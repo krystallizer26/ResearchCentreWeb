@@ -1,0 +1,29 @@
+{
+  "name": "Mojenn",
+  "description": "A CMS using AngularJS and NodeJS",
+  "repository": "https://github.com/triskell/Mojenn",
+  "devDependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "feathers": "~0.3.1",
+    "karma": "~0.10",
+    "karma-jasmine": "~0.1",
+    "karma-junit-reporter": "~0.1",
+    "mongoose": "^3.8.8",
+    "passport": "^0.2.2",
+    "passport-twitter": "~1.0.2",
+    "phantomjs": "~1.9",
+    "protractor": "~0.17.0"
+  },
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "debug": "^3.1.0",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "morgan": "^1.9.0",
+    "passport-local": "^1.0.0",
+    "serve-favicon": "^2.4.5",
+    "stylus": "^0.54.5"
+  }
+}

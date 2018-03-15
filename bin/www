@@ -1,0 +1,10 @@
+
+var debug = require('debug')('SCIENCE KMITL Website');
+var app = require('../server');
+
+app.set('port', (process.env.PORT || 2000));
+
+var server = app.listen(app.get('port'), function() {
+    console.log("server runing on port " + app.get('port'));
+    debug('Express server listening on port ' + server.address().port);
+});
