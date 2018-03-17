@@ -5,31 +5,29 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
- 
-var  passport = require('passport');
+
+var passport = require('passport');
 var flash = require('connect-flash');
-  
+
 var config = require('./config/config'); //Server configuration file
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-
-
 var app = express();
 
- 
-
-mongoose.connect(config.dbUrl, function(err){
-	if (err) { 
-    console.log("********************************!!! WARNING plzzz !!!*********************************");
-    console.log("                          Can't connect to Database.");
-    console.log("             Please Start database first than restarting this program.");
-    console.log("**************************************************************************************");
-
-    
-    console.log(err) }
-});  
+mongoose.connect(config.dbUrl, function (err) {
+    console.log("Connecting Database...")
+    if (err) {
+        console.log("********************************!!! WARNING plzzz !!!*********************************");
+        console.log("                          Can't connect to Database.");
+        console.log("             Please Start database first than restarting this program.");
+        console.log("**************************************************************************************");
+        console.log(err)
+    }
+    else
+        console.log("Database READY")
+});
 
 //require('./passport')(passport); //Set authentification
 require('./config/passport')(passport); // pass passport for configuration
@@ -38,14 +36,16 @@ require('./config/passport')(passport); // pass passport for configuration
 //-- api
 var api = require('./routes/api');
 
+var Department_Route = require('./routes/department_api');
+var Position_Route = require('./routes/position_api');
+var Keyword_Route = require('./routes/keyword_api');
+var AcademicLevel_Route = require('./routes/academicLevel_api');
 
 // configuration ===============================================================
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 // set up our express application
-
-
 
 app.set('view engine', 'ejs'); // set up ejs for templating
 
@@ -104,16 +104,18 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // all of our routes will be prefixed with /api
 
 app.use('/api', api);
+app.use('/api', Department_Route);
+app.use('/api', Position_Route);
+app.use('/api', Keyword_Route);
+app.use('/api', AcademicLevel_Route);
 
 require('./routes/index.js')(app, passport); //Set routes load our routes and pass in our app and fully configured passpo
 
-
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handlers
@@ -121,28 +123,25 @@ app.use(function (req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function (err, req, res, next) {
-      res.status(err.status || 500);
-      res.render('error', {
-          message: err.message,
-          error: err
-      });
-  });
+    app.use(function (err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-      message: err.message,
-      error: {}
-  });
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
 
-/*
-app.listen(config.port);
-*/
-
+// app.listen(config.port);
 
 module.exports = app;
