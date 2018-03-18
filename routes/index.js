@@ -12,7 +12,7 @@ module.exports = function (app, passport) {
     // =====================================
     app.get('/', function (req, res) {
         console.log("index");
-        res.sendfile('index.html'); // load the index.ejs file
+        res.sendfile('public/general/index.html'); // load the index.ejs file
     });
     app.get('/mkpro', function (req, res) {
         res.sendfile('public/docs/documentation.html'); // load the index.ejs file
