@@ -41,6 +41,9 @@ var Position_Route = require('./routes/position_api');
 var Keyword_Route = require('./routes/keyword_api');
 var AcademicLevel_Route = require('./routes/academicLevel_api');
 var Researcher_Route = require('./routes/researcher_api');
+var BachelorTeachingDepartment_API = require('./routes/bachelorTeachingDepartment_api');
+var MasterTeachingDepartment_API = require('./routes/masterTeachingDepartment_api');
+var DoctoryTeachingDepartment_API = require('./routes/doctoryTeachingDepartment_api');
 
 // configuration ===============================================================
 
@@ -110,6 +113,9 @@ app.use('/api', Position_Route);
 app.use('/api', Keyword_Route);
 app.use('/api', AcademicLevel_Route);
 app.use('/api', Researcher_Route);
+app.use('/api', BachelorTeachingDepartment_API);
+app.use('/api', MasterTeachingDepartment_API);
+app.use('/api', DoctoryTeachingDepartment_API);
 
 require('./routes/index.js')(app, passport); //Set routes load our routes and pass in our app and fully configured passpo
 
