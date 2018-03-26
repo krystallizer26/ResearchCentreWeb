@@ -1,4 +1,5 @@
 var BachelorTeachingDepartment = require('../model/bachelorTeachingDepartment_model.js');
+var Researcher = require('../model/researcher_model.js');
 
 module.exports = {
     newBachelorTeachingDepartment: function (bachelorTeachingDepartment, callback) {
@@ -83,5 +84,6 @@ module.exports = {
                 callback("252", null, newsCallback)
             }
         });
-    }
+    },
+    
 };
