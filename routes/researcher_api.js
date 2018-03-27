@@ -12,7 +12,7 @@ var ObjectId = require('mongodb').ObjectId;
 var flow = require('../services/flow.js')
 var ReturnCode = require('../model/returnCode.js');
 var Validate = require("../controller/validation_controller.js");
-var Return_control = require('../controller/return_control.js');
+var Return_Control = require('../controller/return_control.js');
 
 //Model
 var Researcher = require('../model/researcher_model.js');
@@ -56,27 +56,27 @@ router.post('/newResearcher', function (request, response) {
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!booleanReady) {
         var alert = "Input Not Valid, check if some data is not boolean."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
     }
     else if (!objectIdReady) {
         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
     else if (!numberReady) {
         var alert = "Input Not Valid, check if some data must contain only numeric character."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "004", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "004", alert, response)
     }
     else if (request.body.personalID.length != 13) {
         var alert = "Input Not Valid, check if personalId is in a correct pattern. (13 numeric-only character)"
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "005", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "005", alert, response)
     }
     else {
         flow.exec(
@@ -84,21 +84,21 @@ router.post('/newResearcher', function (request, response) {
                 Department_Control.checkDepartmentByID(new ObjectId(request.body.departmentId), this);
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     Position_Control.checkPositionByID(new ObjectId(request.body.positionId), this);
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(request.body.academicLevelId), this);
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     var researcher = new Researcher();
@@ -114,14 +114,15 @@ router.post('/newResearcher', function (request, response) {
                     researcher.doctoralGraduation = request.body.doctoralGraduation;
                     researcher.assignDate = request.body.assignDate;
                     researcher.retirementStatus = request.body.retirementStatus;
+                    researcher.researcherPic = request.body.researcherPic;
                     Researcher_Control.newResearcher(researcher, this);
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_control.responseWithCodeAndData(ReturnCode.success, "New Researcher was saved successfully as _id defined", functionCallback._id, response);
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "New Researcher was saved successfully as _id defined", functionCallback._id, response);
                 }
             }
         );
@@ -143,17 +144,17 @@ router.post('/getResearcherTeaching', function (request, response) {
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
     else if (!(request.body.academicLevel == "Bachelor" || request.body.academicLevel == "Master" || request.body.academicLevel == "Doctory" || request.body.academicLevel == "0")) {
         var alert = "Input Not Valid, not expected academicLevel."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "005", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "005", alert, response)
     }
     else {
         flow.exec(
@@ -232,10 +233,10 @@ router.post('/getResearcherTeaching', function (request, response) {
                 Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), query, this);
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_control.responseWithCodeAndData(ReturnCode.success, "Get Researcher's bachelor teaching data completed", functionCallback, response);
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "Get Researcher's bachelor teaching data completed", functionCallback, response);
                 }
             }
         );
@@ -259,17 +260,17 @@ router.post('/editResearcherTeaching', function (request, response) {
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
     else if (!(request.body.academicLevel == "Bachelor" || request.body.academicLevel == "Master" || request.body.academicLevel == "Doctory")) {
         var alert = "Input Not Valid, not expected academicLevel."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "005", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "005", alert, response)
     }
     else {
         flow.exec(
@@ -278,7 +279,7 @@ router.post('/editResearcherTeaching', function (request, response) {
                 Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), query, this);
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     var query = {};
@@ -294,7 +295,7 @@ router.post('/editResearcherTeaching', function (request, response) {
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     let query = {};
@@ -347,10 +348,10 @@ router.post('/editResearcherTeaching', function (request, response) {
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_control.responseWithCode(ReturnCode.success, "Update Researcher's Teaching Complete", response);
+                    Return_Control.responseWithCode(ReturnCode.success, "Update Researcher's Teaching Complete", response);
                 }
             }
         );
@@ -388,27 +389,27 @@ router.post('/editResearcher/', function (request, response) {
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!booleanReady) {
         var alert = "Input Not Valid, check if some data is not boolean."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
     }
     else if (!objectIdReady) {
         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
     else if (!numberReady) {
         var alert = "Input Not Valid, check if some data must contain only numeric character."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "004", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "004", alert, response)
     }
     else if (request.body.personalID.length != 13) {
         var alert = "Input Not Valid, check if personalId is in a correct pattern. (13 numeric-only character)"
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "005", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "005", alert, response)
     }
     else {
         flow.exec(
@@ -416,21 +417,21 @@ router.post('/editResearcher/', function (request, response) {
                 Department_Control.checkDepartmentByID(new ObjectId(request.body.departmentId), this);
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     Position_Control.checkPositionByID(new ObjectId(request.body.positionId), this);
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(request.body.academicLevelId), this);
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     let query = { "_id": true }
@@ -438,7 +439,7 @@ router.post('/editResearcher/', function (request, response) {
                 }
             }, function (code, err, result) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     let query = {
@@ -456,6 +457,7 @@ router.post('/editResearcher/', function (request, response) {
                             "target": request.body.target,
                             "assignDate": request.body.assignDate,
                             "retirementStatus": request.body.retirementStatus,
+                            "researcherPic": request.body.researcherPic,
                             "editedDate": Date.now()
                         }
                     }
@@ -463,10 +465,10 @@ router.post('/editResearcher/', function (request, response) {
                 }
             }, function (code, err, result) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_control.responseWithCode(ReturnCode.success, "Researcher with _id: " + request.body.researcherId + " has updated successfully.", response);
+                    Return_Control.responseWithCode(ReturnCode.success, "Researcher with _id: " + request.body.researcherId + " has updated successfully.", response);
                 }
             }
         );
@@ -490,12 +492,12 @@ router.post('/addKeywordToResearcher/', function (request, response) {
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
     else {
         flow.exec(
@@ -504,31 +506,31 @@ router.post('/addKeywordToResearcher/', function (request, response) {
                 Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), query, this);
             }, function (code, err, functionCallback) {
                 if (err || functionCallback == 0) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, "Researcher " + request.body.researcherId + " not found", response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, "Researcher " + request.body.researcherId + " not found", response);
                 }
                 else {
                     Keyword_Control.checkKeywordByID(new ObjectId(request.body.keywordId), this);
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     Researcher_Control.checkBindedKeywordwithResearcher(new ObjectId(request.body.researcherId), new ObjectId(request.body.keywordId), this);
                 }
             }, function (code, err, functionCallback) {
                 if (code != "393") {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     Researcher_Control.bindKeywordtoResearcher(new ObjectId(request.body.researcherId), new ObjectId(request.body.keywordId), this);
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_control.responseWithCode(ReturnCode.success, "Bind Researcher " + request.body.researcherId + " with Keyword " + request.body.keywordId + " completed", response);
+                    Return_Control.responseWithCode(ReturnCode.success, "Bind Researcher " + request.body.researcherId + " with Keyword " + request.body.keywordId + " completed", response);
                 }
             }
         );
@@ -553,12 +555,12 @@ router.post('/removeKeywordFromResearcher/', function (request, response) {
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
     else {
         flow.exec(
@@ -567,31 +569,31 @@ router.post('/removeKeywordFromResearcher/', function (request, response) {
                 Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), query, this);
             }, function (code, err, functionCallback) {
                 if (err || functionCallback == 0) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, "Researcher " + request.body.researcherId + " not found", response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, "Researcher " + request.body.researcherId + " not found", response);
                 }
                 else {
                     Keyword_Control.checkKeywordByID(new ObjectId(request.body.keywordId), this);
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     Researcher_Control.checkBindedKeywordwithResearcher(new ObjectId(request.body.researcherId), new ObjectId(request.body.keywordId), this);
                 }
             }, function (code, err, functionCallback) {
                 if (code != "392") {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     Researcher_Control.removeKeywordfromResearcher(new ObjectId(request.body.researcherId), new ObjectId(request.body.keywordId), this);
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_control.responseWithCode(ReturnCode.success, "Unbind Researcher " + request.body.researcherId + " with Keyword " + request.body.keywordId + " completed", response);
+                    Return_Control.responseWithCode(ReturnCode.success, "Unbind Researcher " + request.body.researcherId + " with Keyword " + request.body.keywordId + " completed", response);
                 }
             }
         );
@@ -612,28 +614,92 @@ router.post('/getResearcherfromID/', function (request, response) {
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
     else {
         flow.exec(
             function () {
                 let query = {}
-                Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId),query, this);
+                Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), query, this);
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_control.responseWithCodeAndData(ReturnCode.success, "get Researcher with _id " + request.body.researcherId + " Completed", functionCallback, response)
+                    Researcher_Control.getAllResearcherDataById(functionCallback, this);
+                }
+            }, function (functionCallback) {
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get Researcher with _id " + request.body.researcherId + " Completed", functionCallback, response)
+            }
+        );
+    }
+});
+
+router.post('/deleteResearcher/', function (request, response) {
+    var methodCode = "43";
+
+    var requiredData = [];
+    requiredData.push(request.body.researcherId);
+    var requiredReady = Validate.requiredData_Check(requiredData)
+
+    var objectIdData = [];
+    objectIdData.push(request.body.researcherId);
+    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+
+    if (!requiredReady) {
+        var alert = "Input Not Valid, check if some data is required."
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+    }
+    else if (!objectIdReady) {
+        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+    }
+    else {
+        flow.exec(
+            function () {
+                let query = { "_id": true }
+                Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), this);
+            }, function (code, err, result) {
+                if (code != "382") {
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                }
+                else {
+                    Researcher_Control.deleteResearcherByID(new ObjectId(request.body.researcherId), this);
+                }
+            }, function (code, err, result) {
+                if (err) {
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                }
+                else {
+                    Return_Control.responseWithCode(ReturnCode.success, "Researcher with _id: " + request.body.researcherId + " has deleted successfully.", response);
                 }
             }
         );
     }
+});
+
+router.post('/getAllResearcherPreview/', function (request, response) {
+    var methodCode = "44";
+
+    flow.exec(
+        function () {
+            Researcher_Control.getAllResearcherPreview(this);
+        }, function (code, err, functionCallback) {
+            if (err) {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+            }
+            else {
+                Return_Control.responseWithCodeAndData("999999", "get All Researcher Completed", functionCallback, response)
+            }
+        }
+    );
 });
 
 // router.post('/getAllKeyword/', function (request, response) {
@@ -644,58 +710,14 @@ router.post('/getResearcherfromID/', function (request, response) {
 //             Keyword_Control.getAllKeyword(this);
 //         }, function (code, err, functionCallback) {
 //             if (err) {
-//                 Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
 //             }
 //             else {
-//                 Return_control.responseWithCodeAndData("999999", "get All Keyword Completed", functionCallback, response)
+//                 Return_Control.responseWithCodeAndData("999999", "get All Keyword Completed", functionCallback, response)
 //             }
 //         }
 //     );
 
-// });
-
-// router.post('/deleteKeyword/', function (request, response) {
-//     var methodCode = "15";
-
-//     var requiredData = [];
-//     requiredData.push(request.body.keywordId);
-//     var requiredReady = Validate.requiredData_Check(requiredData)
-
-//     var objectIdData = [];
-//     objectIdData.push(request.body.keywordId);
-//     var objectIdReady = Validate.objectIDData_Check(objectIdData)
-
-//     if (!requiredReady) {
-//         var alert = "Input Not Valid, check if some data is required."
-//         console.log(alert);
-//         Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-//     }
-//     else if (!objectIdReady) {
-//         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
-//         console.log(alert);
-//         Return_control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-//     }
-//     else {
-//         flow.exec(
-//             function () {
-//                 Keyword_Control.checkKeywordByID(new ObjectId(request.body.keywordId), this);
-//             }, function (code, err, result) {
-//                 if (code != "132") {
-//                     Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-//                 }
-//                 else {
-//                     Keyword_Control.deleteKeywordByID(new ObjectId(request.body.keywordId), this);
-//                 }
-//             }, function (code, err, result) {
-//                 if (err) {
-//                     Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-//                 }
-//                 else {
-//                     Return_control.responseWithCode(ReturnCode.success, "Keyword_Control with _id: " + request.body.keywordId + " has deleted successfully.", response);
-//                 }
-//             }
-//         );
-//     }
 // });
 module.exports = router;
 

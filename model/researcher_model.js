@@ -16,6 +16,7 @@ var Researcher_Schema = new Schema({
     assignDate: { type: Date, default: null },
     birthDate: { type: Date, default: null },
     retirementStatus: { type: Boolean, default: false },
+    researcherPic: { type: String, default: null },
 
     bachelorTeachingDepartmentId: { type: String, default: null },
     bachelor_AcademicYear: { type: Number, default: null },

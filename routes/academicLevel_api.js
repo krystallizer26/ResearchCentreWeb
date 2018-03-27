@@ -16,7 +16,7 @@ router.use(function (req, res, next) {
 var flow = require('../services/flow.js')
 var ReturnCode = require('../model/returnCode.js');
 var Validate = require("../controller/validation_controller.js");
-var Return_control = require('../controller/return_control.js');
+var Return_Control = require('../controller/return_control.js');
 
 //Model
 var AcademicLevel = require('../model/academicLevel_model.js');
@@ -35,7 +35,7 @@ router.post('/newAcademicLevel', function (request, response) {
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
@@ -46,10 +46,10 @@ router.post('/newAcademicLevel', function (request, response) {
                 AcademicLevel_Control.newAcademicLevel(academicLevel, this);
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_control.responseWithCodeAndData(ReturnCode.success, "New AcademicLevel was saved successfully as _id defined", functionCallback._id, response);
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "New AcademicLevel was saved successfully as _id defined", functionCallback._id, response);
                 }
             }
         );
@@ -72,12 +72,12 @@ router.post('/editAcademicLevel/', function (request, response) {
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
     else {
         flow.exec(
@@ -85,7 +85,7 @@ router.post('/editAcademicLevel/', function (request, response) {
                 AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(request.body.academicLevelId), this);
             }, function (code, err, result) {
                 if (code != "182") {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     var academicLevel = new AcademicLevel();
@@ -95,10 +95,10 @@ router.post('/editAcademicLevel/', function (request, response) {
                 }
             }, function (code, err, result) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_control.responseWithCode(ReturnCode.success, "AcademicLevel with _id: " + request.body.academicLevelId + " has updated successfully.", response);
+                    Return_Control.responseWithCode(ReturnCode.success, "AcademicLevel with _id: " + request.body.academicLevelId + " has updated successfully.", response);
                 }
             }
         );
@@ -113,10 +113,10 @@ router.post('/getAllAcademicLevel/', function (request, response) {
             AcademicLevel_Control.getAllAcademicLevel(this);
         }, function (code, err, functionCallback) {
             if (err) {
-                Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
             else {
-                Return_control.responseWithCodeAndData("999999", "get All AcademicLevel Completed", functionCallback, response)
+                Return_Control.responseWithCodeAndData("999999", "get All AcademicLevel Completed", functionCallback, response)
             }
         }
     );
@@ -137,12 +137,12 @@ router.post('/getAcademicLevelfromID/', function (request, response) {
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
     else {
         flow.exec(
@@ -150,10 +150,10 @@ router.post('/getAcademicLevelfromID/', function (request, response) {
                 AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(request.body.academicLevelId), this);
             }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_control.responseWithCodeAndData("999999", "get AcademicLevel with _id " + request.body.academicLevelId + " Completed", functionCallback, response)
+                    Return_Control.responseWithCodeAndData("999999", "get AcademicLevel with _id " + request.body.academicLevelId + " Completed", functionCallback, response)
                 }
             }
         );
@@ -174,12 +174,12 @@ router.post('/deleteAcademicLevel/', function (request, response) {
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
     else {
         flow.exec(
@@ -187,17 +187,17 @@ router.post('/deleteAcademicLevel/', function (request, response) {
                 AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(request.body.academicLevelId), this);
             }, function (code, err, result) {
                 if (code != "182") {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
                     AcademicLevel_Control.deleteAcademicLevelByID(new ObjectId(request.body.academicLevelId), this);
                 }
             }, function (code, err, result) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_control.responseWithCode(ReturnCode.success, "AcademicLevel with _id: " + request.body.academicLevelId + " has deleted successfully.", response);
+                    Return_Control.responseWithCode(ReturnCode.success, "AcademicLevel with _id: " + request.body.academicLevelId + " has deleted successfully.", response);
                 }
             }
         );

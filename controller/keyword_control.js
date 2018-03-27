@@ -1,4 +1,9 @@
+var ObjectId = require('mongodb').ObjectId
+var flow = require('../services/flow.js')
+
 var Keyword = require('../model/keyword_model.js');
+
+var Keyword_Control = require("../controller/keyword_control.js");
 
 module.exports = {
     newKeyword: function (keyword, callback) {
@@ -83,5 +88,37 @@ module.exports = {
                 callback("152", null, newsCallback)
             }
         });
+    },
+    convertKeywordFromIDArray: function (keywordId, callback) {
+        let tmp = []
+        flow.serialForEach(keywordId, function (keyword) {
+            let query = {"_id": true,"keywordName_TH":true,"keywordName_EN":true}
+            checkKeywordByID(new ObjectId(keyword),query, this);
+        }, function (code,err,functionCallback) {
+            tmp.push(functionCallback)
+        }, function () {
+            callback(tmp);
+        });
     }
 };
+
+//----------------------------------------
+function checkKeywordByID(keywordId,query, callback) {
+    Keyword.findOne({ "_id": keywordId },query, function (error, functionCallback) {
+        if (error) {
+            let errCode = "...";
+            var alert = "Error in finding Keyword with _id: " + keywordId + "\nError: " + error.message;
+            console.log("ERROR Code: " + errCode + " " + alert);
+            callback(errCode, alert, null)
+        }
+        else if (functionCallback) {
+            callback("...", null, functionCallback)
+        }
+        else {
+            let errCode = "...";
+            var alert = "Keyword with _id: " + keywordId + " not found";
+            console.log("ERROR Code: " + errCode + " " + alert);
+            callback(errCode, alert, functionCallback)
+        }
+    });
+}
