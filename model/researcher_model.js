@@ -2,8 +2,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Researcher_Schema = new Schema({
-    researcherName_TH: { type: String, required: true, unique: true },
-    researcherName_EN: { type: String, required: true, unique: true },
+    researcherFName_TH: { type: String, required: true, unique: true },
+    researcherFName_EN: { type: String, required: true, unique: true },
+    researcherLName_TH: { type: String, required: true, unique: true },
+    researcherLName_EN: { type: String, required: true, unique: true },
+    gender: { type: String, required: true, unique: true },
     personalID: { type: String, required: true, unique: true },
     departmentId: { type: String, default: null },
     positionId: { type: String, default: null },

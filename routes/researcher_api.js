@@ -31,8 +31,11 @@ router.post('/newResearcher', function (request, response) {
     var methodCode = "36";
 
     var requiredData = [];
-    requiredData.push(request.body.researcherName_TH);
-    requiredData.push(request.body.researcherName_EN);
+    requiredData.push(request.body.researcherFName_TH);
+    requiredData.push(request.body.researcherFName_TH);
+    requiredData.push(request.body.researcherLName_EN);
+    requiredData.push(request.body.researcherLName_EN);
+    requiredData.push(request.body.gender);
     requiredData.push(request.body.personalID);
     requiredData.push(request.body.departmentId);
     requiredData.push(request.body.positionId);
@@ -102,8 +105,11 @@ router.post('/newResearcher', function (request, response) {
                 }
                 else {
                     var researcher = new Researcher();
-                    researcher.researcherName_TH = request.body.researcherName_TH;
-                    researcher.researcherName_EN = request.body.researcherName_EN;
+                    researcher.researcherName_TH = request.body.researcherFName_TH;
+                    researcher.researcherName_TH = request.body.researcherFName_TH;
+                    researcher.researcherName_EN = request.body.researcherLName_EN;
+                    researcher.researcherName_EN = request.body.researcherLName_EN;
+                    researcher.gender = request.body.gender;
                     researcher.personalID = request.body.personalID;
                     researcher.birthDate = request.body.birthDate;
                     researcher.departmentId = request.body.departmentId;
@@ -363,8 +369,11 @@ router.post('/editResearcher/', function (request, response) {
 
     var requiredData = [];
     requiredData.push(request.body.researcherId);
-    requiredData.push(request.body.researcherName_TH);
-    requiredData.push(request.body.researcherName_EN);
+    requiredData.push(request.body.researcherFName_TH);
+    requiredData.push(request.body.researcherFName_EN);
+    requiredData.push(request.body.researcherLName_TH);
+    requiredData.push(request.body.researcherLName_EN);
+    requiredData.push(request.body.gender);
     requiredData.push(request.body.personalID);
     requiredData.push(request.body.departmentId);
     requiredData.push(request.body.positionId);
@@ -444,8 +453,11 @@ router.post('/editResearcher/', function (request, response) {
                 else {
                     let query = {
                         $set: {
-                            "researcherName_TH": request.body.researcherName_TH,
-                            "researcherName_EN": request.body.researcherName_EN,
+                            "researcherFName_TH": request.body.researcherFName_TH,
+                            "researcherFName_EN": request.body.researcherFName_EN,
+                            "researcherLName_TH": request.body.researcherLName_TH,
+                            "researcherLName_EN": request.body.researcherLName_EN,
+                            "gender": request.body.gender,
                             "personalID": request.body.personalID,
                             "birthDate": request.body.birthDate,
                             "departmentId": request.body.departmentId,

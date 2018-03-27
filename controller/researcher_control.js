@@ -106,7 +106,7 @@ module.exports = {
         });
     },
     getAllResearcherPreview: function (callback) {
-        Researcher.find({}, { "_id": true, "researcherName_TH": true, "researcherName_EN": true, "researcherPic": true }, function (error, functionCallback) {
+        Researcher.find({}, { "_id": true, "researcherName_TH": true, "researcherName_EN": true, "researcherPic": true,"keywordIdArray":true,"academicLevelId":true,"positionId":true,"departmentId":true }, function (error, functionCallback) {
             if (error) {
                 let errCode = "431";
                 var alert = "Error in getAllAcademicLevel , Error : " + error.message;
