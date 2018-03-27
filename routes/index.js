@@ -14,6 +14,13 @@ module.exports = function (app, passport) {
         console.log("index");
         res.sendfile('public/general/index.html'); // load the index.ejs file
     });
+
+    app.get('/research_centre_2', function (req, res) {
+        console.log("template 2 ");
+        res.sendfile('public/general_2/index.html'); // load the index.ejs file
+    });
+
+
     app.get('/mkpro', function (req, res) {
         res.sendfile('public/docs/documentation.html'); // load the index.ejs file
     });
@@ -30,10 +37,10 @@ module.exports = function (app, passport) {
     });
 
 
-    app.get('/admin_page', isLoggedInadmin, function (req, res) {
+    app.get('/admin', isLoggedInadmin, function (req, res) {
         //res.render('index', { title: 'Express' });
         
-        res.sendfile('./public/admin.html'); // load the single view file (angular will handle the page changes on the front-end)
+        res.sendfile('public/admin/index.html'); // load the single view file (angular will handle the page changes on the front-end)
     });
         
     // =====================================
