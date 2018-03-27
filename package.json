@@ -1,29 +1,38 @@
 {
-  "name": "Mojenn",
-  "description": "A CMS using AngularJS and NodeJS",
-  "repository": "https://github.com/triskell/Mojenn",
-  "devDependencies": {
-    "bcrypt-nodejs": "0.0.3",
-    "feathers": "~0.3.1",
-    "karma": "~0.10",
-    "karma-jasmine": "~0.1",
-    "karma-junit-reporter": "~0.1",
-    "mongoose": "^3.8.8",
-    "passport": "^0.2.2",
-    "passport-twitter": "~1.0.2",
-    "phantomjs": "~1.9",
-    "protractor": "~0.17.0"
+  "name": "node-api",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/scotch-io/node-token-authentication"
   },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Chris Sevilleja <scotch.io>",
+  "license": "MIT",
   "dependencies": {
+    "ali-oss": "^4.11.4",
+    "async": "^2.6.0",
+    "babel": "^6.23.0",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "~1.18.2",
+    "co": "^4.6.0",
     "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^1.4.0",
     "cookie-parser": "^1.4.3",
-    "debug": "^3.1.0",
+    "crypto-js": "^3.1.9-1",
     "ejs": "^2.5.7",
-    "express": "^4.16.2",
+    "express": "~4.16.1",
     "express-session": "^1.15.6",
-    "morgan": "^1.9.0",
+    "mongodb": "^3.0.1",
+    "mongoose": "^4.13.12",
+    "morgan": "~1.9.0",
+    "node-uuid": "^1.4.8",
+    "npm": "^5.7.1",
+    "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "serve-favicon": "^2.4.5",
+    "sprintf-js": "^1.1.1",
     "stylus": "^0.54.5"
   }
 }
