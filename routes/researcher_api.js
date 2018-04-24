@@ -32,8 +32,8 @@ router.post('/newResearcher', function (request, response) {
 
     var requiredData = [];
     requiredData.push(request.body.researcherFName_TH);
-    requiredData.push(request.body.researcherFName_TH);
-    requiredData.push(request.body.researcherLName_EN);
+    requiredData.push(request.body.researcherFName_EN);
+    requiredData.push(request.body.researcherLName_TH);
     requiredData.push(request.body.researcherLName_EN);
     requiredData.push(request.body.gender);
     requiredData.push(request.body.personalID);
