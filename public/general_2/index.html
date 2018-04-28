@@ -27,13 +27,10 @@
   </head>
   <body class="menu-position-top full-screen" ng-app = "app" ng-controller = "homeCtrl">
 
-        <div ng-include src="'./general_2/research_assets/partail/nav/nav_main.html'"></div>
+        <div ng-include src="'./general_2/research_assets/partail/nav/nav_main.html'" ></div>
+         <div ui-view></div>
 
-        <div ui-view></div>
 
-
-      <div class="display-type"></div>
-    </div>
     <script src="/general_2/assets/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/general_2/assets/bower_components/popper.js/dist/umd/popper.min.js"></script>
     <script src="/general_2/assets/bower_components/moment/moment.js"></script>

@@ -32,6 +32,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 
     .state('profileDetail', {
       url: '/profileDetail',
+       abstract: true,
       templateUrl: "./general_2/research_assets/partail/profile.html",
       controller: 'profileDetailCtrl'
     })
@@ -80,11 +81,14 @@ angular.module('app')
     }
   }]);
 
+  app.run(function($state, $rootScope){
+     $rootScope.$state = $state;
+  })
 
-
-app.controller('homeCtrl', function($scope, $http,$state) {
+app.controller('homeCtrl', function($scope, $http,$state,$window) {
  console.log("homeCtrl start");
- //$state.go('profileDetail');
+ //$window.scrollTo(0, 0); //up to top
+ $state.go('profileDetail.general');
  //console.log("paperDetail paperDetail");
 });
 app.controller('paperDetailCtrl', function($scope, $http) {
