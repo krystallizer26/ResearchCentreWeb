@@ -20,6 +20,11 @@
     <link href="/general_2/assets/bower_components/slick-carousel/slick/slick.css" rel="stylesheet">
     <link href="/general_2/assets/css/main.css?version=4.3.0" rel="stylesheet">
   </head>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
+  <script src="/general_2/assets/js/index.js"></script>
+  
   <body class="menu-position-top full-screen">
     <div class="all-wrapper solid-bg-all">
      
@@ -468,253 +473,255 @@
           END - Breadcrumbs
           -------------------->
 
-          <div class="all-wrapper rentals" style="max-width: 1600px; ">
-            <!--------------------
-            START - Top Bar
-            -------------------->
-            <div class="top-bar-rentals">
-              <div class="logo-w">
-                <a class="logo" href="index.html">
-                  <div class="logo-element"></div>
-                  <div class="logo-label">
-                   Reseachers
+          <div ng-app="app">
+            <div class="all-wrapper rentals" ng-controller="index" ng-init="init()" style="max-width: 1600px; ">
+              <!--------------------
+              START - Top Bar
+              -------------------->
+              <div class="top-bar-rentals">
+                <div class="logo-w">
+                  <a class="logo" href="index.html">
+                    <div class="logo-element"></div>
+                    <div class="logo-label">
+                    Reseachers
+                    </div>
+                  </a>
+                  <div class="filters-toggler">
+                    <i class="os-icon os-icon-hamburger-menu-1"></i>
                   </div>
-                </a>
-                <div class="filters-toggler">
-                  <i class="os-icon os-icon-hamburger-menu-1"></i>
                 </div>
-              </div>
-              <div class="filters">
-                <div class="filters-header">
-                  <h4>
-                    Search By
-                   </h4>
-                </div>
-                <form class="form-inline">
-                
-                  <div class="filter-w">
-                    <div class="filter-body">
-                      <div class="form-group">
-                        <label for="">xxxx</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <div class="input-group-text">
-                              
+                <div class="filters">
+                  <div class="filters-header">
+                    <h4>
+                      Search By
+                    </h4>
+                  </div>
+                  <form class="form-inline">
+                  
+                    <div class="filter-w">
+                      <div class="filter-body">
+                        <div class="form-group">
+                          <label for="">xxxx</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">
+                                
+                              </div>
                             </div>
+                            <input class="form-control date-range-picker" type="text" value="">
                           </div>
-                          <input class="form-control date-range-picker" type="text" value="">
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="buttons-w">
-                    <a class="btn btn-upper btn-primary" href="#"><i class="os-icon os-icon-ui-37"></i><span>Search</span></a>
-                  </div>
-                </form>
+                    <div class="buttons-w">
+                      <a class="btn btn-upper btn-primary" href="#"><i class="os-icon os-icon-ui-37"></i><span>Search</span></a>
+                    </div>
+                  </form>
+                </div>
               </div>
-            </div>
-            <!--------------------
-            END - Top bar
-            --------------------><!--------------------
-            START - Rentals Content
-            --------------------><div class="rentals-list-w">
               <!--------------------
-              START - Property Index Filters
-              -------------------->
-              <div class="filter-side">
-                <div class="filters-header">
-                  <h4>
-                    Filter
-                  </h4>
-                  <div class="reset-filters">
-                    <i class="os-icon-close os-icon"></i><span>Reset Filters</span>
-                  </div>
-                </div>
-                <div class="filter-w">
-                  <div class="filter-toggle">
-                    <i class="os-icon-minus os-icon"></i>
-                  </div>
-                  <h6 class="filter-header">
-                    ภาควิชา/หน่วยงาน
-                  </h6>
-                  <div class="filter-body">
-                    <div class="toggled-buttons">
-                      <a class="btn btn-toggled off" href="#">ทั้งหมด</a>
-                      <a class="btn btn-toggled off" href="#">ภาควิชาคณิตศาสตร์</a>
-                      <a class="btn btn-toggled off" href="#">ภาควิชาชีววิทยา</a>
-                      <a class="btn btn-toggled off" href="#">ภาควิชาฟิสิกส์</a>
-                      <a class="btn btn-toggled off" href="#">ภาควิชาวิทยาการคอมพิวเตอร์</a>
-                   
-                      <a class="btn btn-toggled off" href="#">ภาควิชาเคมี</a>
-                      <a class="btn btn-toggled on" href="#">ภาควิชาชีววิทยา</a>
-                      <a class="btn btn-toggled off" href="#">ศูนย์เครื่องมือวิทยาศาสตร์</a>
-                      
+              END - Top bar
+              --------------------><!--------------------
+              START - Rentals Content
+              --------------------><div class="rentals-list-w">
+                <!--------------------
+                START - Property Index Filters
+                -------------------->
+                <div class="filter-side">
+                  <div class="filters-header">
+                    <h4>
+                      Filter
+                    </h4>
+                    <div class="reset-filters">
+                      <i class="os-icon-close os-icon"></i><span>Reset Filters</span>
                     </div>
                   </div>
-                </div>
-               
-                <div class="filter-w">
-                  <div class="filter-toggle">
-                    <i class="os-icon-minus os-icon"></i>
-                  </div>
-                  <h6 class="filter-header">
-                    ตำแหน่ง
-                  </h6>
-                  <div class="filter-body">
-                    <div class="toggled-buttons solid">
-                      <a class="btn btn-toggled on" href="#">ทั้งหมด</a>
-                      <a class="btn btn-toggled off" href="#">ผศ.</a>
-                      <a class="btn btn-toggled off" href="#">รศ.</a>
-                      <a class="btn btn-toggled off" href="#">ศ.</a>
-        
-                    </div>
-                  </div>
-                </div>
-                <div class="filter-w">
-                  <div class="filter-toggle">
-                    <i class="os-icon-minus os-icon"></i>
-                  </div>
-                  <h6 class="filter-header">
-                    Keyword
-                  </h6>
-                  <div class="filter-body">
-                    <select class="select2" multiple="true" name="">
-                      <option>
-                        การปรับปรุงพันธุ์พืช
-                      </option>
-                      <option>
-                        การย้ายยีน
-                      </option>
-                      <option selected="true">
-                        การเก็บรักษาพันธุกรรม 
-                      </option>
-                      <option>
-                        Plant Breeding and Molecular Genetic
-                      </option>
-                      <option selected="true">
-                        โรคสัตว์น้ำ
-                      </option>
-                    </select>
-                  </div>
-                </div>
-               
-                <div class="filter-w">
+                  <div class="filter-w">
                     <div class="filter-toggle">
                       <i class="os-icon-minus os-icon"></i>
                     </div>
                     <h6 class="filter-header">
-                      ชื่อนักวิจัย
+                      ภาควิชา/หน่วยงาน
                     </h6>
                     <div class="filter-body">
-                      <input class="ion-range-slider" type="text">
-                    </div>
-                  </div>
-               
-              </div>
-              <!--------------------
-              END - Property Index Filters
-              -------------------->
-              <div class="rentals-list">
-                <div class="list-controls">
-                  <div class="list-info">
-                    1 Researchers Found
-                  </div>
-                  <div class="list-order">
-                    <label for="">Order By:</label><select>
-                      <option>
-                        ระยะเวลาวิจัย
-                      </option>
-                      <option>
-                        จำนวนครั้งที่ให้คำปรึกษา
-                      </option>
-                     
-                    </select>
-                  </div>
-                </div>
-                <div class="property-items as-list">
-                  <!--------------------
-                  START - Property Item
-                  -------------------->
-                  <div class="row">
-                  <div class="property-item col-md-6">
-                    <a class="item-media-w" href="rentals_single.html">
-                      <div class="item-media" style="background-image: url(http://www.science.kmitl.ac.th/wp-content/uploads/2018/01/DSC_5232-683x1024.jpg)"></div>
-                    </a>
-                    <div class="item-info">
-                      <div class="item-features">
-                        <div class="feature">
-                            Department of Chemistry
-                        </div>
-                       
-                      </div>
-                      <h3 class="item-title">
-                        <a href="xxxx.html">Prof. Tawan Sooknoi</a>
-                      </h3>
-                      <!--<div class="item-reviews">
-                        <div class="reviews-stars">
-                          <select class="item-star-rating">
-                            <option value="1">
-                              1
-                            </option>
-                            <option value="2">
-                              2
-                            </option>
-                            <option value="3">
-                              3
-                            </option>
-                            <option selected="yes" value="4">
-                              4
-                            </option>
-                            <option value="5">
-                              5
-                            </option>
-                          </select>
-                        </div>
-                        <div class="reviews-count">
-                          12 Reviews
-                        </div>
-                      </div>-->
-                      <div class="item-price-buttons">
-                       <!-- <div class="item-price">
-                          <strong>$350</strong><span>/per night</span>
-                        </div>-->
-                        <div class="item-buttons">
-                          <a class="btn btn-outline-primary" href="/general_2/profile.html"><span>Details</span><i class="os-icon os-icon-arrow-2-right"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                  <!--------------------
-                  END - Property Item
-                  -------------------->
-                  
-                </div>
-                <div class="pagination-w">
-                  <div class="pagination-info">
-                
-                  </div>
-                  <div class="pagination-links">
-                    <ul class="pagination">
-                      <li class="page-item disabled">
-                        <a class="page-link" href="#"> Previous</a>
-                      </li>
-                      <li class="page-item active">
-                        <a class="page-link" href="#"> 1</a>
-                      </li>
+                      <div class="toggled-buttons">
+                        <a class="btn btn-toggled off" href="#">ทั้งหมด</a>
+                        <a class="btn btn-toggled off" href="#">ภาควิชาคณิตศาสตร์</a>
+                        <a class="btn btn-toggled off" href="#">ภาควิชาชีววิทยา</a>
+                        <a class="btn btn-toggled off" href="#">ภาควิชาฟิสิกส์</a>
+                        <a class="btn btn-toggled off" href="#">ภาควิชาวิทยาการคอมพิวเตอร์</a>
                     
-                      <li class="page-item">
-                        <a class="page-link" href="#"> Next</a>
-                      </li>
-                    </ul>
+                        <a class="btn btn-toggled off" href="#">ภาควิชาเคมี</a>
+                        <a class="btn btn-toggled on" href="#">ภาควิชาชีววิทยา</a>
+                        <a class="btn btn-toggled off" href="#">ศูนย์เครื่องมือวิทยาศาสตร์</a>
+                        
+                      </div>
+                    </div>
+                  </div>
+                
+                  <div class="filter-w">
+                    <div class="filter-toggle">
+                      <i class="os-icon-minus os-icon"></i>
+                    </div>
+                    <h6 class="filter-header">
+                      ตำแหน่ง
+                    </h6>
+                    <div class="filter-body">
+                      <div class="toggled-buttons solid">
+                        <a class="btn btn-toggled on" href="#">ทั้งหมด</a>
+                        <a class="btn btn-toggled off" href="#">ผศ.</a>
+                        <a class="btn btn-toggled off" href="#">รศ.</a>
+                        <a class="btn btn-toggled off" href="#">ศ.</a>
+          
+                      </div>
+                    </div>
+                  </div>
+                  <div class="filter-w">
+                    <div class="filter-toggle">
+                      <i class="os-icon-minus os-icon"></i>
+                    </div>
+                    <h6 class="filter-header">
+                      Keyword
+                    </h6>
+                    <div class="filter-body">
+                      <select class="select2" multiple="true" name="">
+                        <option>
+                          การปรับปรุงพันธุ์พืช
+                        </option>
+                        <option>
+                          การย้ายยีน
+                        </option>
+                        <option selected="true">
+                          การเก็บรักษาพันธุกรรม 
+                        </option>
+                        <option>
+                          Plant Breeding and Molecular Genetic
+                        </option>
+                        <option selected="true">
+                          โรคสัตว์น้ำ
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                
+                  <div class="filter-w">
+                      <div class="filter-toggle">
+                        <i class="os-icon-minus os-icon"></i>
+                      </div>
+                      <h6 class="filter-header">
+                        ชื่อนักวิจัย
+                      </h6>
+                      <div class="filter-body">
+                        <input class="ion-range-slider" type="text">
+                      </div>
+                    </div>
+                
+                </div>
+                <!--------------------
+                END - Property Index Filters
+                -------------------->
+                <div class="rentals-list">
+                  <div class="list-controls">
+                    <div class="list-info">
+                      1 Researchers Found
+                    </div>
+                    <div class="list-order">
+                      <label for="">Order By:</label><select>
+                        <option>
+                          ระยะเวลาวิจัย
+                        </option>
+                        <option>
+                          จำนวนครั้งที่ให้คำปรึกษา
+                        </option>
+                      
+                      </select>
+                    </div>
+                  </div>
+                  <div class="property-items as-list">
+                    <!--------------------
+                    START - Property Item
+                    -------------------->
+                    <div class="row">
+                    <div class="property-item col-md-6">
+                      <a class="item-media-w" href="rentals_single.html">
+                        <div class="item-media" style="background-image: url(http://www.science.kmitl.ac.th/wp-content/uploads/2018/01/DSC_5232-683x1024.jpg)"></div>
+                      </a>
+                      <div class="item-info">
+                        <div class="item-features">
+                          <div class="feature">
+                              Department of Chemistry
+                          </div>
+                        
+                        </div>
+                        <h3 class="item-title">
+                          <a href="xxxx.html">Prof. Tawan Sooknoi</a>
+                        </h3>
+                        <!--<div class="item-reviews">
+                          <div class="reviews-stars">
+                            <select class="item-star-rating">
+                              <option value="1">
+                                1
+                              </option>
+                              <option value="2">
+                                2
+                              </option>
+                              <option value="3">
+                                3
+                              </option>
+                              <option selected="yes" value="4">
+                                4
+                              </option>
+                              <option value="5">
+                                5
+                              </option>
+                            </select>
+                          </div>
+                          <div class="reviews-count">
+                            12 Reviews
+                          </div>
+                        </div>-->
+                        <div class="item-price-buttons">
+                        <!-- <div class="item-price">
+                            <strong>$350</strong><span>/per night</span>
+                          </div>-->
+                          <div class="item-buttons">
+                            <a class="btn btn-outline-primary" href="/general_2/profile.html"><span>Details</span><i class="os-icon os-icon-arrow-2-right"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <!--------------------
+                    END - Property Item
+                    -------------------->
+                    
+                  </div>
+                  <div class="pagination-w">
+                    <div class="pagination-info">
+                  
+                    </div>
+                    <div class="pagination-links">
+                      <ul class="pagination">
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#"> Previous</a>
+                        </li>
+                        <li class="page-item active">
+                          <a class="page-link" href="#"> 1</a>
+                        </li>
+                      
+                        <li class="page-item">
+                          <a class="page-link" href="#"> Next</a>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div><!--------------------
-            END - Rentals Content
-            -------------------->
+              </div><!--------------------
+              END - Rentals Content
+              -------------------->
 
-           
+            
+            </div>
           </div>
           <br>
           

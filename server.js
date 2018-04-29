@@ -44,6 +44,7 @@ var Researcher_Route = require('./routes/researcher_api');
 var BachelorTeachingDepartment_API = require('./routes/bachelorTeachingDepartment_api');
 var MasterTeachingDepartment_API = require('./routes/masterTeachingDepartment_api');
 var DoctoryTeachingDepartment_API = require('./routes/doctoryTeachingDepartment_api');
+var sheets_API = require('./routes/sheetsAPI');
 
 // configuration ===============================================================
 
@@ -100,9 +101,6 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 
-
-
-
 // routes ======================================================================
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
@@ -116,6 +114,7 @@ app.use('/api', Researcher_Route);
 app.use('/api', BachelorTeachingDepartment_API);
 app.use('/api', MasterTeachingDepartment_API);
 app.use('/api', DoctoryTeachingDepartment_API);
+app.use('/api', sheets_API);
 
 require('./routes/index.js')(app, passport); //Set routes load our routes and pass in our app and fully configured passpo
 
