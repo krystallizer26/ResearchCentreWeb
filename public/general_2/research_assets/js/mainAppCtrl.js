@@ -37,27 +37,27 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
       controller: 'profileDetailCtrl'
     })
     .state('profileDetail.general', {
-      url: '/general',
+      url: '/profileDetail/general',
       templateUrl: "./general_2/research_assets/partail/profile_general.html",
       controller: 'profileDetailGeneralCtrl'
     })
     .state('profileDetail.research', {
-      url: '/research',
+      url: '/profileDetail/research',
       templateUrl: "./general_2/research_assets/partail/profile_research.html",
       controller: 'profileDetailResearchCtrl'
     })
     .state('profileDetail.copyright', {
-      url: '/copyright',
+      url: '/profileDetail/copyright',
       templateUrl: "./general_2/research_assets/partail/profile_copyright.html",
       controller: 'profileDetailCopyrightCtrl'
     })
     .state('profileDetail.award', {
-      url: '/award',
+      url: '/profileDetail/award',
       templateUrl: "./general_2/research_assets/partail/profile_award.html",
       controller: 'profileDetailAwardCtrl'
     })
     .state('profileDetail.thesistitle', {
-      url: '/thesistitle',
+      url: '/profileDetail/thesistitle',
       templateUrl: "./general_2/research_assets/partail/profile_thesistitle.html",
       controller: 'profileDetailThesistitleCtrl'
     })
@@ -88,7 +88,7 @@ angular.module('app')
 app.controller('homeCtrl', function($scope, $http,$state,$window) {
  console.log("homeCtrl start");
  //$window.scrollTo(0, 0); //up to top
- //$state.go('profileDetail.research');  //เปลี่ยนหน้า
+ $state.go('profileDetail.general');
  //console.log("paperDetail paperDetail");
 });
 app.controller('paperDetailCtrl', function($scope, $http) {
