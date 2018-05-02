@@ -61,6 +61,11 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
       templateUrl: "./general_2/research_assets/partail/profile_thesistitle.html",
       controller: 'profileDetailThesistitleCtrl'
     })
+    .state('profileDetail.researchGrants', {
+      url: '/profileDetail/researchgrants',
+      templateUrl: "./general_2/research_assets/partail/research_grants.html",
+      controller: 'profileDetailresearchGrantsCtrl'
+    })
 
 });
 
