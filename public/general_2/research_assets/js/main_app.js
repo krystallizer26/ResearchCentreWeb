@@ -84,39 +84,3 @@ angular.module('app')
   app.run(function($state, $rootScope){
      $rootScope.$state = $state;
   })
-
-app.controller('homeCtrl', function($scope, $http,$state,$window) {
- console.log("homeCtrl start");
- //$window.scrollTo(0, 0); //up to top
- //$state.go('profileDetail.general');
- //console.log("paperDetail paperDetail");
-});
-app.controller('paperDetailCtrl', function($scope, $http) {
-  console.log("paperDetailCtrl start");
-});
-app.controller('bookDetailCtrl', function($scope, $http) {
-  console.log("bookDetailCtrl start");
-});
-app.controller('copyrightDetailCtrl', function($scope, $http) {
-  console.log("copyrightDetailCtrl start");
-});
-
-
-app.controller('profileDetailCtrl', function($scope, $http) {
-  console.log("profileDetailCtrl start");
-});
-app.controller('profileDetailGeneralCtrl', function($scope, $http) {
-  console.log("profileDetailGeneralCtrl start");
-});
-app.controller('profileDetailResearchCtrl', function($scope, $http) {
-  console.log("profileDetailResearchCtrl start");
-});
-app.controller('profileDetailCopyrightCtrl', function($scope, $http) {
-  console.log("profileDetailCopyrightCtrl start");
-});
-app.controller('profileDetailAwardCtrl', function($scope, $http) {
-  console.log("profileDetailAwardCtrl start");
-});
-app.controller('profileDetailThesistitleCtrl', function($scope, $http) {
-  console.log("profileDetailThesistitleCtrl start");
-});
