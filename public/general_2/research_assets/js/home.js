@@ -3,7 +3,8 @@ app.controller('homeCtrl', function($scope, $http,$state,$window) {
  //$window.scrollTo(0, 0); //up to top
  //$state.go('profileDetail.general');
  //console.log("paperDetail paperDetail");
- $scope.gotoProfile() = function {
+ $scope.gotoProfile = function () {
    $state.go('profileDetail.general');
  }
+
 });
