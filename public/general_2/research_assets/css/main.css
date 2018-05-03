@@ -5,3 +5,22 @@
   top: 10px;
   left: 25%;
 }
+.row .profile-detail{
+  padding: inherit;
+}
+.element-wrapper .element-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+.element-wrapper .element-info {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.element-box, .invoice-w, .big-error-w {
+    padding: 1.5rem 2rem;
+    margin-bottom: 0rem;
+}
