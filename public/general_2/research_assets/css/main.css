@@ -1,0 +1,7 @@
+.picturepofile {
+  max-width: 50%;
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  left: 25%;
+}
