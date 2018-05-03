@@ -24,3 +24,67 @@
     padding: 1.5rem 2rem;
     margin-bottom: 0rem;
 }
+
+
+.card {
+    font-size: .875rem;
+}
+.card {
+    border: 0;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    border-radius: 6px;
+    color: rgba(0, 0, 0, 0.87);
+    background: #fff;
+    width: 100%;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.card-collapse,
+.card-collapse .card-header {
+    box-shadow: none;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.card-collapse {
+    margin: 0;
+}
+
+.card-collapse .card-header {
+    border-bottom: 1px solid #ddd;
+    padding: 25px 10px 5px 0px;
+    margin: 0;
+    box-shadow: none !important;
+    background: #ffffff;
+}
+
+.card-collapse .card-header a {
+    color: #3C4858;
+    font-size: 0.9375rem;
+    display: block;
+}
+
+.card-collapse .card-header a:hover,
+.card-collapse .card-header a:active,
+.card-collapse .card-header a[aria-expanded="true"] {
+    color: #047bf8;
+}
+
+.card-collapse .card-header a i {
+    float: right;
+    top: 4px;
+    position: relative;
+}
+
+.card-collapse .card-header a[aria-expanded="true"] i {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.card-collapse .card-body {
+    padding: 15px 0px 5px;
+}
