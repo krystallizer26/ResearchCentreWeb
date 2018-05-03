@@ -15,10 +15,10 @@ module.exports = function (app, passport) {
         res.sendfile('public/general_2/index.html'); // load the index.ejs file
     });
 
-    // app.get('/research_centre_2', function (req, res) {
-    //     console.log("template 2 ");
-    //     res.sendfile('public/general_2/index.html'); // load the index.ejs file
-    // });
+     app.get('/research_centre', function (req, res) {
+         console.log("template 2 ");
+         res.sendfile('public/general/index.html'); // load the index.ejs file
+     });
 
 
     app.get('/mkpro', function (req, res) {
