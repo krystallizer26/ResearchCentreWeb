@@ -1,21 +1,27 @@
+<!-- <script>
+      $('ul').on('click', 'li', function() {
+      $('li.active').removeClass('active');
+      $(this).addClass('active');
+      });
+</script> -->
     <div class="top-bar color-scheme-light">
             <ul>
-              <li class="active">
+              <li id = "tab1" class="active">
                 <a ng-click="gotoHome()">Home</a>
               </li>
-              <li>
+              <li id = "tab2">
                 <a ng-click="gotoResearch()">Research</a>
               </li>
-              <li>
+              <li id = "tab3">
                 <a ng-click="gotoIntellectualProperty()">Intellectual property</a>
               </li>
-              <li>
+              <li id = "tab4">
                 <a ng-click="gotoResearchGrants()">Research Grants</a>
               </li>
-              <li>
+              <li id = "tab5">
                 <a ng-click="gotoAward()">Award</a>
               </li>
-              <li>
+              <li id = "tab6">
                 <a ng-click="gotoThesisTopics()">Thesis topics</a>
               </li>
             </ul>
