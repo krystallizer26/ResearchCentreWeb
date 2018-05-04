@@ -32,230 +32,275 @@ var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepa
 var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 var Publication_Control = require("../controller/publication_control.js");
 
-router.post('/newPublication', function (request, response) {
-    var methodCode = "45";
+// router.post('/newPublication', function (request, response) {
+//     var methodCode = "45";
+
+//     var requiredData = [];
+//     requiredData.push(request.body.publicationName);
+//     requiredData.push(request.body.researcherId);
+//     var requiredReady = Validate.requiredData_Check(requiredData);
+
+//     var objectIdData = [];
+//     requiredData.push(request.body.researcherId);
+//     requiredData.push(request.body.bachelorDepartment);
+//     requiredData.push(request.body.masterDepartment);
+//     requiredData.push(request.body.doctoryDepartment);
+//     var objectIdReady = Validate.objectIDData_Check(objectIdData)
+
+//     if (!requiredReady) {
+//         var alert = "Input Not Valid, check if some data is required."
+//         console.log(alert);
+//         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+//     }
+//     else if (!objectIdReady) {
+//         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+//         console.log(alert);
+//         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+//     }
+//     else {
+//         flow.exec(
+//             function () {
+//                 Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), this)
+//             }, function (code, err, functionCallback) {
+//                 if (code != "382") {
+//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//                 }
+//                 else {
+//                     BachelorTeachingDepartment_Control.checkBachelorTeachingDepartmentByID(new ObjectId(request.body.bachelorDepartment), this)
+//                 }
+//             }, function (code, err, functionCallback) {
+//                 if (code != "232") {
+//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//                 }
+//                 else {
+//                     MasterTeachingDepartment_Control.checkMasterTeachingDepartmentByID(new ObjectId(request.body.masterDepartment), this)
+//                 }
+//             }, function (code, err, functionCallback) {
+//                 if (code != "282") {
+//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//                 }
+//                 else {
+//                     DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentByID(new ObjectId(request.body.doctoryDepartment), this)
+//                 }
+//             }, function (code, err, functionCallback) {
+//                 if (code != "332") {
+//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//                 }
+//                 else {
+//                     var publication = new Publication();
+//                     publication.researcherId = request.body.researcherId;
+//                     publication.publicationName = request.body.publicationName;
+//                     publication.publishLocation = request.body.publishLocation;
+//                     publication.publishYear = request.body.publishYear;
+//                     publication.publishType = request.body.publishType;
+//                     publication.scholarType = request.body.scholarType;
+//                     publication.address = request.body.address;
+//                     publication.publicationDatabase = request.body.publicationDatabase;
+//                     publication.impactFactor = request.body.impactFactor;
+//                     publication.quartile = request.body.quartile;
+//                     publication.weight = request.body.weight;
+//                     publication.detail = request.body.detail;
+//                     publication.studentName = request.body.studentName;
+//                     publication.bachelorDepartment = request.body.bachelorDepartment;
+//                     publication.masterDepartment = request.body.masterDepartment;
+//                     publication.doctoryDepartment = request.body.doctoryDepartment;
+
+//                     Publication_Control.newPublication(publication, this);
+//                 }
+//             }, function (code, err, functionCallback) {
+//                 if (code != "441") {
+//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//                 }
+//                 else {
+//                     Return_Control.responseWithCodeAndData(ReturnCode.success, "New Publication was saved successfully as _id defined", functionCallback._id, response);
+//                 }
+//             }
+//         );
+//     }
+// });
+
+router.post('/newPublication_bulk', function (request, response) {
+    var methodCode = "51";
 
     var requiredData = [];
-    requiredData.push(request.body.publicationName);
-    requiredData.push(request.body.researcherId);
-    var requiredReady = Validate.requiredData_Check(requiredData);
-
-    var objectIdData = [];
-    requiredData.push(request.body.researcherId);
-    requiredData.push(request.body.bachelorDepartment);
-    requiredData.push(request.body.masterDepartment);
-    requiredData.push(request.body.doctoryDepartment);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
-
-    if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
-        console.log(alert);
-        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
-        console.log(alert);
-        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
-        flow.exec(
-            function () {
-                Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), this)
-            }, function (code, err, functionCallback) {
-                if (code != "382") {
-                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    BachelorTeachingDepartment_Control.checkBachelorTeachingDepartmentByID(new ObjectId(request.body.bachelorDepartment), this)
-                }
-            }, function (code, err, functionCallback) {
-                if (code != "232") {
-                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    MasterTeachingDepartment_Control.checkMasterTeachingDepartmentByID(new ObjectId(request.body.masterDepartment), this)
-                }
-            }, function (code, err, functionCallback) {
-                if (code != "282") {
-                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentByID(new ObjectId(request.body.doctoryDepartment), this)
-                }
-            }, function (code, err, functionCallback) {
-                if (code != "332") {
-                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    var publication = new Publication();
-                    publication.researcherId = request.body.researcherId;
-                    publication.publicationName = request.body.publicationName;
-                    publication.publishLocation = request.body.publishLocation;
-                    publication.publishYear = request.body.publishYear;
-                    publication.publishType = request.body.publishType;
-                    publication.scholarType = request.body.scholarType;
-                    publication.address = request.body.address;
-                    publication.publicationDatabase = request.body.publicationDatabase;
-                    publication.impactFactor = request.body.impactFactor;
-                    publication.quartile = request.body.quartile;
-                    publication.weight = request.body.weight;
-                    publication.detail = request.body.detail;
-                    publication.studentName = request.body.studentName;
-                    publication.bachelorDepartment = request.body.bachelorDepartment;
-                    publication.masterDepartment = request.body.masterDepartment;
-                    publication.doctoryDepartment = request.body.doctoryDepartment;
-
-                    Publication_Control.newPublication(publication, this);
-                }
-            }, function (code, err, functionCallback) {
-                if (code != "441") {
-                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    Return_Control.responseWithCodeAndData(ReturnCode.success, "New Publication was saved successfully as _id defined", functionCallback._id, response);
-                }
-            }
-        );
-    }
-});
-
-router.post('/editPublication/', function (request, response) {
-    var methodCode = "46";
-
-    var requiredData = [];
-    requiredData.push(request.body.publicationId);
-    requiredData.push(request.body.publicationName);
-    requiredData.push(request.body.researcherId);
+    requiredData.push(request.body.publicationData);
     var requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
-    objectIdData.push(request.body.publicationId);
-    requiredData.push(request.body.researcherId);
-    requiredData.push(request.body.bachelorDepartment);
-    requiredData.push(request.body.masterDepartment);
-    requiredData.push(request.body.doctoryDepartment);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
-
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
-    else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
-        console.log(alert);
-        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
     else {
-        flow.exec(
-            function () {
-                Publication_Control.checkPublicationByID(new ObjectId(request.body.publicationId), this);
-            }, function (code, err, functionCallback) {
-                if (code != "462") {
-                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), this)
-                }
-            }, function (code, err, functionCallback) {
-                if (code != "382") {
-                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    BachelorTeachingDepartment_Control.checkBachelorTeachingDepartmentByID(new ObjectId(request.body.bachelorDepartment), this)
-                }
-            }, function (code, err, functionCallback) {
-                if (code != "232") {
-                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    MasterTeachingDepartment_Control.checkMasterTeachingDepartmentByID(new ObjectId(request.body.masterDepartment), this)
-                }
-            }, function (code, err, functionCallback) {
-                if (code != "282") {
-                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentByID(new ObjectId(request.body.doctoryDepartment), this)
-                }
-            }, function (code, err, result) {
-                if (code != "332") {
-                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    var publication = new Publication();
-                    publication.researcherId = request.body.researcherId;
-                    publication.publicationName = request.body.publicationName;
-                    publication.publishLocation = request.body.publishLocation;
-                    publication.publishYear = request.body.publishYear;
-                    publication.publishType = request.body.publishType;
-                    publication.scholarType = request.body.scholarType;
-                    publication.address = request.body.address;
-                    publication.publicationDatabase = request.body.publicationDatabase;
-                    publication.impactFactor = request.body.impactFactor;
-                    publication.quartile = request.body.quartile;
-                    publication.weight = request.body.weight;
-                    publication.detail = request.body.detail;
-                    publication.studentName = request.body.studentName;
-                    publication.bachelorDepartment = request.body.bachelorDepartment;
-                    publication.masterDepartment = request.body.masterDepartment;
-                    publication.doctoryDepartment = request.body.doctoryDepartment;
-                    Publication_Control.updatePublicationByID(new ObjectId(request.body.publicationId), publication, this);
-                }
-            }, function (code, err, result) {
-                if (code != "452") {
-                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    Return_Control.responseWithCode(ReturnCode.success, "Publication with _id: " + request.body.publicationId + " has updated successfully.", response);
-                }
-            }
-        );
+        let publicationData = JSON.parse(request.body.publicationData);
+        publicationData = publicationData.feed.entry;
+
+        let researcherCount = publicationData.length;
+        console.log("Inserting " + researcherCount + " researchers");
+
+        var counter = [];
+        for (let i = 0; i < researcherCount; i++) {
+            counter.push(i);
+        }
+
+        let currentPos = 0;
+        flow.serialForEach(counter, function (val) {
+            currentPos = val
+
+            var publication = new Publication();
+            publication.researcherName = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชื่อ"]["$t"])
+            publication.publicationName = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชื่อผลงานวิจัย"]["$t"])
+            publication.publishLocation = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$แหล่งเผยแพร่ผลงาน"]["$t"])
+            publication.publishYear = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ปีพ.ศ."]["$t"])
+            publication.publishType = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ลักษณะการเผยแพร่"]["$t"])
+            publication.scholarType = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ประเภททุนที่สนับสนุน"]["$t"])
+            publication.address = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$address"]["$t"])
+            publication.publicationDatabase = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ฐานข้อมูล"]["$t"])
+            publication.impactFactor = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$impactfactor"]["$t"])
+            publication.quartile = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$quartile"]["$t"])
+            publication.weight = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ค่าน้ำหนัก"]["$t"])
+            publication.detail = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$หมายเหตุ"]["$t"])
+            
+            publication.studentName = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชื่อนักศึกษา"]["$t"])
+            publication.bachelorTeachingDepartmentName_TH = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$หลักสูตรระดับปริญญาตรี"]["$t"])
+            publication.masterTeachingDepartmentName_TH = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$หลักสูตรระดับปริญญาโท"]["$t"])
+            publication.doctoryTeachingDepartmentName_TH = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$หลักสูตรระดับปริญญาโท_2"]["$t"])
+            publication.graduationYear = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ปีที่สำเร็จการศึกษา"]["$t"])
+            
+            Publication_Control.newPublication_fromScrap(publication, this);
+
+        }, function (code, err, finctionCallback) {
+            // do nothing after each loop
+        }, function () {
+            Return_Control.responseWithCode(ReturnCode.success, "New Publication(s) was saved successfully", response);
+        });
     }
 });
 
-router.post('/getAllPublication/', function (request, response) {
+// router.post('/editPublication/', function (request, response) {
+//     var methodCode = "46";
+
+//     var requiredData = [];
+//     requiredData.push(request.body.publicationId);
+//     requiredData.push(request.body.publicationName);
+//     requiredData.push(request.body.researcherId);
+//     var requiredReady = Validate.requiredData_Check(requiredData)
+
+//     var objectIdData = [];
+//     objectIdData.push(request.body.publicationId);
+//     requiredData.push(request.body.researcherId);
+//     requiredData.push(request.body.bachelorDepartment);
+//     requiredData.push(request.body.masterDepartment);
+//     requiredData.push(request.body.doctoryDepartment);
+//     var objectIdReady = Validate.objectIDData_Check(objectIdData)
+
+//     if (!requiredReady) {
+//         var alert = "Input Not Valid, check if some data is required."
+//         console.log(alert);
+//         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+//     }
+//     else if (!objectIdReady) {
+//         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+//         console.log(alert);
+//         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+//     }
+//     else {
+//         flow.exec(
+//             function () {
+//                 Publication_Control.checkPublicationByID(new ObjectId(request.body.publicationId), this);
+//             }, function (code, err, functionCallback) {
+//                 if (code != "462") {
+//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//                 }
+//                 else {
+//                     Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), this)
+//                 }
+//             }, function (code, err, functionCallback) {
+//                 if (code != "382") {
+//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//                 }
+//                 else {
+//                     BachelorTeachingDepartment_Control.checkBachelorTeachingDepartmentByID(new ObjectId(request.body.bachelorDepartment), this)
+//                 }
+//             }, function (code, err, functionCallback) {
+//                 if (code != "232") {
+//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//                 }
+//                 else {
+//                     MasterTeachingDepartment_Control.checkMasterTeachingDepartmentByID(new ObjectId(request.body.masterDepartment), this)
+//                 }
+//             }, function (code, err, functionCallback) {
+//                 if (code != "282") {
+//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//                 }
+//                 else {
+//                     DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentByID(new ObjectId(request.body.doctoryDepartment), this)
+//                 }
+//             }, function (code, err, result) {
+//                 if (code != "332") {
+//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//                 }
+//                 else {
+//                     var publication = new Publication();
+//                     publication.researcherId = request.body.researcherId;
+//                     publication.publicationName = request.body.publicationName;
+//                     publication.publishLocation = request.body.publishLocation;
+//                     publication.publishYear = request.body.publishYear;
+//                     publication.publishType = request.body.publishType;
+//                     publication.scholarType = request.body.scholarType;
+//                     publication.address = request.body.address;
+//                     publication.publicationDatabase = request.body.publicationDatabase;
+//                     publication.impactFactor = request.body.impactFactor;
+//                     publication.quartile = request.body.quartile;
+//                     publication.weight = request.body.weight;
+//                     publication.detail = request.body.detail;
+//                     publication.studentName = request.body.studentName;
+//                     publication.bachelorDepartment = request.body.bachelorDepartment;
+//                     publication.masterDepartment = request.body.masterDepartment;
+//                     publication.doctoryDepartment = request.body.doctoryDepartment;
+//                     Publication_Control.updatePublicationByID(new ObjectId(request.body.publicationId), publication, this);
+//                 }
+//             }, function (code, err, result) {
+//                 if (code != "452") {
+//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//                 }
+//                 else {
+//                     Return_Control.responseWithCode(ReturnCode.success, "Publication with _id: " + request.body.publicationId + " has updated successfully.", response);
+//                 }
+//             }
+//         );
+//     }
+// });
+
+router.post('/getAllPublicationPreview/', function (request, response) {
     var methodCode = "47";
 
     flow.exec(
         function () {
-            Publication_Control.getAllPublication(this);
+            Publication_Control.getAllPublicationPreview(this);
+        }, function (code, err, functionCallback) {
+            if (code === "591") {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+            }
+            else if (code === "592") {
+                Publication_Control.getAllFullPublicationDataPreview(functionCallback, this);
+            }
+            else{
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "No Publication Founded", [], response)
+            }
         }, function (code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
             else {
-                Return_Control.responseWithCodeAndData("999999", "get All Publication Completed", functionCallback, response)
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Publication Completed", functionCallback, response)
             }
         }
     );
 });
 
 router.post('/getPublicationfromID/', function (request, response) {
-    var personel = new Personel();
     var methodCode = "48";
-
-    var thisResearcher;
-    var thisPublication;
-
-    var obj = new Object();
-    obj.researcherName = "N/A";
-    obj.researcherId = "N/A";
-    obj.publicationName = "N/A";
-    obj.publishLocation = "N/A";
-    obj.publishYear = "N/A";
-    obj.publishType = "N/A";
-    obj.scholarType = "N/A";
-    obj.address = "N/A";
-    obj.publicationDatabase = "N/A";
-    obj.impactFactor = "N/A";
-    obj.quartile = "N/A";
-    obj.weight = "N/A";
-    obj.detail = "N/A";
-    obj.studentName = "N/A";
-    obj.bachelorDepartment = "N/A";
-    obj.masterDepartment = "N/A";
-    obj.doctoryDepartment = "N/A";
 
     var requiredData = [];
     requiredData.push(request.body.publicationId);
@@ -265,73 +310,30 @@ router.post('/getPublicationfromID/', function (request, response) {
     objectIdData.push(request.body.publicationId);
     var objectIdReady = Validate.objectIDData_Check(objectIdData)
 
-
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
-        Return_control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
     else {
         flow.exec(
             function () {
-                News_Control.checkNewsByID(new ObjectId(request.body.newsID), this);
-            }, function (code, err, result) {
+                Publication_Control.checkPublicationByID(new ObjectId(request.body.publicationId), query, this);
+            }, function (code, err, functionCallback) {
                 if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    thisNews = result;
-                    obj.topicShort = result.topicShort;
-                    obj.topicFull = result.topicFull;
-                    obj.detailShort = result.detailShort;
-                    obj.detailFull = result.detailFull;
-                    obj.topicPicture = result.topicPicture;
-                    obj.datetimePost = result.datetimePost;
-                    obj.datetimeEdit = result.datetimeEdit;
-                    obj.author = result.author;
-                    obj.readCount = result.readCount;
-                    obj.isPinned = result.isPinned;
-                    Department_Control.checkDepartmentByID(new ObjectId(thisNews.departmentId), this);
+                    Researcher_Control.getFullPublicationData(functionCallback, this);
                 }
-            }, function (code, err, result) {
-                if (err) {
-                    obj.departmentName = "N/A";
-                }
-                else {
-                    obj.departmentName = result.departmentName;
-                }
-                TargetType_Control.checkTargetTypeByID(new ObjectId(thisNews.targetTypeId), this);
-            }, function (code, err, result) {
-                if (err) {
-                    obj.targetTypeName = "N/A";
-                }
-                else {
-                    obj.targetTypeName = result.targetTypeName;
-                }
-                ResourceType_Control.checkResourceTypeByID(new ObjectId(thisNews.resourceId), this);
-            }, function (code, err, result) {
-                if (err) {
-                    obj.resourceName = "N/A";
-                }
-                else {
-                    obj.resourceName = result.resourceName;
-                }
-                Tag_Control.checkTagByArrayID(thisNews.tagId, this);
-            }, function (code, err, result) {
-                if (err) {
-                    Return_control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    console.log("tag" + result)
-                    obj.tagData = result;
-                    News_Control.countReader(new ObjectId(request.body.newsID), request.body.readCount);
-                    Return_control.responseWithCode("999999", obj, response)
-                }
+            }, function (code, err, functionCallback) {
+                //console.log("functionCallback: "+ JSON.stringify(functionCallback))
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get Researcher with _id " + request.body.researcherId + " Completed", functionCallback, response)
             }
         );
     }

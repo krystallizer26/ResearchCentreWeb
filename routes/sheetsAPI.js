@@ -5,6 +5,7 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const OAuth2Client = google.auth.OAuth2;
+var sheets = google.sheets('v4');
 
 // const sheetId = '1-jqRrxaiifgrxyrxNAiaBy0LTSRPq2NmwMjPsnMhL9A';
 const sheetId = '1FQK00JrBtazJ247OmvPoPjfGympWwV5zLDpeP5iJdQ0';  // my test sheet
@@ -13,6 +14,7 @@ const apiKey = 'AIzaSyCGj1-hvQBoDF7CuUryVze0KaMKcrNRVSM';
 
 // GOOGLE SHEETS API SETUP =====================================
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
+const CLIENT_SECRET_PATH = 'googleapis_credentials/client_secret.json';
 const TOKEN_PATH = 'googleapis_credentials/credentials.json';
 
 var clientAuth = null;
@@ -68,7 +70,7 @@ function getNewToken(oAuth2Client) {
 }
 
 // Load client secrets from a local file.
-fs.readFile('googleapis_credentials/client_secret.json', (err, content) => {
+fs.readFile(CLIENT_SECRET_PATH, (err, content) => {
   if (err) console.log('Error loading client secret file:', err);
   else {
     // Authorize a client with credentials, then call the Google Sheets API.
@@ -80,11 +82,10 @@ fs.readFile('googleapis_credentials/client_secret.json', (err, content) => {
 // route definitions ==============================================
 router.post('/getResearcherSheet', function(req, res) {
   if (req.body.sheetName) {
-    const service = google.sheets({version: 'v4', clientAuth});
-    service.spreadsheets.values.get({
+    sheets.spreadsheets.values.get({
       spreadsheetId: sheetId,
       range: req.body.sheetName + '!A2:B',
-      key: apiKey
+      auth: clientAuth
     }, (err, {data}) => {
       if (err) res.json({m:'The API returned an error: ' + err});
       else {
