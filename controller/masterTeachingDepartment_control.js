@@ -49,6 +49,38 @@ module.exports = {
             }
         });
     },
+    checkAndInsertMasterTeachingByMasterTeachingDepartmentName: function (masterTeachingDepartmentName_TH, masterTeachingDepartmentName_EN, callback) {
+        MasterTeachingDepartment.findOne({ "masterTeachingDepartmentName_TH": masterTeachingDepartmentName_TH }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "531";
+                var alert = "Error in finding MasterTeachingDepartment with name: " + masterTeachingDepartmentName_TH + "\nError: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback) {
+                callback("532", null, functionCallback)
+            }
+            else {
+                var alert = "MasterTeachingDepartment with masterTeachingDepartmentName_TH: " + masterTeachingDepartmentName_TH + " not found";
+                
+                var masterTeachingDepartment = new MasterTeachingDepartment();
+                masterTeachingDepartment.masterTeachingDepartmentName_TH = masterTeachingDepartmentName_TH;
+                masterTeachingDepartment.masterTeachingDepartmentName_EN = masterTeachingDepartmentName_EN;
+                console.log("Saving MasterTeachingDepartment: " + masterTeachingDepartment.masterTeachingDepartmentName_TH);
+                masterTeachingDepartment.save(function (error, saveResponse) {
+                    if (error) {
+                        let errCode = "533";
+                        var alert = "Saving MasterTeachingDepartment fail, Error: " + error.message;
+                        console.log("ERROR Code: " + errCode + " " + alert);
+                        callback(errCode, alert, null);
+                    }
+                    else {
+                        callback("534", null, saveResponse)
+                    }
+                });
+            }
+        });
+    },
     getAllMasterTeachingDepartment: function (callback) {
         MasterTeachingDepartment.find({}, {}, function (error, functionCallback) {
             if (error) {

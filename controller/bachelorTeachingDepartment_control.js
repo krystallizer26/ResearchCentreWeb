@@ -50,6 +50,38 @@ module.exports = {
             }
         });
     },
+    checkAndInsertBachelorTeachingByBachelorTeachingDepartmentName: function (bachelorTeachingDepartmentName_TH, bachelorTeachingDepartmentName_EN, callback) {
+        BachelorTeachingDepartment.findOne({ "bachelorTeachingDepartmentName_TH": bachelorTeachingDepartmentName_TH }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "521";
+                var alert = "Error in finding BachelorTeachingDepartment with name: " + bachelorTeachingDepartmentName_TH + "\nError: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback) {
+                callback("522", null, functionCallback)
+            }
+            else {
+                var alert = "BachelorTeachingDepartment with bachelorTeachingDepartmentName_TH: " + bachelorTeachingDepartmentName_TH + " not found";
+                
+                var bachelorTeachingDepartment = new BachelorTeachingDepartment();
+                bachelorTeachingDepartment.bachelorTeachingDepartmentName_TH = bachelorTeachingDepartmentName_TH;
+                bachelorTeachingDepartment.bachelorTeachingDepartmentName_EN = bachelorTeachingDepartmentName_EN;
+                console.log("Saving BachelorTeachingDepartment: " + bachelorTeachingDepartment.bachelorTeachingDepartmentName_TH);
+                bachelorTeachingDepartment.save(function (error, saveResponse) {
+                    if (error) {
+                        let errCode = "523";
+                        var alert = "Saving BachelorTeachingDepartment fail, Error: " + error.message;
+                        console.log("ERROR Code: " + errCode + " " + alert);
+                        callback(errCode, alert, null);
+                    }
+                    else {
+                        callback("524", null, saveResponse)
+                    }
+                });
+            }
+        });
+    },
     getAllBachelorTeachingDepartment: function (callback) {
         BachelorTeachingDepartment.find({}, {}, function (error, functionCallback) {
             if (error) {

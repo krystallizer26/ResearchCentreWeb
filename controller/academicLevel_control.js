@@ -49,6 +49,38 @@ module.exports = {
             }
         });
     },
+    checkAndInsertAcademicLevelByAcademicLevelName: function (academicPositionName_TH, academicPositionName_EN, callback) {
+        AcademicLevel.findOne({ "academicLevelName_TH": academicPositionName_TH }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "511";
+                var alert = "Error in finding AcademicLevel with name: " + academicPositionName_TH + "\nError: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback) {
+                callback("512", null, functionCallback)
+            }
+            else {
+                var alert = "AcademicLevel with academicPositionName_TH: " + academicPositionName_TH + " not found";
+                
+                var academicLevel = new AcademicLevel();
+                academicLevel.academicLevelName_TH = academicPositionName_TH;
+                academicLevel.academicLevelName_EN = academicPositionName_EN;
+                console.log("Saving AcademicLevel: " + academicLevel.academicLevelName_TH);
+                academicLevel.save(function (error, saveResponse) {
+                    if (error) {
+                        let errCode = "513";
+                        var alert = "Saving AcademicLevel fail, Error: " + error.message;
+                        console.log("ERROR Code: " + errCode + " " + alert);
+                        callback(errCode, alert, null);
+                    }
+                    else {
+                        callback("514", null, saveResponse)
+                    }
+                });
+            }
+        });
+    },
     getAllAcademicLevel: function (callback) {
         AcademicLevel.find({}, {}, function (error, functionCallback) {
             if (error) {
