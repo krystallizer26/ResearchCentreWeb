@@ -49,6 +49,38 @@ module.exports = {
             }
         });
     },
+    checkAndInsertDoctoryTeachingByDoctoryTeachingDepartmentName: function (doctoryTeachingDepartmentName_TH, doctoryTeachingDepartmentName_EN, callback) {
+        DoctoryTeachingDepartment.findOne({ "doctoryTeachingDepartmentName_TH": doctoryTeachingDepartmentName_TH }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "541";
+                var alert = "Error in finding DoctoryTeachingDepartment with name: " + doctoryTeachingDepartmentName_TH + "\nError: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback) {
+                callback("542", null, functionCallback)
+            }
+            else {
+                var alert = "DoctoryTeachingDepartment with doctoryTeachingDepartmentName_TH: " + doctoryTeachingDepartmentName_TH + " not found";
+                
+                var doctoryTeachingDepartment = new DoctoryTeachingDepartment();
+                doctoryTeachingDepartment.doctoryTeachingDepartmentName_TH = doctoryTeachingDepartmentName_TH;
+                doctoryTeachingDepartment.doctoryTeachingDepartmentName_EN = doctoryTeachingDepartmentName_EN;
+                console.log("Saving DoctoryTeachingDepartment: " + doctoryTeachingDepartment.doctoryTeachingDepartmentName_TH);
+                doctoryTeachingDepartment.save(function (error, saveResponse) {
+                    if (error) {
+                        let errCode = "543";
+                        var alert = "Saving DoctoryTeachingDepartment fail, Error: " + error.message;
+                        console.log("ERROR Code: " + errCode + " " + alert);
+                        callback(errCode, alert, null);
+                    }
+                    else {
+                        callback("544", null, saveResponse)
+                    }
+                });
+            }
+        });
+    },
     getAllDoctoryTeachingDepartment: function (callback) {
         DoctoryTeachingDepartment.find({}, {}, function (error, functionCallback) {
             if (error) {

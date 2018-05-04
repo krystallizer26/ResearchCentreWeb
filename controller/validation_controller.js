@@ -56,5 +56,15 @@ module.exports = {
             }
         }
         return (wrongNotFounded);
+    },
+    scrappingCleanUp: function (input) {
+        //console.log("input: " + input);
+        let string = input;
+        string = string.replace(/\\n/g, ' ')
+        string = string.replace(/\\u/g, '-')
+        string = string.replace(/\\r/g, ' ')
+        string = string.trim()
+        //console.log("output: " + string);
+        return (string);
     }
 };

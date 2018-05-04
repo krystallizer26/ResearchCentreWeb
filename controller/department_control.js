@@ -49,6 +49,38 @@ module.exports = {
             }
         });
     },
+    checkAndInsertDepartmentByDepartmentName: function (departmentName_TH, departmentName_EN, callback) {
+        Department.findOne({ "departmentName_TH": departmentName_TH }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "491";
+                var alert = "Error in finding Department with name: " + departmentName_TH + "\nError: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback) {
+                callback("492", null, functionCallback)
+            }
+            else {
+                var alert = "Department with departmentName_TH: " + departmentName_TH + " not found";
+                
+                var department = new Department();
+                department.departmentName_TH = departmentName_TH;
+                department.departmentName_EN = departmentName_EN;
+                console.log("Saving Department: " + department.departmentName_TH);
+                department.save(function (error, saveResponse) {
+                    if (error) {
+                        let errCode = "493";
+                        var alert = "Saving Department fail, Error: " + error.message;
+                        console.log("ERROR Code: " + errCode + " " + alert);
+                        callback(errCode, alert, null);
+                    }
+                    else {
+                        callback("494", null, saveResponse)
+                    }
+                });
+            }
+        });
+    },
     getAllDepartment: function (callback) {
         Department.find({}, {}, function (error, functionCallback) {
             if (error) {

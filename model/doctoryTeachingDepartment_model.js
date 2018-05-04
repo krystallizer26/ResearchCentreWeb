@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var DoctoryTeachingDepartment_Schema = new Schema({
-    doctoryTeachingDepartmentName_TH: { type: String, required: true, unique: true },
-    doctoryTeachingDepartmentName_EN: { type: String, required: true, unique: true },
+    doctoryTeachingDepartmentName_TH: { type: String, unique: true },
+    doctoryTeachingDepartmentName_EN: { type: String, default: null },
     createdDate: { type: Date, default: Date.now },
     editedDate: { type: Date, default: Date.now }
 });

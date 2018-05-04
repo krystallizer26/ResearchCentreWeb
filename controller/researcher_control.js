@@ -21,6 +21,75 @@ module.exports = {
             }
         });
     },
+    newResearcher_fromScrap: function (researcher, callback) {
+        console.log("Saving Researcher: " + researcher.researcherName_TH);
+
+        flow.exec(
+            function () {
+                Department_Control.checkAndInsertDepartmentByDepartmentName(researcher.departmentName_TH, researcher.departmentName_EN, this);
+            }, function (code, err, functionCallback) {
+                if (!err) {
+                    researcher.departmentId = functionCallback._id
+                }
+                else {
+                    researcher.departmentId = null
+                }
+                Position_Control.checkAndInsertPositionByPositionName(researcher.positionName_TH, researcher.positionName_EN, this);
+            }, function (code, err, functionCallback) {
+                if (!err) {
+                    researcher.positionId = functionCallback._id
+                }
+                else {
+                    researcher.positionId = null
+                }
+                AcademicLevel_Control.checkAndInsertAcademicLevelByAcademicLevelName(researcher.academicPositionName_TH, researcher.academicPositionName_EN, this);
+            }, function (code, err, functionCallback) {
+                if (!err) {
+                    researcher.academicLevelId = functionCallback._id
+                }
+                else {
+                    researcher.academicLevelId = null
+                }
+                BachelorTeachingDepartment_Control.checkAndInsertBachelorTeachingByBachelorTeachingDepartmentName(researcher.bachelorTeachingDepartmentName_TH, researcher.bachelorTeachingDepartmentName_EN, this);
+            }, function (code, err, functionCallback) {
+                if (!err) {
+                    researcher.bachelorTeachingDepartmentId = functionCallback._id
+                }
+                else {
+                    researcher.bachelorTeachingDepartmentId = null
+                }
+                MasterTeachingDepartment_Control.checkAndInsertMasterTeachingByMasterTeachingDepartmentName(researcher.masterTeachingDepartmentName_TH, researcher.masterTeachingDepartmentName_EN, this);
+            }, function (code, err, functionCallback) {
+                if (!err) {
+                    researcher.masterTeachingDepartmentId = functionCallback._id
+                }
+                else {
+                    researcher.masterTeachingDepartmentId = null
+                }
+                DoctoryTeachingDepartment_Control.checkAndInsertDoctoryTeachingByDoctoryTeachingDepartmentName(researcher.doctoryTeachingDepartmentName_TH, researcher.doctoryTeachingDepartmentName_EN, this);
+            }, function (code, err, functionCallback) {
+                if (!err) {
+                    researcher.doctoryTeachingDepartmentId = functionCallback._id
+                }
+                else {
+                    researcher.doctoryTeachingDepartmentId = null
+                }
+
+                researcher.save(function (error, saveResponse) {
+                    if (error) {
+                        let errCode = "361";
+                        var alert = "Saving Researcher fail, Error: " + error.message;
+                        console.log("ERROR Code: " + errCode + " " + alert);
+                        callback(errCode, alert, null);
+                    }
+                    else {
+                        callback("362", null, saveResponse)
+                    }
+                });
+
+            }
+        );
+    },
     updateResearcherByID: function (researcherId, newvalues, callback) {
         var myquery = { "_id": researcherId };
         console.log("In Method: " + JSON.stringify(newvalues))
@@ -106,7 +175,27 @@ module.exports = {
         });
     },
     getAllResearcherPreview: function (callback) {
-        Researcher.find({}, { "_id": true, "researcherName_TH": true, "researcherName_EN": true, "researcherPic": true,"keywordIdArray":true,"academicLevelId":true,"positionId":true,"departmentId":true }, function (error, functionCallback) {
+        Researcher.find({}, {
+            "_id": true,
+            "researcherName_TH": true,
+            "researcherName_EN": true,
+            "researcherPic": true,
+            "academicLevelId": true,
+            "positionId": true,
+            "departmentId": true,
+
+            "keyword1_TH": true,
+            "keyword2_TH": true,
+            "keyword3_TH": true,
+            "keyword4_TH": true,
+            "keyword5_TH": true,
+            "keyword1_EN": true,
+            "keyword2_EN": true,
+            "keyword3_EN": true,
+            "keyword4_EN": true,
+            "keyword5_EN": true
+
+        }, function (error, functionCallback) {
             if (error) {
                 let errCode = "431";
                 var alert = "Error in getAllAcademicLevel , Error : " + error.message;
@@ -115,91 +204,50 @@ module.exports = {
             }
             else if (functionCallback) {
                 let errCode = "432";
-                var alert = "Get All Researcher Completed! " + JSON.stringify(functionCallback);
+                var alert = "Get All Researcher Completed! ";
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "433";
-                var alert = "No AcademicLevel Founded";
+                var alert = "No Researcher Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
         });
     },
-    getAllResearcherDataById: function (researcherData, callback) {
+
+    getFullResearcherData: function (researcherData, callback) {
         let tmp = JSON.parse(JSON.stringify(researcherData));
         let promotiontmp = null;
         flow.exec(
             function () {
-                //console.log("history.requestId: "+history.requestID)
-                Department_Control.checkDepartmentByID(new ObjectId(researcherData.departmentId), this)
-            }, function (code, err, functionCallback) {
-                if (functionCallback) {
-                    tmp["departmentName_TH"] = functionCallback.departmentName_TH;
-                    tmp["departmentName_EN"] = functionCallback.departmentName_EN;
-                }
-                else {
-                    tmp["departmentName_TH"] = "Not found";
-                    tmp["departmentName_EN"] = "Not found";
-                }
-                Position_Control.checkPositionByID(new ObjectId(researcherData.positionId), this);
-            }, function (code, err, functionCallback) {
-                if (functionCallback) {
-                    tmp["positionName_TH"] = functionCallback.positionName_TH;
-                    tmp["positionName_EN"] = functionCallback.positionName_EN;
-                }
-                else {
-                    tmp["positionName_TH"] = "Not found";
-                    tmp["positionName_EN"] = "Not found";
-                }
-                AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(researcherData.academicLevelId), this);
-            }, function (code, err, functionCallback) {
-                if (functionCallback) {
-                    tmp["academicLevelName_TH"] = functionCallback.academicLevelName_TH;
-                    tmp["academicLevelName_EN"] = functionCallback.academicLevelName_EN;
-                }
-                else {
-                    tmp["academicLevelName_TH"] = "Not found";
-                    tmp["academicLevelName_EN"] = "Not found";
-                }
-                BachelorTeachingDepartment_Control.checkBachelorTeachingDepartmentByID(new ObjectId(researcherData.bachelorTeachingDepartmentId), this);
-            }, function (code, err, functionCallback) {
-                if (functionCallback) {
-                    tmp["bachelorTeachingDepartmentName_TH"] = functionCallback.bachelorTeachingDepartmentName_TH;
-                    tmp["bachelorTeachingDepartmentName_EN"] = functionCallback.bachelorTeachingDepartmentName_EN;
-                }
-                else {
-                    tmp["bachelorTeachingDepartmentName_TH"] = "Not found";
-                    tmp["bachelorTeachingDepartmentName_EN"] = "Not found";
-                }
-                MasterTeachingDepartment_Control.checkMasterTeachingDepartmentByID(new ObjectId(researcherData.masterTeachingDepartmentId), this);
-            }, function (code, err, functionCallback) {
-                if (functionCallback) {
-                    tmp["masterTeachingDepartmentName_TH"] = functionCallback.masterTeachingDepartmentName_TH;
-                    tmp["masterTeachingDepartmentName_EN"] = functionCallback.masterTeachingDepartmentName_EN;
-                }
-                else {
-                    tmp["masterTeachingDepartmentName_TH"] = "Not found";
-                    tmp["masterTeachingDepartmentName_EN"] = "Not found";
-                }
-                DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentByID(new ObjectId(researcherData.doctoryTeachingDepartmentId), this);
-            }, function (code, err, functionCallback) {
-                if (functionCallback) {
-                    tmp["doctoryTeachingDepartmentName_TH"] = functionCallback.doctoryTeachingDepartmentName_TH;
-                    tmp["doctoryTeachingDepartmentName_EN"] = functionCallback.doctoryTeachingDepartmentName_EN;
-                }
-                else {
-                    tmp["doctoryTeachingDepartmentName_TH"] = "Not found";
-                    tmp["doctoryTeachingDepartmentName_EN"] = "Not found";
-                }
-                Keyword_Control.convertKeywordFromIDArray(researcherData.keywordIdArray, this);
+                getFullResearcher(researcherData, this);
             }, function (functionCallback) {
-                console.log("functionCallback:"+functionCallback)
-                tmp["keyword"] = functionCallback;
-                callback(tmp)
+                callback("551", null, functionCallback);
             }
         );
+    },
+
+    getAllFullResearcherDataPreview: function (researcher, callback) {
+        var counterArray = []
+        var forCallback = []
+        for (let i = 0; i < researcher.length; i++) {
+            counterArray.push(i)
+        }
+
+        let currentPos = 0;
+        flow.serialForEach(counterArray, function (pos) {
+            currentPos = pos;
+            //console.log("historyArray[currentPos] " + historyArray[currentPos]);
+            getFullResearcherPreview(researcher[currentPos], this);
+        }, function (functionCallback) {
+            forCallback.push(functionCallback);
+        }, function () {
+            //console.log("callback")
+            callback("561", null, forCallback);
+        });
+
     }
 };
 
@@ -210,4 +258,117 @@ var AcademicLevel_Control = require("../controller/academicLevel_control.js");
 var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
 var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
 var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
-var Keyword_Control = require("../controller/keyword_control.js");
+
+function getFullResearcher(input, callback) {
+    let researcherData = JSON.parse(JSON.stringify(input));
+    console.log("getFullResearcherData for " + researcherData.researcherName_TH)
+    flow.exec(
+        function () {
+            //console.log("history.requestId: "+history.requestID)
+            Department_Control.checkDepartmentByID(new ObjectId(researcherData.departmentId), this)
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                researcherData["departmentName_TH"] = functionCallback.departmentName_TH;
+                researcherData["departmentName_EN"] = functionCallback.departmentName_EN;
+            }
+            else {
+                researcherData["departmentName_TH"] = "Not found";
+                researcherData["departmentName_EN"] = "Not found";
+            }
+            Position_Control.checkPositionByID(new ObjectId(researcherData.positionId), this);
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                researcherData["positionName_TH"] = functionCallback.positionName_TH;
+                researcherData["positionName_EN"] = functionCallback.positionName_EN;
+            }
+            else {
+                researcherData["positionName_TH"] = "Not found";
+                researcherData["positionName_EN"] = "Not found";
+            }
+            AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(researcherData.academicLevelId), this);
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                researcherData["academicLevelName_TH"] = functionCallback.academicLevelName_TH;
+                researcherData["academicLevelName_EN"] = functionCallback.academicLevelName_EN;
+            }
+            else {
+                researcherData["academicLevelName_TH"] = "Not found";
+                researcherData["academicLevelName_EN"] = "Not found";
+            }
+            BachelorTeachingDepartment_Control.checkBachelorTeachingDepartmentByID(new ObjectId(researcherData.bachelorTeachingDepartmentId), this);
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                researcherData["bachelorTeachingDepartmentName_TH"] = functionCallback.bachelorTeachingDepartmentName_TH;
+                researcherData["bachelorTeachingDepartmentName_EN"] = functionCallback.bachelorTeachingDepartmentName_EN;
+            }
+            else {
+                researcherData["bachelorTeachingDepartmentName_TH"] = "Not found";
+                researcherData["bachelorTeachingDepartmentName_EN"] = "Not found";
+            }
+            MasterTeachingDepartment_Control.checkMasterTeachingDepartmentByID(new ObjectId(researcherData.masterTeachingDepartmentId), this);
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                researcherData["masterTeachingDepartmentName_TH"] = functionCallback.masterTeachingDepartmentName_TH;
+                researcherData["masterTeachingDepartmentName_EN"] = functionCallback.masterTeachingDepartmentName_EN;
+            }
+            else {
+                researcherData["masterTeachingDepartmentName_TH"] = "Not found";
+                researcherData["masterTeachingDepartmentName_EN"] = "Not found";
+            }
+            DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentByID(new ObjectId(researcherData.doctoryTeachingDepartmentId), this);
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                researcherData["doctoryTeachingDepartmentName_TH"] = functionCallback.doctoryTeachingDepartmentName_TH;
+                researcherData["doctoryTeachingDepartmentName_EN"] = functionCallback.doctoryTeachingDepartmentName_EN;
+            }
+            else {
+                researcherData["doctoryTeachingDepartmentName_TH"] = "Not found";
+                researcherData["doctoryTeachingDepartmentName_EN"] = "Not found";
+            }
+            callback(researcherData)
+        }
+    );
+}
+
+
+function getFullResearcherPreview(input, callback) {
+    let researcherData = JSON.parse(JSON.stringify(input));
+    console.log("getFullResearcherData for " + researcherData.researcherName_TH)
+    flow.exec(
+        function () {
+            //console.log("history.requestId: "+history.requestID)
+            Department_Control.checkDepartmentByID(new ObjectId(researcherData.departmentId), this)
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                researcherData["departmentName_TH"] = functionCallback.departmentName_TH;
+                researcherData["departmentName_EN"] = functionCallback.departmentName_EN;
+            }
+            else {
+                researcherData["departmentName_TH"] = "Not found";
+                researcherData["departmentName_EN"] = "Not found";
+            }
+            Position_Control.checkPositionByID(new ObjectId(researcherData.positionId), this);
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                researcherData["positionName_TH"] = functionCallback.positionName_TH;
+                researcherData["positionName_EN"] = functionCallback.positionName_EN;
+            }
+            else {
+                researcherData["positionName_TH"] = "Not found";
+                researcherData["positionName_EN"] = "Not found";
+            }
+            AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(researcherData.academicLevelId), this);
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                researcherData["academicLevelName_TH"] = functionCallback.academicLevelName_TH;
+                researcherData["academicLevelName_EN"] = functionCallback.academicLevelName_EN;
+            }
+            else {
+                researcherData["academicLevelName_TH"] = "Not found";
+                researcherData["academicLevelName_EN"] = "Not found";
+            }
+
+            callback(researcherData)
+        }
+    );
+}
