@@ -37,29 +37,34 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
       controller: 'profileDetailCtrl'
     })
     .state('profileDetail.general', {
-      url: '/profileDetail/general',
+      url: '/general',
       templateUrl: "./general_2/research_assets/partail/profile_general.html",
       controller: 'profileDetailGeneralCtrl'
     })
     .state('profileDetail.research', {
-      url: '/profileDetail/research',
+      url: '/research',
       templateUrl: "./general_2/research_assets/partail/profile_research.html",
       controller: 'profileDetailResearchCtrl'
     })
     .state('profileDetail.copyright', {
-      url: '/profileDetail/copyright',
+      url: '/copyright',
       templateUrl: "./general_2/research_assets/partail/profile_copyright.html",
       controller: 'profileDetailCopyrightCtrl'
     })
     .state('profileDetail.award', {
-      url: '/profileDetail/award',
+      url: '/award',
       templateUrl: "./general_2/research_assets/partail/profile_award.html",
       controller: 'profileDetailAwardCtrl'
     })
     .state('profileDetail.thesistitle', {
-      url: '/profileDetail/thesistitle',
+      url: '/thesistitle',
       templateUrl: "./general_2/research_assets/partail/profile_thesistitle.html",
       controller: 'profileDetailThesistitleCtrl'
+    })
+    .state('profileDetail.researchGrants', {
+      url: '/researchgrants',
+      templateUrl: "./general_2/research_assets/partail/research_grants.html",
+      controller: 'profileDetailresearchGrantsCtrl'
     })
 
 });
@@ -84,39 +89,3 @@ angular.module('app')
   app.run(function($state, $rootScope){
      $rootScope.$state = $state;
   })
-
-app.controller('homeCtrl', function($scope, $http,$state,$window) {
- console.log("homeCtrl start");
- //$window.scrollTo(0, 0); //up to top
- $state.go('profileDetail.general');
- //console.log("paperDetail paperDetail");
-});
-app.controller('paperDetailCtrl', function($scope, $http) {
-  console.log("paperDetailCtrl start");
-});
-app.controller('bookDetailCtrl', function($scope, $http) {
-  console.log("bookDetailCtrl start");
-});
-app.controller('copyrightDetailCtrl', function($scope, $http) {
-  console.log("copyrightDetailCtrl start");
-});
-
-
-app.controller('profileDetailCtrl', function($scope, $http) {
-  console.log("profileDetailCtrl start");
-});
-app.controller('profileDetailGeneralCtrl', function($scope, $http) {
-  console.log("profileDetailGeneralCtrl start");
-});
-app.controller('profileDetailResearchCtrl', function($scope, $http) {
-  console.log("profileDetailResearchCtrl start");
-});
-app.controller('profileDetailCopyrightCtrl', function($scope, $http) {
-  console.log("profileDetailCopyrightCtrl start");
-});
-app.controller('profileDetailAwardCtrl', function($scope, $http) {
-  console.log("profileDetailAwardCtrl start");
-});
-app.controller('profileDetailThesistitleCtrl', function($scope, $http) {
-  console.log("profileDetailThesistitleCtrl start");
-});

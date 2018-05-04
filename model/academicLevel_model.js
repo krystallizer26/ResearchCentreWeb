@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var AcademicLevel_Schema = new Schema({
-    academicLevelName_TH: { type: String, required: true, unique: true },
-    academicLevelName_EN: { type: String, required: true, unique: true },
+    academicLevelName_TH: { type: String, unique: true  },
+    academicLevelName_EN: { type: String, default: null },
     createdDate: { type: Date, default: Date.now },
     editedDate: { type: Date, default: Date.now }
 });

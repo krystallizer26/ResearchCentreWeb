@@ -49,6 +49,39 @@ module.exports = {
             }
         });
     },
+    checkAndInsertPositionByPositionName: function (positionName_TH, positionName_EN, callback) {
+        Position.findOne({ "positionName_TH": positionName_TH }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "501";
+                var alert = "Error in finding Position with name: " + positionName_TH + "\nError: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback) {
+                callback("502", null, functionCallback)
+            }
+            else {
+                var alert = "Position with positionName_TH: " + positionName_TH + " not found";
+                
+                var position = new Position();
+                position.positionName_TH = positionName_TH;
+                position.positionName_EN = positionName_EN;
+                console.log("Saving Position: " + position.positionName_TH);
+                position.save(function (error, saveResponse) {
+                    if (error) {
+                        let errCode = "503";
+                        var alert = "Saving Position fail, Error: " + error.message;
+                        console.log("ERROR Code: " + errCode + " " + alert);
+                        callback(errCode, alert, null);
+                    }
+                    else {
+                        console.log("saveResponse: " + JSON.stringify(saveResponse))
+                        callback("504", null, saveResponse)
+                    }
+                });
+            }
+        });
+    },
     getAllPosition: function (callback) {
         Position.find({}, {}, function (error, functionCallback) {
             if (error) {
