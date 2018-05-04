@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Publication_Schema = new Schema({
-    researcherId: { type: String, required: true },
+    researcherId: { type: String, default: "N/A" },
     publicationName: { type: String, required: true },
     publishLocation: { type: String, default: "N/A" },
     publishYear: { type: Number, default: 0 },
@@ -16,9 +16,10 @@ var Publication_Schema = new Schema({
     detail: { type: String, default: "N/A" },
     
     studentName: { type: String, default: "N/A" },
-    bachelorDepartment: { type: String, default: null },
-    masterDepartment: { type: String, default: null },
-    doctoryDepartment: { type: String, default: null },
+    bachelorDepartmentId: { type: String, default: null },
+    masterDepartmentId: { type: String, default: null },
+    doctoryDepartmentId: { type: String, default: null },
+    graduationYear: { type: String, default: null },
 
     createdDate: { type: Date, default: Date.now },
     editedDate: { type: Date, default: Date.now }

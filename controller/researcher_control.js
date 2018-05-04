@@ -123,6 +123,25 @@ module.exports = {
             }
         });
     },
+    checkResearcherByResearcherName: function (researcherName_TH, callback) {
+        Researcher.findOne({ "researcherName_TH": researcherName_TH }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "571";
+                var alert = "Error in finding Researcher with name: " + researcherName_TH + "\nError: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback) {
+                callback("572", null, functionCallback)
+            }
+            else {
+                let errCode = "573";
+                var alert = "Researcher with name: " + researcherName_TH + " not found";
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, functionCallback)
+            }
+        });
+    },
     checkBindedKeywordwithResearcher: function (researcherId, keywordId, callback) {
         Researcher.findOne({ $and: [{ "_id": researcherId }, { "keywordIdArray": keywordId }] }, function (error, findCallback) {
             if (error) {

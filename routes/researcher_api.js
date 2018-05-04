@@ -138,8 +138,6 @@ var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDe
 router.post('/newResearcher_bulk', function (request, response) {
     var methodCode = "50";
 
-    let winlossArray = [];
-
     var requiredData = [];
     requiredData.push(request.body.researcherData);
     var requiredReady = Validate.requiredData_Check(requiredData)
@@ -408,7 +406,6 @@ router.post('/getResearcherfromID/', function (request, response) {
     else {
         flow.exec(
             function () {
-                let query = {}
                 Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), query, this);
             }, function (code, err, functionCallback) {
                 if (err) {
