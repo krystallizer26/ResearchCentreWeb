@@ -36,8 +36,7 @@ app.controller("mainCtrl", function($scope,$http) {
   //     alert( "failure message: " + JSON.stringify({data: data}) +"ไม่สามารถติดต่อเซิฟเวอร์ได้ ติดต่อแอดมิน");
   //     console.log(status+headers);
   // });
-        $scope.depList = [];
-
+  
         $http({
             method: 'POST',
             url: '/api/getAllDepartment/'
