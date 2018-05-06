@@ -63,7 +63,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     })
     .state('profileDetail.researchGrants', {
       url: '/researchgrants',
-      templateUrl: "./general_2/research_assets/partail/research_grants.html",
+      templateUrl: "./general_2/research_assets/partail/profile_research_grants.html",
       controller: 'profileDetailresearchGrantsCtrl'
     })
 
