@@ -1,5 +1,3 @@
-import { fail } from 'assert';
-
 var express = require('express');
 var router = express.Router();
 var rp = require('request-promise-native');
@@ -88,7 +86,7 @@ fs.readFile(CLIENT_SECRET_PATH, (err, content) => {
 });
 
 // route definitions ==============================================
-router.get('/insertResearcherSheet', async function(req, res) {
+router.get('/insertResearcherSheet', function(req, res) {
 
     sheets.spreadsheets.values.batchGet({
       spreadsheetId: sheetId,
@@ -101,33 +99,57 @@ router.get('/insertResearcherSheet', async function(req, res) {
           message:'The API returned an error: ' + err
         });
       } else {
-        const rows = data.values;
+        const rows = data.valueRanges[0].values;
         var fail_info = null;
         for (var i=1; i<rows.length; i++) {  // skip header row (i=0)
-          var name_th = rows[i][0].trim();
-          var name_en = rows[i][2].trim();
+
+          var name_th = rows[i].length > 0 ? rows[i][0].trim() : 'N/A';
+          if (name_th.includes(' ')) {
+            name_th = {
+              fname: (name_th.split(' '))[0].trim(),
+              lname: (name_th.split(' '))[1].trim()
+            }
+          } else {
+            name_th = {
+              fname: name_th,
+              lname: ''
+            }
+          }
+
+          var name_en = rows[i].length > 2 ? rows[i][2].trim() : 'N/A';
+          if (name_en.includes(' ')) {
+            name_en = {
+              fname: (name_en.split(' '))[0].trim(),
+              lname: (name_en.split(' '))[1].trim()
+            }
+          } else {
+            name_en = {
+              fname: name_en,
+              lname: ''
+            }
+          }
           var formData = {
-            researcherFName_TH: (name_th.split(' '))[0].trim(),
-            researcherLName_TH: (name_th.split(' '))[1].trim(),
-            researcherFName_EN: (name_en.split(' '))[0].trim(),
-            researcherLName_EN: (name_en.split(' '))[1].trim(),
+            researcherFName_TH: name_th.fname,
+            researcherLName_TH: name_th.lname,
+            researcherFName_EN: name_en.fname,
+            researcherLName_EN: name_en.lname,
             gender: 'N/A',
-            personalID: rows[i][1].trim(),
-            birthDate: rows[i][11].trim(),
-            departmentId: '',
-            positionId: '',
-            academicLevelId: '',
-            bachelorGraduation: rows[i][7].trim(),
-            masterGraduation: rows[i][8].trim(),
-            doctoralGraduation: rows[i][9].trim(),
-            target: rows[i][28].trim(),
-            assignDate: rows[i][10].trim(),
-            retirementStatus: rows[i][12].trim(),
+            personalID: rows[i].length > 1 ? (rows[i][1].length > 0 ? rows[i][1].trim() : 'N/A') : 'N/A',
+            birthDate: rows[i].length > 11 ? (rows[i][11].length > 0 ? rows[i][11].trim() : 'N/A') : 'N/A',
+            departmentId: 'N/A',
+            positionId: 'N/A',
+            academicLevelId: 'N/A',
+            bachelorGraduation: rows[i].length > 7 ? (rows[i][7].length > 0 ? rows[i][7].trim() : 'N/A') : 'N/A',
+            masterGraduation: rows[i].length > 8 ? (rows[i][8].length > 0 ? rows[i][8].trim() : 'N/A') : 'N/A',
+            doctoralGraduation: rows[i].length > 9 ? (rows[i][9].length > 0 ? rows[i][9].trim() : 'N/A') : 'N/A',
+            target: rows[i].length > 28 ? (rows[i][28].length > 0 ? rows[i][28].trim() : 'N/A') : 'N/A',
+            assignDate: rows[i].length > 10 ? (rows[i][10].length > 0 ? rows[i][10].trim() : 'N/A') : 'N/A',
+            retirementStatus: rows[i].length > 12 ? (rows[i][12].length > 0 ? rows[i][12].trim() : 'N/A') : 'N/A',
           }
           for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
           for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
           for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
-          
+
           var response = await rp({
             uri: 'http://localhost:2000/api/newResearcher',
             method: 'POST',
@@ -135,6 +157,7 @@ router.get('/insertResearcherSheet', async function(req, res) {
           });
 
           if (response.code != '999999') {
+            console.log('FAILED => ' + response.code + ' ---> ' + response.message);
             fail_info = {
               code: response.code,
               message: response.message
@@ -142,8 +165,12 @@ router.get('/insertResearcherSheet', async function(req, res) {
             break;
           } 
         }
+        // res.json({
+        //   code: rows
+        // });
         
         if (fail_info) {
+          console.log('FAIL INFO => ' + fail_info.code + ' ---> ' + fail_info.message);
           res.json({
             code: 'FAILED',
             message: 'API failed with code => ' + fail_info.code + ' and message => ' + fail_info.message
@@ -156,7 +183,6 @@ router.get('/insertResearcherSheet', async function(req, res) {
         }
       }
     });
-
 });
 
 router.get('/insertResearchWorkSheet', function(req, res) {
@@ -172,64 +198,11 @@ router.get('/insertResearchWorkSheet', function(req, res) {
         message:'The API returned an error: ' + err
       });
     } else {
-      const rows = data.values;
+      const rows = data.valueRanges.values;
       res.json({
         code: '999999',
-        message: rows
+        message: data
       });
-
-      // var fail_info = null;
-      // for (var i=1; i<rows.length; i++) {  // skip header row (i=0)
-      //   var name_th = rows[i][0].trim();
-      //   var name_en = rows[i][2].trim();
-      //   var formData = {
-      //     researcherFName_TH: (name_th.split(' '))[0].trim(),
-      //     researcherLName_TH: (name_th.split(' '))[1].trim(),
-      //     researcherFName_EN: (name_en.split(' '))[0].trim(),
-      //     researcherLName_EN: (name_en.split(' '))[1].trim(),
-      //     gender: 'N/A',
-      //     personalID: rows[i][1].trim(),
-      //     birthDate: rows[i][11].trim(),
-      //     departmentId: '',
-      //     positionId: '',
-      //     academicLevelId: '',
-      //     bachelorGraduation: rows[i][7].trim(),
-      //     masterGraduation: rows[i][8].trim(),
-      //     doctoralGraduation: rows[i][9].trim(),
-      //     target: rows[i][28].trim(),
-      //     assignDate: rows[i][10].trim(),
-      //     retirementStatus: rows[i][12].trim(),
-      //   }
-      //   for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
-      //   for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
-      //   for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
-        
-      //   var response = await rp({
-      //     uri: 'http://localhost:2000/api/newResearcher',
-      //     method: 'POST',
-      //     form: formData
-      //   });
-
-      //   if (response.code != '999999') {
-      //     fail_info = {
-      //       code: response.code,
-      //       message: response.message
-      //     };
-      //     break;
-      //   } 
-      // }
-      
-      // if (fail_info) {
-      //   res.json({
-      //     code: 'FAILED',
-      //     message: 'API failed with code => ' + fail_info.code + ' and message => ' + fail_info.message
-      //   });
-      // } else {
-      //   res.json({
-      //     code: '999999',
-      //     message: 'done!'
-      //   });
-      // }
     }
   });
 });
@@ -247,64 +220,11 @@ router.get('/insertResearchFundSheet', function(req, res) {
         message:'The API returned an error: ' + err
       });
     } else {
-      const rows = data.values;
+      const rows = data.valueRanges[0].values;
       res.json({
         code: '999999',
         message: rows
       });
-
-      // var fail_info = null;
-      // for (var i=1; i<rows.length; i++) {  // skip header row (i=0)
-      //   var name_th = rows[i][0].trim();
-      //   var name_en = rows[i][2].trim();
-      //   var formData = {
-      //     researcherFName_TH: (name_th.split(' '))[0].trim(),
-      //     researcherLName_TH: (name_th.split(' '))[1].trim(),
-      //     researcherFName_EN: (name_en.split(' '))[0].trim(),
-      //     researcherLName_EN: (name_en.split(' '))[1].trim(),
-      //     gender: 'N/A',
-      //     personalID: rows[i][1].trim(),
-      //     birthDate: rows[i][11].trim(),
-      //     departmentId: '',
-      //     positionId: '',
-      //     academicLevelId: '',
-      //     bachelorGraduation: rows[i][7].trim(),
-      //     masterGraduation: rows[i][8].trim(),
-      //     doctoralGraduation: rows[i][9].trim(),
-      //     target: rows[i][28].trim(),
-      //     assignDate: rows[i][10].trim(),
-      //     retirementStatus: rows[i][12].trim(),
-      //   }
-      //   for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
-      //   for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
-      //   for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
-        
-      //   var response = await rp({
-      //     uri: 'http://localhost:2000/api/newResearcher',
-      //     method: 'POST',
-      //     form: formData
-      //   });
-
-      //   if (response.code != '999999') {
-      //     fail_info = {
-      //       code: response.code,
-      //       message: response.message
-      //     };
-      //     break;
-      //   } 
-      // }
-      
-      // if (fail_info) {
-      //   res.json({
-      //     code: 'FAILED',
-      //     message: 'API failed with code => ' + fail_info.code + ' and message => ' + fail_info.message
-      //   });
-      // } else {
-      //   res.json({
-      //     code: '999999',
-      //     message: 'done!'
-      //   });
-      // }
     }
   });
 });
@@ -322,64 +242,11 @@ router.get('/insertRewardSheet', function(req, res) {
         message:'The API returned an error: ' + err
       });
     } else {
-      const rows = data.values;
+      const rows = data.valueRanges[0].values;
       res.json({
         code: '999999',
         message: rows
       });
-
-      // var fail_info = null;
-      // for (var i=1; i<rows.length; i++) {  // skip header row (i=0)
-      //   var name_th = rows[i][0].trim();
-      //   var name_en = rows[i][2].trim();
-      //   var formData = {
-      //     researcherFName_TH: (name_th.split(' '))[0].trim(),
-      //     researcherLName_TH: (name_th.split(' '))[1].trim(),
-      //     researcherFName_EN: (name_en.split(' '))[0].trim(),
-      //     researcherLName_EN: (name_en.split(' '))[1].trim(),
-      //     gender: 'N/A',
-      //     personalID: rows[i][1].trim(),
-      //     birthDate: rows[i][11].trim(),
-      //     departmentId: '',
-      //     positionId: '',
-      //     academicLevelId: '',
-      //     bachelorGraduation: rows[i][7].trim(),
-      //     masterGraduation: rows[i][8].trim(),
-      //     doctoralGraduation: rows[i][9].trim(),
-      //     target: rows[i][28].trim(),
-      //     assignDate: rows[i][10].trim(),
-      //     retirementStatus: rows[i][12].trim(),
-      //   }
-      //   for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
-      //   for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
-      //   for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
-        
-      //   var response = await rp({
-      //     uri: 'http://localhost:2000/api/newResearcher',
-      //     method: 'POST',
-      //     form: formData
-      //   });
-
-      //   if (response.code != '999999') {
-      //     fail_info = {
-      //       code: response.code,
-      //       message: response.message
-      //     };
-      //     break;
-      //   } 
-      // }
-      
-      // if (fail_info) {
-      //   res.json({
-      //     code: 'FAILED',
-      //     message: 'API failed with code => ' + fail_info.code + ' and message => ' + fail_info.message
-      //   });
-      // } else {
-      //   res.json({
-      //     code: '999999',
-      //     message: 'done!'
-      //   });
-      // }
     }
   });
 });
@@ -397,64 +264,11 @@ router.get('/insertIntellectualPropertySheet', function(req, res) {
         message:'The API returned an error: ' + err
       });
     } else {
-      const rows = data.values;
+      const rows = data.valueRanges[0].values;
       res.json({
         code: '999999',
         message: rows
       });
-
-      // var fail_info = null;
-      // for (var i=1; i<rows.length; i++) {  // skip header row (i=0)
-      //   var name_th = rows[i][0].trim();
-      //   var name_en = rows[i][2].trim();
-      //   var formData = {
-      //     researcherFName_TH: (name_th.split(' '))[0].trim(),
-      //     researcherLName_TH: (name_th.split(' '))[1].trim(),
-      //     researcherFName_EN: (name_en.split(' '))[0].trim(),
-      //     researcherLName_EN: (name_en.split(' '))[1].trim(),
-      //     gender: 'N/A',
-      //     personalID: rows[i][1].trim(),
-      //     birthDate: rows[i][11].trim(),
-      //     departmentId: '',
-      //     positionId: '',
-      //     academicLevelId: '',
-      //     bachelorGraduation: rows[i][7].trim(),
-      //     masterGraduation: rows[i][8].trim(),
-      //     doctoralGraduation: rows[i][9].trim(),
-      //     target: rows[i][28].trim(),
-      //     assignDate: rows[i][10].trim(),
-      //     retirementStatus: rows[i][12].trim(),
-      //   }
-      //   for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
-      //   for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
-      //   for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
-        
-      //   var response = await rp({
-      //     uri: 'http://localhost:2000/api/newResearcher',
-      //     method: 'POST',
-      //     form: formData
-      //   });
-
-      //   if (response.code != '999999') {
-      //     fail_info = {
-      //       code: response.code,
-      //       message: response.message
-      //     };
-      //     break;
-      //   } 
-      // }
-      
-      // if (fail_info) {
-      //   res.json({
-      //     code: 'FAILED',
-      //     message: 'API failed with code => ' + fail_info.code + ' and message => ' + fail_info.message
-      //   });
-      // } else {
-      //   res.json({
-      //     code: '999999',
-      //     message: 'done!'
-      //   });
-      // }
     }
   });
 });
@@ -472,64 +286,11 @@ router.get('/insertThesisSheet', function(req, res) {
         message:'The API returned an error: ' + err
       });
     } else {
-      const rows = data.values;
+      const rows = data.valueRanges[0].values;
       res.json({
         code: '999999',
         message: rows
       });
-
-      // var fail_info = null;
-      // for (var i=1; i<rows.length; i++) {  // skip header row (i=0)
-      //   var name_th = rows[i][0].trim();
-      //   var name_en = rows[i][2].trim();
-      //   var formData = {
-      //     researcherFName_TH: (name_th.split(' '))[0].trim(),
-      //     researcherLName_TH: (name_th.split(' '))[1].trim(),
-      //     researcherFName_EN: (name_en.split(' '))[0].trim(),
-      //     researcherLName_EN: (name_en.split(' '))[1].trim(),
-      //     gender: 'N/A',
-      //     personalID: rows[i][1].trim(),
-      //     birthDate: rows[i][11].trim(),
-      //     departmentId: '',
-      //     positionId: '',
-      //     academicLevelId: '',
-      //     bachelorGraduation: rows[i][7].trim(),
-      //     masterGraduation: rows[i][8].trim(),
-      //     doctoralGraduation: rows[i][9].trim(),
-      //     target: rows[i][28].trim(),
-      //     assignDate: rows[i][10].trim(),
-      //     retirementStatus: rows[i][12].trim(),
-      //   }
-      //   for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
-      //   for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
-      //   for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
-        
-      //   var response = await rp({
-      //     uri: 'http://localhost:2000/api/newResearcher',
-      //     method: 'POST',
-      //     form: formData
-      //   });
-
-      //   if (response.code != '999999') {
-      //     fail_info = {
-      //       code: response.code,
-      //       message: response.message
-      //     };
-      //     break;
-      //   } 
-      // }
-      
-      // if (fail_info) {
-      //   res.json({
-      //     code: 'FAILED',
-      //     message: 'API failed with code => ' + fail_info.code + ' and message => ' + fail_info.message
-      //   });
-      // } else {
-      //   res.json({
-      //     code: '999999',
-      //     message: 'done!'
-      //   });
-      // }
     }
   });
 });
@@ -547,64 +308,11 @@ router.get('/insertAcademicServiceSheet', function(req, res) {
         message:'The API returned an error: ' + err
       });
     } else {
-      const rows = data.values;
+      const rows = data.valueRanges[0].values;
       res.json({
         code: '999999',
         message: rows
       });
-
-      // var fail_info = null;
-      // for (var i=1; i<rows.length; i++) {  // skip header row (i=0)
-      //   var name_th = rows[i][0].trim();
-      //   var name_en = rows[i][2].trim();
-      //   var formData = {
-      //     researcherFName_TH: (name_th.split(' '))[0].trim(),
-      //     researcherLName_TH: (name_th.split(' '))[1].trim(),
-      //     researcherFName_EN: (name_en.split(' '))[0].trim(),
-      //     researcherLName_EN: (name_en.split(' '))[1].trim(),
-      //     gender: 'N/A',
-      //     personalID: rows[i][1].trim(),
-      //     birthDate: rows[i][11].trim(),
-      //     departmentId: '',
-      //     positionId: '',
-      //     academicLevelId: '',
-      //     bachelorGraduation: rows[i][7].trim(),
-      //     masterGraduation: rows[i][8].trim(),
-      //     doctoralGraduation: rows[i][9].trim(),
-      //     target: rows[i][28].trim(),
-      //     assignDate: rows[i][10].trim(),
-      //     retirementStatus: rows[i][12].trim(),
-      //   }
-      //   for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
-      //   for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
-      //   for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
-        
-      //   var response = await rp({
-      //     uri: 'http://localhost:2000/api/newResearcher',
-      //     method: 'POST',
-      //     form: formData
-      //   });
-
-      //   if (response.code != '999999') {
-      //     fail_info = {
-      //       code: response.code,
-      //       message: response.message
-      //     };
-      //     break;
-      //   } 
-      // }
-      
-      // if (fail_info) {
-      //   res.json({
-      //     code: 'FAILED',
-      //     message: 'API failed with code => ' + fail_info.code + ' and message => ' + fail_info.message
-      //   });
-      // } else {
-      //   res.json({
-      //     code: '999999',
-      //     message: 'done!'
-      //   });
-      // }
     }
   });
 });
@@ -622,64 +330,11 @@ router.get('/insertSciKmitlJournalSheet', function(req, res) {
         message:'The API returned an error: ' + err
       });
     } else {
-      const rows = data.values;
+      const rows = data.valueRanges[0].values;
       res.json({
         code: '999999',
         message: rows
       });
-
-      // var fail_info = null;
-      // for (var i=1; i<rows.length; i++) {  // skip header row (i=0)
-      //   var name_th = rows[i][0].trim();
-      //   var name_en = rows[i][2].trim();
-      //   var formData = {
-      //     researcherFName_TH: (name_th.split(' '))[0].trim(),
-      //     researcherLName_TH: (name_th.split(' '))[1].trim(),
-      //     researcherFName_EN: (name_en.split(' '))[0].trim(),
-      //     researcherLName_EN: (name_en.split(' '))[1].trim(),
-      //     gender: 'N/A',
-      //     personalID: rows[i][1].trim(),
-      //     birthDate: rows[i][11].trim(),
-      //     departmentId: '',
-      //     positionId: '',
-      //     academicLevelId: '',
-      //     bachelorGraduation: rows[i][7].trim(),
-      //     masterGraduation: rows[i][8].trim(),
-      //     doctoralGraduation: rows[i][9].trim(),
-      //     target: rows[i][28].trim(),
-      //     assignDate: rows[i][10].trim(),
-      //     retirementStatus: rows[i][12].trim(),
-      //   }
-      //   for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
-      //   for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
-      //   for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
-        
-      //   var response = await rp({
-      //     uri: 'http://localhost:2000/api/newResearcher',
-      //     method: 'POST',
-      //     form: formData
-      //   });
-
-      //   if (response.code != '999999') {
-      //     fail_info = {
-      //       code: response.code,
-      //       message: response.message
-      //     };
-      //     break;
-      //   } 
-      // }
-      
-      // if (fail_info) {
-      //   res.json({
-      //     code: 'FAILED',
-      //     message: 'API failed with code => ' + fail_info.code + ' and message => ' + fail_info.message
-      //   });
-      // } else {
-      //   res.json({
-      //     code: '999999',
-      //     message: 'done!'
-      //   });
-      // }
     }
   });
 });
@@ -697,64 +352,11 @@ router.get('/insertStaffTrainingSheet', function(req, res) {
         message:'The API returned an error: ' + err
       });
     } else {
-      const rows = data.values;
+      const rows = data.valueRanges[0].values;
       res.json({
         code: '999999',
         message: rows
       });
-
-      // var fail_info = null;
-      // for (var i=1; i<rows.length; i++) {  // skip header row (i=0)
-      //   var name_th = rows[i][0].trim();
-      //   var name_en = rows[i][2].trim();
-      //   var formData = {
-      //     researcherFName_TH: (name_th.split(' '))[0].trim(),
-      //     researcherLName_TH: (name_th.split(' '))[1].trim(),
-      //     researcherFName_EN: (name_en.split(' '))[0].trim(),
-      //     researcherLName_EN: (name_en.split(' '))[1].trim(),
-      //     gender: 'N/A',
-      //     personalID: rows[i][1].trim(),
-      //     birthDate: rows[i][11].trim(),
-      //     departmentId: '',
-      //     positionId: '',
-      //     academicLevelId: '',
-      //     bachelorGraduation: rows[i][7].trim(),
-      //     masterGraduation: rows[i][8].trim(),
-      //     doctoralGraduation: rows[i][9].trim(),
-      //     target: rows[i][28].trim(),
-      //     assignDate: rows[i][10].trim(),
-      //     retirementStatus: rows[i][12].trim(),
-      //   }
-      //   for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
-      //   for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
-      //   for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
-        
-      //   var response = await rp({
-      //     uri: 'http://localhost:2000/api/newResearcher',
-      //     method: 'POST',
-      //     form: formData
-      //   });
-
-      //   if (response.code != '999999') {
-      //     fail_info = {
-      //       code: response.code,
-      //       message: response.message
-      //     };
-      //     break;
-      //   } 
-      // }
-      
-      // if (fail_info) {
-      //   res.json({
-      //     code: 'FAILED',
-      //     message: 'API failed with code => ' + fail_info.code + ' and message => ' + fail_info.message
-      //   });
-      // } else {
-      //   res.json({
-      //     code: '999999',
-      //     message: 'done!'
-      //   });
-      // }
     }
   });
 });
@@ -772,64 +374,11 @@ router.get('/insertTeacherTrainingSheet', function(req, res) {
         message:'The API returned an error: ' + err
       });
     } else {
-      const rows = data.values;
+      const rows = data.valueRanges[0].values;
       res.json({
         code: '999999',
         message: rows
       });
-
-      // var fail_info = null;
-      // for (var i=1; i<rows.length; i++) {  // skip header row (i=0)
-      //   var name_th = rows[i][0].trim();
-      //   var name_en = rows[i][2].trim();
-      //   var formData = {
-      //     researcherFName_TH: (name_th.split(' '))[0].trim(),
-      //     researcherLName_TH: (name_th.split(' '))[1].trim(),
-      //     researcherFName_EN: (name_en.split(' '))[0].trim(),
-      //     researcherLName_EN: (name_en.split(' '))[1].trim(),
-      //     gender: 'N/A',
-      //     personalID: rows[i][1].trim(),
-      //     birthDate: rows[i][11].trim(),
-      //     departmentId: '',
-      //     positionId: '',
-      //     academicLevelId: '',
-      //     bachelorGraduation: rows[i][7].trim(),
-      //     masterGraduation: rows[i][8].trim(),
-      //     doctoralGraduation: rows[i][9].trim(),
-      //     target: rows[i][28].trim(),
-      //     assignDate: rows[i][10].trim(),
-      //     retirementStatus: rows[i][12].trim(),
-      //   }
-      //   for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
-      //   for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
-      //   for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
-        
-      //   var response = await rp({
-      //     uri: 'http://localhost:2000/api/newResearcher',
-      //     method: 'POST',
-      //     form: formData
-      //   });
-
-      //   if (response.code != '999999') {
-      //     fail_info = {
-      //       code: response.code,
-      //       message: response.message
-      //     };
-      //     break;
-      //   } 
-      // }
-      
-      // if (fail_info) {
-      //   res.json({
-      //     code: 'FAILED',
-      //     message: 'API failed with code => ' + fail_info.code + ' and message => ' + fail_info.message
-      //   });
-      // } else {
-      //   res.json({
-      //     code: '999999',
-      //     message: 'done!'
-      //   });
-      // }
     }
   });
 });
