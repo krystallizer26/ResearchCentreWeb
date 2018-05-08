@@ -20,6 +20,7 @@ var Publication_Schema = new Schema({
     masterDepartmentId: { type: String, default: null },
     doctoryDepartmentId: { type: String, default: null },
     graduationYear: { type: String, default: null },
+    publicationRaw: { type: String, default: null },
 
     createdDate: { type: Date, default: Date.now },
     editedDate: { type: Date, default: Date.now }
