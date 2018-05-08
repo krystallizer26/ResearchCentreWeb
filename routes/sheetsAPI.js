@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var request = require('request');
 var rp = require('request-promise-native');
 
 const fs = require('fs');
@@ -92,7 +93,7 @@ router.get('/insertResearcherSheet', function(req, res) {
       spreadsheetId: sheetId,
       ranges: [ "'นักวิจัย'" ],
       auth: clientAuth
-    }, (err, {data}) => {
+    }, async function(err, {data}) {
       if (err) {
         res.json({
           code: 'FAILED',
@@ -101,34 +102,8 @@ router.get('/insertResearcherSheet', function(req, res) {
       } else {
         const rows = data.valueRanges[0].values;
         var fail_info = null;
+        var dataSend = [];
         for (var i=1; i<rows.length; i++) {  // skip header row (i=0)
-
-          // var name_th = rows[i].length > 0 ? rows[i][0].trim() : 'N/A';
-          // if (name_th.includes(' ')) {
-          //   name_th = {
-          //     fname: (name_th.split(' '))[0].trim(),
-          //     lname: (name_th.split(' '))[1].trim()
-          //   }
-          // } else {
-          //   name_th = {
-          //     fname: name_th,
-          //     lname: ''
-          //   }
-          // }
-
-          // var name_en = rows[i].length > 2 ? rows[i][2].trim() : 'N/A';
-          // if (name_en.includes(' ')) {
-          //   name_en = {
-          //     fname: (name_en.split(' '))[0].trim(),
-          //     lname: (name_en.split(' '))[1].trim()
-          //   }
-          // } else {
-          //   name_en = {
-          //     fname: name_en,
-          //     lname: ''
-          //   }
-          // }
-
           var formData = {
             researcherName_TH: validateValueInRow(rows[i], 0),
             researcherName_EN: validateValueInRow(rows[i], 2),
@@ -182,6 +157,7 @@ router.get('/insertResearcherSheet', function(req, res) {
             publicationTCI: validateValueInRow(rows[i], 49),
             researcherPic: null
           };
+          dataSend.push(formData);
           // for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
           // for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
           // for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
@@ -201,6 +177,11 @@ router.get('/insertResearcherSheet', function(req, res) {
             break;
           } 
         }
+        
+        // res.json({
+        //   code: '999999',
+        //   message: dataSend
+        // });
         
         if (fail_info) {
           console.log('FAIL INFO => ' + fail_info.code + ' ---> ' + fail_info.message);
@@ -473,7 +454,7 @@ router.get('/getDataSetup', async function(req, res) {
 });
 
 function validateValueInRow(row, idx) {
-  return row.length > 1 ? (row[idx].length > 0 ? row[idx].trim() : null) : null;
+  return row.length > idx ? (row[idx].length > 0 ? row[idx].trim() : null) : null;
 }
 
 module.exports = router;
