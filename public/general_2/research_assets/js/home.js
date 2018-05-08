@@ -18,10 +18,7 @@ init();
     
         console.log("for getAllResearcherPreview_ai =====----dataObj ---+++++" + JSON.stringify(dataObj));
             let res = $http.post('/api/getAllResearcherPreview_ai', dataObj);
-			 res.on('data', function (partial_data) {
-					 $scope.researcher_list.push(partial_data);
-				  });
-  
+	
   
             res.success(function(data, status, headers, config) {
                 //$scope.message = data;
