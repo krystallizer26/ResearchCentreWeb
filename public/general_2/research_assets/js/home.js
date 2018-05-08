@@ -1,4 +1,4 @@
-app.controller('homeCtrl', function($scope, $http,$state,$window) {
+app.controller('homeCtrl', function($scope, $http,$state,$window,global_service) {
  console.log("homeCtrl start");
  //$window.scrollTo(0, 0); //up to top
  //$state.go('profileDetail.general');
@@ -43,10 +43,17 @@ init();
 	  $scope.search = {};
  }
  
- $scope.gotoProfile = function () {
+ $scope.gotoProfile = function (researcher_id) {
+	 
+	
+	 global_service.set_news_id(researcher_id);
+	  alert()
+	 
    $state.go('profileDetail.general');
    
    
  }
+ 
+ 
 
 });
