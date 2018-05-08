@@ -10,7 +10,7 @@ init();
 	 $scope.search={};
 	 $scope.search.departmentName_TH='';
 	 
-	 
+	 $scope.researcher_list={};
 	  let dataObj = {
                
             };	
@@ -18,10 +18,15 @@ init();
     
         console.log("for getAllResearcherPreview_ai =====----dataObj ---+++++" + JSON.stringify(dataObj));
             let res = $http.post('/api/getAllResearcherPreview_ai', dataObj);
+			 res.on('data', function (partial_data) {
+					 $scope.researcher_list.push(partial_data);
+				  });
+  
+  
             res.success(function(data, status, headers, config) {
                 //$scope.message = data;
                 console.log("this getAllResearcherPreview_ai = " +JSON.stringify(data))
-                $scope.researcher_list = data;
+                //$scope.researcher_list = data;
               
                 
              
