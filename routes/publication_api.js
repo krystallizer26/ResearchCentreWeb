@@ -32,92 +32,57 @@ var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepa
 var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 var Publication_Control = require("../controller/publication_control.js");
 
-// router.post('/newPublication', function (request, response) {
-//     var methodCode = "45";
+router.post('/newPublication_EachScrap', function (request, response) {
+    var methodCode = "45";
 
-//     var requiredData = [];
-//     requiredData.push(request.body.publicationName);
-//     requiredData.push(request.body.researcherId);
-//     var requiredReady = Validate.requiredData_Check(requiredData);
+    var requiredData = [];
+    requiredData.push(request.body.publicationName);
+    requiredData.push(request.body.researcherName);
+    var requiredReady = Validate.requiredData_Check(requiredData);
 
-//     var objectIdData = [];
-//     requiredData.push(request.body.researcherId);
-//     requiredData.push(request.body.bachelorDepartment);
-//     requiredData.push(request.body.masterDepartment);
-//     requiredData.push(request.body.doctoryDepartment);
-//     var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    if (!requiredReady) {
+        var alert = "Input Not Valid, check if some data is required."
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+    }
+    else {
+        flow.exec(
+            function () {
+                var publication = new Publication();
+                publication.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
+                publication.publicationName = Validate.scrappingCleanUp(request.body.publicationName)
+                publication.publicationAuthor = Validate.scrappingCleanUp(request.body.publicationAuthor)
+                publication.publishLocation = Validate.scrappingCleanUp(request.body.publishLocation)
+                publication.publishYear = Validate.scrappingCleanUp(request.body.publishYear)
+                publication.publishType = Validate.scrappingCleanUp(request.body.publishType)
+                publication.scholarType = Validate.scrappingCleanUp(request.body.scholarType)
+                publication.address = Validate.scrappingCleanUp(request.body.address)
+                publication.publicationDatabase = Validate.scrappingCleanUp(request.body.publicationDatabase)
+                publication.impactFactor = Validate.scrappingCleanUp(request.body.impactFactor)
+                publication.quartile = Validate.scrappingCleanUp(request.body.quartile)
+                publication.weight = Validate.scrappingCleanUp(request.body.weight)
+                publication.detail = Validate.scrappingCleanUp(request.body.detail)
 
-//     if (!requiredReady) {
-//         var alert = "Input Not Valid, check if some data is required."
-//         console.log(alert);
-//         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-//     }
-//     else if (!objectIdReady) {
-//         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
-//         console.log(alert);
-//         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-//     }
-//     else {
-//         flow.exec(
-//             function () {
-//                 Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), this)
-//             }, function (code, err, functionCallback) {
-//                 if (code != "382") {
-//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-//                 }
-//                 else {
-//                     BachelorTeachingDepartment_Control.checkBachelorTeachingDepartmentByID(new ObjectId(request.body.bachelorDepartment), this)
-//                 }
-//             }, function (code, err, functionCallback) {
-//                 if (code != "232") {
-//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-//                 }
-//                 else {
-//                     MasterTeachingDepartment_Control.checkMasterTeachingDepartmentByID(new ObjectId(request.body.masterDepartment), this)
-//                 }
-//             }, function (code, err, functionCallback) {
-//                 if (code != "282") {
-//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-//                 }
-//                 else {
-//                     DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentByID(new ObjectId(request.body.doctoryDepartment), this)
-//                 }
-//             }, function (code, err, functionCallback) {
-//                 if (code != "332") {
-//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-//                 }
-//                 else {
-//                     var publication = new Publication();
-//                     publication.researcherId = request.body.researcherId;
-//                     publication.publicationName = request.body.publicationName;
-//                     publication.publishLocation = request.body.publishLocation;
-//                     publication.publishYear = request.body.publishYear;
-//                     publication.publishType = request.body.publishType;
-//                     publication.scholarType = request.body.scholarType;
-//                     publication.address = request.body.address;
-//                     publication.publicationDatabase = request.body.publicationDatabase;
-//                     publication.impactFactor = request.body.impactFactor;
-//                     publication.quartile = request.body.quartile;
-//                     publication.weight = request.body.weight;
-//                     publication.detail = request.body.detail;
-//                     publication.studentName = request.body.studentName;
-//                     publication.bachelorDepartment = request.body.bachelorDepartment;
-//                     publication.masterDepartment = request.body.masterDepartment;
-//                     publication.doctoryDepartment = request.body.doctoryDepartment;
+                publication.studentName = Validate.scrappingCleanUp(request.body.studentName)
+                publication.bachelorTeachingDepartmentName_TH = Validate.scrappingCleanUp(request.body.bachelorTeachingDepartmentName_TH)
+                publication.masterTeachingDepartmentName_TH = Validate.scrappingCleanUp(request.body.masterTeachingDepartmentName_TH)
+                publication.doctoryTeachingDepartmentName_TH = Validate.scrappingCleanUp(request.body.doctoryTeachingDepartmentName_TH)
+                publication.graduationYear = Validate.scrappingCleanUp(request.body.graduationYear)
+                publication.publicationRaw = Validate.scrappingCleanUp(request.body.publicationRaw)
 
-//                     Publication_Control.newPublication(publication, this);
-//                 }
-//             }, function (code, err, functionCallback) {
-//                 if (code != "441") {
-//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-//                 }
-//                 else {
-//                     Return_Control.responseWithCodeAndData(ReturnCode.success, "New Publication was saved successfully as _id defined", functionCallback._id, response);
-//                 }
-//             }
-//         );
-//     }
-// });
+                Publication_Control.newPublication_fromScrap(publication, this);
+
+            }, function (code, err, functionCallback) {
+                if (code != "441") {
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                }
+                else {
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "New Publication was saved successfully as _id defined", functionCallback._id, response);
+                }
+            }
+        );
+    }
+});
 
 router.post('/newPublication_bulk', function (request, response) {
     var methodCode = "51";
@@ -150,6 +115,7 @@ router.post('/newPublication_bulk', function (request, response) {
             var publication = new Publication();
             publication.researcherName = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชื่อ"]["$t"])
             publication.publicationName = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชื่อผลงานวิจัย"]["$t"])
+            publication.publicationAuthor = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชือเจ้าของผลงาน"]["$t"])
             publication.publishLocation = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$แหล่งเผยแพร่ผลงาน"]["$t"])
             publication.publishYear = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ปีพ.ศ."]["$t"])
             publication.publishType = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ลักษณะการเผยแพร่"]["$t"])
@@ -160,13 +126,13 @@ router.post('/newPublication_bulk', function (request, response) {
             publication.quartile = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$quartile"]["$t"])
             publication.weight = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ค่าน้ำหนัก"]["$t"])
             publication.detail = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$หมายเหตุ"]["$t"])
-            
+
             publication.studentName = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชื่อนักศึกษา"]["$t"])
             publication.bachelorTeachingDepartmentName_TH = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$หลักสูตรระดับปริญญาตรี"]["$t"])
             publication.masterTeachingDepartmentName_TH = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$หลักสูตรระดับปริญญาโท"]["$t"])
             publication.doctoryTeachingDepartmentName_TH = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$หลักสูตรระดับปริญญาโท_2"]["$t"])
             publication.graduationYear = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ปีที่สำเร็จการศึกษา"]["$t"])
-            
+
             Publication_Control.newPublication_fromScrap(publication, this);
 
         }, function (code, err, finctionCallback) {
@@ -285,7 +251,7 @@ router.post('/getAllPublicationPreview/', function (request, response) {
             else if (code === "592") {
                 Publication_Control.getAllFullPublicationDataPreview(functionCallback, this);
             }
-            else{
+            else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No Publication Founded", [], response)
             }
         }, function (code, err, functionCallback) {
