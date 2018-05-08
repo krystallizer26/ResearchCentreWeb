@@ -93,7 +93,7 @@ router.get('/insertResearcherSheet', function(req, res) {
       spreadsheetId: sheetId,
       ranges: [ "'นักวิจัย'" ],
       auth: clientAuth
-    }, async function(err, {data}) {
+    }, function(err, {data}) {
       if (err) {
         res.json({
           code: 'FAILED',
@@ -162,39 +162,30 @@ router.get('/insertResearcherSheet', function(req, res) {
           // for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
           // for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
 
-          var response = await rp({
+          rp({
             uri: 'http://localhost:2000/api/newResearcher_EachScrap',
             method: 'POST',
             form: formData
+          }).then(function(response) {
+            if (response.code != '999999') {
+              console.log('FAILED => ' + response.code + ' ---> ' + response.message);
+            } else {
+              console.log('--------- SUCCESS !!!');
+            }
+          }).catch(function(err) {
+            console.log('ERROR => ' + err.message);
           });
-
-          if (response.code != '999999') {
-            console.log('FAILED => ' + response.code + ' ---> ' + response.message);
-            fail_info = {
-              code: response.code,
-              message: response.message
-            };
-            break;
-          } 
         }
         
         // res.json({
         //   code: '999999',
         //   message: dataSend
         // });
-        
-        if (fail_info) {
-          console.log('FAIL INFO => ' + fail_info.code + ' ---> ' + fail_info.message);
-          res.json({
-            code: 'FAILED',
-            message: 'API failed with code => ' + fail_info.code + ' and message => ' + fail_info.message
-          });
-        } else {
-          res.json({
-            code: '999999',
-            message: 'done!'
-          });
-        }
+
+        res.json({
+          code: '999999',
+          message: 'done!'
+        });
       }
     });
 });
