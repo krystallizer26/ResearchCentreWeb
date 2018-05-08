@@ -3,8 +3,50 @@ app.controller('homeCtrl', function($scope, $http,$state,$window) {
  //$window.scrollTo(0, 0); //up to top
  //$state.go('profileDetail.general');
  //console.log("paperDetail paperDetail");
+init();
+
+ 
+ function init(){
+	 $scope.search={};
+	 $scope.search.departmentName_TH='';
+	 
+	 
+	  let dataObj = {
+               
+            };	
+    
+    
+        console.log("for getAllResearcherPreview_ai =====----dataObj ---+++++" + JSON.stringify(dataObj));
+            let res = $http.post('/api/getAllResearcherPreview_ai', dataObj);
+            res.success(function(data, status, headers, config) {
+                //$scope.message = data;
+                console.log("this getAllResearcherPreview_ai = " +JSON.stringify(data))
+                $scope.researcher_list = data;
+              
+                
+             
+            });
+            res.error(function(data, status, headers, config) {
+                alert( "failure message: " + JSON.stringify({data: data}) +"ไม่สามารถติดต่อเซิฟเวอร์ได้ ติดต่อแอดมิน");
+               
+            });		
+ }
+ 
+ $scope.filter_department = function(department_name){
+
+	 $scope.search.departmentName_TH = department_name;
+	 
+ }
+ 
+ $scope.reset_filter = function(){
+	 
+	  $scope.search = {};
+ }
+ 
  $scope.gotoProfile = function () {
    $state.go('profileDetail.general');
+   
+   
  }
 
 });
