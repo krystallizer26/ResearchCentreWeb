@@ -30,106 +30,80 @@ var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDe
 router.post('/newResearcher_EachScrap', function (request, response) {
     var methodCode = "36";
 
-    var requiredData = [];
-    requiredData.push(request.body.researcherName_TH);
-    requiredData.push(request.body.personalID);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    flow.exec(
+        function () {
+            var researcher = new Researcher();
+            researcher.researcherName_TH = Validate.scrappingCleanUp(request.body.researcherName_TH)
+            researcher.researcherName_EN = Validate.scrappingCleanUp(request.body.researcherName_EN)
+            researcher.personalID = request.body.personalID
+            researcher.departmentName_TH = Validate.scrappingCleanUp(request.body.departmentName_TH)
+            researcher.academicPositionName_TH = Validate.scrappingCleanUp(request.body.academicPositionName_TH)
+            researcher.academicPositionName_EN = Validate.scrappingCleanUp(request.body.academicPositionName_EN)
+            researcher.positionName_TH = Validate.scrappingCleanUp(request.body.positionName_TH)
+            researcher.bachelorGraduation = Validate.scrappingCleanUp(request.body.bachelorGraduation)
+            researcher.masterGraduation = Validate.scrappingCleanUp(request.body.masterGraduation)
+            researcher.doctoralGraduation = Validate.scrappingCleanUp(request.body.doctoralGraduation)
+            researcher.assignDate = request.body.assignDate
+            researcher.birthDate = request.body.birthDate
+            researcher.retirementStatus = request.body.retirementStatus
+            researcher.target = Validate.scrappingCleanUp(request.body.target)
 
-    var numberData = [];
-    numberData.push(request.body.personalID);
-    var numberReady = Validate.numberData_Check(numberData)
+            researcher.bachelorTeachingDepartmentName_TH = Validate.scrappingCleanUp(request.body.bachelorTeachingDepartmentName_TH)
+            researcher.bachelor_AcademicYear = request.body.bachelor_AcademicYear
+            researcher.bachelor_FacultyBoard_Comment = request.body.bachelor_FacultyBoard_Comment
+            researcher.bachelor_CouncilBoard_Comment = request.body.bachelor_CouncilBoard_Comment
+            researcher.bachelor_InstituteBoard_Comment = request.body.bachelor_InstituteBoard_Comment
 
-    if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
-        console.log(alert);
-        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
-        var alert = "Input Not Valid, check if some data must contain only numeric character."
-        console.log(alert);
-        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "004", alert, response)
-    }
-    else if (request.body.personalID.length != 13) {
-        var alert = "Input Not Valid, check if personalId is in a correct pattern. (13 numeric-only character)"
-        console.log(alert);
-        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "005", alert, response)
-    }
-    else {
-        flow.exec(
-            function () {
-                var researcher = new Researcher();
-                researcher.researcherName_TH = Validate.scrappingCleanUp(request.body.researcherName_TH)
-                researcher.researcherName_EN = Validate.scrappingCleanUp(request.body.researcherName_EN)
-                researcher.personalID = request.body.personalID
-                researcher.departmentName_TH = Validate.scrappingCleanUp(request.body.departmentName_TH)
-                researcher.academicPositionName_TH = Validate.scrappingCleanUp(request.body.academicPositionName_TH)
-                researcher.academicPositionName_EN = Validate.scrappingCleanUp(request.body.academicPositionName_EN)
-                researcher.positionName_TH = Validate.scrappingCleanUp(request.body.positionName_TH)
-                researcher.bachelorGraduation = Validate.scrappingCleanUp(request.body.bachelorGraduation)
-                researcher.masterGraduation = Validate.scrappingCleanUp(request.body.masterGraduation)
-                researcher.doctoralGraduation = Validate.scrappingCleanUp(request.body.doctoralGraduation)
-                researcher.assignDate = request.body.assignDate
-                researcher.birthDate = request.body.birthDate
-                researcher.retirementStatus = request.body.retirementStatus
-                researcher.target = Validate.scrappingCleanUp(request.body.target)
+            researcher.masterTeachingDepartmentName_TH = Validate.scrappingCleanUp(request.body.masterTeachingDepartmentName_TH)
+            researcher.master_AcademicYear = request.body.master_AcademicYear
+            researcher.master_FacultyBoard_Comment = request.body.master_FacultyBoard_Comment
+            researcher.master_CouncilBoard_Comment = request.body.master_CouncilBoard_Comment
+            researcher.master_InstituteBoard_Comment = request.body.master_InstituteBoard_Comment
 
-                researcher.bachelorTeachingDepartmentName_TH = Validate.scrappingCleanUp(request.body.bachelorTeachingDepartmentName_TH)
-                researcher.bachelor_AcademicYear = request.body.bachelor_AcademicYear
-                researcher.bachelor_FacultyBoard_Comment = request.body.bachelor_FacultyBoard_Comment
-                researcher.bachelor_CouncilBoard_Comment = request.body.bachelor_CouncilBoard_Comment
-                researcher.bachelor_InstituteBoard_Comment = request.body.bachelor_InstituteBoard_Comment
+            researcher.doctoryTeachingDepartmentName_TH = Validate.scrappingCleanUp(request.body.doctoryTeachingDepartmentName_TH)
+            researcher.doctory_AcademicYear = request.body.doctory_AcademicYear
+            researcher.doctory_FacultyBoard_Comment = request.body.doctory_FacultyBoard_Comment
+            researcher.doctory_CouncilBoard_Comment = request.body.doctory_CouncilBoard_Comment
+            researcher.doctory_InstituteBoard_Comment = request.body.doctory_InstituteBoard_Comment
 
-                researcher.masterTeachingDepartmentName_TH = Validate.scrappingCleanUp(request.body.masterTeachingDepartmentName_TH)
-                researcher.master_AcademicYear = request.body.master_AcademicYear
-                researcher.master_FacultyBoard_Comment = request.body.master_FacultyBoard_Comment
-                researcher.master_CouncilBoard_Comment = request.body.master_CouncilBoard_Comment
-                researcher.master_InstituteBoard_Comment = request.body.master_InstituteBoard_Comment
+            researcher.keyword1_TH = Validate.scrappingCleanUp(request.body.keyword1_TH)
+            researcher.keyword2_TH = Validate.scrappingCleanUp(request.body.keyword2_TH)
+            researcher.keyword3_TH = Validate.scrappingCleanUp(request.body.keyword3_TH)
+            researcher.keyword4_TH = Validate.scrappingCleanUp(request.body.keyword4_TH)
+            researcher.keyword5_TH = Validate.scrappingCleanUp(request.body.keyword5_TH)
+            researcher.keyword1_EN = Validate.scrappingCleanUp(request.body.keyword1_EN)
+            researcher.keyword2_EN = Validate.scrappingCleanUp(request.body.keyword2_EN)
+            researcher.keyword3_EN = Validate.scrappingCleanUp(request.body.keyword3_EN)
+            researcher.keyword4_EN = Validate.scrappingCleanUp(request.body.keyword4_EN)
+            researcher.keyword5_EN = Validate.scrappingCleanUp(request.body.keyword5_EN)
 
-                researcher.doctoryTeachingDepartmentName_TH = Validate.scrappingCleanUp(request.body.doctoryTeachingDepartmentName_TH)
-                researcher.doctory_AcademicYear = request.body.doctory_AcademicYear
-                researcher.doctory_FacultyBoard_Comment = request.body.doctory_FacultyBoard_Comment
-                researcher.doctory_CouncilBoard_Comment = request.body.doctory_CouncilBoard_Comment
-                researcher.doctory_InstituteBoard_Comment = request.body.doctory_InstituteBoard_Comment
+            researcher.scopusBefore2560 = request.body.scopusBefore2560
+            researcher.citationBefore2560 = request.body.citationBefore2560
+            researcher.hIndex = request.body.hIndex
 
-                researcher.keyword1_TH = Validate.scrappingCleanUp(request.body.keyword1_TH)
-                researcher.keyword2_TH = Validate.scrappingCleanUp(request.body.keyword2_TH)
-                researcher.keyword3_TH = Validate.scrappingCleanUp(request.body.keyword3_TH)
-                researcher.keyword4_TH = Validate.scrappingCleanUp(request.body.keyword4_TH)
-                researcher.keyword5_TH = Validate.scrappingCleanUp(request.body.keyword5_TH)
-                researcher.keyword1_EN = Validate.scrappingCleanUp(request.body.keyword1_EN)
-                researcher.keyword2_EN = Validate.scrappingCleanUp(request.body.keyword2_EN)
-                researcher.keyword3_EN = Validate.scrappingCleanUp(request.body.keyword3_EN)
-                researcher.keyword4_EN = Validate.scrappingCleanUp(request.body.keyword4_EN)
-                researcher.keyword5_EN = Validate.scrappingCleanUp(request.body.keyword5_EN)
+            researcher.citationTotal = request.body.citationTotal
+            researcher.citationAfter2560 = request.body.citationAfter2560
+            researcher.citationLifeTime = request.body.citationLifeTime
+            researcher.citationTCI = request.body.citationTCI
 
-                researcher.scopusBefore2560 = request.body.scopusBefore2560
-                researcher.citationBefore2560 = request.body.citationBefore2560
-                researcher.hIndex = request.body.hIndex
+            researcher.publicationTotal = request.body.publicationTotal
+            researcher.publication2560 = request.body.publication2560
+            researcher.publicationLifeTime = request.body.publicationLifeTime
+            researcher.publicationTCI = request.body.publicationTCI
 
-                researcher.citationTotal = request.body.citationTotal
-                researcher.citationAfter2560 = request.body.citationAfter2560
-                researcher.citationLifeTime = request.body.citationLifeTime
-                researcher.citationTCI = request.body.citationTCI
+            researcher.researcherPic = request.body.researcherPic
 
-                researcher.publicationTotal = request.body.publicationTotal
-                researcher.publication2560 = request.body.publication2560
-                researcher.publicationLifeTime = request.body.publicationLifeTime
-                researcher.publicationTCI = request.body.publicationTCI
+            Researcher_Control.newResearcher_fromScrap(researcher, this);
 
-                researcher.researcherPic = request.body.researcherPic
-
-                Researcher_Control.newResearcher_fromScrap(researcher, this);
-
-            }, function (code, err, functionCallback) {
-                if (err) {
-                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
-                    Return_Control.responseWithCodeAndData(ReturnCode.success, "New Researcher was saved successfully as _id defined", functionCallback._id, response);
-                }
+        }, function (code, err, functionCallback) {
+            if (err) {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
-        );
-    }
+            else {
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "New Researcher was saved successfully as _id defined", functionCallback._id, response);
+            }
+        }
+    );
 });
 
 router.post('/newResearcher_bulk', function (request, response) {

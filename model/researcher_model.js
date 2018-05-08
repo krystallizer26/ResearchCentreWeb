@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Researcher_Schema = new Schema({
-    researcherName_TH: { type: String, required: true, unique: true },
-    researcherName_EN: { type: String, required: true, unique: true },
-    gender: { type: String, default: null }, 
+    researcherName_TH: { type: String, unique: true },
+    researcherName_EN: { type: String, default: null },
+    gender: { type: String, default: null },
     personalID: { type: String, required: true },
     departmentId: { type: String, default: null },
     positionId: { type: String, default: null },
@@ -17,7 +17,7 @@ var Researcher_Schema = new Schema({
     birthDate: { type: String, default: null }, // Need to be date
     retirementStatus: { type: String, default: null }, // Need to be boolean
     researcherPic: { type: String, default: null },
-    
+
     keyword1_TH: { type: String, default: null },
     keyword2_TH: { type: String, default: null },
     keyword3_TH: { type: String, default: null },
@@ -34,13 +34,13 @@ var Researcher_Schema = new Schema({
     bachelor_FacultyBoard_Comment: { type: String, default: null },
     bachelor_CouncilBoard_Comment: { type: String, default: null },
     bachelor_InstituteBoard_Comment: { type: String, default: null },
-    
+
     masterTeachingDepartmentId: { type: String, default: null },
     master_AcademicYear: { type: Number, default: null },
     master_FacultyBoard_Comment: { type: String, default: null },
     master_CouncilBoard_Comment: { type: String, default: null },
     master_InstituteBoard_Comment: { type: String, default: null },
-    
+
     doctoryTeachingDepartmentId: { type: String, default: null },
     doctory_AcademicYear: { type: Number, default: null },
     doctory_FacultyBoard_Comment: { type: String, default: null },
