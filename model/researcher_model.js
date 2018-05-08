@@ -5,7 +5,7 @@ var Researcher_Schema = new Schema({
     researcherName_TH: { type: String, unique: true },
     researcherName_EN: { type: String, default: null },
     gender: { type: String, default: null },
-    personalID: { type: String, required: true },
+    personalID: { type: String, default: null },
     departmentId: { type: String, default: null },
     positionId: { type: String, default: null },
     academicLevelId: { type: String, default: null },
