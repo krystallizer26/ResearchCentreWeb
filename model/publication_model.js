@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var Publication_Schema = new Schema({
     researcherId: { type: String, default: "N/A" },
     publicationName: { type: String, required: true },
+    publicationAuthor: { type: String, default: "N/A" },
     publishLocation: { type: String, default: "N/A" },
     publishYear: { type: Number, default: 0 },
     publishType: { type: String, default: "N/A" },

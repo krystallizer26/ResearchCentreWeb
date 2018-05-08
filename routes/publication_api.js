@@ -51,6 +51,7 @@ router.post('/newPublication_EachScrap', function (request, response) {
                 var publication = new Publication();
                 publication.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
                 publication.publicationName = Validate.scrappingCleanUp(request.body.publicationName)
+                publication.publicationAuthor = Validate.scrappingCleanUp(request.body.publicationAuthor)
                 publication.publishLocation = Validate.scrappingCleanUp(request.body.publishLocation)
                 publication.publishYear = Validate.scrappingCleanUp(request.body.publishYear)
                 publication.publishType = Validate.scrappingCleanUp(request.body.publishType)
@@ -114,6 +115,7 @@ router.post('/newPublication_bulk', function (request, response) {
             var publication = new Publication();
             publication.researcherName = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชื่อ"]["$t"])
             publication.publicationName = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชื่อผลงานวิจัย"]["$t"])
+            publication.publicationAuthor = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชือเจ้าของผลงาน"]["$t"])
             publication.publishLocation = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$แหล่งเผยแพร่ผลงาน"]["$t"])
             publication.publishYear = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ปีพ.ศ."]["$t"])
             publication.publishType = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ลักษณะการเผยแพร่"]["$t"])
