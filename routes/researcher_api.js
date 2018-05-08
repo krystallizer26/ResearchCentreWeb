@@ -35,10 +35,6 @@ router.post('/newResearcher_EachScrap', function (request, response) {
     requiredData.push(request.body.personalID);
     var requiredReady = Validate.requiredData_Check(requiredData)
 
-    var booleanData = [];
-    booleanData.push(request.body.retirementStatus);
-    var booleanReady = Validate.booleanData_Check(booleanData)
-
     var numberData = [];
     numberData.push(request.body.personalID);
     var numberReady = Validate.numberData_Check(numberData)
@@ -47,11 +43,6 @@ router.post('/newResearcher_EachScrap', function (request, response) {
         var alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!booleanReady) {
-        var alert = "Input Not Valid, check if some data is not boolean."
-        console.log(alert);
-        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
     }
     else if (!numberReady) {
         var alert = "Input Not Valid, check if some data must contain only numeric character."
