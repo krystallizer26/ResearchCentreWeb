@@ -15,7 +15,7 @@ var Researcher_Schema = new Schema({
     target: { type: String, default: null },
     assignDate: { type: String, default: null }, // Need to be date
     birthDate: { type: String, default: null }, // Need to be date
-    retirementStatus: { type: String, default: false }, // Need to be boolean
+    retirementStatus: { type: String, default: null }, // Need to be boolean
     researcherPic: { type: String, default: null },
     
     keyword1_TH: { type: String, default: null },
