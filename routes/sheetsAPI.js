@@ -103,55 +103,91 @@ router.get('/insertResearcherSheet', function(req, res) {
         var fail_info = null;
         for (var i=1; i<rows.length; i++) {  // skip header row (i=0)
 
-          var name_th = rows[i].length > 0 ? rows[i][0].trim() : 'N/A';
-          if (name_th.includes(' ')) {
-            name_th = {
-              fname: (name_th.split(' '))[0].trim(),
-              lname: (name_th.split(' '))[1].trim()
-            }
-          } else {
-            name_th = {
-              fname: name_th,
-              lname: ''
-            }
-          }
+          // var name_th = rows[i].length > 0 ? rows[i][0].trim() : 'N/A';
+          // if (name_th.includes(' ')) {
+          //   name_th = {
+          //     fname: (name_th.split(' '))[0].trim(),
+          //     lname: (name_th.split(' '))[1].trim()
+          //   }
+          // } else {
+          //   name_th = {
+          //     fname: name_th,
+          //     lname: ''
+          //   }
+          // }
 
-          var name_en = rows[i].length > 2 ? rows[i][2].trim() : 'N/A';
-          if (name_en.includes(' ')) {
-            name_en = {
-              fname: (name_en.split(' '))[0].trim(),
-              lname: (name_en.split(' '))[1].trim()
-            }
-          } else {
-            name_en = {
-              fname: name_en,
-              lname: ''
-            }
-          }
+          // var name_en = rows[i].length > 2 ? rows[i][2].trim() : 'N/A';
+          // if (name_en.includes(' ')) {
+          //   name_en = {
+          //     fname: (name_en.split(' '))[0].trim(),
+          //     lname: (name_en.split(' '))[1].trim()
+          //   }
+          // } else {
+          //   name_en = {
+          //     fname: name_en,
+          //     lname: ''
+          //   }
+          // }
+
           var formData = {
-            researcherFName_TH: name_th.fname,
-            researcherLName_TH: name_th.lname,
-            researcherFName_EN: name_en.fname,
-            researcherLName_EN: name_en.lname,
-            gender: 'N/A',
-            personalID: rows[i].length > 1 ? (rows[i][1].length > 0 ? rows[i][1].trim() : 'N/A') : 'N/A',
-            birthDate: rows[i].length > 11 ? (rows[i][11].length > 0 ? rows[i][11].trim() : 'N/A') : 'N/A',
-            departmentId: 'N/A',
-            positionId: 'N/A',
-            academicLevelId: 'N/A',
-            bachelorGraduation: rows[i].length > 7 ? (rows[i][7].length > 0 ? rows[i][7].trim() : 'N/A') : 'N/A',
-            masterGraduation: rows[i].length > 8 ? (rows[i][8].length > 0 ? rows[i][8].trim() : 'N/A') : 'N/A',
-            doctoralGraduation: rows[i].length > 9 ? (rows[i][9].length > 0 ? rows[i][9].trim() : 'N/A') : 'N/A',
-            target: rows[i].length > 28 ? (rows[i][28].length > 0 ? rows[i][28].trim() : 'N/A') : 'N/A',
-            assignDate: rows[i].length > 10 ? (rows[i][10].length > 0 ? rows[i][10].trim() : 'N/A') : 'N/A',
-            retirementStatus: rows[i].length > 12 ? (rows[i][12].length > 0 ? rows[i][12].trim() : 'N/A') : 'N/A',
-          }
-          for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
-          for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
-          for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
+            researcherName_TH: validateValueInRow(rows[i], 0),
+            researcherName_EN: validateValueInRow(rows[i], 2),
+            personalID: validateValueInRow(rows[i], 1),
+            departmentName_TH: validateValueInRow(rows[i], 3),
+            academicPositionName_TH: validateValueInRow(rows[i], 4),
+            academicPositionName_EN: validateValueInRow(rows[i], 6),
+            positionName_TH: validateValueInRow(rows[i], 5),
+            bachelorGraduation: validateValueInRow(rows[i], 7),
+            masterGraduation: validateValueInRow(rows[i], 8),
+            doctoralGraduation: validateValueInRow(rows[i], 9),
+            assignDate: validateValueInRow(rows[i], 10),
+            birthDate: validateValueInRow(rows[i], 11),
+            retirementStatus: validateValueInRow(rows[i], 12),
+            target: validateValueInRow(rows[i], 28),
+            bachelorTeachingDepartmentName_TH: validateValueInRow(rows[i], 13),
+            bachelor_AcademicYear: validateValueInRow(rows[i], 14),
+            bachelor_FacultyBoard_Comment: validateValueInRow(rows[i], 15),
+            bachelor_CouncilBoard_Comment: validateValueInRow(rows[i], 16),
+            bachelor_InstituteBoard_Comment: validateValueInRow(rows[i], 17),
+            masterTeachingDepartmentName_TH: validateValueInRow(rows[i], 18),
+            master_AcademicYear: validateValueInRow(rows[i], 19),
+            master_FacultyBoard_Comment: validateValueInRow(rows[i], 20),
+            master_CouncilBoard_Comment: validateValueInRow(rows[i], 21),
+            master_InstituteBoard_Comment: validateValueInRow(rows[i], 22),
+            doctoryTeachingDepartmentName_TH: validateValueInRow(rows[i], 23),
+            doctory_AcademicYear: validateValueInRow(rows[i], 24),
+            doctory_FacultyBoard_Comment: validateValueInRow(rows[i], 25),
+            doctory_CouncilBoard_Comment: validateValueInRow(rows[i], 26),
+            doctory_InstituteBoard_Comment: validateValueInRow(rows[i], 27),
+            keyword1_TH: validateValueInRow(rows[i], 34),
+            keyword2_TH: validateValueInRow(rows[i], 35),
+            keyword3_TH: validateValueInRow(rows[i], 36),
+            keyword4_TH: validateValueInRow(rows[i], 37),
+            keyword5_TH: validateValueInRow(rows[i], 38),
+            keyword1_EN: validateValueInRow(rows[i], 29),
+            keyword2_EN: validateValueInRow(rows[i], 30),
+            keyword3_EN: validateValueInRow(rows[i], 31),
+            keyword4_EN: validateValueInRow(rows[i], 32),
+            keyword5_EN: validateValueInRow(rows[i], 33),
+            scopusBefore2560: validateValueInRow(rows[i], 39),
+            citationBefore2560: validateValueInRow(rows[i], 40),
+            hIndex: validateValueInRow(rows[i], 41),
+            citationTotal: validateValueInRow(rows[i], 42),
+            citationAfter2560: validateValueInRow(rows[i], 43),
+            citationLifeTime: validateValueInRow(rows[i], 44),
+            citationTCI: validateValueInRow(rows[i], 45),
+            publicationTotal: validateValueInRow(rows[i], 46),
+            publication2560: validateValueInRow(rows[i], 47),
+            publicationLifeTime: validateValueInRow(rows[i], 48),
+            publicationTCI: validateValueInRow(rows[i], 49),
+            researcherPic: null
+          };
+          // for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
+          // for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
+          // for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
 
           var response = await rp({
-            uri: 'http://localhost:2000/api/newResearcher',
+            uri: 'http://localhost:2000/api/newResearcher_EachScrap',
             method: 'POST',
             form: formData
           });
@@ -165,9 +201,6 @@ router.get('/insertResearcherSheet', function(req, res) {
             break;
           } 
         }
-        // res.json({
-        //   code: rows
-        // });
         
         if (fail_info) {
           console.log('FAIL INFO => ' + fail_info.code + ' ---> ' + fail_info.message);
@@ -438,6 +471,10 @@ router.get('/getDataSetup', async function(req, res) {
       }
     });
 });
+
+function validateValueInRow(row, idx) {
+  return row.length > 1 ? (row[idx].length > 0 ? row[idx].trim() : null) : null;
+}
 
 module.exports = router;
 
