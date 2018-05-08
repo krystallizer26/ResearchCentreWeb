@@ -23,7 +23,7 @@ init();
             res.success(function(data, status, headers, config) {
                 //$scope.message = data;
                 console.log("this getAllResearcherPreview_ai = " +JSON.stringify(data))
-                //$scope.researcher_list = data;
+                $scope.researcher_list = data;
               
                 
              
