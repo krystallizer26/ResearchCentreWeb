@@ -4,7 +4,7 @@ app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service
   console.log(researcher_id);
   //alert("id ===> " +researcher_id);
 
-  $scope.researchData = {}
+  //$scope.researchData = {}
   let dataObj = {
             researcherId : researcher_id
           };
@@ -21,8 +21,8 @@ app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service
                 else
                 {
                 console.log(data);
-                $scope.researchData  = data.message;
-                console.log('$scope.researchData  =  '+ JSON.stringify($scope.researchData))
+                $scope.researchData  = data.data;
+                console.log($scope.researchData)
             //    $scope.news_table= new NgTableParams({count: 10 ,  sorting: { resourceName: "desc" }  }, { counts: [10,20, 100], dataset: $scope.news_list });
 
               }

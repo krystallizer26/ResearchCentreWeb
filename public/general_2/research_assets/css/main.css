@@ -1,9 +1,10 @@
 .picturepofile {
-  max-width: 50%;
+  max-width: 33%;
   position: absolute;
   z-index: 1;
   top: 6%;
-  left: 25%;
+  left: 31%;
+  border-radius: 11px;
 }
 .row .profile-detail{
   padding: inherit;
