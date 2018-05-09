@@ -239,6 +239,7 @@ module.exports = {
     },
 
     getAllFullResearcherDataPreview: function (researcher, callback) {
+        let forCallback = [];
         for (let i = 0; i < researcher.length; i++) {
             getFullResearcherPreview(researcher[i], function (a) {
                 console.log("a >> " + JSON.stringify(a))
