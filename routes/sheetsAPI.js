@@ -93,7 +93,7 @@ router.get('/insertResearcherSheet', function(req, res) {
       spreadsheetId: sheetId,
       ranges: [ "'นักวิจัย'" ],
       auth: clientAuth
-    }, function(err, {data}) {
+    }, async function(err, {data}) {
       if (err) {
         res.json({
           code: 'FAILED',
@@ -162,19 +162,21 @@ router.get('/insertResearcherSheet', function(req, res) {
           // for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
           // for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
 
-          rp({
-            uri: 'http://localhost:2000/api/newResearcher_EachScrap',
-            method: 'POST',
-            form: formData
-          }).then(function(response) {
+          try {
+            var response = await rp({
+              uri: 'http://localhost:2000/api/newResearcher_EachScrap',
+              method: 'POST',
+              form: formData
+            });
+
             if (response.code != '999999') {
-              console.log('FAILED => ' + response.code + ' ---> ' + response.message);
+              console.log('row #' + i + ' FAILED => ' + response.code + ' ---> ' + response.message);
             } else {
-              console.log('--------- SUCCESS !!!');
+              console.log('row #' + i + ' SUCCESS !!!');
             }
-          }).catch(function(err) {
-            console.log('ERROR => ' + err.message);
-          });
+          } catch (err) {
+            console.log('row #' + i + ' ERROR => ' + err.message);
+          }
         }
         
         // res.json({
