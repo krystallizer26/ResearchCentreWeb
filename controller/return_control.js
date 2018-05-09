@@ -4,8 +4,8 @@ module.exports = {
         response.json({ "code": codeNum, "message": txt, "data": null });
     },
     responseWithCodeAndData: function (codeNum, txt, data, response) {
-        console.log("** Response message >> " + txt);
-        console.log("** Response data    >> " + JSON.stringify(data));
+        // console.log("** Response #"+codeNum+" >> " + txt);
+        // console.log("** Response data    >> " + JSON.stringify(data));
         response.json({ "code": codeNum, "message": txt, "data": data });
     }
 };

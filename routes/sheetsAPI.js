@@ -167,10 +167,11 @@ router.get('/insertResearcherSheet', function(req, res) {
             method: 'POST',
             form: formData
           }).then(function(response) {
+            response = JSON.parse(response)
             if (response.code != '999999') {
               console.log('FAILED => ' + response.code + ' ---> ' + response.message);
             } else {
-              console.log('--------- SUCCESS !!!');
+              //console.log('--------- SUCCESS !!!');
             }
           }).catch(function(err) {
             console.log('ERROR => ' + err.message);
@@ -184,7 +185,7 @@ router.get('/insertResearcherSheet', function(req, res) {
 
         res.json({
           code: '999999',
-          message: 'done!'
+          message: 'Processing... Please Wait!'
         });
       }
     });

@@ -2,8 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Researcher_Schema = new Schema({
-    researcherName_TH: { type: String, unique: true },
+    researcherName_TH: { type: String, required: true, unique: true },
     researcherName_EN: { type: String, default: null },
+    researcherName_Combine: { type: String, default: null },
     gender: { type: String, default: null },
     personalID: { type: String, default: null },
     departmentId: { type: String, default: null },
@@ -18,16 +19,11 @@ var Researcher_Schema = new Schema({
     retirementStatus: { type: String, default: null }, // Need to be boolean
     researcherPic: { type: String, default: null },
 
-    keyword1_TH: { type: String, default: null },
-    keyword2_TH: { type: String, default: null },
-    keyword3_TH: { type: String, default: null },
-    keyword4_TH: { type: String, default: null },
-    keyword5_TH: { type: String, default: null },
-    keyword1_EN: { type: String, default: null },
-    keyword2_EN: { type: String, default: null },
-    keyword3_EN: { type: String, default: null },
-    keyword4_EN: { type: String, default: null },
-    keyword5_EN: { type: String, default: null },
+    keywordArray: [{
+        keyword_TH: String,
+        keyword_EN: String,
+        keyword_Combine: String,
+    }],
 
     bachelorTeachingDepartmentId: { type: String, default: null },
     bachelor_AcademicYear: { type: Number, default: null },
