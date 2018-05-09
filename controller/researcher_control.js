@@ -13,7 +13,7 @@ module.exports = {
             if (error) {
                 let errCode = "361";
                 var alert = "Saving Researcher fail, Error: " + error.message;
-                console.log("ERROR Code: " + errCode + " " + alert);
+                //console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null);
             }
             else {
@@ -256,27 +256,43 @@ module.exports = {
         }
 
         let currentPos = 0;
-        flow.serialForEach(counterArray, function (pos) {
-            currentPos = pos;
-            //console.log("historyArray[currentPos] " + historyArray[currentPos]);
-            getFullResearcherPreview(researcher[currentPos], this);
-        }, function (functionCallback) {
-            forCallback.push(functionCallback);
-        }, function () {
-            //console.log("callback")
-            callback("561", null, forCallback);
-        });
+        let qqq = qqqqqq(researcher);
+        callback("561", null, qqq);
+
+        // flow.serialForEach(counterArray, function (pos) {
+        //     currentPos = pos;
+        //     //console.log("historyArray[currentPos] " + historyArray[currentPos]);
+        //     getFullResearcherPreview(researcher[currentPos], this);
+        // }, function (functionCallback) {
+        //     forCallback.push(functionCallback);
+        // }, function () {
+        //     //console.log("callback")
+        //     callback("561", null, forCallback);
+        // });
 
     }
 };
 
 //------
 
+async function qqqqqq(a) {
+
+    var forCallback = []
+
+    const  z = await Promise.all(a.map(async (a1) => {
+        const contents = await getFullResearcherPreview(a1)
+        console.log("YEAH")
+    }));
+    return z
+}
+
 var Position_Control = require("../controller/position_control.js");
 var AcademicLevel_Control = require("../controller/academicLevel_control.js");
 var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
 var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
 var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+
+var forCallback_getFullResearcherPreview = []
 
 function getFullResearcher(input, callback) {
     let researcherData = JSON.parse(JSON.stringify(input));
@@ -366,16 +382,6 @@ function getFullResearcherPreview(input, callback) {
                 researcherData["departmentName_TH"] = "Not found";
                 researcherData["departmentName_EN"] = "Not found";
             }
-            Position_Control.checkPositionByID(new ObjectId(researcherData.positionId), this);
-        }, function (code, err, functionCallback) {
-            if (functionCallback) {
-                researcherData["positionName_TH"] = functionCallback.positionName_TH;
-                researcherData["positionName_EN"] = functionCallback.positionName_EN;
-            }
-            else {
-                researcherData["positionName_TH"] = "Not found";
-                researcherData["positionName_EN"] = "Not found";
-            }
             AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(researcherData.academicLevelId), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
@@ -386,8 +392,7 @@ function getFullResearcherPreview(input, callback) {
                 researcherData["academicLevelName_TH"] = "Not found";
                 researcherData["academicLevelName_EN"] = "Not found";
             }
-
-            callback(researcherData)
+            forCallback_getFullResearcherPreview.push(researcherData)
         }
     );
 }
