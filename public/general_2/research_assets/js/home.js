@@ -7,14 +7,11 @@ init();
 
 
  function init(){
-	 $scope.search={};
-	 $scope.search.departmentName_TH='';
-<<<<<<< HEAD
+     $scope.search={};
+     $scope.search.departmentData = {};
+	 $scope.search.departmentData.departmentName_TH='';
      
      $scope.loading = true;
-=======
-
->>>>>>> f6c10f46344079773b945c78b7bdcb8a6f41cdb8
 	 $scope.researcher_list={};
 	  let dataObj = {
 
@@ -27,7 +24,6 @@ init();
 
             res.success(function(data, status, headers, config) {
                 //$scope.message = data;
-<<<<<<< HEAD
                 console.log("this getAllResearcherPreview_ai = " +JSON.stringify(data))
                 if(data.code != "999999")
                 {
@@ -37,19 +33,14 @@ init();
 
                     
                     $scope.researcher_list = data.data;
+                    console.log("========================== ")
+                    console.log($scope.researcher_list)
                     $scope.loading = false;
                 }
                 
               
                 
              
-=======
-                console.log("this getAllResearcherPreview = " +JSON.stringify(data))
-                $scope.researcher_list = data.data;
-
-
-
->>>>>>> f6c10f46344079773b945c78b7bdcb8a6f41cdb8
             });
             res.error(function(data, status, headers, config) {
                 alert( "failure message: " + JSON.stringify({data: data}) +"ไม่สามารถติดต่อเซิฟเวอร์ได้ ติดต่อแอดมิน");
