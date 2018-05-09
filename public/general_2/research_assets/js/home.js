@@ -9,7 +9,8 @@ init();
  function init(){
 	 $scope.search={};
 	 $scope.search.departmentName_TH='';
-	 
+     
+     $scope.loading = true;
 	 $scope.researcher_list={};
 	  let dataObj = {
                
@@ -29,7 +30,9 @@ init();
                 }
                 else{
 
+                    
                     $scope.researcher_list = data.data;
+                    $scope.loading = false;
                 }
                 
               
