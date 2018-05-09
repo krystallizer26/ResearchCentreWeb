@@ -87,7 +87,7 @@ fs.readFile(CLIENT_SECRET_PATH, (err, content) => {
 });
 
 // route definitions ==============================================
-<<<<<<< HEAD
+
 router.get('/insertResearcherSheet', function (req, res) {
 
   sheets.spreadsheets.values.batchGet({
@@ -176,7 +176,9 @@ router.get('/insertResearcherSheet', function (req, res) {
           }
         }).catch(function (err) {
           console.log('ERROR => ' + err.message);
-=======
+        })
+      }
+    }})})
 router.get('/insertResearcherSheet', function(req, res) {
 
     sheets.spreadsheets.values.batchGet({
@@ -268,18 +270,8 @@ router.get('/insertResearcherSheet', function(req, res) {
             console.log('row #' + i + ' ERROR => ' + err.message);
           }
         }
-        
-        // res.json({
-        //   code: '999999',
-        //   message: dataSend
-        // });
 
-        res.json({
-          code: '999999',
-          message: 'Processing... Please Wait!'
->>>>>>> 5664bd1b81c84b1f05c88cda36f1287dab32bb48
-        });
-      }
+
 
       // res.json({
       //   code: '999999',
@@ -604,4 +596,3 @@ function validateValueInRow(row, idx) {
 }
 
 module.exports = router;
-
