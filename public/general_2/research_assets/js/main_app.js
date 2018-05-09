@@ -75,22 +75,22 @@ angular.module('app')
   // each function returns a promise object
   .factory('global_service', ['$rootScope', '$http', function($rootScope, $http) {
     let buf_id;
-   
-	
-	let factory = {}; 
 
-	factory.get_news_id = function() {
+
+	let factory = {};
+
+	factory.get_research_id = function() {
 		  return buf_id;
 		}
 
-	factory.set_news_id = function(id) {
+	factory.set_research_id = function(id) {
 			    buf_id = id;
         console.log('set_news_id= '+buf_id)
       }
 	return factory;
-	
-	
-	
+
+
+
   }]);
 
   app.run(function($state, $rootScope){
