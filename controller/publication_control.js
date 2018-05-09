@@ -25,13 +25,13 @@ module.exports = {
 
         flow.exec(
             function () {
-                Researcher_Control.checkResearcherByResearcherName(publication.researcherName, this);
+                Researcher_Control.checkResearcherByPersonalID(publication.researcherPersonalID, this);
             }, function (code, err, functionCallback) {
                 if (!err) {
                     publication.researcherId = functionCallback._id
                 }
                 else {
-                    callback("581", null, null)
+                    publication.researcherId = "111111111111111111111111"
                 }
                 BachelorTeachingDepartment_Control.checkAndInsertBachelorTeachingByBachelorTeachingDepartmentName(publication.bachelorTeachingDepartmentName_TH, publication.bachelorTeachingDepartmentName_EN, this);
             }, function (code, err, functionCallback) {
@@ -61,7 +61,7 @@ module.exports = {
                 publication.save(function (error, saveResponse) {
                     if (error) {
                         let errCode = "582";
-                        var alert = "Saving Publication fail, Error: " + error.message;
+                        var alert = "Saving Publication fail, Error: " + error.message + "@" + publication.publicationName;
                         console.log("ERROR Code: " + errCode + " " + alert);
                         callback(errCode, alert, null);
                     }
@@ -191,6 +191,37 @@ module.exports = {
             }
         });
     },
+    getAllPublicationPreviewByResearcherId: function (researcherId, limitNum, callback) {
+        Publication.find({ "researcherId": researcherId }, {
+            "_id": true,
+            "researcherId": true,
+            "publicationName": true,
+            "publishLocation": true,
+            "publishYear": true,
+            "publishType": true,
+            "publicationDatabase": true
+        }, { sort: { "publishYear": -1 }, limit: limitNum }
+            , function (error, functionCallback) {
+                if (error) {
+                    let errCode = "611";
+                    var alert = "Error in getAllPublicationPreview , Error : " + error.message;
+                    console.log("ERROR Code: " + errCode + " " + alert);
+                    callback(errCode, alert, null)
+                }
+                else if (functionCallback) {
+                    let errCode = "612";
+                    var alert = "Get All Publication Completed! ";
+                    //console.log(alert);
+                    callback(errCode, null, functionCallback)
+                }
+                else {
+                    let errCode = "613";
+                    var alert = "No Researcher Founded";
+                    console.log("ERROR Code: " + errCode + " " + alert);
+                    callback(errCode, alert, null)
+                }
+            });
+    },
 
     getFullPublicationData: function (researcherData, callback) {
         let tmp = JSON.parse(JSON.stringify(researcherData));
@@ -205,22 +236,19 @@ module.exports = {
     },
 
     getAllFullPublicationDataPreview: function (pubilcation, callback) {
-        var counterArray = []
-        var forCallback = []
+        let forCallback = [];
+        console.log("pubilcation.length >> " + pubilcation.length)
+        let j = 0;
         for (let i = 0; i < pubilcation.length; i++) {
-            counterArray.push(i)
+            getFullPublicationPreview(pubilcation[i], function (a) {
+                //console.log("a >> " + JSON.stringify(a))
+                forCallback.push(a);
+                if (j == pubilcation.length - 1)
+                    callback("561", null, forCallback);
+                else
+                    j++;
+            });
         }
-        let currentPos = 0;
-        flow.serialForEach(counterArray, function (pos) {
-            currentPos = pos;
-            //console.log("historyArray[currentPos] " + historyArray[currentPos]);
-            getFullPublicationPreview(pubilcation[currentPos], this);
-        }, function (functionCallback) {
-            forCallback.push(functionCallback);
-        }, function () {
-            //console.log("callback")
-            callback("561", null, forCallback);
-        });
 
     }
 };
@@ -243,7 +271,7 @@ function getFullPublicationPreview(input, callback) {
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)
-            Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId), this)
+            Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId), {}, this)
         }, function (code, err, functionCallback) {
             if (functionCallback) {
                 publicationData["researcherName_TH"] = functionCallback.researcherName_TH;
@@ -291,9 +319,9 @@ function getFullPublicationPreview(input, callback) {
     );
 }
 
-function getFullPublicationPreview(input, callback) {
+function getFullPublication(input, callback) {
     let publicationData = JSON.parse(JSON.stringify(input));
-    console.log("getFullPublicationPreview for " + publicationData.publicationName)
+    console.log("getFullPublication for " + publicationData.publicationName)
     let academicLevelId_tmp = null;
     let positionId_tmp = null;
     let departmentId_tmp = null;
@@ -303,6 +331,7 @@ function getFullPublicationPreview(input, callback) {
             Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId), this)
         }, function (code, err, functionCallback) {
             if (functionCallback) {
+                publicationData["researcherId"] = functionCallback._id;
                 publicationData["researcherName_TH"] = functionCallback.researcherName_TH;
                 publicationData["researcherName_EN"] = functionCallback.researcherName_EN;
                 academicLevelId_tmp = functionCallback.academicLevelId;
@@ -316,17 +345,15 @@ function getFullPublicationPreview(input, callback) {
             Position_Control.checkPositionByID(new ObjectId(positionId_tmp), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                publicationData["positionName_TH"] = functionCallback.positionName_TH;
-                publicationData["positionName_EN"] = functionCallback.positionName_EN;
+                publicationData["positionData"] = functionCallback;
             }
             else {
-                publicationData["positionName_TH"] = "Not found";
-                publicationData["positionName_EN"] = "Not found";
+                publicationData["positionData"] = [];
             }
             AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(academicLevelId_tmp), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                publicationData["academicLevelName_TH"] = functionCallback.academicLevelName_TH;
+                publicationData["academicLevelData"] = functionCallback.academicLevelName_TH;
                 publicationData["academicLevelName_EN"] = functionCallback.academicLevelName_EN;
             }
             else {

@@ -141,6 +141,25 @@ module.exports = {
                 callback(errCode, alert, functionCallback)
             }
         });
+    }, 
+    checkResearcherByPersonalID: function (personalID, callback) {
+        Researcher.findOne({ "personalID": personalID }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "591";
+                var alert = "Error in finding Researcher with personalID: " + personalID + "\nError: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback) {
+                callback("592", null, functionCallback)
+            }
+            else {
+                let errCode = "593";
+                var alert = "Researcher with personalID: " + personalID + " not found";
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, functionCallback)
+            }
+        });
     },
     checkBindedKeywordwithResearcher: function (researcherId, keywordId, callback) {
         Researcher.findOne({ $and: [{ "_id": researcherId }, { "keywordIdArray": keywordId }] }, function (error, findCallback) {
@@ -240,12 +259,15 @@ module.exports = {
 
     getAllFullResearcherDataPreview: function (researcher, callback) {
         let forCallback = [];
+        let j = 0;
         for (let i = 0; i < researcher.length; i++) {
             getFullResearcherPreview(researcher[i], function (a) {
-                console.log("a >> " + JSON.stringify(a))
+                //console.log("a >> " + JSON.stringify(a))
                 forCallback.push(a);
-                if (i == researcher.length-1)
+                if (j == researcher.length - 1)
                     callback("561", null, forCallback);
+                else
+                    j++;
             });
         }
 
@@ -282,62 +304,50 @@ function getFullResearcher(input, callback) {
             Department_Control.checkDepartmentByID(new ObjectId(researcherData.departmentId), this)
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                researcherData["departmentName_TH"] = functionCallback.departmentName_TH;
-                researcherData["departmentName_EN"] = functionCallback.departmentName_EN;
+                researcherData["departmentData"] = functionCallback
             }
             else {
-                researcherData["departmentName_TH"] = "Not found";
-                researcherData["departmentName_EN"] = "Not found";
+                researcherData["departmentData"] = [];
             }
             Position_Control.checkPositionByID(new ObjectId(researcherData.positionId), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                researcherData["positionName_TH"] = functionCallback.positionName_TH;
-                researcherData["positionName_EN"] = functionCallback.positionName_EN;
+                researcherData["positionData"] = functionCallback
             }
             else {
-                researcherData["positionName_TH"] = "Not found";
-                researcherData["positionName_EN"] = "Not found";
+                researcherData["positionData"] = [];
             }
             AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(researcherData.academicLevelId), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                researcherData["academicLevelName_TH"] = functionCallback.academicLevelName_TH;
-                researcherData["academicLevelName_EN"] = functionCallback.academicLevelName_EN;
+                researcherData["academicLevelData"] = functionCallback
             }
             else {
-                researcherData["academicLevelName_TH"] = "Not found";
-                researcherData["academicLevelName_EN"] = "Not found";
+                researcherData["academicLevelData"] = [];
             }
             BachelorTeachingDepartment_Control.checkBachelorTeachingDepartmentByID(new ObjectId(researcherData.bachelorTeachingDepartmentId), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                researcherData["bachelorTeachingDepartmentName_TH"] = functionCallback.bachelorTeachingDepartmentName_TH;
-                researcherData["bachelorTeachingDepartmentName_EN"] = functionCallback.bachelorTeachingDepartmentName_EN;
+                researcherData["bachelorDepartment"] = functionCallback
             }
             else {
-                researcherData["bachelorTeachingDepartmentName_TH"] = "Not found";
-                researcherData["bachelorTeachingDepartmentName_EN"] = "Not found";
+                researcherData["bachelorDepartment"] = [];
             }
             MasterTeachingDepartment_Control.checkMasterTeachingDepartmentByID(new ObjectId(researcherData.masterTeachingDepartmentId), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                researcherData["masterTeachingDepartmentName_TH"] = functionCallback.masterTeachingDepartmentName_TH;
-                researcherData["masterTeachingDepartmentName_EN"] = functionCallback.masterTeachingDepartmentName_EN;
+                researcherData["masterDepartment"] = functionCallback
             }
             else {
-                researcherData["masterTeachingDepartmentName_TH"] = "Not found";
-                researcherData["masterTeachingDepartmentName_EN"] = "Not found";
+                researcherData["masterDepartment"] = [];
             }
             DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentByID(new ObjectId(researcherData.doctoryTeachingDepartmentId), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                researcherData["doctoryTeachingDepartmentName_TH"] = functionCallback.doctoryTeachingDepartmentName_TH;
-                researcherData["doctoryTeachingDepartmentName_EN"] = functionCallback.doctoryTeachingDepartmentName_EN;
+                researcherData["doctoryDepartment"] = functionCallback
             }
             else {
-                researcherData["doctoryTeachingDepartmentName_TH"] = "Not found";
-                researcherData["doctoryTeachingDepartmentName_EN"] = "Not found";
+                researcherData["doctoryDepartment"] = [];
             }
             callback(researcherData)
         }
@@ -354,32 +364,26 @@ function getFullResearcherPreview(input, callback) {
             Department_Control.checkDepartmentByID(new ObjectId(researcherData.departmentId), this)
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                researcherData["departmentName_TH"] = functionCallback.departmentName_TH;
-                researcherData["departmentName_EN"] = functionCallback.departmentName_EN;
+                researcherData["departmentData"] = functionCallback
             }
             else {
-                researcherData["departmentName_TH"] = "Not found";
-                researcherData["departmentName_EN"] = "Not found";
+                researcherData["departmentData"] = [];
             }
             Position_Control.checkPositionByID(new ObjectId(researcherData.positionId), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                researcherData["positionName_TH"] = functionCallback.positionName_TH;
-                researcherData["positionName_EN"] = functionCallback.positionName_EN;
+                researcherData["positionData"] = functionCallback
             }
             else {
-                researcherData["positionName_TH"] = "Not found";
-                researcherData["positionName_EN"] = "Not found";
+                researcherData["positionData"] = [];
             }
             AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(researcherData.academicLevelId), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                researcherData["academicLevelName_TH"] = functionCallback.academicLevelName_TH;
-                researcherData["academicLevelName_EN"] = functionCallback.academicLevelName_EN;
+                researcherData["academicLevelData"] = functionCallback
             }
             else {
-                researcherData["academicLevelName_TH"] = "Not found";
-                researcherData["academicLevelName_EN"] = "Not found";
+                researcherData["academicLevelData"] = [];
             }
             callback(researcherData)
 

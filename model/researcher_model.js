@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Researcher_Schema = new Schema({
-    researcherName_TH: { type: String, required: true, unique: true },
+    researcherName_TH: { type: String, required: true, unique: true, dropDups: true },
     researcherName_EN: { type: String, default: null },
     researcherName_Combine: { type: String, default: null },
     gender: { type: String, default: null },
