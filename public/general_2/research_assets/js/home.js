@@ -17,13 +17,21 @@ init();
     
     
         console.log("for getAllResearcherPreview_ai =====----dataObj ---+++++" + JSON.stringify(dataObj));
-            let res = $http.post('/api/getAllResearcherPreview_ai', dataObj);
+            let res = $http.post('/api/getAllResearcherPreview', dataObj);
 	
   
             res.success(function(data, status, headers, config) {
                 //$scope.message = data;
                 console.log("this getAllResearcherPreview_ai = " +JSON.stringify(data))
-                $scope.researcher_list = data;
+                if(data.code != "999999")
+                {
+                        alert( JSON.stringify(data.code) )
+                }
+                else{
+
+                    $scope.researcher_list = data.data;
+                }
+                
               
                 
              
