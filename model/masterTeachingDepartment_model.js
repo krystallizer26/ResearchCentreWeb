@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var MasterTeachingDepartment_Schema = new Schema({
-    masterTeachingDepartmentName_TH: { type: String, unique: true },
+    masterTeachingDepartmentName_TH: { type: String, unique: true, dropDups: true },
     masterTeachingDepartmentName_EN: { type: String, default: null },
     createdDate: { type: Date, default: Date.now },
     editedDate: { type: Date, default: Date.now }
