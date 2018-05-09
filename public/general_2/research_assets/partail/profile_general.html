@@ -22,22 +22,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
   <!--------------------
   END - Breadcrumbs
   -------------------->
-<div class="class="content-i"">
+<div class="content-i">
   <div class="content-box" ><div class="row">
     <div class="col-sm-6">
       <div class="user-profile compact">
 
         <div class="up-head-w" style="max-width: 1600px;background-image:url(/general_2/research_assets/image/background_drops_light_circles_blue_83428.jpg)">
-        <img class = "picturepofile" ng-src="/general_2/research_assets/image/Facebook-no-profile-picture-icon-620x389-e1416282314920.jpg">
+        <img class = "picturepofile" ng-src="http://www.science.kmitl.ac.th/wp-content/uploads/2018/01/DSC_5232-683x1024.jpg">
           <!-- <div class="up-social">
             <a href="#"><i class="os-icon os-icon-twitter"></i></a><a href="#"><i class="os-icon os-icon-facebook"></i></a>
           </div> -->
           <div class="up-main-info" style="padding-top:57%">
             <h2 class="up-header">
-              Prof. Tawan Sooknoi
+              {{researchData.academicLevelName_EN}} {{researchData.researcherName_EN}}
             </h2>
             <h6 class="up-sub-header">
-              Head/Researcher Department of Chemistry
+              {{researchData.positionName_EN}} / {{researchData.departmentName_TH}}
             </h6>
           </div>
           <svg class="decor" width="842px" height="219px" viewBox="0 0 842 219" preserveAspectRatio="xMaxYMax meet" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="translate(-381.000000, -362.000000)" fill="#FFFFFF"><path class="decor-path" d="M1223,362 L1223,581 L381,581 C868.912802,575.666667 1149.57947,502.666667 1223,362 Z"></path></g></svg>
@@ -65,7 +65,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
               <div class="col-sm-6 b-r b-b">
                 <div class="el-tablo centered padded-v">
                   <div class="value">
-                    25
+                    {{researchData.citationTotal}}
                   </div>
                   <div class="label">
                     Total sitetations
@@ -75,7 +75,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
               <div class="col-sm-6 b-b">
                 <div class="el-tablo centered padded-v">
                   <div class="value">
-                    315
+                    {{researchData.publicationTotal}}
                   </div>
                   <div class="label">
                     Total publications
@@ -240,7 +240,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
                 <legend style="margin-bottom: 0.5rem;"><span>ชื่อ-นามสกุล / Frist name - Last name</span></legend>
                 <div class="row" >
                   <div class="col" style="margin-left: 12px;">
-                      รศ.ดร.ตะวัน สุขน้อย  / Prof. Tawan Sooknoi
+                      {{researchData.researcherName_Combine}}
                   </div>
                 </div>
               </div>
@@ -249,7 +249,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
               <legend style="margin-bottom: 0.5rem;"><span>ภาควิชา / Department</span></legend>
               <div class="row" >
                 <div class="col" style="margin-left: 12px;">
-                    ภาควิชาเคมี  / Department of Chemistry
+                    {{researchData.departmentName_TH}}  / {{researchData.departmentName_EN}}
                 </div>
               </div>
             </div>
@@ -258,7 +258,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
               <legend style="margin-bottom: 0.5rem;"><span>ตำแหน่งงาน / Position</span></legend>
               <div class="row">
                 <div class="col" style="margin-left: 12px;">
-                    หัวหน้าภาควิชาเคมี / Head/Researcher Department of Chemistry
+                    {{researchData.positionName_TH}} / {{researchData.positionName_EN}}
                 </div>
               </div>
             </div>
@@ -280,7 +280,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
                       </div>
                       <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
-                          M.Eng Kyoto University (1989),Ph.D.Kyoto University (1999)dddd ddddddd ddddddddd ddddddddd dddd
+                           {{researchData.bachelorGraduation}}
                         </div>
                       </div>
                     </div>
@@ -295,8 +295,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
                       </div>
                       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
-                           M.Eng Kyoto University (1989),Ph.D.Kyoto University (1999) M.Eng Kyoto University (1989),Ph.D.Kyoto University (1999)
-                        </div>
+                          {{researchData.masterGraduation}}
                       </div>
                     </div>
                     <div class="card card-collapse">
@@ -310,7 +309,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
                       </div>
                       <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                         <div class="card-body">
-                          M.Eng Kyoto University (1989),Ph.D.Kyoto University (1999) /  M.Eng Kyoto University (1989),Ph.D.Kyoto University (1999)
+                          {{researchData.doctoralGraduation}}
                       </div>
                     </div>
                     </div>
@@ -323,7 +322,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
           <legend style="margin-bottom: 0.5rem;"><span>อุตสาหกรรมเป้าหมาย / Target Industry</span></legend>
           <div class="row">
             <div class="col" style="margin-left: 12px;">
-                อุตสาหกรรมการท่องเที่ยวกลุ่มรายได้ดีและการท่องเที่ยวเชิงสุขภาพ (Affluent, Medical and Wellness Tourism)
+                {{researchData.target}}
             </div>
           </div>
         </div>
@@ -332,15 +331,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
           <legend style="margin-bottom: 0.5rem;"><span>คำสำคัญ / Keywords</span></legend>
           <div class="row">
             <div class="col" style="margin-left: 12px;">
-               <span class="badge badge-success">Nanomaterials / วัสดุนาโน</span>
-               <span class="badge badge-success">Electroceramics / วัสดุไฟฟ้าเซรามิกส์</span>
+               <span class="badge badge-success" ng-repeat=" itemKeyword in researchData.keywordArray"> {{itemKeyword.keyword_Combine}}</span>
+               <!-- <span class="badge badge-success">Electroceramics / วัสดุไฟฟ้าเซรามิกส์</span>
                <span class="badge badge-success">Energy materials / วัสดุพลังงาน</span>
                <span class="badge badge-success">Composite materials / วัสดุผสม</span>
-               <span class="badge badge-success">Photocatalytic materials / วัสดุตัวเร่งปฏิกิริยาทางแสง</span>
+               <span class="badge badge-success">Photocatalytic materials / วัสดุตัวเร่งปฏิกิริยาทางแสง</span> -->
             </div>
           </div>
         </div>
-
+     </div>
       </div>
     </div>
 
@@ -361,7 +360,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
         <div>
           <div class="row">
             <div class= "col-sm-1"><div class="icon-diamond" style="font-size: 18px;color: #dfdfdf;"></div></div>
-            <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
+            <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force2<strong> 2018</strong></div>
           </div>
           <hr/>
         </div>
