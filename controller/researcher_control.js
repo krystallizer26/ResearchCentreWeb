@@ -255,9 +255,9 @@ module.exports = {
             counterArray.push(i)
         }
 
-        let currentPos = 0;
-        let qqq = qqqqqq(researcher);
-        callback("561", null, qqq);
+        // let currentPos = 0;
+        // let qqq = qqqqqq(researcher);
+        // callback("561", null, qqq);
 
         // flow.serialForEach(counterArray, function (pos) {
         //     currentPos = pos;
@@ -270,6 +270,10 @@ module.exports = {
         //     callback("561", null, forCallback);
         // });
 
+        // for(let i=0; i<)
+        //     getFullResearcherPreview(researcher[currentPos], this);
+
+        callback("561", null, forCallback);
     }
 };
 
@@ -382,6 +386,16 @@ function getFullResearcherPreview(input, callback) {
                 researcherData["departmentName_TH"] = "Not found";
                 researcherData["departmentName_EN"] = "Not found";
             }
+            Position_Control.checkPositionByID(new ObjectId(researcherData.positionId), this);
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                researcherData["positionName_TH"] = functionCallback.positionName_TH;
+                researcherData["positionName_EN"] = functionCallback.positionName_EN;
+            }
+            else {
+                researcherData["positionName_TH"] = "Not found";
+                researcherData["positionName_EN"] = "Not found";
+            }
             AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(researcherData.academicLevelId), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
@@ -392,7 +406,9 @@ function getFullResearcherPreview(input, callback) {
                 researcherData["academicLevelName_TH"] = "Not found";
                 researcherData["academicLevelName_EN"] = "Not found";
             }
-            forCallback_getFullResearcherPreview.push(researcherData)
+            callback(researcherData)
+            
+            // forCallback_getFullResearcherPreview.push(researcherData)
         }
     );
 }
