@@ -202,17 +202,7 @@ module.exports = {
             "academicLevelId": true,
             "positionId": true,
             "departmentId": true,
-
-            "keyword1_TH": true,
-            "keyword2_TH": true,
-            "keyword3_TH": true,
-            "keyword4_TH": true,
-            "keyword5_TH": true,
-            "keyword1_EN": true,
-            "keyword2_EN": true,
-            "keyword3_EN": true,
-            "keyword4_EN": true,
-            "keyword5_EN": true
+            "keywordArray": true
 
         }, function (error, functionCallback) {
             if (error) {
