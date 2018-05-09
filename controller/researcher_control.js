@@ -249,46 +249,30 @@ module.exports = {
     },
 
     getAllFullResearcherDataPreview: function (researcher, callback) {
-        var counterArray = []
-        var forCallback = []
         for (let i = 0; i < researcher.length; i++) {
-            counterArray.push(i)
+            getFullResearcherPreview(researcher[i], function (a) {
+                console.log("a >> " + JSON.stringify(a))
+                forCallback.push(a);
+                if (i == researcher.length-1)
+                    callback("561", null, forCallback);
+            });
         }
 
-        // let currentPos = 0;
-        // let qqq = qqqqqq(researcher);
-        // callback("561", null, qqq);
-
-        // flow.serialForEach(counterArray, function (pos) {
-        //     currentPos = pos;
-        //     //console.log("historyArray[currentPos] " + historyArray[currentPos]);
-        //     getFullResearcherPreview(researcher[currentPos], this);
-        // }, function (functionCallback) {
-        //     forCallback.push(functionCallback);
-        // }, function () {
-        //     //console.log("callback")
-        //     callback("561", null, forCallback);
-        // });
-
-        // for(let i=0; i<)
-        //     getFullResearcherPreview(researcher[currentPos], this);
-
-        callback("561", null, forCallback);
     }
 };
 
 //------
 
-async function qqqqqq(a) {
+// async function qqqqqq(a) {
 
-    var forCallback = []
+//     var forCallback = []
 
-    const  z = await Promise.all(a.map(async (a1) => {
-        const contents = await getFullResearcherPreview(a1)
-        console.log("YEAH")
-    }));
-    return z
-}
+//     const  z = await Promise.all(a.map(async (a1) => {
+//         const contents = await getFullResearcherPreview(a1)
+//         console.log("YEAH")
+//     }));
+//     return z
+// }
 
 var Position_Control = require("../controller/position_control.js");
 var AcademicLevel_Control = require("../controller/academicLevel_control.js");
@@ -407,7 +391,7 @@ function getFullResearcherPreview(input, callback) {
                 researcherData["academicLevelName_EN"] = "Not found";
             }
             callback(researcherData)
-            
+
             // forCallback_getFullResearcherPreview.push(researcherData)
         }
     );
