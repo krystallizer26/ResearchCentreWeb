@@ -13,7 +13,7 @@ module.exports = {
             if (error) {
                 let errCode = "361";
                 var alert = "Saving Researcher fail, Error: " + error.message;
-                console.log("ERROR Code: " + errCode + " " + alert);
+                //console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null);
             }
             else {
@@ -202,17 +202,7 @@ module.exports = {
             "academicLevelId": true,
             "positionId": true,
             "departmentId": true,
-
-            "keyword1_TH": true,
-            "keyword2_TH": true,
-            "keyword3_TH": true,
-            "keyword4_TH": true,
-            "keyword5_TH": true,
-            "keyword1_EN": true,
-            "keyword2_EN": true,
-            "keyword3_EN": true,
-            "keyword4_EN": true,
-            "keyword5_EN": true
+            "keywordArray": true
 
         }, function (error, functionCallback) {
             if (error) {
@@ -249,34 +239,39 @@ module.exports = {
     },
 
     getAllFullResearcherDataPreview: function (researcher, callback) {
-        var counterArray = []
-        var forCallback = []
+        let forCallback = [];
         for (let i = 0; i < researcher.length; i++) {
-            counterArray.push(i)
+            getFullResearcherPreview(researcher[i], function (a) {
+                console.log("a >> " + JSON.stringify(a))
+                forCallback.push(a);
+                if (i == researcher.length-1)
+                    callback("561", null, forCallback);
+            });
         }
-
-        let currentPos = 0;
-        flow.serialForEach(counterArray, function (pos) {
-            currentPos = pos;
-            //console.log("historyArray[currentPos] " + historyArray[currentPos]);
-            getFullResearcherPreview(researcher[currentPos], this);
-        }, function (functionCallback) {
-            forCallback.push(functionCallback);
-        }, function () {
-            //console.log("callback")
-            callback("561", null, forCallback);
-        });
 
     }
 };
 
 //------
 
+// async function qqqqqq(a) {
+
+//     var forCallback = []
+
+//     const  z = await Promise.all(a.map(async (a1) => {
+//         const contents = await getFullResearcherPreview(a1)
+//         console.log("YEAH")
+//     }));
+//     return z
+// }
+
 var Position_Control = require("../controller/position_control.js");
 var AcademicLevel_Control = require("../controller/academicLevel_control.js");
 var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
 var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
 var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+
+var forCallback_getFullResearcherPreview = []
 
 function getFullResearcher(input, callback) {
     let researcherData = JSON.parse(JSON.stringify(input));
@@ -386,8 +381,9 @@ function getFullResearcherPreview(input, callback) {
                 researcherData["academicLevelName_TH"] = "Not found";
                 researcherData["academicLevelName_EN"] = "Not found";
             }
-
             callback(researcherData)
+
+            // forCallback_getFullResearcherPreview.push(researcherData)
         }
     );
 }

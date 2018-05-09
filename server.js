@@ -80,14 +80,15 @@ app.use(function (req, res, next) {
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));// log every request to the console
-
+/*
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-//for limit file 
-/*
-app.use(bodyParser.json({ limit: '3mb' }));
-app.use(bodyParser.urlencoded({ limit: '3mb', extended: true }));
 */
+//for limit file 
+
+app.use(bodyParser.json({ limit: '30000mb' }));
+app.use(bodyParser.urlencoded({ limit: '30000mb', extended: true }));
+
 
 
 app.use(cookieParser());

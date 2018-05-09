@@ -186,7 +186,7 @@ router.get('/insertResearcherSheet', function(req, res) {
 
         res.json({
           code: '999999',
-          message: 'done!'
+          message: 'Processing... Please Wait!'
         });
       }
     });
