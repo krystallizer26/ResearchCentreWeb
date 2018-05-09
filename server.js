@@ -86,8 +86,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 */
 //for limit file 
 
-app.use(bodyParser.json({ limit: '3000mb' }));
-app.use(bodyParser.urlencoded({ limit: '3000mb', extended: true }));
+app.use(bodyParser.json({ limit: '30000mb' }));
+app.use(bodyParser.urlencoded({ limit: '30000mb', extended: true }));
 
 
 
