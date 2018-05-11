@@ -31,6 +31,7 @@ module.exports = {
                     publication.researcherId = functionCallback._id
                 }
                 else {
+                    console.log("Researcher with Personal Id " + publication.researcherPersonalID + "not found for publication named " + publication.publicationName)
                     publication.researcherId = "111111111111111111111111"
                 }
                 BachelorTeachingDepartment_Control.checkAndInsertBachelorTeachingByBachelorTeachingDepartmentName(publication.bachelorTeachingDepartmentName_TH, publication.bachelorTeachingDepartmentName_EN, this);

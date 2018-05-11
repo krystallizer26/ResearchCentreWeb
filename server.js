@@ -45,6 +45,7 @@ var BachelorTeachingDepartment_API = require('./routes/bachelorTeachingDepartmen
 var MasterTeachingDepartment_API = require('./routes/masterTeachingDepartment_api');
 var DoctoryTeachingDepartment_API = require('./routes/doctoryTeachingDepartment_api');
 var Publication_API = require('./routes/publication_api');
+var ResearchFund_API = require('./routes/researchFund_api');
 var sheets_API = require('./routes/sheetsAPI');
 
 // configuration ===============================================================
@@ -118,6 +119,7 @@ app.use('/api', MasterTeachingDepartment_API);
 app.use('/api', DoctoryTeachingDepartment_API);
 app.use('/api', sheets_API);
 app.use('/api', Publication_API);
+app.use('/api', ResearchFund_API);
 
 require('./routes/index.js')(app, passport); //Set routes load our routes and pass in our app and fully configured passpo
 

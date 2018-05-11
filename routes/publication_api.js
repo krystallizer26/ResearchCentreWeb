@@ -33,6 +33,7 @@ router.post('/newPublication_EachScrap', function (request, response) {
 
     var requiredData = [];
     requiredData.push(request.body.publicationName);
+    requiredData.push(request.body.researcherPersonalID);
     requiredData.push(request.body.researcherName);
     var requiredReady = Validate.requiredData_Check(requiredData);
 
@@ -267,6 +268,7 @@ router.post('/getAllPublicationPreviewByResearcherId/', function (request, respo
 
     var requiredData = [];
     requiredData.push(request.body.researcherId);
+    requiredData.push(request.body.limit);
     var requiredReady = Validate.requiredData_Check(requiredData)
 
     var numberData = [];
@@ -339,7 +341,7 @@ router.post('/getPublicationfromID/', function (request, response) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Researcher_Control.getFullPublicationData(functionCallback, this);
+                    Publication_Control.getFullPublicationData(functionCallback, this);
                 }
             }, function (code, err, functionCallback) {
                 //console.log("functionCallback: "+ JSON.stringify(functionCallback))
