@@ -1,305 +1,680 @@
+<style>
+  @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+* {
+  box-sizing: border-box;
+}
 
-      <style>
-      /* Lazy Load Styles */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizelegibility;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+.slider--teams {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  max-width: 750px;
+  opacity: 0;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.slider--teams .slider--teams__team {
+  position: relative;
+  overflow: hidden;
+}
+
+#list {
+  position: relative;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+#list li {
+  position: relative;
+  display: inline-block;
+  float: left;
+  text-align: center;
+}
+#list li figure {
+  cursor: pointer;
+  margin: 1em;
+  opacity: 0.5;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  transition: opacity 450ms ease-in-out, -webkit-transform 450ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  transition: transform 450ms cubic-bezier(0.445, 0.05, 0.55, 0.95), opacity 450ms ease-in-out;
+  transition: transform 450ms cubic-bezier(0.445, 0.05, 0.55, 0.95), opacity 450ms ease-in-out, -webkit-transform 450ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  -webkit-transform: scale(0.5) translateZ(0px);
+          transform: scale(0.5) translateZ(0px);
+}
+#list li figure:hover {
+  opacity: 0.8;
+  -webkit-transform: scale(0.6) translateZ(0px);
+          transform: scale(0.6) translateZ(0px);
+}
+#list li figure:active {
+  opacity: 1;
+  -webkit-transform: scale(0.7) translateZ(0px);
+          transform: scale(0.7) translateZ(0px);
+}
+#list li figure > div {
+  border-radius: 5px;
+  position: relative;
+  margin: 2rem auto;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  -webkit-transform: rotate(45deg) translateZ(0px);
+          transform: rotate(45deg) translateZ(0px);
+}
+#list li figure > div > div {
+  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/953/teams.jpg) no-repeat;
+  background-size: cover;
+  background-position: 0px 0px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 170px;
+  height: 170px;
+  -webkit-transform: rotate(-45deg) translate(0%, -70%);
+          transform: rotate(-45deg) translate(0%, -70%);
+}
+#list li figure figcaption h2 {
+  color: #333;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+#list li figure figcaption p {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+#list li:nth-child(1) figure > div > div {
+  background-position: 0px 0px !important;
+}
+#list li:nth-child(2) figure > div > div {
+  background-position: 0px 20% !important;
+}
+#list li:nth-child(3) figure > div > div {
+  background-position: 0px 40% !important;
+}
+#list li:nth-child(4) figure > div > div {
+  background-position: 0px 60% !important;
+}
+#list li:nth-child(5) figure > div > div {
+  background-position: 0px 80% !important;
+}
+#list li:nth-child(6) figure > div > div {
+  background-position: 0px 100% !important;
+}
+
+.active {
+  opacity: 1 !important;
+  -webkit-transform: scale(1) translateZ(0px) !important;
+          transform: scale(1) translateZ(0px) !important;
+}
+
+.cf:before,
+.cf:after {
+  content: " ";
+  display: table;
+}
+
+.cf:after {
+  clear: both;
+}
+
+.cf {
+  *zoom: 1;
+}
+
+
+.cardnews {
+  float: left;
+  padding: 0 1.7rem;
+  width: 50%;
+}
+.cardnews .menu-content {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.cardnews .menu-content::before, .cardnews .menu-content::after {
+  content: '';
+  display: table;
+}
+.cardnews .menu-content::after {
+  clear: both;
+}
+.cardnews .menu-content li {
+  display: inline-block;
+}
+.carcardnewsd .menu-content a {
+  color: #fff;
+}
+.cardnews .menu-content span {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Open Sans';
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+}
+.cardnews .wrapper {
+  background-color: #fff;
+  min-height: 540px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.2);
+}
+.cardnews .wrapper:hover .data {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+.cardnews .data {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  -webkit-transform: translateY(calc(70px + 1em));
+          transform: translateY(calc(70px + 1em));
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+}
+.cardnews .data .content {
+  padding: 1em;
+  position: relative;
+  z-index: 1;
+}
+.cardnews .author {
+  font-size: 12px;
+}
+.cardnews .title {
+  margin-top: 10px;
+}
+.cardnews .text {
+  height: 70px;
+  margin: 0;
+}
+.cardnews input[type='checkbox'] {
+  display: none;
+}
+.cardnews input[type='checkbox']:checked + .menu-content {
+  -webkit-transform: translateY(-60px);
+          transform: translateY(-60px);
+}
+
+.example-1 .wrapper {
+
+}
+.example-1 .date {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #77d7b9;
+  color: #fff;
+  padding: 0.8em;
+}
+.example-1 .date span {
+  display: block;
+  text-align: center;
+}
+.example-1 .date .day {
+  font-weight: 700;
+  font-size: 24px;
+  text-shadow: 2px 3px 2px rgba(0, 0, 0, 0.18);
+}
+.example-1 .date .month {
+  text-transform: uppercase;
+}
+.example-1 .date .month,
+.example-1 .date .year {
+  font-size: 12px;
+}
+.example-1 .content {
+  background-color: #fff;
+  box-shadow: 0 5px 30px 10px rgba(0, 0, 0, 0.3);
+}
+.example-1 .title a {
+  color: gray;
+}
+.example-1 .menu-button {
+  position: absolute;
+  z-index: 999;
+  top: 16px;
+  right: 16px;
+  width: 25px;
+  text-align: center;
+  cursor: pointer;
+}
+.example-1 .menu-button span {
+  width: 5px;
+  height: 5px;
+  background-color: gray;
+  color: gray;
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+}
+.example-1 .menu-button span::after, .example-1 .menu-button span::before {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 5px;
+  background-color: currentColor;
+  position: absolute;
+  border-radius: 50%;
+}
+.example-1 .menu-button span::before {
+  left: -10px;
+}
+.example-1 .menu-button span::after {
+  right: -10px;
+}
+.example-1 .menu-content {
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+.example-1 .menu-content li {
+  width: 33.333333%;
+  float: left;
+  background-color: #77d7b9;
+  height: 60px;
+  position: relative;
+}
+.example-1 .menu-content a {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 24px;
+}
+.example-1 .menu-content span {
+  top: -10px;
+}
+
+.example-2 .wrapper {
   
-         
-         
-         
+}
+.example-2 .wrapper:hover .menu-content span {
+  -webkit-transform: translate(-50%, -10px);
+          transform: translate(-50%, -10px);
+  opacity: 1;
+}
+.example-2 .header {
+  color: #fff;
+  padding: 1em;
+}
+.example-2 .header::before, .example-2 .header::after {
+  content: '';
+  display: table;
+}
+.example-2 .header::after {
+  clear: both;
+}
+.example-2 .header .date {
+  float: left;
+  font-size: 12px;
+}
+.example-2 .menu-content {
+  float: right;
+}
+.example-2 .menu-content li {
+  margin: 0 5px;
+  position: relative;
+}
+.example-2 .menu-content span {
+  transition: all 0.3s;
+  opacity: 0;
+}
+.example-2 .data {
+  color: #fff;
+  -webkit-transform: translateY(calc(70px + 4em));
+          transform: translateY(calc(70px + 4em));
+}
+.example-2 .title a {
+  color: #fff;
+}
+.example-2 .button {
+  display: block;
+  width: 100px;
+  margin: 2em auto 1em;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  line-height: 1;
+  position: relative;
+  font-weight: 700;
+}
+.example-2 .button::after {
+  content: '\2192';
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  transition: all 0.3s;
+}
+.example-2 .button:hover::after {
+  -webkit-transform: translate(5px, -50%);
+          transform: translate(5px, -50%);
+  opacity: 1;
+}
+
+</style>
+
+<br><br>
 
 
-        </style>
-         
-         <!-- <ul class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="/general_2/assets/index.html">Home</a>
-            </li>
-            <li class="breadcrumb-item">
-              <a href="/general_2/assets/index.html">Researchers</a>
-            </li>
-
-          </ul> -->
-          <!--------------------
-          END - Breadcrumbs
-          -------------------->
-
-	
-          <div class="all-wrapper rentals" style="max-width: 1600px; ">
-            <!--------------------
-            START - Top Bar
-            -------------------->
-            <div class="top-bar-rentals">
-              <div class="logo-w">
-                <a class="logo" href="index.html">
-                  <div class="logo-element"></div>
-                  <div class="logo-label">
-                   Reseachers
-                  </div>
-                </a>
-                <div class="filters-toggler">
-                  <i class="os-icon os-icon-hamburger-menu-1"></i>
-                </div>
-              </div>
-              <div class="filters">
-                <div class="filters-header">
-                  <h4>
-                    Search By
-                   </h4>
-                </div>
-                <form class="form-inline">
-
-                  <div class="filter-w">
-                    <div class="filter-body">
-                      <div class="form-group">
-                        <label for="">xxxx</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <div class="input-group-text">
-
-                            </div>
-                          </div>
-                          <input class="form-control date-range-picker" type="text" value="">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="buttons-w">
-                    <a class="btn btn-upper btn-primary" href="#"><i class="os-icon os-icon-ui-37"></i><span>Search</span></a>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <!--------------------
-            END - Top bar
-            --------------------><!--------------------
-            START - Rentals Content
-            --------------------><div class="rentals-list-w">
-              <!--------------------
-              START - Property Index Filters
-              -------------------->
-              <div class="filter-side">
-                <div class="filters-header">
-                  <h4>
-                    Filter
-                  </h4>
-                  <div class="reset-filters" ng-click="reset_filter()">
-                    <i class="os-icon-close os-icon"></i><span >Reset Filters</span>
-                  </div>
-                </div>
-				 <div class="filter-w">
-                  <div class="filter-toggle">
-                    <i class="os-icon-minus os-icon"></i>
-                  </div>
-                  <h6 class="filter-header">
-                    ค้นหา
-                  </h6>
-                  <div class="filter-body">
-                      <input type="text" class="form-control"  placeholder="คำที่ต้องการค้นหา" ng-model="search.$" >
-                  
-                  </div>
-                </div>
-				
-				
-				     <div class="filter-w">
-                    <div class="filter-toggle">
-                      <i class="os-icon-minus os-icon"></i>
-                    </div>
-                    <h6 class="filter-header">
-                      ชื่อนักวิจัย
-                    </h6>
-                    <div class="filter-body">
-                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ชื่อนักวิจัย" ng-model="search.researcherName_TH" >
-                    </div>
-                  </div>
-				  
-				  
-                <div class="filter-w">
-                  <div class="filter-toggle">
-                    <i class="os-icon-minus os-icon"></i>
-                  </div>
-                  <h6 class="filter-header">
-                    ภาควิชา/หน่วยงาน
-                  </h6>
-                  <div class="filter-body">
-                    <div class="toggled-buttons">
-                      <a class="btn btn-toggled " ng-class="{'on':search.departmentName_TH == ''}" ng-click="filter_department('')" >ทั้งหมด</a>
-                      <a class="btn btn-toggled " ng-class="{'on':search.departmentName_TH == 'คณิตศาสตร์'}" ng-click="filter_department('คณิตศาสตร์') ">ภาควิชาคณิตศาสตร์</a>
-                      <a class="btn btn-toggled " ng-class="{'on':search.departmentName_TH == 'ชีววิทยา'}" ng-click="filter_department('ชีววิทยา')" >ภาควิชาชีววิทยา</a>
-                      <a class="btn btn-toggled " ng-class="{'on':search.departmentName_TH == 'ฟิสิกส์'}" ng-click="filter_department('ฟิสิกส์')">ภาควิชาฟิสิกส์</a>
-                      <a class="btn btn-toggled " ng-class="{'on':search.departmentName_TH == 'วิทยาการคอมพิวเตอร์'}" ng-click="filter_department('วิทยาการคอมพิวเตอร์')" >ภาควิชาวิทยาการคอมพิวเตอร์</a>
-
-                      <a class="btn btn-toggled " ng-class="{'on':search.departmentName_TH == 'เคมี'}" ng-click="filter_department('เคมี')" >ภาควิชาเคมี</a>
-                      <a class="btn btn-toggled " ng-class="{'on':search.departmentName_TH == 'ชีววิทยา'}" ng-click="filter_department('ชีววิทยา') ">ภาควิชาชีววิทยา</a>
-                      <a class="btn btn-toggled " ng-class="{'on':search.departmentName_TH == 'ศูนย์เครื่องมือวิทยาศาสตร์'}" ng-click="filter_department('ศูนย์เครื่องมือวิทยาศาสตร์') ">ศูนย์เครื่องมือวิทยาศาสตร์</a>
-
-                    </div>
-                  </div>
-                </div>
-
-				 <div class="filter-w">
-                  <div class="filter-toggle">
-                    <i class="os-icon-minus os-icon"></i>
-                  </div>
-                  <h6 class="filter-header">
-                    Keyword
-                  </h6>
-                  <div class="filter-body">
-                      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Keyword" ng-model="search.$" >
-                  
-                  </div>
-                </div>
-				
-				
-                <div class="filter-w">
-                  <div class="filter-toggle">
-                    <i class="os-icon-minus os-icon"></i>
-                  </div>
-                  <h6 class="filter-header">
-                    ตำแหน่ง
-                  </h6>
-                  <div class="filter-body">
-                    <div class="toggled-buttons solid">
-                      <a class="btn btn-toggled on" href="#">ทั้งหมด</a>
-                      <a class="btn btn-toggled off" href="#">ผศ.</a>
-                      <a class="btn btn-toggled off" href="#">รศ.</a>
-                      <a class="btn btn-toggled off" href="#">ศ.</a>
-
-                    </div>
-                  </div>
-                </div>
-               
-
+<div class="all-wrapper rentals " style="max-width: 1600px; ">
+    <div class="">
+    
+        <div class="row">
            
+       
+                <div class=" col-sm-4 col-xxxl-3 example-1 cardnews">
+                    <br><br>
+                  <div class="wrapper" style="  background: url(http://www.science.kmitl.ac.th/wp-content/themes/personalTheme/images/news/059.jpg) 20% 1%/cover no-repeat;">
+                    <div class="date">
+                      <span class="day">10</span>
+                      <span class="month">Mar</span>
+                      <span class="year">2018</span>
+                    </div>
+                    <div class="data">
+                      <div class="content">
+                        <span class="author"> Admin </span>
+                        <h4 class="title" style="color:rgb(34, 77, 250)"><a href="#">วันที่ 13 มีนาคม 2561 งานประกันคุณภาพ จัดประชุมอาจารย์ประจำหลักสูตร ระดับปริญญาตรี</a></h4>
+                        <p class="text">วันที่ 13 มีนาคม 2561 งานประกันคุณภาพ จัดประชุมอาจารย์ประจำหลักสูตร ระดับปริญญาตรี เพื่อหารือการจัดเตรียมข้อมูลสำหรับเขียนรายงานการประเมินตนเองตามระบบ AUN-QA ประจำปีการศึกษา 2560 ณ ห้องประชุมราชราชพฤกษ์ 2-3 อาคารคณะวิทยาศาสตร์</p>
+                        <label for="show-menu" class="menu-button"><span></span></label>
+                    
+                    
 
-              </div>
-              <!--------------------
-              END - Property Index Filters
-              -------------------->
-              <div class="rentals-list  ">
-                <div class="list-controls">
-                  <div class="list-info">
-                   {{researcher_list.length}} Researchers Found
-                  </div>
-                  <div class="list-order">
-                    <label for="">Order By:</label>
-					<select ng-model="order">
-                      <option value='researcherName_TH'>
-                        ชื่อนักวิจัย
-                      </option>
-                      <option value='departmentName_TH'>
-            ภาควิชา/หน่วยงาน
-                      </option>
-
-                    </select>
-                  </div>
-                </div>
-                <div class="property-items as-list">
-                  <!--------------------
-                  START - Property Item
-                  -------------------->
-                  <div class="row " >
-                  <div class="property-item col-md-6  " ng-repeat="item in researcher_list | filter:search:strict  | orderBy:order" >
-                   
-               
-                    <a class="item-media-w" href="rentals_single.html">
-             <!--          <div class="item-media" style="background-image: url(http://www.science.kmitl.ac.th/wp-content/uploads/2018/01/DSC_5232-683x1024.jpg)"></div>
-				 -->
-				   <div class="item-media card-image" style="background-image: url( https://picsum.photos/200/300/?image={{$index + 10}})"></div>
-				 
-                    </a>
-                    <div class="item-info">
-                      <div class="item-features">
-                        <div class="feature">
-                         ภาควิชา/หน่วยงาน  <b>{{item.departmentName_TH}}</b>
-                        </div>
 
                       </div>
-                      <h3 class="item-title">
-					  
-					   <a >{{item.researcherName_EN}}</a>
-					   <br>
-                        <a >{{item.researcherName_TH}}</a>
-                      </h3>
-					  
-					  <p>
-					   <br>
-					  Keywords:
-					   <span class="badge badge-light">{{item.keyword1_EN}}</span>,
-					   <span class="badge badge-light">{{item.keyword2_EN}}</span>,
-					   <span class="badge badge-light">{{item.keyword3_EN}}</span>,
-					   <span class="badge badge-light">{{item.keyword4_EN}}</span>,
-					   <span class="badge badge-light">{{item.keyword5_EN}}</span>
-					  </p>
-                      <!--<div class="item-reviews">
-                        <div class="reviews-stars">
-                          <select class="item-star-rating">
-                            <option value="1">
-                              1
-                            </option>
-                            <option value="2">
-                              2
-                            </option>
-                            <option value="3">
-                              3
-                            </option>
-                            <option selected="yes" value="4">
-                              4
-                            </option>
-                            <option value="5">
-                              5
-                            </option>
-                          </select>
-                        </div>
-                        <div class="reviews-count">
-                          12 Reviews
-                        </div>
-                      </div>-->
-                      <div class="item-price-buttons">
-                      <!--<div class="item-price">
-                          <strong>$350</strong><span>/per night</span>
-                        </div>-->
-                        <div class="item-buttons">
-                          <a class="btn btn-outline-primary" ng-click="gotoProfile(item._id)"><span>Details</span><i class="os-icon os-icon-arrow-2-right"></i></a>
-                        </div>
-                      </div>
+                      <input type="checkbox" id="show-menu" />
+                      <ul class="menu-content">
+                        <li>
+                          <a href="#" class="fa fa-bookmark-o"></a>
+                        </li>
+                        <li><a href="#" class="fa fa-heart-o"><span>47</span></a></li>
+                        <li><a href="#" class="fa fa-comment-o"><span>8</span></a></li>
+                      </ul>
                     </div>
                   </div>
                 </div>
-                  <!--------------------
-                  END - Property Item
-                  -------------------->
-  <div ui-view></div>
-                </div>
-                <div class="pagination-w">
-                  <div class="pagination-info">
+              
+                <div class=" col-sm-4 col-xxxl-3 example-1 cardnews">
+                    <br><br>
+                    <div class="wrapper"  style="  background: url(http://www.science.kmitl.ac.th/wp-content/themes/personalTheme/images/news/068.jpg) 20% 1%/cover no-repeat;">
+                      <div class="date">
+                        <span class="day">8</span>
+                        <span class="month">Mar</span>
+                        <span class="year">2018</span>
+                      </div>
+                      <div class="data">
+                        <div class="content">
+                          <span class="author">Admin</span>
+                          <h4 class="title" style="color:rgb(34, 77, 250)"><a href="#">2 เม.ย. 61 รศ.ดร.อิทธิพล แจ้งชัด ได้รับพระราชทานเครื่องราชอิสริยาภรณ์ วชิรมหามงกุฎ </a></h4>
+                          <p class="text">2 เม.ย. 61 รศ.ดร.อิทธิพล แจ้งชัด ได้รับพระราชทานเครื่องราชอิสริยาภรณ์ วชิรมหามงกุฎ ในพิธีพระราชทานเครื่องราชอิสริยาภรณ์ชั้นสายสะพาย ต่อหน้าพระฉายาลักษณ์สมเด็จพระเจ้าอยู่หัว ณ หอประชุมครุสภา กระทรวงศึกษาธิการ
+                            </p>
+                          <label for="show-menu" class="menu-button"><span></span></label>
+                      
+                      
+  
+  
+                        </div>
+                        <input type="checkbox" id="show-menu" />
+                        <ul class="menu-content">
+                          <li>
+                            <a href="#" class="fa fa-bookmark-o"></a>
+                          </li>
+                          <li><a href="#" class="fa fa-heart-o"><span>47</span></a></li>
+                          <li><a href="#" class="fa fa-comment-o"><span>8</span></a></li>
+                        </ul>
+                      </div>
+                    </div>
 
                   </div>
-                  <div class="pagination-links">
-                    <ul class="pagination">
-                      <li class="page-item disabled">
-                        <a class="page-link" href="#"> Previous</a>
-                      </li>
-                      <li class="page-item active">
-                        <a class="page-link" href="#"> 1</a>
-                      </li>
-
-                      <li class="page-item">
-                        <a class="page-link" href="#"> Next</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div><!--------------------
-            END - Rentals Content
-            -------------------->
 
 
+                  <div class=" col-sm-4 col-xxxl-3 example-1 cardnews">
+                      <br><br>
+                      <div class="wrapper"  style="  background: url(http://www.science.kmitl.ac.th/wp-content/themes/personalTheme/images/news/060.jpg) 20% 1%/cover no-repeat;">
+                        <div class="date">
+                          <span class="day">5</span>
+                          <span class="month">Mar</span>
+                          <span class="year">2018</span>
+                        </div>
+                        <div class="data">
+                          <div class="content">
+                            <span class="author">Admin</span>
+                            <h4 class="title" style="color:rgb(34, 77, 250)"><a href="#">เยือนคณะบริหารธุรกิจและเศรษฐศาสตร์ มหาวิทยาลัยอัสสัมชัญ </a></h4>
+                            <p class="text">
+                                16/3/61 รศ.ดร.อิทธิพล แจ้งชัด คณบดีคณะวิทยาศาสตร์ สจล. และคณะ เยือนคณะบริหารธุรกิจและเศรษฐศาสตร์ มหาวิทยาลัยอัสสัมชัญ เข้าพูดคุยความร่วมมือกับคณะบริหารธุรกิจ จะเกิดอะไรขึ้นเมื่อวิทยาศาสตร์และเทคโนโลยี มาเจอกับสุดยอดสายธุรกิจและการตลาดและขอบพระคุณ ดร.อุรีย์ เจี่ยสกุล คณบดีคณะบริหารธุรกิจและเศรษฐศาสตร์ มหาวิทยาลัยอัสสัมชัญ ที่ให้การต้อนรับเป็นอย่างดี
+                            
+                              </p>
+                            <label for="show-menu" class="menu-button"><span></span></label>
+                        
+                        
+    
+    
+                          </div>
+                          <input type="checkbox" id="show-menu" />
+                          <ul class="menu-content">
+                            <li>
+                              <a href="#" class="fa fa-bookmark-o"></a>
+                            </li>
+                            <li><a href="#" class="fa fa-heart-o"><span>47</span></a></li>
+                            <li><a href="#" class="fa fa-comment-o"><span>8</span></a></li>
+                          </ul>
+                        </div>
+                      </div>
+  
+                    </div>
+                    <ul class="demo-icons-list" style="    margin-top: 15%; margin-right: -23%;">
+                        <li>
+                            <a href="http://161.246.35.182:2001/page/news_container/0/5a8470b228d2e92a0c753010"><i style="color:rgb(77, 77, 248); font-size:5rem;" class="icon-arrow-right-circle"></i><span>Read More ..</span></a>
+                          </li>
+                        </ul>
+
+                    <div class="">
+                        <br>
+                        <br>
+      
+                      <button class="mr-2 mb-2 btn btn-lg btn-outline-primary " style="float:right" type="button"><i class="icon-arrow-right-circle"></i>
+                      </button>
+                    </div>
+        </div>
+     
+
+     
+
+    </div>
+</div>
+
+
+<br><br><br><br>
+
+
+
+  <!-- 
+autor: Marco Barría 
+https://twitter.com/marco_bf
+-->
+
+<style>
+  
+
+
+.parallax {
+  position: relative;
+  overflow-x: hidden;
+  height: 360px;
+}
+
+.parallax__layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.parallax__layer--bg {
+  top: 70px;
+  width: 80%;
+  height: 160px;
+}
+
+.parallax__layer--fg {
+  pointer-events: none;
+  width: 125%;
+  height: 300px;
+}
+
+.parallax__layer__cell {
+  position: absolute;
+  width: 50%;
+  margin: 0 5%;
+  height: 100%;
+}
+
+.parallax__layer__cell:nth-child(1) { left: 0%; }
+.parallax__layer__cell:nth-child(2) { left: 60%; }
+.parallax__layer__cell:nth-child(3) { left: 120%; }
+.parallax__layer__cell:nth-child(4) { left: 180%; }
+.parallax__layer__cell:nth-child(5) { left: 240%; }
+
+.parallax__layer__cell--bg {
+  background: hsla(210, 100%, 50%, 0.4);
+
+}
+
+.parallax__layer__cell--fg {
+
+  background: hsla(60, 100%, 50%, 0.4);
+
+}
+
+/* carousel */
+
+
+.carousel-cell {
+  height: 220px;
+  width: 50%;
+  margin: 40px 5%; /* total width = 50% + 5% + 5% = 60% */
+
+  background: rgb(160, 214, 160);
+
+
+  opacity: 0.6;
+  border-radius: 5px;
+  counter-increment: carousel-cell;
+}
+
+/* cell number */
+.carousel-cell:before {
+  display: block;
+  text-align: center;
+  content: counter(carousel-cell);
+  line-height: 200px;
+  font-size: 80px;
+  color: white;
+}
+
+
+
+</style>
+
+<div class="parallax">
+  <!-- background parallax layer -->
+  <div class="parallax__layer parallax__layer--bg">
+    <div class="parallax__layer__cell parallax__layer__cell--bg">
+
+        <div>
+            <p>cccccccccccccccca</p>
+            <p>aaaaaaaaaaaaaaaaaa</p>
+            <p>aaaaaaaaaaaaaaaaaa</p>
+            <p>aaaaaaaaaaaaaaaaaa</p>
           </div>
-          <br>
 
-          <div class="display-type"></div>
+    </div>
+    <div class="parallax__layer__cell parallax__layer__cell--bg"></div>
+    <div class="parallax__layer__cell parallax__layer__cell--bg"></div>
+    <div class="parallax__layer__cell parallax__layer__cell--bg"></div>
+    <div class="parallax__layer__cell parallax__layer__cell--bg"></div>
+  </div>
+  <!-- carousel: midground parallax layer -->
+  <div class="carousel">
+    <div class="carousel-cell">
+        <div>
+            <p>bbbbbbbbbbbbb</p>
+            <p>bbbbbbbbbbbbbbbb</p>
+            <p>aaaaaaaaaaaaaaaaaa</p>
+            <p>aaaaaaaaaaaaaaaaaa</p>
+          </div>
+    </div>
+    <div class="carousel-cell"></div>
+    <div class="carousel-cell"></div>
+    <div class="carousel-cell"></div>
+    <div class="carousel-cell"></div>
+  </div>
+  <!-- foreground parallax layer -->
+  <div class="parallax__layer parallax__layer--fg">
+    <div class="parallax__layer__cell parallax__layer__cell--fg">
+
+      <div>
+        <p>aaaaaaaaaaaaaaaaaa</p>
+        <p>aaaaaaaaaaaaaaaaaa</p>
+        <p>aaaaaaaaaaaaaaaaaa</p>
+        <p>aaaaaaaaaaaaaaaaaa</p>
+      </div>
 
 
-
-
+    </div>
+    <div class="parallax__layer__cell parallax__layer__cell--fg"></div>
+    <div class="parallax__layer__cell parallax__layer__cell--fg"></div>
+    <div class="parallax__layer__cell parallax__layer__cell--fg"></div>
+    <div class="parallax__layer__cell parallax__layer__cell--fg"></div>
+  </div>
+</div>
 

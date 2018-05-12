@@ -6,10 +6,17 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/home');
 
   $stateProvider
-    .state('home', {
-      url: '/home',
-      templateUrl: "./general_2/research_assets/partail/home.html",
-      controller: 'homeCtrl'
+  .state('home', {
+    url: '/home',
+    templateUrl: "./general_2/research_assets/partail/home.html",
+    controller: 'homeCtrl'
+  })
+
+    
+    .state('researcher', {
+      url: '/researcher',
+      templateUrl: "./general_2/research_assets/partail/researcher.html",
+      controller: 'researcherCtrl'
     })
 
     .state('paperDetail', {
