@@ -395,6 +395,24 @@ router.post('/deletePublication/', function (request, response) {
     }
 });
 
+router.post('/wipePublication/', function (request, response) {
+    var methodCode = "64";
+
+    flow.exec(
+        function () {
+            Publication_Control.wipePublication(this);
+
+        }, function (code, err, result) {
+            if (err) {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+            }
+            else {
+                Return_Control.responseWithCode(ReturnCode.success, "All Publication has been deleted successfully.", response);
+            }
+        }
+    );
+});
+
 module.exports = router;
 
 //-----------------------------------------------------------------------------

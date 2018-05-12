@@ -11,7 +11,7 @@ var Validate = require("../controller/validation_controller.js");
 var Return_Control = require('../controller/return_control.js');
 
 //Model
-var ResearchFund = require('../model/researchFund_model.js');
+var IntellectualProperty = require('../model/intellectualProperty_model.js');
 
 //Controller
 var Researcher_Control = require("../controller/researcher_control.js");
@@ -23,97 +23,80 @@ var BachelorTeachingDepartment_Control = require("../controller/bachelorTeaching
 var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
 var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 var Publication_Control = require("../controller/publication_control.js");
-var ResearchFund_Control = require("../controller/researchFund_control.js");
+var IntellectualProperty_Control = require("../controller/intellectualProperty_control.js");
 
-router.post('/newResearchFund_EachScrap', function (request, response) {
-    var methodCode = "52";
+router.post('/newIntellectualProperty_EachScrap', function (request, response) {
+    var methodCode = "...";
 
     var requiredData = [];
     requiredData.push(request.body.researcherName);
     requiredData.push(request.body.researcherPersonalID);
-    requiredData.push(request.body.researchName);
+    requiredData.push(request.body.intPropertyName);
     var requiredReady = Validate.requiredData_Check(requiredData);
 
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
-        console.log(alert);
+        //console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
             function () {
-                var researchFund = new ResearchFund();
-                researchFund.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
-                researchFund.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
-                researchFund.researchName = Validate.scrappingCleanUp(request.body.researchName)
-                researchFund.fundSource = Validate.scrappingCleanUp(request.body.fundSource)
-                researchFund.scholarshipYear = Validate.scrappingCleanUp(request.body.scholarshipYear)
-                researchFund.scholarshipStart = Validate.scrappingCleanUp(request.body.scholarshipStart)
-                researchFund.scholarshipEnd = Validate.scrappingCleanUp(request.body.scholarshipEnd)
-                researchFund.progress6MonthDate = Validate.scrappingCleanUp(request.body.progress6MonthDate)
-                researchFund.progress6MonthPercent = Validate.scrappingCleanUp(request.body.progress6MonthPercent)
-                researchFund.progress12MonthDate = Validate.scrappingCleanUp(request.body.progress12MonthDate)
-                researchFund.progress12MonthPercent = Validate.scrappingCleanUp(request.body.progress12MonthPercent)
-                researchFund.extend1 = Validate.scrappingCleanUp(request.body.extend1)
-                researchFund.extend2 = Validate.scrappingCleanUp(request.body.extend2)
-                researchFund.fullPaperDate = Validate.scrappingCleanUp(request.body.fullPaperDate)
+                var intellectualProperty = new IntellectualProperty();
+                intellectualProperty.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
+                intellectualProperty.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
+                intellectualProperty.intPropertyCode = Validate.scrappingCleanUp(request.body.intPropertyCode)
+                intellectualProperty.intPropertyName = Validate.scrappingCleanUp(request.body.intPropertyName)
+                intellectualProperty.intPropertyRegisterDate = Validate.scrappingCleanUp(request.body.intPropertyRegisterDate)
+                intellectualProperty.licenseCode = Validate.scrappingCleanUp(request.body.licenseCode)
+                intellectualProperty.intPropertyName = Validate.scrappingCleanUp(request.body.intPropertyName)
+                intellectualProperty.licenseType = Validate.scrappingCleanUp(request.body.licenseType)
+                intellectualProperty.claimBy = Validate.scrappingCleanUp(request.body.claimBy)
+                intellectualProperty.coCreation = Validate.scrappingCleanUp(request.body.coCreation)
 
-                researchFund.result1 = Validate.scrappingCleanUp(request.body.result1)
-                researchFund.result2 = Validate.scrappingCleanUp(request.body.result2)
-                researchFund.finishDate = Validate.scrappingCleanUp(request.body.finishDate)
-                researchFund.perYear = Validate.scrappingCleanUp(request.body.perYear)
-                researchFund.continueYear = Validate.scrappingCleanUp(request.body.continueYear)
-                researchFund.maximumFund = Validate.scrappingCleanUp(request.body.maximumFund)
-                researchFund.ratio = Validate.scrappingCleanUp(request.body.ratio)
-                researchFund.role = Validate.scrappingCleanUp(request.body.role)
-                researchFund.before2561Inside = Validate.scrappingCleanUp(request.body.before2561Inside)
-                researchFund.before2561Outside = Validate.scrappingCleanUp(request.body.before2561Outside)
-                researchFund.after2561 = Validate.scrappingCleanUp(request.body.after2561)
-                researchFund.detail = Validate.scrappingCleanUp(request.body.detail)
-
-                ResearchFund_Control.newResearchFund_fromScrap(researchFund, this);
+                IntellectualProperty_Control.newIntellectualProperty_fromScrap(intellectualProperty, this);
 
             }, function (code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_Control.responseWithCodeAndData(ReturnCode.success, "New Publication was saved successfully as _id defined", functionCallback._id, response);
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "New IntellectualProperty was saved successfully as _id defined", functionCallback._id, response);
                 }
             }
         );
     }
 });
 
-router.post('/getAllResearchFundPreview/', function (request, response) {
-    var methodCode = "53";
+router.post('/getAllIntellectualPropertyPreview/', function (request, response) {
+    var methodCode = "68";
 
     flow.exec(
         function () {
-            ResearchFund_Control.getAllResearchFundPreview(this);
+            IntellectualProperty_Control.getAllIntellectualPropertyPreview(this);
         }, function (code, err, functionCallback) {
-            if (code === "631") {
+            if (code === "691") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
-            else if (code === "632") {
-                ResearchFund_Control.getAllFullResearchFundDataPreview(functionCallback, this);
+            else if (code === "692") {
+                IntellectualProperty_Control.getAllFullIntellectualPropertyDataPreview(functionCallback, this);
             }
             else {
-                Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearchFund Founded", [], response)
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "No IntellectualProperty Founded", [], response)
             }
         }, function (code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
             else {
-                Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearchFund Completed", functionCallback, response)
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get All IntellectualProperty Completed", functionCallback, response)
             }
         }
     );
 });
 
-router.post('/getAllResearchFundPreviewByResearcherId/', function (request, response) {
-    var methodCode = "54";
+router.post('/getAllIntellectualPropertyPreviewByResearcherId/', function (request, response) {
+    var methodCode = "69";
 
     var requiredData = [];
     requiredData.push(request.body.researcherId);
@@ -146,38 +129,38 @@ router.post('/getAllResearchFundPreviewByResearcherId/', function (request, resp
     else {
         flow.exec(
             function () {
-                ResearchFund_Control.getAllResearchFundPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
+                IntellectualProperty_Control.getAllIntellectualPropertyPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
             }, function (code, err, functionCallback) {
-                if (code === "641") {
+                if (code === "701") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
-                else if (code === "642") {
-                    ResearchFund_Control.getAllFullResearchFundDataPreview(functionCallback, this);
+                else if (code === "702") {
+                    IntellectualProperty_Control.getAllFullIntellectualPropertyDataPreview(functionCallback, this);
                 }
                 else {
-                    Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearchFund Founded", [], response)
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "No IntellectualProperty Founded", [], response)
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearchFund Completed", functionCallback, response)
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "get All IntellectualProperty Completed", functionCallback, response)
                 }
             }
         );
     }
 });
 
-router.post('/getResearchFundfromID/', function (request, response) {
-    var methodCode = "55";
+router.post('/getIntellectualPropertyfromID/', function (request, response) {
+    var methodCode = "70";
 
     var requiredData = [];
-    requiredData.push(request.body.researchFundId);
+    requiredData.push(request.body.intellectualPropertyId);
     var requiredReady = Validate.requiredData_Check(requiredData)
 
     var objectIdData = [];
-    objectIdData.push(request.body.researchFundId);
+    objectIdData.push(request.body.intellectualPropertyId);
     var objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
@@ -193,31 +176,31 @@ router.post('/getResearchFundfromID/', function (request, response) {
     else {
         flow.exec(
             function () {
-                ResearchFund_Control.checkResearchFundByID(new ObjectId(request.body.researchFundId), this);
+                IntellectualProperty_Control.checkIntellectualPropertyByID(new ObjectId(request.body.intellectualPropertyId), this);
             }, function (code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    ResearchFund_Control.getFullResearchFundData(functionCallback, this);
+                    IntellectualProperty_Control.getFullIntellectualPropertyData(functionCallback, this);
                 }
             }, function (code, err, functionCallback) {
                 //console.log("functionCallback: "+ JSON.stringify(functionCallback))
-                Return_Control.responseWithCodeAndData(ReturnCode.success, "get ResearchFund with _id " + request.body.researchFundId + " Completed", functionCallback, response)
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get IntellectualProperty with _id " + request.body.intellectualPropertyId + " Completed", functionCallback, response)
             }
         );
     }
 });
 
-router.post('/deleteResearchFund/', function (request, response) {
-    var methodCode = "56";
+router.post('/deleteIntellectualProperty/', function (request, response) {
+    var methodCode = "71";
 
     var requiredData = [];
-    requiredData.push(request.body.researchFundId);
+    requiredData.push(request.body.intellectualPropertyId);
     var requiredReady = Validate.requiredData_Check(requiredData)
 
     var objectIdData = [];
-    objectIdData.push(request.body.researchFundId);
+    objectIdData.push(request.body.intellectualPropertyId);
     var objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
@@ -233,40 +216,40 @@ router.post('/deleteResearchFund/', function (request, response) {
     else {
         flow.exec(
             function () {
-                ResearchFund_Control.checkResearchFundByID(new ObjectId(request.body.researchFundId), this);
+                IntellectualProperty_Control.checkIntellectualPropertyByID(new ObjectId(request.body.intellectualPropertyId), this);
             }, function (code, err, result) {
-                if (code != "672") {
+                if (code != "712") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    ResearchFund_Control.deleteResearchFundByID(new ObjectId(request.body.researchFundId), this);
+                    IntellectualProperty_Control.deleteIntellectualPropertyByID(new ObjectId(request.body.intellectualPropertyId), this);
                 }
             }, function (code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_Control.responseWithCode(ReturnCode.success, "researchFund with _id: " + request.body.researchFundId + " has deleted successfully.", response);
+                    Return_Control.responseWithCode(ReturnCode.success, "intellectualProperty with _id: " + request.body.intellectualPropertyId + " has deleted successfully.", response);
                 }
             }
         );
     }
 });
 
-router.post('/wipeResearchFund/', function (request, response) {
-    var methodCode = "63";
+router.post('/wipeIntellectualProperty/', function (request, response) {
+    var methodCode = "72";
 
     flow.exec(
         function () {
-            ResearchFund_Control.wipeResearchFund(this);
+            IntellectualProperty_Control.wipeIntellectualProperty(this);
 
         }, function (code, err, result) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
             else {
-                Return_Control.responseWithCode(ReturnCode.success, "All ResearchFund has been deleted successfully.", response);
-            }w
+                Return_Control.responseWithCode(ReturnCode.success, "All IntellectualProperty has been deleted successfully.", response);
+            }
         }
     );
 });

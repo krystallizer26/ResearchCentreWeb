@@ -11,7 +11,7 @@ var Validate = require("../controller/validation_controller.js");
 var Return_Control = require('../controller/return_control.js');
 
 //Model
-var ResearchFund = require('../model/researchFund_model.js');
+var Reward = require('../model/reward_model.js');
 
 //Controller
 var Researcher_Control = require("../controller/researcher_control.js");
@@ -23,97 +23,77 @@ var BachelorTeachingDepartment_Control = require("../controller/bachelorTeaching
 var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
 var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 var Publication_Control = require("../controller/publication_control.js");
-var ResearchFund_Control = require("../controller/researchFund_control.js");
+var Reward_Control = require("../controller/reward_control.js");
 
-router.post('/newResearchFund_EachScrap', function (request, response) {
-    var methodCode = "52";
+router.post('/newReward_EachScrap', function (request, response) {
+    var methodCode = "57";
 
     var requiredData = [];
     requiredData.push(request.body.researcherName);
     requiredData.push(request.body.researcherPersonalID);
-    requiredData.push(request.body.researchName);
+    requiredData.push(request.body.rewardName);
     var requiredReady = Validate.requiredData_Check(requiredData);
 
     if (!requiredReady) {
         var alert = "Input Not Valid, check if some data is required."
-        console.log(alert);
+        //console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
             function () {
-                var researchFund = new ResearchFund();
-                researchFund.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
-                researchFund.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
-                researchFund.researchName = Validate.scrappingCleanUp(request.body.researchName)
-                researchFund.fundSource = Validate.scrappingCleanUp(request.body.fundSource)
-                researchFund.scholarshipYear = Validate.scrappingCleanUp(request.body.scholarshipYear)
-                researchFund.scholarshipStart = Validate.scrappingCleanUp(request.body.scholarshipStart)
-                researchFund.scholarshipEnd = Validate.scrappingCleanUp(request.body.scholarshipEnd)
-                researchFund.progress6MonthDate = Validate.scrappingCleanUp(request.body.progress6MonthDate)
-                researchFund.progress6MonthPercent = Validate.scrappingCleanUp(request.body.progress6MonthPercent)
-                researchFund.progress12MonthDate = Validate.scrappingCleanUp(request.body.progress12MonthDate)
-                researchFund.progress12MonthPercent = Validate.scrappingCleanUp(request.body.progress12MonthPercent)
-                researchFund.extend1 = Validate.scrappingCleanUp(request.body.extend1)
-                researchFund.extend2 = Validate.scrappingCleanUp(request.body.extend2)
-                researchFund.fullPaperDate = Validate.scrappingCleanUp(request.body.fullPaperDate)
+                var reward = new Reward();
+                reward.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
+                reward.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
+                reward.rewardYear = Validate.scrappingCleanUp(request.body.rewardYear)
+                reward.rewardName = Validate.scrappingCleanUp(request.body.rewardName)
+                reward.studentName = Validate.scrappingCleanUp(request.body.studentName)
+                reward.rewardDate = Validate.scrappingCleanUp(request.body.rewardDate)
+                reward.rewardRank = Validate.scrappingCleanUp(request.body.rewardRank)
 
-                researchFund.result1 = Validate.scrappingCleanUp(request.body.result1)
-                researchFund.result2 = Validate.scrappingCleanUp(request.body.result2)
-                researchFund.finishDate = Validate.scrappingCleanUp(request.body.finishDate)
-                researchFund.perYear = Validate.scrappingCleanUp(request.body.perYear)
-                researchFund.continueYear = Validate.scrappingCleanUp(request.body.continueYear)
-                researchFund.maximumFund = Validate.scrappingCleanUp(request.body.maximumFund)
-                researchFund.ratio = Validate.scrappingCleanUp(request.body.ratio)
-                researchFund.role = Validate.scrappingCleanUp(request.body.role)
-                researchFund.before2561Inside = Validate.scrappingCleanUp(request.body.before2561Inside)
-                researchFund.before2561Outside = Validate.scrappingCleanUp(request.body.before2561Outside)
-                researchFund.after2561 = Validate.scrappingCleanUp(request.body.after2561)
-                researchFund.detail = Validate.scrappingCleanUp(request.body.detail)
-
-                ResearchFund_Control.newResearchFund_fromScrap(researchFund, this);
+                Reward_Control.newReward_fromScrap(reward, this);
 
             }, function (code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_Control.responseWithCodeAndData(ReturnCode.success, "New Publication was saved successfully as _id defined", functionCallback._id, response);
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "New Reward was saved successfully as _id defined", functionCallback._id, response);
                 }
             }
         );
     }
 });
 
-router.post('/getAllResearchFundPreview/', function (request, response) {
-    var methodCode = "53";
+router.post('/getAllRewardPreview/', function (request, response) {
+    var methodCode = "58";
 
     flow.exec(
         function () {
-            ResearchFund_Control.getAllResearchFundPreview(this);
+            Reward_Control.getAllRewardPreview(this);
         }, function (code, err, functionCallback) {
-            if (code === "631") {
+            if (code === "691") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
-            else if (code === "632") {
-                ResearchFund_Control.getAllFullResearchFundDataPreview(functionCallback, this);
+            else if (code === "692") {
+                Reward_Control.getAllFullRewardDataPreview(functionCallback, this);
             }
             else {
-                Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearchFund Founded", [], response)
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "No Reward Founded", [], response)
             }
         }, function (code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
             else {
-                Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearchFund Completed", functionCallback, response)
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Reward Completed", functionCallback, response)
             }
         }
     );
 });
 
-router.post('/getAllResearchFundPreviewByResearcherId/', function (request, response) {
-    var methodCode = "54";
+router.post('/getAllRewardPreviewByResearcherId/', function (request, response) {
+    var methodCode = "59";
 
     var requiredData = [];
     requiredData.push(request.body.researcherId);
@@ -146,38 +126,38 @@ router.post('/getAllResearchFundPreviewByResearcherId/', function (request, resp
     else {
         flow.exec(
             function () {
-                ResearchFund_Control.getAllResearchFundPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
+                Reward_Control.getAllRewardPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
             }, function (code, err, functionCallback) {
-                if (code === "641") {
+                if (code === "701") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
-                else if (code === "642") {
-                    ResearchFund_Control.getAllFullResearchFundDataPreview(functionCallback, this);
+                else if (code === "702") {
+                    Reward_Control.getAllFullRewardDataPreview(functionCallback, this);
                 }
                 else {
-                    Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearchFund Founded", [], response)
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "No Reward Founded", [], response)
                 }
             }, function (code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearchFund Completed", functionCallback, response)
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Reward Completed", functionCallback, response)
                 }
             }
         );
     }
 });
 
-router.post('/getResearchFundfromID/', function (request, response) {
-    var methodCode = "55";
+router.post('/getRewardfromID/', function (request, response) {
+    var methodCode = "60";
 
     var requiredData = [];
-    requiredData.push(request.body.researchFundId);
+    requiredData.push(request.body.rewardId);
     var requiredReady = Validate.requiredData_Check(requiredData)
 
     var objectIdData = [];
-    objectIdData.push(request.body.researchFundId);
+    objectIdData.push(request.body.rewardId);
     var objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
@@ -193,31 +173,31 @@ router.post('/getResearchFundfromID/', function (request, response) {
     else {
         flow.exec(
             function () {
-                ResearchFund_Control.checkResearchFundByID(new ObjectId(request.body.researchFundId), this);
+                Reward_Control.checkRewardByID(new ObjectId(request.body.rewardId), this);
             }, function (code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    ResearchFund_Control.getFullResearchFundData(functionCallback, this);
+                    Reward_Control.getFullRewardData(functionCallback, this);
                 }
             }, function (code, err, functionCallback) {
                 //console.log("functionCallback: "+ JSON.stringify(functionCallback))
-                Return_Control.responseWithCodeAndData(ReturnCode.success, "get ResearchFund with _id " + request.body.researchFundId + " Completed", functionCallback, response)
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get Reward with _id " + request.body.rewardId + " Completed", functionCallback, response)
             }
         );
     }
 });
 
-router.post('/deleteResearchFund/', function (request, response) {
-    var methodCode = "56";
+router.post('/deleteReward/', function (request, response) {
+    var methodCode = "61";
 
     var requiredData = [];
-    requiredData.push(request.body.researchFundId);
+    requiredData.push(request.body.rewardId);
     var requiredReady = Validate.requiredData_Check(requiredData)
 
     var objectIdData = [];
-    objectIdData.push(request.body.researchFundId);
+    objectIdData.push(request.body.rewardId);
     var objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
@@ -233,40 +213,40 @@ router.post('/deleteResearchFund/', function (request, response) {
     else {
         flow.exec(
             function () {
-                ResearchFund_Control.checkResearchFundByID(new ObjectId(request.body.researchFundId), this);
+                Reward_Control.checkRewardByID(new ObjectId(request.body.rewardId), this);
             }, function (code, err, result) {
-                if (code != "672") {
+                if (code != "712") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    ResearchFund_Control.deleteResearchFundByID(new ObjectId(request.body.researchFundId), this);
+                    Reward_Control.deleteRewardByID(new ObjectId(request.body.rewardId), this);
                 }
             }, function (code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    Return_Control.responseWithCode(ReturnCode.success, "researchFund with _id: " + request.body.researchFundId + " has deleted successfully.", response);
+                    Return_Control.responseWithCode(ReturnCode.success, "reward with _id: " + request.body.rewardId + " has deleted successfully.", response);
                 }
             }
         );
     }
 });
 
-router.post('/wipeResearchFund/', function (request, response) {
-    var methodCode = "63";
+router.post('/wipeReward/', function (request, response) {
+    var methodCode = "62";
 
     flow.exec(
         function () {
-            ResearchFund_Control.wipeResearchFund(this);
+            Reward_Control.wipeReward(this);
 
         }, function (code, err, result) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
             else {
-                Return_Control.responseWithCode(ReturnCode.success, "All ResearchFund has been deleted successfully.", response);
-            }w
+                Return_Control.responseWithCode(ReturnCode.success, "All Reward has been deleted successfully.", response);
+            }
         }
     );
 });

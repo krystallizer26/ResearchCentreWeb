@@ -199,6 +199,21 @@ module.exports = {
             }
         });
     },
+
+    wipeResearcher: function (callback) {
+        Researcher.remove({}, function (error, deleteCallback) {
+            if (error) {
+                let errCode = "761";
+                var alert = "Error in wiping Reward Error: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else {
+                callback("762", null, deleteCallback)
+            }
+        });
+    }, 
+
     deleteResearcherByID: function (researcherId, callback) {
         Researcher.remove({ "_id": researcherId }, function (error, newsCallback) {
             if (error) {

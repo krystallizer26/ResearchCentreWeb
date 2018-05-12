@@ -162,6 +162,21 @@ module.exports = {
             }
         });
     },
+
+    wipePublication: function (callback) {
+        Publication.remove({}, function (error, deleteCallback) {
+            if (error) {
+                let errCode = "751";
+                var alert = "Error in wiping Reward Error: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else {
+                callback("752", null, deleteCallback)
+            }
+        });
+    },
+
     getAllPublicationPreview: function (callback) {
         Publication.find({}, {
             "_id": true,

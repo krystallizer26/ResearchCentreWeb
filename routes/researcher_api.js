@@ -450,6 +450,24 @@ router.post('/deleteResearcher/', function (request, response) {
     }
 });
 
+router.post('/wipeResearcher/', function (request, response) {
+    var methodCode = "65";
+
+    flow.exec(
+        function () {
+            Researcher_Control.wipeResearcher(this);
+
+        }, function (code, err, result) {
+            if (err) {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+            }
+            else {
+                Return_Control.responseWithCode(ReturnCode.success, "All Researcher has been deleted successfully.", response);
+            }
+        }
+    );
+});
+
 module.exports = router;
 
 //-----------------------------------------------------------------------------

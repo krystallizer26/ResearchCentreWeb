@@ -93,6 +93,20 @@ module.exports = {
         });
     },
 
+    wipeResearchFund: function (callback) {
+        ResearchFund.remove({}, function (error, deleteCallback) {
+            if (error) {
+                let errCode = "741";
+                var alert = "Error in wiping Reward Error: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else {
+                callback("742", null, deleteCallback)
+            }
+        });
+    },
+
     getAllResearchFundPreview: function (callback) {
         ResearchFund.find({}, {
             "_id": true,
