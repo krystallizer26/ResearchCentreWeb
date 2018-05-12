@@ -13,9 +13,6 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
   })
 
     
-      
-
-
     .state('researcher', {
       url: '/researcher',
       templateUrl: "./general_2/research_assets/partail/researcher.html",
