@@ -135,7 +135,7 @@ module.exports = {
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
-            else if (functionCallback) {
+            else if (functionCallback.length > 0) {
                 let errCode = "472";
                 var alert = "Get All Publication Completed! " + JSON.stringify(functionCallback);
                 //console.log(alert);
@@ -178,7 +178,7 @@ module.exports = {
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
-            else if (functionCallback) {
+            else if (functionCallback.length > 0) {
                 let errCode = "592";
                 var alert = "Get All Publication Completed! ";
                 //console.log(alert);
@@ -240,15 +240,20 @@ module.exports = {
         let forCallback = [];
         console.log("pubilcation.length >> " + pubilcation.length)
         let j = 0;
-        for (let i = 0; i < pubilcation.length; i++) {
-            getFullPublicationPreview(pubilcation[i], function (a) {
-                //console.log("a >> " + JSON.stringify(a))
-                forCallback.push(a);
-                if (j == pubilcation.length - 1)
-                    callback("561", null, forCallback);
-                else
-                    j++;
-            });
+        if (researchFund.length == 0) {
+            callback("...", null, []);
+        }
+        else {
+            for (let i = 0; i < pubilcation.length; i++) {
+                getFullPublicationPreview(pubilcation[i], function (a) {
+                    //console.log("a >> " + JSON.stringify(a))
+                    forCallback.push(a);
+                    if (j == pubilcation.length - 1)
+                        callback("561", null, forCallback);
+                    else
+                        j++;
+                });
+            }
         }
 
     }

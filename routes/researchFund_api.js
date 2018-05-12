@@ -99,14 +99,14 @@ router.post('/getAllResearchFundPreview/', function (request, response) {
                 ResearchFund_Control.getAllFullResearchFundDataPreview(functionCallback, this);
             }
             else {
-                Return_Control.responseWithCodeAndData(ReturnCode.success, "No Publication Founded", [], response)
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearchFund Founded", [], response)
             }
         }, function (code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
             else {
-                Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Publication Completed", functionCallback, response)
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearchFund Completed", functionCallback, response)
             }
         }
     );
@@ -124,6 +124,10 @@ router.post('/getAllResearchFundPreviewByResearcherId/', function (request, resp
     numberData.push(request.body.limit);
     var numberReady = Validate.numberData_Check(numberData)
 
+    var objectData = [];
+    objectData.push(request.body.researcherId);
+    var objectReady = Validate.objectIDData_Check(objectData)
+
     if (!requiredReady) {
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
@@ -133,6 +137,11 @@ router.post('/getAllResearchFundPreviewByResearcherId/', function (request, resp
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
+    }
+    else if (!objectReady) {
+        let alert = "Input Not Valid, check if some data have to be MongoDB ObjectId.";
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
     else {
         flow.exec(
@@ -201,7 +210,7 @@ router.post('/getResearchFundfromID/', function (request, response) {
 });
 
 router.post('/deleteResearchFund/', function (request, response) {
-    var methodCode = "49";
+    var methodCode = "56";
 
     var requiredData = [];
     requiredData.push(request.body.researchFundId);
