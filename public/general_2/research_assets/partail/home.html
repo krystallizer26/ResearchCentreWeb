@@ -1,6 +1,7 @@
 
       <style>
       /* Lazy Load Styles */
+<<<<<<< HEAD
   
          
          
@@ -23,6 +24,152 @@
           -------------------->
 
 	
+=======
+  
+      .loader {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  
+  display: -ms-grid;
+  -ms-grid-columns: 1fr 1fr 1fr 1fr 1fr;
+  -ms-grid-rows: 1fr 1fr 1fr 1fr 1fr;
+  
+  width: 60px;
+  height: 60px;
+  margin: 15vh auto 0;
+  padding: 20px;
+  border-radius: 50%;
+
+  
+  -webkit-animation: spin ease-in-out 2s forwards infinite;
+
+  
+          animation: spin ease-in-out 2s forwards infinite;
+}
+  
+  .loader .circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+     background-color: #98c9fd; 
+    
+    
+    -webkit-animation: ease-in 1s alternate infinite; 
+    
+    
+            animation: ease-in 1s alternate infinite;
+  }
+  
+  .loader .circle.t-l {
+      grid-column: 1 / span 1;
+      grid-row: 1 / span 1;
+      
+      -ms-grid-column: 1;
+      -ms-grid-row: 1;
+      
+      -webkit-animation-name: move-t-l;
+      
+              animation-name: move-t-l;
+    }
+  
+  .loader .circle.t-r {
+      grid-column: 5 / span 1;
+      grid-row: 1 / span 1;
+    background-color: #4472fd; 
+      -ms-grid-column: 5;
+      -ms-grid-row: 1;
+      
+      -webkit-animation-name: move-t-r;
+      
+              animation-name: move-t-r;
+    }
+  
+  .loader .circle.b-l {
+      grid-column: 1 / span 1;
+      grid-row: 5 / span 1;
+      
+      -ms-grid-column: 1;
+      -ms-grid-row: 5;
+       background-color: #4472fd; 
+      -webkit-animation-name: move-b-l; 
+              animation-name: move-b-l;
+    }
+  
+  .loader .circle.b-r {
+      grid-column: 5 / span 1;
+      grid-row: 5 / span 1;
+           
+      -ms-grid-column: 5;
+      -ms-grid-row: 5;
+      
+      -webkit-animation-name: move-b-r;
+      
+              animation-name: move-b-r;
+    }
+
+@-webkit-keyframes spin {
+  from { -webkit-transform: rotate(45deg); transform: rotate(45deg); }
+  to { -webkit-transform: rotate(765deg); transform: rotate(765deg); }
+}
+
+@keyframes spin {
+  from { -webkit-transform: rotate(45deg); transform: rotate(45deg); }
+  to { -webkit-transform: rotate(765deg); transform: rotate(765deg); }
+}
+
+@-webkit-keyframes move-t-l {
+  to { -webkit-transform: translate(200%, 200%); transform: translate(200%, 200%) }
+}
+
+@keyframes move-t-l {
+  to { -webkit-transform: translate(200%, 200%); transform: translate(200%, 200%) }
+}
+
+@-webkit-keyframes move-t-r {
+  to { -webkit-transform: translate(-200%, 200%); transform: translate(-200%, 200%) }
+}
+
+@keyframes move-t-r {
+  to { -webkit-transform: translate(-200%, 200%); transform: translate(-200%, 200%) }
+}
+
+@-webkit-keyframes move-b-l {
+  to { -webkit-transform: translate(200%, -200%); transform: translate(200%, -200%) }
+}
+
+@keyframes move-b-l {
+  to { -webkit-transform: translate(200%, -200%); transform: translate(200%, -200%) }
+}
+
+@-webkit-keyframes move-b-r {
+  to { -webkit-transform: translate(-200%, -200%); transform: translate(-200%, -200%) }
+}
+
+@keyframes move-b-r {
+  to { -webkit-transform: translate(-200%, -200%); transform: translate(-200%, -200%) }
+}
+
+
+
+        </style>
+         
+         <!-- <ul class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="/general_2/assets/index.html">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a href="/general_2/assets/index.html">Researchers</a>
+            </li>
+
+          </ul> -->
+          <!--------------------
+          END - Breadcrumbs
+          -------------------->
+
+  
+          
+>>>>>>> parent of f95f432... ff
           <div class="all-wrapper rentals" style="max-width: 1600px; ">
             <!--------------------
             START - Top Bar
@@ -196,6 +343,18 @@
                   <!--------------------
                   START - Property Item
                   -------------------->
+<<<<<<< HEAD
+=======
+<div class="section" ng-show="loading">
+                  <figure class="loader">
+                    <div class="circle t-l"></div>
+                    <div class="circle t-r"></div>
+                    <div class="circle b-l"></div>
+                    <div class="circle b-r"></div>
+                  </figure>
+ </div>
+
+>>>>>>> parent of f95f432... ff
                   <div class="row " >
                   <div class="property-item col-md-6  " ng-repeat="item in researcher_list | filter:search:strict  | orderBy:order" >
                    
@@ -203,13 +362,21 @@
                     <a class="item-media-w" href="rentals_single.html">
              <!--          <div class="item-media" style="background-image: url(http://www.science.kmitl.ac.th/wp-content/uploads/2018/01/DSC_5232-683x1024.jpg)"></div>
 				 -->
+<<<<<<< HEAD
 				   <div class="item-media card-image" style="background-image: url( https://picsum.photos/200/300/?image={{$index + 10}})"></div>
+=======
+				   <div class="item-media card-image" style="background-image: url( https://picsum.photos/200/300/?image={{$index+10}})"></div>
+>>>>>>> parent of f95f432... ff
 				 
                     </a>
                     <div class="item-info">
                       <div class="item-features">
                         <div class="feature">
+<<<<<<< HEAD
                          ภาควิชา/หน่วยงาน  <b>{{item.departmentName_TH}}</b>
+=======
+                         ภาควิชา/หน่วยงาน  <b>{{item.departmentData.departmentName_TH}}</b>
+>>>>>>> parent of f95f432... ff
                         </div>
 
                       </div>
@@ -222,12 +389,23 @@
 					  
 					  <p>
 					   <br>
+<<<<<<< HEAD
 					  Keywords:
 					   <span class="badge badge-light">{{item.keyword1_EN}}</span>,
 					   <span class="badge badge-light">{{item.keyword2_EN}}</span>,
 					   <span class="badge badge-light">{{item.keyword3_EN}}</span>,
 					   <span class="badge badge-light">{{item.keyword4_EN}}</span>,
 					   <span class="badge badge-light">{{item.keyword5_EN}}</span>
+=======
+            Keywords:
+            
+
+					   <span class="badge badge-light" ng-repeat="itemitem in item.keywordArray">{{itemitem.keyword_EN}},
+
+
+             </span>
+		
+>>>>>>> parent of f95f432... ff
 					  </p>
                       <!--<div class="item-reviews">
                         <div class="reviews-stars">
@@ -271,6 +449,7 @@
                 </div>
                 <div class="pagination-w">
                   <div class="pagination-info">
+<<<<<<< HEAD
 
                   </div>
                   <div class="pagination-links">
@@ -302,4 +481,37 @@
 
 
 
+=======
+
+                  </div>
+                  <div class="pagination-links">
+                    <ul class="pagination">
+                      <li class="page-item disabled">
+                        <a class="page-link" href="#"> Previous</a>
+                      </li>
+                      <li class="page-item active">
+                        <a class="page-link" href="#"> 1</a>
+                      </li>
+
+                      <li class="page-item">
+                        <a class="page-link" href="#"> Next</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div><!--------------------
+            END - Rentals Content
+            -------------------->
+
+
+          </div>
+          <br>
+
+          <div class="display-type"></div>
+
+
+
+
+>>>>>>> parent of f95f432... ff
 
