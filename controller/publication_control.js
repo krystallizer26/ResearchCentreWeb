@@ -183,6 +183,7 @@ module.exports = {
             "researcherId": true,
             "publicationName": true,
             "publishLocation": true,
+            "publicationAuthor": true,
             "publishYear": true,
             "publishType": true,
             "publicationDatabase": true
@@ -213,6 +214,7 @@ module.exports = {
             "researcherId": true,
             "publicationName": true,
             "publishLocation": true,
+            "publicationAuthor": true,
             "publishYear": true,
             "publishType": true,
             "publicationDatabase": true
