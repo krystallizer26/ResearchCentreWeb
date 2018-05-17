@@ -255,7 +255,7 @@ module.exports = {
         let forCallback = [];
         console.log("pubilcation.length >> " + pubilcation.length)
         let j = 0;
-        if (researchFund.length == 0) {
+        if (pubilcation.length == 0) {
             callback("...", null, []);
         }
         else {
