@@ -1,5 +1,37 @@
-app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service) {
+app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service,$state) {
   console.log("profileDetailGeneralCtrl start");
+  
+  $scope.gotoHome = function () {
+    $('li.active').removeClass('active');
+    $('#tab1').addClass('active');
+    $state.go("profileDetail.general");
+  }
+  $scope.gotoResearch = function () {
+    $('li.active').removeClass('active');
+    $('#tab2').addClass('active');
+    $state.go("profileDetail.research");
+  }
+  $scope.gotoIntellectualProperty = function () {
+    $('li.active').removeClass('active');
+    $('#tab3').addClass('active');
+    $state.go("profileDetail.copyright");
+  }
+  $scope.gotoResearchGrants = function () {
+    $('li.active').removeClass('active');
+    $('#tab4').addClass('active');
+    $state.go("profileDetail.researchGrants");
+  }
+  $scope.gotoAward = function () {
+    $('li.active').removeClass('active');
+    $('#tab5').addClass('active');
+    $state.go("profileDetail.award");
+  }
+  $scope.gotoThesisTopics = function () {
+    $('li.active').removeClass('active');
+    $('#tab6').addClass('active');
+    $state.go("profileDetail.thesistitle");
+  }  
+  
   var researcher_id = global_service.get_research_id(researcher_id);
   console.log(researcher_id);
   //alert("id ===> " +researcher_id);
