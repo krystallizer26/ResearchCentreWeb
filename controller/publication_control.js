@@ -374,12 +374,10 @@ function getFullPublication(input, callback) {
             AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(academicLevelId_tmp), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                publicationData["academicLevelData"] = functionCallback.academicLevelName_TH;
-                publicationData["academicLevelName_EN"] = functionCallback.academicLevelName_EN;
+                researcherData["academicLevelData"] = functionCallback
             }
             else {
-                publicationData["academicLevelName_TH"] = "Not found";
-                publicationData["academicLevelName_EN"] = "Not found";
+                researcherData["academicLevelData"] = [];
             }
             Department_Control.checkDepartmentByID(new ObjectId(departmentId_tmp), this)
         }, function (code, err, functionCallback) {
@@ -425,3 +423,6 @@ function getFullPublication(input, callback) {
         }
     );
 }
+
+
+
