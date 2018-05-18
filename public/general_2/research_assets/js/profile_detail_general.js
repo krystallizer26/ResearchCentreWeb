@@ -1,4 +1,4 @@
-app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service,$state) {
+app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service,$state ) {
   console.log("profileDetailGeneralCtrl start");
   
   $scope.gotoHome = function () {
