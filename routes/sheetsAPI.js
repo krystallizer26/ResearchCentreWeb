@@ -463,7 +463,7 @@ router.get('/insertThesisSheet', function (req, res) {
     spreadsheetId: sheetId,
     ranges: ["'หัวข้อวิทยานิพนธ์'"],
     auth: clientAuth
-  }, (err, { data }) => {
+  }, function (err, { data }) {
     if (err) {
       res.json({
         code: 'FAILED',
@@ -471,9 +471,60 @@ router.get('/insertThesisSheet', function (req, res) {
       });
     } else {
       const rows = data.valueRanges[0].values;
+      var fail_info = null;
+      var dataSend = [];
+      for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+        var formData = {
+          researcherName: validateValueInRow(rows[i], 0),
+
+          studentName: validateValueInRow(rows[i], 2) + validateValueInRow(rows[i], 4) , 
+          studentCode: validateValueInRow(rows[i], 5),
+          studentTel: validateValueInRow(rows[i], 6),
+          studentEmail: validateValueInRow(rows[i], 7),
+          masterDepartmentName: validateValueInRow(rows[i], 8),
+          doctoryDepartmentName: validateValueInRow(rows[i], 9),
+          thesisName_TH: validateValueInRow(rows[i], 10),
+          thesisName_EN: validateValueInRow(rows[i], 11),
+          coProfessor1: validateValueInRow(rows[i], 12),
+          coProfessor2: validateValueInRow(rows[i], 13),
+          chiefCommitee: validateValueInRow(rows[i], 14),
+          commitee1: validateValueInRow(rows[i], 15),
+          commitee2: validateValueInRow(rows[i], 16),
+          commitee3: validateValueInRow(rows[i], 17),
+          professorAssignDate: validateValueInRow(rows[i], 18),
+          thesisNameAssignDate: validateValueInRow(rows[i], 4),
+          intPropertyCode: validateValueInRow(rows[i], 4),
+          intPropertyCode: validateValueInRow(rows[i], 4),
+          intPropertyCode: validateValueInRow(rows[i], 4),
+          intPropertyCode: validateValueInRow(rows[i], 4),
+          intPropertyCode: validateValueInRow(rows[i], 4),
+        };
+        dataSend.push(formData);
+
+        rp({
+          uri: 'http://localhost:2000/api/newIntellectualProperty_EachScrap',
+          method: 'POST',
+          form: formData
+        }).then(function (response) {
+          response = JSON.parse(response)
+          if (response.code != '999999') {
+            console.log('FAILED => ' + response.code + ' ---> ' + response.message);
+          } else {
+            //console.log('--------- SUCCESS !!!');
+          }
+        }).catch(function (err) {
+          console.log('ERROR => ' + err.message);
+        });
+      }
+
+      // res.json({
+      //   code: '999999',
+      //   message: dataSend
+      // });
+
       res.json({
         code: '999999',
-        message: rows
+        message: 'Processing... Please Wait!'
       });
     }
   });

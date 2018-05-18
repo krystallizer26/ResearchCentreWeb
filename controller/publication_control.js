@@ -183,6 +183,7 @@ module.exports = {
             "researcherId": true,
             "publicationName": true,
             "publishLocation": true,
+            "publicationAuthor": true,
             "publishYear": true,
             "publishType": true,
             "publicationDatabase": true
@@ -213,6 +214,7 @@ module.exports = {
             "researcherId": true,
             "publicationName": true,
             "publishLocation": true,
+            "publicationAuthor": true,
             "publishYear": true,
             "publishType": true,
             "publicationDatabase": true
@@ -255,7 +257,7 @@ module.exports = {
         let forCallback = [];
         console.log("pubilcation.length >> " + pubilcation.length)
         let j = 0;
-        if (researchFund.length == 0) {
+        if (pubilcation.length == 0) {
             callback("...", null, []);
         }
         else {
@@ -374,12 +376,10 @@ function getFullPublication(input, callback) {
             AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(academicLevelId_tmp), this);
         }, function (code, err, functionCallback) {
             if (functionCallback) {
-                publicationData["academicLevelData"] = functionCallback.academicLevelName_TH;
-                publicationData["academicLevelName_EN"] = functionCallback.academicLevelName_EN;
+                researcherData["academicLevelData"] = functionCallback
             }
             else {
-                publicationData["academicLevelName_TH"] = "Not found";
-                publicationData["academicLevelName_EN"] = "Not found";
+                researcherData["academicLevelData"] = [];
             }
             Department_Control.checkDepartmentByID(new ObjectId(departmentId_tmp), this)
         }, function (code, err, functionCallback) {
@@ -425,3 +425,6 @@ function getFullPublication(input, callback) {
         }
     );
 }
+
+
+

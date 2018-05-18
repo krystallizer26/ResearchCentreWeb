@@ -8,6 +8,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('home', {
     url: '/home',
+    cache: false,
     templateUrl: "./general_2/research_assets/partail/home.html",
     controller: 'homeCtrl'
   })
@@ -15,24 +16,28 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     
     .state('researcher', {
       url: '/researcher',
+      cache: false,
       templateUrl: "./general_2/research_assets/partail/researcher.html",
       controller: 'researcherCtrl'
     })
 
     .state('paperDetail', {
       url: '/paperDetail',
+      cache: false,
       templateUrl: "./general_2/research_assets/partail/paperDetail.html",
       controller: 'paperDetailCtrl'
     })
 
     .state('bookDetail', {
       url: '/bookDetail',
+      cache: false,
       templateUrl: "./general_2/research_assets/partail/bookDetail.html",
       controller: 'bookDetailCtrl'
     })
 
     .state('copyrightDetail', {
       url: '/copyrightDetail',
+      cache: false,
       templateUrl: "./general_2/research_assets/partail/copyrightDetail.html",
       controller: 'copyrightDetailCtrl'
     })
@@ -45,31 +50,37 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
     })
     .state('profileDetail.general', {
       url: '/general',
+      cache: false,
       templateUrl: "./general_2/research_assets/partail/profile_general.html",
       controller: 'profileDetailGeneralCtrl'
     })
     .state('profileDetail.research', {
       url: '/research',
+      cache: false,
       templateUrl: "./general_2/research_assets/partail/profile_research.html",
       controller: 'profileDetailResearchCtrl'
     })
     .state('profileDetail.copyright', {
       url: '/copyright',
+      cache: false,
       templateUrl: "./general_2/research_assets/partail/profile_copyright.html",
       controller: 'profileDetailCopyrightCtrl'
     })
     .state('profileDetail.award', {
       url: '/award',
+      cache: false,
       templateUrl: "./general_2/research_assets/partail/profile_award.html",
       controller: 'profileDetailAwardCtrl'
     })
     .state('profileDetail.thesistitle', {
       url: '/thesistitle',
+      cache: false,
       templateUrl: "./general_2/research_assets/partail/profile_thesistitle.html",
       controller: 'profileDetailThesistitleCtrl'
     })
     .state('profileDetail.researchGrants', {
       url: '/researchgrants',
+      cache: false,
       templateUrl: "./general_2/research_assets/partail/profile_research_grants.html",
       controller: 'profileDetailresearchGrantsCtrl'
     })
@@ -96,9 +107,8 @@ angular.module('app')
       }
 	return factory;
 
-
-
   }]);
+
 
   app.run(function($state, $rootScope){
      $rootScope.$state = $state;

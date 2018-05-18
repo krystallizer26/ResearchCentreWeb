@@ -41,6 +41,7 @@ module.exports = {
             "_id": true,
             "researcherId": true,
             "intPropertyRegisterDate": true,
+            "licenseCode": true,
             "intPropertyName": true,
             "claimBy": true,
             "licenseType": true
@@ -71,6 +72,7 @@ module.exports = {
             "_id": true,
             "researcherId": true,
             "intPropertyRegisterDate": true,
+            "licenseCode": true,
             "intPropertyName": true,
             "claimBy": true,
             "licenseType": true
