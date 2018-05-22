@@ -42,7 +42,8 @@ module.exports = {
             "researcherId": true,
             "rewardName": true,
             "rewardYear": true,
-            "rewardDate": true
+            "rewardDate": true,
+            "rewardRank":true
         }, function (error, functionCallback) {
             if (error) {
                 let errCode = "691";
@@ -71,7 +72,8 @@ module.exports = {
             "researcherId": true,
             "rewardName": true,
             "rewardYear": true,
-            "rewardDate": true
+            "rewardDate": true,
+            "rewardRank":true
         }, { sort: { "rewardYear": -1 }, limit: limitNum }
             , function (error, functionCallback) {
                 if (error) {
