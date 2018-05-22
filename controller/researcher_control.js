@@ -236,7 +236,9 @@ module.exports = {
             "academicLevelId": true,
             "positionId": true,
             "departmentId": true,
-            "keywordArray": true
+            "keywordArray": true,
+            "keywordString": true
+
 
         }, function (error, functionCallback) {
             if (error) {

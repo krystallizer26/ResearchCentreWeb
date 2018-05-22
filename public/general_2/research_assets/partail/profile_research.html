@@ -11,38 +11,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
       <span class="icon-docs" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span>  ผลงานวิจัยที่ตีพิมพ์ในวารสารวิชาการระดับนานาชาติ / International Publications
   
     </h6>
-    <div>
-      <div class="row">
+    <div >
+      <div class="row" ng-repeat="paper in Publication">
         <!-- <div class= "col-sm-1"><div class="icon-doc" style="font-size: 18px;color: #dfdfdf;"></div>  </div> -->
         <div class="col-sm-1 icon-doc" style="font-size: 18px;color: #dfdfdf;"></div> 
         
-          <div class="col-sm-11"><a href="https://www.sciencedirect.com/science/article/pii/S0022459617303687?via%3Dihub">Extending the basic function of lattice oxygen in lepidocrocite titanate – The conversion of intercalated fatty acid to liquid hydrocarbon fuels</a>
-          , Tosapol Maluangnont, Pornanan Arsa, Tawan Sooknoi, Journal of Solid State Chemistry, 256 (2017) 219–226 </div>
+          <div class="col-sm-11"><a href="{{paper.publicationURL}}">{{paper.publicationName}} </a>
+            {{paper.publicationAuthor}} {{paper.publishLocation}} </div>
           
       
       <hr style="margin-left: 8%;">
-    </div>
-    <div class="row">
-        <!-- <div class= "col-sm-1"><div class="icon-doc" style="font-size: 18px;color: #dfdfdf;"></div>  </div> -->
-        <div class="col-sm-1 icon-doc" style="font-size: 18px;color: #dfdfdf;"></div> 
-        
-          <div class="col-sm-11"><a href="https://www.sciencedirect.com/science/article/pii/S0022459617303687?via%3Dihub">Extending the basic function of lattice oxygen in lepidocrocite titanate – The conversion of intercalated fatty acid to liquid hydrocarbon fuels</a>
-          , Tosapol Maluangnont, Pornanan Arsa, Tawan Sooknoi, Journal of Solid State Chemistry, 256 (2017) 219–226 </div>
-          
-      
-      <hr style="margin-left: 8%;">
-    </div>
-    <div class="row">
-        <!-- <div class= "col-sm-1"><div class="icon-doc" style="font-size: 18px;color: #dfdfdf;"></div>  </div> -->
-        <div class="col-sm-1 icon-doc" style="font-size: 18px;color: #dfdfdf;"></div> 
-        
-          <div class="col-sm-11"><a href="https://www.sciencedirect.com/science/article/pii/S0022459617303687?via%3Dihub">Extending the basic function of lattice oxygen in lepidocrocite titanate – The conversion of intercalated fatty acid to liquid hydrocarbon fuels</a>
-          , Tosapol Maluangnont, Pornanan Arsa, Tawan Sooknoi, Journal of Solid State Chemistry, 256 (2017) 219–226 </div>
-          
-      
-      <hr style="margin-left: 8%;">
-    </div>
-   
+    </div>   
     <button type="button" class="btn btn-primary">เพิ่มเติม / More <i class="os-icon os-icon-arrow-2-right"></i></button>
 
     

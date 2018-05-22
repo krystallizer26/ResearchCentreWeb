@@ -6,6 +6,7 @@ var Reward_Schema = new Schema({
     rewardName: { type: String, required: true },
     studentName: { type: String, default: null },
     rewardDate: { type: String, default: null },
+    rewardYear: { type: String, default: null },
     rewardRank: { type: String, default: null },
     
     createdDate: { type: Date, default: Date.now },
