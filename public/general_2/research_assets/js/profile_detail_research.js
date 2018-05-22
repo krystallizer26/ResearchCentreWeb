@@ -27,19 +27,19 @@ app.controller('profileDetailResearchCtrl', function($scope, $http,global_servic
 
 
       Publication.forEach(function(item){
-            if(item.publishType == "international")
+            if(item.publishType == "InternationalJournal")
             {
               $scope.pb_international.push(item);
             }
-            else if(item.publishType == "national")
+            else if(item.publishType == "NationalJournal")
             {
               $scope.pb_national.push(item);
             }
-            else if(item.publishType == "conference")
+            else if(item.publishType == "InternationalConference")
             {
               $scope.pb_conference.push(item);
             }
-            else if(item.publishType == "book")
+            else if(item.publishType == "Others")
             {
               $scope.pb_book.push(item);
             }
