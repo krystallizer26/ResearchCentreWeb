@@ -25,6 +25,7 @@ var Researcher_Schema = new Schema({
         keyword_Combine: String,
     }],
 
+    keywordString: { type: String, default: null },
     bachelorTeachingDepartmentId: { type: String, default: null },
     bachelor_AcademicYear: { type: Number, default: null },
     bachelor_FacultyBoard_Comment: { type: String, default: null },
