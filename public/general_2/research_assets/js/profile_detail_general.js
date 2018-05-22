@@ -41,6 +41,7 @@ app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service
             researcherId : researcher_id
           };
 
+
           //console.log("==== data getResearcherfromID ==== "+JSON.stringify(dataObjGetResearcherfromID));
           $http.post('/api/getResearcherfromID/',dataObjGetResearcherfromID)
             .success(function(data, status, headers, config) {
@@ -52,7 +53,11 @@ app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service
                 }
                 else
                 {
-                //console.log(data);
+
+                  console.log("-*-------------------------------");
+                console.log("getResearcherfromID " +JSON.stringify(data));
+
+
                 $scope.researchData  = data.data;
                 //console.log($scope.researchData)
             //    $scope.news_table= new NgTableParams({count: 10 ,  sorting: { resourceName: "desc" }  }, { counts: [10,20, 100], dataset: $scope.news_list });
@@ -129,6 +134,29 @@ app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service
                 alert( "failure message: " + JSON.stringify({data: data}) +"ไม่สามารถติดต่อเซิฟเวอร์ได้ ติดต่อแอดมิน");
                 console.log(status+headers);
             });
+
+
+
+            $http.post('/api/getAllRewardPreviewByResearcherId/',dataObj)
+            .success(function(data, status, headers, config) {
+                //$scope.message = data;
+                console.log("-----------"+ JSON.stringify(data));
+                if(data.code != "999999")
+                {
+                  alert("getAllRewardPreviewByResearcherId "+data.message);
+                }
+                else
+                {
+                console.log("Awards");
+                $scope.awards = data.data;
+                console.log($scope.award)
+              }
+            })
+            .error(function(data, status, headers, config) {
+                alert( "failure message: " + JSON.stringify({data: data}) +"ไม่สามารถติดต่อเซิฟเวอร์ได้ ติดต่อแอดมิน");
+                console.log(status+headers);
+            });
+
 
 
 });

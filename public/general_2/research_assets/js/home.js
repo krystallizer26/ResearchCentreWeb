@@ -32,7 +32,8 @@ init();
 
             res.success(function(data, status, headers, config) {
                 //$scope.message = data;
-                console.log("this getAllResearcherPreview_ai = " +JSON.stringify(data))
+                console.log("this getAllResearcherPreview_ai = ")
+                console.log(JSON.stringify(data))
                 if(data.code != "999999")
                 {
                         alert( JSON.stringify(data.code) )
@@ -43,6 +44,7 @@ init();
                     $scope.researcher_list = data.data;
                     $scope.loading = false;
 
+                }
                     /*
                     var $carousel = $('.carousel').flickity({
   draggable: false,

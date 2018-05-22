@@ -17,9 +17,38 @@ app.controller('profileDetailResearchCtrl', function($scope, $http,global_servic
       }
       else
       {
-      $scope.Publication  = data.data;
+      let Publication  = data.data;
+
+      $scope.pb_international = [];
+      $scope.pb_national = [];
+      $scope.pb_conference = [];
+      $scope.pb_book = [];
+      $scope.pb_other = [];
+
+
+      Publication.forEach(function(item){
+            if(item.publishType == "international")
+            {
+              $scope.pb_international.push(item);
+            }
+            else if(item.publishType == "national")
+            {
+              $scope.pb_national.push(item);
+            }
+            else if(item.publishType == "conference")
+            {
+              $scope.pb_conference.push(item);
+            }
+            else if(item.publishType == "book")
+            {
+              $scope.pb_book.push(item);
+            }
+            else{
+              $scope.pb_other.push(item);
+            }
+      })
       console.log("Publication");
-      console.log($scope.Publication);
+      console.log(Publication);
     }
   })
   .error(function(data, status, headers, config) {

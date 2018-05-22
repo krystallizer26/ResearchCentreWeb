@@ -33,12 +33,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
             <a href="#"><i class="os-icon os-icon-twitter"></i></a><a href="#"><i class="os-icon os-icon-facebook"></i></a>
           </div> -->
           <div class="up-main-info" style="padding-top:57%">
+              <h2 class="up-header">
+                  {{researchData.academicLevelData.academicLevelName_TH_Short}} {{researchData.researcherName_TH}}
+                </h2>
+                <br>
             <h2 class="up-header">
-              {{researchData.academicLevelName_EN}} {{researchData.researcherName_EN}}
+              {{researchData.academicLevelData.academicLevelName_EN_Short}} {{researchData.researcherName_EN}}
             </h2>
+       
             <h6 class="up-sub-header">
-              {{researchData.positionName_EN}} / {{researchData.departmentName_TH}}
+              {{researchData.positionData.positionName_TH}}  {{researchData.departmentData.departmentName_TH}}
             </h6>
+            <h6 class="up-sub-header">
+                {{researchData.positionData.positionName_EN}}  {{researchData.departmentData.departmentName_EN}}
+              </h6>
           </div>
           <svg class="decor" width="842px" height="219px" viewBox="0 0 842 219" preserveAspectRatio="xMaxYMax meet" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="translate(-381.000000, -362.000000)" fill="#FFFFFF"><path class="decor-path" d="M1223,362 L1223,581 L381,581 C868.912802,575.666667 1149.57947,502.666667 1223,362 Z"></path></g></svg>
         </div>
@@ -110,7 +118,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
         <div class="element-box">
 
           <h6 class="element-header">
-            <span class="icon-docs" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Research
+            <span class="icon-docs" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Research Outputs
           </h6>
           <div ng-repeat="paper in Publication">
             <div class="row">
@@ -120,7 +128,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
             <hr/>
           </div>
 
-          <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoResearch()">More Researchs <i class="os-icon os-icon-arrow-2-right"></i></button>
+          <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoResearch()">More Research Outputs <i class="os-icon os-icon-arrow-2-right"></i></button>
 
         </div>
       </div>
@@ -133,7 +141,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
           </h6>
           <div ng-repeat="inte in intellectualProperty">
             <div class="row">
-              <div class= "col-sm-1"><div class="icon-badge" style="font-size: 18px;color: #dfdfdf;"></div></div>
+              <div class= "dccol-sm-1"><div class="icon-badge" style="font-size: 18px;color: #dfdfdf;"></div></div>
               <div class= "col-sm-10">{{inte.intPropertyName}}<strong> {{inte.intPropertyRegisterDate}}</strong></div>
             </div>
             <hr/>
@@ -148,7 +156,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
         <div class="element-box">
 
           <h6 class="element-header">
-            <span class="icon-chemistry" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Thesis Topics
+            <span class="icon-chemistry" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Thesis Advisory
           </h6>
           <div>
             <div class="row">
@@ -174,7 +182,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
             <hr/>
           </div>
 
-          <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoThesisTopics()">More Thesis Topics <i class="os-icon os-icon-arrow-2-right"></i></button>
+          <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoThesisTopics()">More Thesis Advisory <i class="os-icon os-icon-arrow-2-right"></i></button>
 
         </div>
       </div>
@@ -217,7 +225,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
               <legend style="margin-bottom: 0.5rem;"><span>ภาควิชา / Department</span></legend>
               <div class="row" >
                 <div class="col" style="margin-left: 12px;">
-                    {{researchData.departmentName_TH}}  / {{researchData.departmentName_EN}}
+                    {{researchData.departmentData.departmentName_TH}}  / {{researchData.departmentData.departmentName_EN}}
                 </div>
               </div>
             </div>
@@ -226,16 +234,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
               <legend style="margin-bottom: 0.5rem;"><span>ตำแหน่งงาน / Position</span></legend>
               <div class="row">
                 <div class="col" style="margin-left: 12px;">
-                    {{researchData.positionName_TH}} / {{researchData.positionName_EN}}
+                    {{researchData.positionData.positionName_TH}} / {{researchData.positionData.positionName_EN}}
                 </div>
               </div>
             </div>
 
             <div class="row profile-detail">
               <legend style="margin-bottom: 0.5rem;"><span>การศึกษา / Education</span></legend>
-              <div class="row">
+              <div class="">
 
-                <div class="col" style="margin-left: 12px;">
+                <div class="" style="margin-left: 12px;">
                   <div id="accordion">
                     <div class="card card-collapse">
                       <div class="card-header" id="headingOne">
@@ -285,8 +293,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
               </div>
             </div>
         </div>
+      </div>
 
-        <div class="row profile-detail" >
+      <div class="row profile-detail" >
+          <div class="">
           <legend style="margin-bottom: 0.5rem;"><span>อุตสาหกรรมเป้าหมาย / Target Industry</span></legend>
           <div class="row">
             <div class="col" style="margin-left: 12px;">
@@ -294,12 +304,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
             </div>
           </div>
         </div>
+        </div>
 
         <div class="row profile-detail" >
           <legend style="margin-bottom: 0.5rem;"><span>คำสำคัญ / Keywords</span></legend>
           <div class="row">
             <div class="col" style="margin-left: 12px;">
-               <span class="badge badge-success" ng-repeat=" itemKeyword in researchData.keywordArray"> {{itemKeyword.keyword_Combine}}</span>
+              <span ng-repeat=" itemKeyword in researchData.keywordArray">
+               <span class="badge badge-success" > {{itemKeyword.keyword_Combine}}  </span> 
+              </span>
                <!-- <span class="badge badge-success">Electroceramics / วัสดุไฟฟ้าเซรามิกส์</span>
                <span class="badge badge-success">Energy materials / วัสดุพลังงาน</span>
                <span class="badge badge-success">Composite materials / วัสดุผสม</span>
@@ -307,7 +320,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
             </div>
           </div>
         </div>
-     </div>
+    
       </div>
     </div>
 
@@ -335,33 +348,26 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
       <div class="element-box">
 
         <h6 class="element-header">
-          <span class="icon-trophy" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Award
+          <span class="icon-trophy" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Awards
         </h6>
-        <div>
-          <div class="row">
-            <div class= "col-sm-1"><div class="icon-trophy" style="font-size: 18px;color: #dfdfdf;"></div></div>
-            <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
+
+        <div ng-repeat="award in awards">
+            <div class="row" >
+              <div class= "col-sm-1"><div class="icon-trophy" style="font-size: 18px;color: #dfdfdf;"></div></div>
+              <div class= "col-sm-10">{{award.rewardYear}} , <b>{{award.rewardName}}</b></div>
+            </div>
+            <hr/>
           </div>
-          <hr/>
-        </div>
+
 
         <div>
-          <div class="row">
-            <div class= "col-sm-1"><div class="icon-trophy" style="font-size: 18px;color: #dfdfdf;"></div></div>
-            <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
-          </div>
-          <hr/>
-        </div>
 
-        <div>
-          <div class="row">
-            <div class= "col-sm-1"><div class="icon-trophy" style="font-size: 18px;color: #dfdfdf;"></div></div>
-            <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
-          </div>
-          <hr/>
-        </div>
+            
+            
+            
 
-        <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoAward()">More Award <i class="os-icon os-icon-arrow-2-right"></i></button>
+
+        <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoAward()">More Awards <i class="os-icon os-icon-arrow-2-right"></i></button>
 
       </div>
     </div>

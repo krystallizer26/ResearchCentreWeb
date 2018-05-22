@@ -12,7 +12,7 @@ init();
 	 $scope.search.departmentData.departmentName_TH='';
      
      $scope.loading = true;
-	 $scope.researcher_list={};
+	 $scope.researcher_list=[];
 	  let dataObj = {
 
             };
@@ -24,7 +24,8 @@ init();
 
             res.success(function(data, status, headers, config) {
                 //$scope.message = data;
-                console.log("this getAllResearcherPreview_ai = " +JSON.stringify(data))
+                console.log("this getAllResearcherPreview_ai = ")
+                console.log(data.data)
                 if(data.code != "999999")
                 {
                         alert( JSON.stringify(data.code) )
