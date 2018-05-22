@@ -215,7 +215,7 @@ router.get('/insertPublicationWorkSheet', function (req, res) {
           publicationAuthor: validateValueInRow(rows[i], 4),
           publishLocation: validateValueInRow(rows[i], 5),
           publishYear: validateValueInRow(rows[i], 6),
-          publishType: validateValueInRow(rows[i], 7),
+          publishType_raw: validateValueInRow(rows[i], 7),
           scholarType: validateValueInRow(rows[i], 8),
           address: validateValueInRow(rows[i], 9),
           publicationDatabase: validateValueInRow(rows[i], 11),
@@ -492,12 +492,12 @@ router.get('/insertThesisSheet', function (req, res) {
           commitee2: validateValueInRow(rows[i], 16),
           commitee3: validateValueInRow(rows[i], 17),
           professorAssignDate: validateValueInRow(rows[i], 18),
-          thesisNameAssignDate: validateValueInRow(rows[i], 4),
-          intPropertyCode: validateValueInRow(rows[i], 4),
-          intPropertyCode: validateValueInRow(rows[i], 4),
-          intPropertyCode: validateValueInRow(rows[i], 4),
-          intPropertyCode: validateValueInRow(rows[i], 4),
-          intPropertyCode: validateValueInRow(rows[i], 4),
+          thesisNameAssignDate: validateValueInRow(rows[i], 19),
+          thesisNameAnnounceDate: validateValueInRow(rows[i], 20),
+          qualifyTestDate: validateValueInRow(rows[i], 21),
+          outlineTestDate: validateValueInRow(rows[i], 22),
+          thesisTestDate: validateValueInRow(rows[i], 23),
+          gradutionDate: validateValueInRow(rows[i], 24),
         };
         dataSend.push(formData);
 

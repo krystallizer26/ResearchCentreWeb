@@ -82,6 +82,7 @@ module.exports = {
                 "publicationName": publication.publicationName,
                 "publishLocation": publication.publishLocation,
                 "publishYear": publication.publishYear,
+                "publishType_raw": publication.publishType,
                 "publishType": publication.publishType,
                 "scholarType": publication.scholarType,
                 "address": publication.address,
@@ -185,6 +186,7 @@ module.exports = {
             "publishLocation": true,
             "publicationAuthor": true,
             "publishYear": true,
+            "publishType_raw": true,
             "publishType": true,
             "publicationDatabase": true
         }, function (error, functionCallback) {
@@ -216,6 +218,7 @@ module.exports = {
             "publishLocation": true,
             "publicationAuthor": true,
             "publishYear": true,
+            "publishType_raw": true,
             "publishType": true,
             "publicationDatabase": true
         }, { sort: { "publishYear": -1 }, limit: limitNum }
