@@ -112,31 +112,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
           <h6 class="element-header">
             <span class="icon-docs" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Research
           </h6>
-          <div>
+          <div ng-repeat="paper in Publication">
             <div class="row">
               <div class= "col-sm-1"><div class="icon-doc" style="font-size: 18px;color: #dfdfdf;"></div></div>
-              <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
+              <div class= "col-sm-10">{{paper.publicationName}} {{paper.publicationAuthor}} {{paper.publishLocation}}<strong></strong></div>
             </div>
             <hr/>
           </div>
 
-          <div>
-            <div class="row">
-              <div class= "col-sm-1"><div class="icon-doc" style="font-size: 18px;color: #dfdfdf;"></div></div>
-              <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
-            </div>
-            <hr/>
-          </div>
-
-          <div>
-            <div class="row">
-              <div class= "col-sm-1"><div class="icon-doc" style="font-size: 18px;color: #dfdfdf;"></div></div>
-              <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
-            </div>
-            <hr/>
-          </div>
-
-          <button type="button" class="btn btn-primary" style="float: right;">More Researchs <i class="os-icon os-icon-arrow-2-right"></i></button>
+          <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoResearch()">More Researchs <i class="os-icon os-icon-arrow-2-right"></i></button>
 
         </div>
       </div>
@@ -147,31 +131,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
           <h6 class="element-header">
             <span class="icon-badge" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Intellectual Property
           </h6>
-          <div>
+          <div ng-repeat="inte in intellectualProperty">
             <div class="row">
               <div class= "col-sm-1"><div class="icon-badge" style="font-size: 18px;color: #dfdfdf;"></div></div>
-              <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
+              <div class= "col-sm-10">{{inte.intPropertyName}}<strong> {{inte.intPropertyRegisterDate}}</strong></div>
             </div>
             <hr/>
           </div>
 
-          <div>
-            <div class="row">
-              <div class= "col-sm-1"><div class="icon-badge" style="font-size: 18px;color: #dfdfdf;"></div></div>
-              <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
-            </div>
-            <hr/>
-          </div>
-
-          <div>
-            <div class="row">
-              <div class= "col-sm-1"><div class="icon-badge" style="font-size: 18px;color: #dfdfdf;"></div></div>
-              <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
-            </div>
-            <hr/>
-          </div>
-
-          <button type="button" class="btn btn-primary" style="float: right;">More Intellectual Property <i class="os-icon os-icon-arrow-2-right"></i></button>
+          <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoIntellectualProperty()">More Intellectual Property <i class="os-icon os-icon-arrow-2-right"></i></button>
 
         </div>
       </div>
@@ -206,7 +174,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
             <hr/>
           </div>
 
-          <button type="button" class="btn btn-primary" style="float: right;">More Thesis Topics <i class="os-icon os-icon-arrow-2-right"></i></button>
+          <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoThesisTopics()">More Thesis Topics <i class="os-icon os-icon-arrow-2-right"></i></button>
 
         </div>
       </div>
@@ -272,7 +240,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
                     <div class="card card-collapse">
                       <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
-                          <a data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <a data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                             ระดับปริญญาตรี / Bachelor Degree
                             <i class="icon-arrow-down"></i>
                           </a>
@@ -349,31 +317,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
         <h6 class="element-header">
           <span class="icon-diamond" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Research Grants
         </h6>
-        <div>
-          <div class="row">
+        <div ng-repeat="fund in funds">
+          <div class="row" >
             <div class= "col-sm-1"><div class="icon-diamond" style="font-size: 18px;color: #dfdfdf;"></div></div>
-            <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
+            <div class= "col-sm-10">{{fund.researchName}} , <b>แหล่งทุน</b> {{fund.fundSource}}</div>
           </div>
           <hr/>
         </div>
 
-        <div>
-          <div class="row">
-            <div class= "col-sm-1"><div class="icon-diamond" style="font-size: 18px;color: #dfdfdf;"></div></div>
-            <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force2<strong> 2018</strong></div>
-          </div>
-          <hr/>
-        </div>
-
-        <div>
-          <div class="row">
-            <div class= "col-sm-1"><div class="icon-diamond" style="font-size: 18px;color: #dfdfdf;"></div></div>
-            <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
-          </div>
-          <hr/>
-        </div>
-
-        <button type="button" class="btn btn-primary" style="float: right;">More Researchs Grants<i class="os-icon os-icon-arrow-2-right"></i></button>
+        <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoResearchGrants()">More Researchs Grants<i class="os-icon os-icon-arrow-2-right"></i></button>
 
       </div>
     </div>
@@ -409,7 +361,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
           <hr/>
         </div>
 
-        <button type="button" class="btn btn-primary" style="float: right;">More Award <i class="os-icon os-icon-arrow-2-right"></i></button>
+        <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoAward()">More Award <i class="os-icon os-icon-arrow-2-right"></i></button>
 
       </div>
     </div>
