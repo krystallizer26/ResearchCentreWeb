@@ -7,6 +7,7 @@ var Publication_Schema = new Schema({
     publicationAuthor: { type: String, default: null },
     publishLocation: { type: String, default: null },
     publishYear: { type: Number, default: 0 },
+    publishType_raw: { type: String, default: null },
     publishType: { type: String, default: null },
     scholarType: { type: String, default: null },
     address: { type: String, default: null },
