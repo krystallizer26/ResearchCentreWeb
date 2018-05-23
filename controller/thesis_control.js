@@ -10,13 +10,13 @@ module.exports = {
 
         flow.exec(
             function () {
-                Researcher_Control.checkResearcherByPersonalID(thesis.researcherPersonalID, this);
+                Researcher_Control.checkResearcherByResearcherName(thesis.researcherName, this);
             }, function (code, err, functionCallback) {
                 if (!err) {
                     thesis.researcherId = functionCallback._id
                 }
                 else {
-                    console.log("Researcher with personalID " + thesis.researcherPersonalID + " not found for Thesis named " + thesis.thesisName)
+                    console.log("Researcher with Name " + thesis.researcherName + " not found for Thesis named " + thesis.thesisName_TH)
                     thesis.researcherId = "111111111111111111111111"
                 }
                 MasterTeachingDepartment_Control.checkAndInsertMasterTeachingByMasterTeachingDepartmentName(thesis.masterDepartmentName, thesis.masterDepartmentName_EN, this);
@@ -39,7 +39,7 @@ module.exports = {
                 thesis.save(function (error, saveResponse) {
                     if (error) {
                         let errCode = "772";
-                        var alert = "Saving Publication fail, Error: " + error.message + "@" + publication.publicationName;
+                        var alert = "Saving Thesis fail, Error: " + error.message + "@" + thesis.thesisName_TH;
                         console.log("ERROR Code: " + errCode + " " + alert);
                         callback(errCode, alert, null);
                     }
@@ -55,10 +55,13 @@ module.exports = {
         Thesis.find({}, {
             "_id": true,
             "researcherId": true,
-            "thesisName": true,
-            "thesisYear": true,
-            "thesisDate": true,
-            "thesisRank": true
+            "studentName": true,
+            "masterDepartmentId": true,
+            "doctoryDepartmentId": true,
+            "thesisName_TH": true,
+            "thesisName_EN": true,
+            "coProfessor1": true,
+            "coProfessor2": true
         }, function (error, functionCallback) {
             if (error) {
                 let errCode = "781";
@@ -85,11 +88,14 @@ module.exports = {
         Thesis.find({ "researcherId": researcherId }, {
             "_id": true,
             "researcherId": true,
-            "thesisName": true,
-            "thesisYear": true,
-            "thesisDate": true,
-            "thesisRank": true
-        }, { sort: { "thesisYear": -1 }, limit: limitNum }
+            "studentName": true,
+            "masterDepartmentId": true,
+            "doctoryDepartmentId": true,
+            "thesisName_TH": true,
+            "thesisName_EN": true,
+            "coProfessor1": true,
+            "coProfessor2": true
+        }, { sort: { "thesisName_TH": -1 }, limit: limitNum }
             , function (error, functionCallback) {
                 if (error) {
                     let errCode = "791";
@@ -220,6 +226,26 @@ function getFullThesisPreview(input, callback) {
                 thesisData["researcherName_TH"] = "Not found";
                 thesisData["researcherName_EN"] = "Not found";
             }
+            MasterTeachingDepartment_Control.checkMasterTeachingDepartmentByID(new ObjectId(thesisData.masterDepartmentId), this);
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                thesisData["masterTeachingDepartmentName_TH"] = functionCallback.masterTeachingDepartmentName_TH;
+                thesisData["masterTeachingDepartmentName_EN"] = functionCallback.masterTeachingDepartmentName_EN;
+            }
+            else {
+                thesisData["masterTeachingDepartmentName_TH"] = "Not found";
+                thesisData["masterTeachingDepartmentName_EN"] = "Not found";
+            }
+            DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentByID(new ObjectId(thesisData.doctoryDepartmentId), this);
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                thesisData["doctoryTeachingDepartmentName_TH"] = functionCallback.doctoryTeachingDepartmentName_TH;
+                thesisData["doctoryTeachingDepartmentName_EN"] = functionCallback.doctoryTeachingDepartmentName_EN;
+            }
+            else {
+                thesisData["doctoryTeachingDepartmentName_TH"] = "Not found";
+                thesisData["doctoryTeachingDepartmentName_EN"] = "Not found";
+            }
             callback(thesisData)
         }
     );
@@ -227,8 +253,7 @@ function getFullThesisPreview(input, callback) {
 
 function getFullThesis(input, callback) {
     let thesisData = JSON.parse(JSON.stringify(input));
-    console.log("getFullThesis for " + thesisData.researchName)
-
+    console.log("getFullThesis for " + thesisData.thesisName_TH)
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)
@@ -241,6 +266,26 @@ function getFullThesis(input, callback) {
             else {
                 thesisData["researcherName_TH"] = "Not found";
                 thesisData["researcherName_EN"] = "Not found";
+            }
+            MasterTeachingDepartment_Control.checkMasterTeachingDepartmentByID(new ObjectId(thesisData.masterDepartmentId), this);
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                thesisData["masterTeachingDepartmentName_TH"] = functionCallback.masterTeachingDepartmentName_TH;
+                thesisData["masterTeachingDepartmentName_EN"] = functionCallback.masterTeachingDepartmentName_EN;
+            }
+            else {
+                thesisData["masterTeachingDepartmentName_TH"] = "Not found";
+                thesisData["masterTeachingDepartmentName_EN"] = "Not found";
+            }
+            DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentByID(new ObjectId(thesisData.doctoryDepartmentId), this);
+        }, function (code, err, functionCallback) {
+            if (functionCallback) {
+                thesisData["doctoryTeachingDepartmentName_TH"] = functionCallback.doctoryTeachingDepartmentName_TH;
+                thesisData["doctoryTeachingDepartmentName_EN"] = functionCallback.doctoryTeachingDepartmentName_EN;
+            }
+            else {
+                thesisData["doctoryTeachingDepartmentName_TH"] = "Not found";
+                thesisData["doctoryTeachingDepartmentName_EN"] = "Not found";
             }
             callback(thesisData)
         }

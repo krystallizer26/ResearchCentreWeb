@@ -21,7 +21,7 @@ var Thesis_Schema = new Schema({
     thesisNameAnnounceDate: { type: String, default: null },
     qualifyTestDate: { type: String, default: null },
     outlineTestDate: { type: String, default: null },
-    outlineTestDate: { type: String, default: null },
+    thesisTestDate: { type: String, default: null },
     gradutionDate: { type: String, default: null }
 });
 

@@ -48,6 +48,7 @@ var Publication_API = require('./routes/publication_api');
 var ResearchFund_API = require('./routes/researchFund_api');
 var Reward_API = require('./routes/reward_api');
 var IntellectualProperty_API = require('./routes/intellectualProperty_api');
+var Thesis_API = require('./routes/thesis_api');
 var sheets_API = require('./routes/sheetsAPI');
 
 // configuration ===============================================================
@@ -124,6 +125,7 @@ app.use('/api', Publication_API);
 app.use('/api', ResearchFund_API);
 app.use('/api', Reward_API);
 app.use('/api', IntellectualProperty_API);
+app.use('/api', Thesis_API);
 
 require('./routes/index.js')(app, passport); //Set routes load our routes and pass in our app and fully configured passpo
 

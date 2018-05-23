@@ -32,8 +32,6 @@ router.post('/newThesis_EachScrap', function (request, response) {
     var methodCode = "73";
 
     var requiredData = [];
-    requiredData.push(request.body.thesisName);
-    requiredData.push(request.body.researcherPersonalID);
     requiredData.push(request.body.researcherName);
     var requiredReady = Validate.requiredData_Check(requiredData);
 
@@ -68,7 +66,7 @@ router.post('/newThesis_EachScrap', function (request, response) {
                 thesis.outlineTestDate = Validate.scrappingCleanUp(request.body.outlineTestDate)
                 thesis.thesisTestDate = Validate.scrappingCleanUp(request.body.thesisTestDate)
                 thesis.gradutionDate = Validate.scrappingCleanUp(request.body.gradutionDate)
-                
+
                 Thesis_Control.newThesis_fromScrap(thesis, this);
 
             }, function (code, err, functionCallback) {
@@ -179,16 +177,16 @@ router.post('/newThesis_EachScrap', function (request, response) {
 // });
 
 router.post('/getAllThesisPreview/', function (request, response) {
-    var methodCode = "47";
+    var methodCode = "74";
 
     flow.exec(
         function () {
             Thesis_Control.getAllThesisPreview(this);
         }, function (code, err, functionCallback) {
-            if (code === "591") {
+            if (code === "781") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
-            else if (code === "592") {
+            else if (code === "782") {
                 Thesis_Control.getAllFullThesisDataPreview(functionCallback, this);
             }
             else {
@@ -206,7 +204,7 @@ router.post('/getAllThesisPreview/', function (request, response) {
 });
 
 router.post('/getAllThesisPreviewByResearcherId/', function (request, response) {
-    var methodCode = "51";
+    var methodCode = "75";
 
     var requiredData = [];
     requiredData.push(request.body.researcherId);
@@ -232,10 +230,10 @@ router.post('/getAllThesisPreviewByResearcherId/', function (request, response) 
             function () {
                 Thesis_Control.getAllThesisPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
             }, function (code, err, functionCallback) {
-                if (code === "611") {
+                if (code === "791") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
-                else if (code === "612") {
+                else if (code === "792") {
                     Thesis_Control.getAllFullThesisDataPreview(functionCallback, this);
                 }
                 else {
@@ -254,7 +252,7 @@ router.post('/getAllThesisPreviewByResearcherId/', function (request, response) 
 });
 
 router.post('/getThesisfromID/', function (request, response) {
-    var methodCode = "48";
+    var methodCode = "76";
 
     var requiredData = [];
     requiredData.push(request.body.thesisId);
@@ -277,7 +275,7 @@ router.post('/getThesisfromID/', function (request, response) {
     else {
         flow.exec(
             function () {
-                Thesis_Control.checkThesisByID(new ObjectId(request.body.thesisId), query, this);
+                Thesis_Control.checkThesisByID(new ObjectId(request.body.thesisId), this);
             }, function (code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
@@ -287,14 +285,14 @@ router.post('/getThesisfromID/', function (request, response) {
                 }
             }, function (code, err, functionCallback) {
                 //console.log("functionCallback: "+ JSON.stringify(functionCallback))
-                Return_Control.responseWithCodeAndData(ReturnCode.success, "get Researcher with _id " + request.body.researcherId + " Completed", functionCallback, response)
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get Thesis with _id " + request.body.thesisId + " Completed", functionCallback, response)
             }
         );
     }
 });
 
 router.post('/deleteThesis/', function (request, response) {
-    var methodCode = "49";
+    var methodCode = "77";
 
     var requiredData = [];
     requiredData.push(request.body.thesisId);
@@ -319,7 +317,7 @@ router.post('/deleteThesis/', function (request, response) {
             function () {
                 Thesis_Control.checkThesisByID(new ObjectId(request.body.thesisId), this);
             }, function (code, err, result) {
-                if (code != "232") {
+                if (code != "802") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
@@ -338,7 +336,7 @@ router.post('/deleteThesis/', function (request, response) {
 });
 
 router.post('/wipeThesis/', function (request, response) {
-    var methodCode = "64";
+    var methodCode = "78";
 
     flow.exec(
         function () {

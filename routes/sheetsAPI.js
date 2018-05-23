@@ -477,7 +477,7 @@ router.get('/insertThesisSheet', function (req, res) {
         var formData = {
           researcherName: validateValueInRow(rows[i], 0),
 
-          studentName: validateValueInRow(rows[i], 2) + validateValueInRow(rows[i], 4) , 
+          studentName: rows[i][2] + " " + validateValueInRow(rows[i], 4),
           studentCode: validateValueInRow(rows[i], 5),
           studentTel: validateValueInRow(rows[i], 6),
           studentEmail: validateValueInRow(rows[i], 7),
@@ -502,7 +502,7 @@ router.get('/insertThesisSheet', function (req, res) {
         dataSend.push(formData);
 
         rp({
-          uri: 'http://localhost:2000/api/newIntellectualProperty_EachScrap',
+          uri: 'http://localhost:2000/api/newThesis_EachScrap',
           method: 'POST',
           form: formData
         }).then(function (response) {
