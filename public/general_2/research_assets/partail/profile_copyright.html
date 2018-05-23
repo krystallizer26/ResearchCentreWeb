@@ -11,52 +11,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
         <span class="icon-badge" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> ชื่อสิ่งประดิษฐ์
       </h6>
       <div>
-        <div class="row">
-          <div class= "col-sm-4"><div class="icon-pencil" style="font-size: 18px;color: #dfdfdf;"> <span> เลขที่ / No.: </span></div>  </div>
-          <div class= "col-sm-6">0000111122223333</div>
-        </div>
-        <hr style="margin-left: 33%;">
-      </div>
-      <div>
-        <div class="row">
-          <div class= "col-sm-4"><div class="icon-calendar" style="font-size: 18px;color: #dfdfdf;"> <span> วันที่ได้รับการจดทะเบียน / Date of registration: </span></div>  </div>
-          <div class= "col-sm-6">27 สิงหาคม 2561</div>
-        </div>
-        <hr style="margin-left: 33%;">
-      </div>
-      <div>
-        <div class="row">
-          <div class= "col-sm-4"><div class="icon-drawer" style="font-size: 18px;color: #dfdfdf;"><span> ประเภทที่ได้รับการคุ้มครอง / Protected category: </span></div></div>
-          <div class= "col-sm-6">สิทธิบัตร</div>
-        </div>
-        <hr style="margin-left: 33%;">
-      </div>
-      <div>
-        <div class="row">
-          <div class= "col-sm-4"><div class="icon-drawer" style="font-size: 18px;color: #dfdfdf;"><span> ประเภทที่ได้รับการคุ้มครอง / Protected category: </span></div></div>
-          <div class= "col-sm-6">สิทธิบัตร</div>
-        </div>
-        <hr style="margin-left: 33%;">
-      </div>
-      <div>
-        <div class="row">
-          <div class= "col-sm-4"><div class="icon-pencil" style="font-size: 18px;color: #dfdfdf;"> <span> ชื่อผู้ขอรับสิทธิบัตร / Name of Applicant: </span></div>  </div>
-          <div class= "col-sm-6">Mr.Xxxxxxxx Xxxxxxxx</div>
-        </div>
-        <hr style="margin-left: 33%;">
-      </div>
-      <div>
-        <div class="row">
-          <div class= "col-sm-4"><div class="icon-pencil" style="font-size: 18px;color: #dfdfdf;"> <span> ชื่อผู้ประดิษฐ์ร่วม / Co-inventor: </span></div>  </div>
-          <div class= "col-sm-6">Mr.Xxxxxxxx Xxxxxxxx</div>
-        </div>
-        <hr style="margin-left: 33%;">
-      </div>
-        <!-- <hr style="margin-left: 33%;"> -->
-        </div>
+        
+       <div ng-repeat="inte in intellectualProperty">
+            <div class="row">
+              <div class= "dccol-sm-1"><div class="icon-badge" style="font-size: 18px;color: #dfdfdf;"></div></div>
+              <div class= "col-sm-10"><b>{{inte.intPropertyCode}}</b>  {{inte.intPropertyName}}<strong> {{inte.intPropertyRegisterDate}}</strong></div>
+            </div>
+            <hr/>
+          </div>
+      
+       
   </div>
 
-<div class="element-wrapper" style="padding-bottom: 0.5rem;">
+<!-- <div class="element-wrapper" style="padding-bottom: 0.5rem;">
 
   <div class="element-box">
     <h6 class="element-header">

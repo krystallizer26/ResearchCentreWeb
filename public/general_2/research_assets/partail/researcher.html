@@ -602,7 +602,7 @@
                       <i class="os-icon-minus os-icon"></i>
                     </div>
                     <h6 class="filter-header">
-                      ค้นหา
+                      <span style="font-size: 22px;">ค้นหา</span> &nbsp;  <span style="color: #cccaca;">search</span>
                     </h6>
                     <div class="filter-body">
                         <input type="text" class="form-control" autofocus  placeholder="คำที่ต้องการค้นหา" ng-model="search.$" >
@@ -616,7 +616,7 @@
                         <i class="os-icon-minus os-icon"></i>
                       </div>
                       <h6 class="filter-header">
-                        ชื่อนักวิจัย
+                          <span style="font-size: 22px;">ชื่อนักวิจัย</span> &nbsp;  <span style="color: #cccaca;">name</span>
                       </h6>
                       <div class="filter-body">
                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ชื่อนักวิจัย" ng-model="search.researcherName_TH" >
@@ -628,8 +628,8 @@
                           <i class="os-icon-minus os-icon"></i>
                         </div>
                         <h6 class="filter-header">
-                          Keyword
-                        </h6>
+                            <span style="font-size: 22px;">คำสำคัญ</span> &nbsp;  <span style="color: #cccaca;">keyword</span>
+                          </h6>
                         <div class="filter-body">
                             <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Keyword" ng-model="search.keywordString" >
                         
@@ -641,19 +641,19 @@
                       <i class="os-icon-minus os-icon"></i>
                     </div>
                     <h6 class="filter-header">
-                      ภาควิชา/หน่วยงาน
-                    </h6>
+                        <span style="font-size: 22px;">ภาควิชา</span> &nbsp;  <span style="color: #cccaca;">department</span>
+                      </h6>
                     <div class="filter-body">
                       <div class="toggled-buttons">
-                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == ''}" ng-click="filter_department('')" >ทั้งหมด</a>
-                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'คณิตศาสตร์'}" ng-click="filter_department('คณิตศาสตร์') ">ภาควิชาคณิตศาสตร์</a>
-                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'ชีววิทยา'}" ng-click="filter_department('ชีววิทยา')" >ภาควิชาชีววิทยา</a>
-                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'ฟิสิกส์'}" ng-click="filter_department('ฟิสิกส์')">ภาควิชาฟิสิกส์</a>
-                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'วิทยาการคอมพิวเตอร์'}" ng-click="filter_department('วิทยาการคอมพิวเตอร์')" >ภาควิชาวิทยาการคอมพิวเตอร์</a>
+                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == ''}" ng-click="filter_department('')" >ทั้งหมด / All</a><br/>
+                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'คณิตศาสตร์'}" ng-click="filter_department('คณิตศาสตร์') ">คณิตศาสตร์ / Mathamatics</a><br/>
+                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'ชีววิทยา'}" ng-click="filter_department('ชีววิทยา')" >ชีววิทยา / Biology</a><br/>
+                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'ฟิสิกส์'}" ng-click="filter_department('ฟิสิกส์')">ฟิสิกส์ / Physics</a><br/>
+                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'วิทยาการคอมพิวเตอร์'}" ng-click="filter_department('วิทยาการคอมพิวเตอร์')" >วิทยาการคอมพิวเตอร์ / Computer Science</a><br/>
   
-                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'เคมี'}" ng-click="filter_department('เคมี')" >ภาควิชาเคมี</a>
-                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'ชีววิทยา'}" ng-click="filter_department('ชีววิทยา') ">ภาควิชาชีววิทยา</a>
-                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'ศูนย์เครื่องมือวิทยาศาสตร์'}" ng-click="filter_department('ศูนย์เครื่องมือวิทยาศาสตร์') ">ศูนย์เครื่องมือวิทยาศาสตร์</a>
+                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'เคมี'}" ng-click="filter_department('เคมี')" >เคมี / Chemistry</a><br/>
+                        <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'ชีววิทยา'}" ng-click="filter_department('ชีววิทยา') ">สถิติ / Statistics</a><br/>
+                        <!-- <a class="btn btn-toggled " ng-class="{'on':search.departmentData.departmentName_TH == 'ศูนย์เครื่องมือวิทยาศาสตร์'}" ng-click="filter_department('ศูนย์เครื่องมือวิทยาศาสตร์') ">ศูนย์เครื่องมือวิทยาศาสตร์</a><br/> -->
   
                       </div>
                     </div>
