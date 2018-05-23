@@ -158,29 +158,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
           <h6 class="element-header">
             <span class="icon-chemistry" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Thesis Advisory
           </h6>
-          <div>
+          <div ng-repeat="item in thesis">
             <div class="row">
               <div class= "col-sm-1"><div class="icon-chemistry" style="font-size: 18px;color: #dfdfdf;"></div></div>
-              <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
+              <div class= "col-sm-10"><strong> {{item.thesisName_TH}} / {{item.thesisName_EN}}</strong> {{item.masterTeachingDepartmentName_TH}} ,{{item.studentName}}</div>
             </div>
             <hr/>
           </div>
 
-          <div>
-            <div class="row">
-              <div class= "col-sm-1"><div class="icon-chemistry" style="font-size: 18px;color: #dfdfdf;"></div></div>
-              <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
-            </div>
-            <hr/>
-          </div>
-
-          <div>
-            <div class="row">
-              <div class= "col-sm-1"><div class="icon-chemistry" style="font-size: 18px;color: #dfdfdf;"></div></div>
-              <div class= "col-sm-10">Approximate solutions for the nonlinear duffing oscillator with an external force<strong> 2018</strong></div>
-            </div>
-            <hr/>
-          </div>
 
           <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoThesisTopics()">More Thesis Advisory <i class="os-icon os-icon-arrow-2-right"></i></button>
 

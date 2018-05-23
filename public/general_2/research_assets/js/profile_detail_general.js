@@ -157,6 +157,44 @@ app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service
                 console.log(status+headers);
             });
 
+            // $http.post('/api/getAllThesisPreview/',dataObj)
+            // .success(function(data, status, headers, config) {
+            //     //$scope.message = data;
+            //     console.log("-----------"+ JSON.stringify(data));
+            //     if(data.code != "999999")
+            //     {
+            //       alert("getAllThesisPreview "+data.message);
+            //     }
+            //     else
+            //     {
+            //     console.log("Thesis");
+            //     $scope.thesis = data.data;
+            //     console.log($scope.thesis)
+            //   }
+            // })
+            // .error(function(data, status, headers, config) {
+            //     alert( "failure message: " + JSON.stringify({data: data}) +"ไม่สามารถติดต่อเซิฟเวอร์ได้ ติดต่อแอดมิน");
+            //     console.log(status+headers);
+            // });
 
+            $http.post('/api/getAllThesisPreviewByResearcherId/',dataObj)
+            .success(function(data, status, headers, config) {
+                //$scope.message = data;
+                console.log("-----------"+ JSON.stringify(data));
+                if(data.code != "999999")
+                {
+                  alert("getAllThesisPreviewByResearcherId "+data.message);
+                }
+                else
+                {
+                console.log("getAllThesisPreviewByResearcherId");
+                $scope.thesis = data.data;
+                console.log($scope.thesis)
+              }
+            })
+            .error(function(data, status, headers, config) {
+                alert( "failure message: " + JSON.stringify({data: data}) +"ไม่สามารถติดต่อเซิฟเวอร์ได้ ติดต่อแอดมิน");
+                console.log(status+headers);
+            });
 
 });
