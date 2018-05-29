@@ -1,3 +1,21 @@
+
+<style>
+
+.font_title_th{
+  font-size: 20px;
+}
+.font_title_en{
+  font-size: 15px;
+}
+
+.font_detail_th{
+  font-size: 16px;
+}
+.font_detail_en{
+  font-size: 13px;
+}
+  </style>
+
 <div class="content-w" style="background: -moz-linear-gradient(30deg, rgba(238,238,238,1) 0%, rgba(207,207,207,1) 100%); /* ff3.6+ */background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, rgba(238,238,238,1)), color-stop(100%, rgba(207,207,207,1))); /* safari4+,chrome */background: -webkit-linear-gradient(30deg, rgba(238,238,238,1) 0%, rgba(207,207,207,1) 100%); /* safari5.1+,chrome10+ */background: -o-linear-gradient(30deg, rgba(238,238,238,1) 0% rgba(207,207,207,1) 100%); /* opera 11.10+ */ background: -ms-linear-gradient(30deg, rgba(238,238,238,1) 0%, rgba(207,207,207,1) 100%); /* ie10+ */
 background: linear-gradient(60deg, rgba(238,238,238,1) 0%, rgba(207,207,207,1) 100%); /* w3c */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#CFCFCF',GradientType=1 ); /* ie6-9 */">
@@ -33,20 +51,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
             <a href="#"><i class="os-icon os-icon-twitter"></i></a><a href="#"><i class="os-icon os-icon-facebook"></i></a>
           </div> -->
           <div class="up-main-info" style="padding-top:57%">
-              <h2 class="up-header">
+              <h2 class="up-header" style="font-size: 30px;">
+
+
                   {{researchData.academicLevelData.academicLevelName_TH_Short}} {{researchData.researcherName_TH}}
                 </h2>
                 <br>
-            <h2 class="up-header">
+            <h2 class="up-header " style="font-size: 17px;">
               {{researchData.academicLevelData.academicLevelName_EN_Short}} {{researchData.researcherName_EN}}
             </h2>
        
-            <h6 class="up-sub-header">
+            <h5 class="up-sub-header">
               {{researchData.positionData.positionName_TH}}  {{researchData.departmentData.departmentName_TH}}
-            </h6>
-            <h6 class="up-sub-header">
+            </h5>
+            <h5 class="up-sub-header">
                 {{researchData.positionData.positionName_EN}}  {{researchData.departmentData.departmentName_EN}}
-              </h6>
+              </h5>
           </div>
           <svg class="decor" width="842px" height="219px" viewBox="0 0 842 219" preserveAspectRatio="xMaxYMax meet" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="translate(-381.000000, -362.000000)" fill="#FFFFFF"><path class="decor-path" d="M1223,362 L1223,581 L381,581 C868.912802,575.666667 1149.57947,502.666667 1223,362 Z"></path></g></svg>
         </div>
@@ -118,7 +138,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
         <div class="element-box">
 
           <h6 class="element-header">
-            <span class="icon-docs" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Research Outputs
+            <span class="icon-docs" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> 
+            <span class="font_title_th"> ผลงานวิจัย </span><span class="font_title_en">Research Outputs</span>
+            
+             
           </h6>
           <div ng-repeat="paper in Publication">
             <div class="row">
@@ -137,7 +160,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
         <div class="element-box">
 
           <h6 class="element-header">
-            <span class="icon-badge" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Intellectual Property
+            <span class="icon-badge" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> 
+            <span class="font_title_th"> ทรัพย์สินทางปัญญา </span><span class="font_title_en">Intellectual Property</span>
+            
+   
           </h6>
           <div ng-repeat="inte in intellectualProperty">
             <div class="row">
@@ -156,12 +182,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
         <div class="element-box">
 
           <h6 class="element-header">
-            <span class="icon-chemistry" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Thesis Advisory
+            <span class="icon-chemistry" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> 
+            <span class="font_title_th"> ที่ปรึกษาวิทยานิพนธ์ </span><span class="font_title_en">Thesis Advisory</span>
+           
           </h6>
           <div ng-repeat="item in thesis">
             <div class="row">
               <div class= "col-sm-1"><div class="icon-chemistry" style="font-size: 18px;color: #dfdfdf;"></div></div>
-              <div class= "col-sm-10"><strong> {{item.thesisName_TH}} / {{item.thesisName_EN}}</strong> {{item.masterTeachingDepartmentName_TH}} ,{{item.studentName}}</div>
+              <div class= "col-sm-10"><strong> {{item.thesisName_TH}} &#09; {{item.thesisName_EN}}</strong> {{item.masterTeachingDepartmentName_TH}} ,{{item.studentName}}</div>
             </div>
             <hr/>
           </div>
@@ -198,34 +226,52 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
             </div>
           </div>
                 <div class="row profile-detail">
-                <legend style="margin-bottom: 0.5rem;"><span>ชื่อ-นามสกุล / Frist name - Last name</span></legend>
+                <legend style="margin-bottom: 0.5rem;">
+                  <span class="font_title_th"> ชื่อ-นามสกุล </span><span class="font_title_en">Frist name - Last name</span></legend>
                 <div class="row" >
                   <div class="col" style="margin-left: 12px;">
-                      {{researchData.researcherName_Combine}}
+                     <span class="font_detail_th">   {{researchData.researcherName_TH}} </span>  
+                     &#09;
+                     <span class="font_detail_en">   {{researchData.researcherName_EN}} </span> 
                   </div>
                 </div>
               </div>
 
               <div class="row profile-detail">
-              <legend style="margin-bottom: 0.5rem;"><span>ภาควิชา / Department</span></legend>
+              <legend style="margin-bottom: 0.5rem;">
+                  <span class="font_title_th"> ภาควิชา </span><span class="font_title_en">Department</span></legend>
+          
               <div class="row" >
                 <div class="col" style="margin-left: 12px;">
-                    {{researchData.departmentData.departmentName_TH}}  / {{researchData.departmentData.departmentName_EN}}
+
+                    <span class="font_detail_th">   {{researchData.departmentData.departmentName_TH}} </span>  
+                    &#09;
+                    <span class="font_detail_en">   {{researchData.departmentData.departmentName_EN}} </span> 
+                   
                 </div>
               </div>
             </div>
 
             <div class="row profile-detail" >
-              <legend style="margin-bottom: 0.5rem;"><span>ตำแหน่งงาน / Position</span></legend>
+              <legend style="margin-bottom: 0.5rem;">
+                  <span class="font_title_th"> ตำแหน่งงาน </span><span class="font_title_en">Position</span></legend>
+                  
+              
               <div class="row">
                 <div class="col" style="margin-left: 12px;">
-                    {{researchData.positionData.positionName_TH}} / {{researchData.positionData.positionName_EN}}
+
+                    <span class="font_detail_th">  {{researchData.positionData.positionName_TH}} </span>  
+                    &#09;
+                    <span class="font_detail_en">{{researchData.positionData.positionName_EN}} </span> 
+                   
                 </div>
               </div>
             </div>
 
             <div class="row profile-detail">
-              <legend style="margin-bottom: 0.5rem;"><span>การศึกษา / Education</span></legend>
+              <legend style="margin-bottom: 0.5rem;">
+                  <span class="font_title_th"> การศึกษา </span><span class="font_title_en">Education</span></legend>
+                
               <div class="">
 
                 <div class="" style="margin-left: 12px;">
@@ -291,7 +337,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
 
       <div class="row profile-detail" >
           <div class="">
-          <legend style="margin-bottom: 0.5rem;"><span>อุตสาหกรรมเป้าหมาย / Target Industry</span></legend>
+          <legend style="margin-bottom: 0.5rem;">
+              <span class="font_title_th"> อุตสาหกรรมเป้าหมาย </span><span class="font_title_en">Target Industry</span></legend>
+              
+       
           <div class="row">
             <div class="col" style="margin-left: 12px;">
                 {{researchData.target}}
@@ -301,13 +350,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
         </div>
 
         <div class="row profile-detail" >
-          <legend style="margin-bottom: 0.5rem;"><span>คำสำคัญ / Keywords</span></legend>
+          
+          <legend style="margin-bottom: 0.5rem;">
+              <span class="font_title_th"> คำสำคัญ </span><span class="font_title_en">Keywords</span></legend>
+              
+         
           <div class="row">
             <div class="col" style="margin-left: 12px;">
               <span ng-repeat=" itemKeyword in researchData.keywordArray">
                <span class="badge badge-success" > {{itemKeyword.keyword_Combine}}  </span> 
               </span>
-               <!-- <span class="badge badge-success">Electroceramics / วัสดุไฟฟ้าเซรามิกส์</span>
+               <!-- <spa
+                n class="badge badge-success">Electroceramics / วัสดุไฟฟ้าเซรามิกส์</span>
                <span class="badge badge-success">Energy materials / วัสดุพลังงาน</span>
                <span class="badge badge-success">Composite materials / วัสดุผสม</span>
                <span class="badge badge-success">Photocatalytic materials / วัสดุตัวเร่งปฏิกิริยาทางแสง</span> -->
@@ -322,7 +376,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
       <div class="element-box">
 
         <h6 class="element-header">
-          <span class="icon-diamond" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Research Grants
+          <span class="icon-diamond" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> 
+          
+          <span class="font_title_th"> ทุนวิจัย </span><span class="font_title_en">Research Grants</span>
+ 
         </h6>
         <div ng-repeat="fund in funds">
           <div class="row" >
@@ -342,7 +399,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
       <div class="element-box">
 
         <h6 class="element-header">
-          <span class="icon-trophy" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> Awards
+          <span class="icon-trophy" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> 
+          <span class="font_title_th"> รางวัล </span><span class="font_title_en">Awards</span>
+         
         </h6>
 
         <div ng-repeat="award in awards">
