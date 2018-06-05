@@ -5,7 +5,7 @@ var ResearchFund_Schema = new Schema({
     researcherId: { type: String, default: null },
     researchName: { type: String, required: true },
     fundSource: { type: String, default: null },
-    scholarshipYear: { type: Number, default: 0 },
+    scholarshipYear: { type: String, default: 0 },
     scholarshipStart: { type: String, default: null },
     scholarshipEnd: { type: String, default: null },
     progress6MonthDate: { type: String, default: null },

@@ -245,14 +245,13 @@ router.post('/wipeResearcherTraining/', function (request, response) {
     flow.exec(
         function () {
             ResearcherTraining_Control.wipeResearcherTraining(this);
-
         }, function (code, err, result) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
             else {
                 Return_Control.responseWithCode(ReturnCode.success, "All ResearcherTraining has been deleted successfully.", response);
-            }w
+            }
         }
     );
 });

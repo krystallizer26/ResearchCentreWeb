@@ -191,7 +191,7 @@ var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDe
 
 function getFullRewardPreview(input, callback) {
     let rewardData = JSON.parse(JSON.stringify(input));
-    console.log("getFullRewardPreview for " + rewardData.researchName)
+    console.log("getFullRewardPreview for " + rewardData.rewardName)
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)
@@ -212,7 +212,7 @@ function getFullRewardPreview(input, callback) {
 
 function getFullReward(input, callback) {
     let rewardData = JSON.parse(JSON.stringify(input));
-    console.log("getFullReward for " + rewardData.researchName)
+    console.log("getFullReward for " + rewardData.rewardName)
 
     flow.exec(
         function () {

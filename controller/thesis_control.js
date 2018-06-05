@@ -6,7 +6,7 @@ var Researcher_Control = require("../controller/researcher_control.js");
 
 module.exports = {
     newThesis_fromScrap: function (thesis, callback) {
-        console.log("Saving Thesis: " + thesis.thesisName);
+        console.log("Saving Thesis: " + thesis.thesisName_TH);
 
         flow.exec(
             function () {

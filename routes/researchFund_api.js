@@ -266,7 +266,7 @@ router.post('/wipeResearchFund/', function (request, response) {
             }
             else {
                 Return_Control.responseWithCode(ReturnCode.success, "All ResearchFund has been deleted successfully.", response);
-            }w
+            }
         }
     );
 });
