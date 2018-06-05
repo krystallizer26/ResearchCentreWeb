@@ -29,6 +29,8 @@
     "mongodb": "^3.0.1",
     "mongoose": "^4.13.12",
     "morgan": "~1.9.0",
+    "nightmare": "^3.0.1",
+    "nightmare-window-manager": "^0.2.2",
     "node-uuid": "^1.4.8",
     "npm": "^5.7.1",
     "passport": "^0.4.0",
@@ -37,6 +39,7 @@
     "request-promise-native": "^1.0.5",
     "serve-favicon": "^2.4.5",
     "sprintf-js": "^1.1.1",
-    "stylus": "^0.54.5"
+    "stylus": "^0.54.5",
+    "vo": "^4.0.2"
   }
 }
