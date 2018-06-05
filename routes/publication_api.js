@@ -73,7 +73,7 @@ router.post('/newPublication_EachScrap', function (request, response) {
                 publication.masterTeachingDepartmentName_TH = Validate.scrappingCleanUp(request.body.masterTeachingDepartmentName_TH)
                 publication.doctoryTeachingDepartmentName_TH = Validate.scrappingCleanUp(request.body.doctoryTeachingDepartmentName_TH)
                 publication.graduationYear = Validate.scrappingCleanUp(request.body.graduationYear)
-                publication.publicationRaw = Validate.scrappingCleanUp(request.body.publicationRaw)
+                publication.publicationRaw = Validate.scrappingCleanUp(request.body.doi)
 
                 Publication_Control.newPublication_fromScrap(publication, this);
 
@@ -242,6 +242,8 @@ router.post('/newPublication_bulk', function (request, response) {
 //         );
 //     }
 // });
+
+
 
 router.post('/getAllPublicationPreview/', function (request, response) {
     var methodCode = "47";

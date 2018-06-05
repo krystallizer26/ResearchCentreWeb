@@ -103,7 +103,7 @@ router.post('/newResearcher_EachScrap', function (request, response) {
             researcher.publication2560 = request.body.publication2560
             researcher.publicationLifeTime = request.body.publicationLifeTime
             researcher.publicationTCI = request.body.publicationTCI
-            
+
             researcher.organizationTel = request.body.organizationTel
             researcher.mobileTel = request.body.mobileTel
             researcher.email = request.body.email
@@ -134,125 +134,183 @@ router.post('/newResearcher_EachScrap', function (request, response) {
 // router.post('/editResearcher/', function (request, response) {
 //     var methodCode = "39";
 
-//     var requiredData = [];
-//     requiredData.push(request.body.researcherId);
-//     requiredData.push(request.body.researcherFName_TH);
-//     requiredData.push(request.body.researcherFName_EN);
-//     requiredData.push(request.body.researcherLName_TH);
-//     requiredData.push(request.body.researcherLName_EN);
-//     requiredData.push(request.body.gender);
-//     requiredData.push(request.body.personalID);
-//     requiredData.push(request.body.departmentId);
-//     requiredData.push(request.body.positionId);
-//     requiredData.push(request.body.academicLevelId);
-//     var requiredReady = Validate.requiredData_Check(requiredData)
+// var requiredData = [];
+// requiredData.push(request.body.researcherId);
+// requiredData.push(request.body.researcherFName_TH);
+// requiredData.push(request.body.researcherFName_EN);
+// requiredData.push(request.body.researcherLName_TH);
+// requiredData.push(request.body.researcherLName_EN);
+// requiredData.push(request.body.gender);
+// requiredData.push(request.body.personalID);
+// requiredData.push(request.body.departmentId);
+// requiredData.push(request.body.positionId);
+// requiredData.push(request.body.academicLevelId);
+// var requiredReady = Validate.requiredData_Check(requiredData)
 
-//     var booleanData = [];
-//     booleanData.push(request.body.retirementStatus);
-//     var booleanReady = Validate.booleanData_Check(booleanData)
+// var booleanData = [];
+// booleanData.push(request.body.retirementStatus);
+// var booleanReady = Validate.booleanData_Check(booleanData)
 
-//     var objectIdData = [];
-//     objectIdData.push(request.body.researcherId);
-//     objectIdData.push(request.body.academicLevelId);
-//     objectIdData.push(request.body.departmentId);
-//     objectIdData.push(request.body.positionId);
-//     var objectIdReady = Validate.objectIDData_Check(objectIdData)
+// var objectIdData = [];
+// objectIdData.push(request.body.researcherId);
+// objectIdData.push(request.body.academicLevelId);
+// objectIdData.push(request.body.departmentId);
+// objectIdData.push(request.body.positionId);
+// var objectIdReady = Validate.objectIDData_Check(objectIdData)
 
-//     var numberData = [];
-//     numberData.push(request.body.personalID);
-//     var numberReady = Validate.numberData_Check(numberData)
+// var numberData = [];
+// numberData.push(request.body.personalID);
+// var numberReady = Validate.numberData_Check(numberData)
 
-//     if (!requiredReady) {
-//         var alert = "Input Not Valid, check if some data is required."
-//         console.log(alert);
-//         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-//     }
-//     else if (!booleanReady) {
-//         var alert = "Input Not Valid, check if some data is not boolean."
-//         console.log(alert);
-//         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-//     }
-//     else if (!objectIdReady) {
-//         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
-//         console.log(alert);
-//         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-//     }
-//     else if (!numberReady) {
-//         var alert = "Input Not Valid, check if some data must contain only numeric character."
-//         console.log(alert);
-//         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "004", alert, response)
-//     }
-//     else if (request.body.personalID.length != 13) {
-//         var alert = "Input Not Valid, check if personalId is in a correct pattern. (13 numeric-only character)"
-//         console.log(alert);
-//         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "005", alert, response)
-//     }
-//     else {
-//         flow.exec(
-//             function () {
-//                 Department_Control.checkDepartmentByID(new ObjectId(request.body.departmentId), this);
-//             }, function (code, err, functionCallback) {
-//                 if (err) {
-//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-//                 }
-//                 else {
-//                     Position_Control.checkPositionByID(new ObjectId(request.body.positionId), this);
-//                 }
-//             }, function (code, err, functionCallback) {
-//                 if (err) {
-//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-//                 }
-//                 else {
-//                     AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(request.body.academicLevelId), this);
-//                 }
-//             }, function (code, err, functionCallback) {
-//                 if (err) {
-//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-//                 }
-//                 else {
-//                     let query = { "_id": true }
-//                     Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), query, this);
-//                 }
-//             }, function (code, err, result) {
-//                 if (err) {
-//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-//                 }
-//                 else {
-//                     let query = {
-//                         $set: {
-//                             "researcherFName_TH": request.body.researcherFName_TH,
-//                             "researcherFName_EN": request.body.researcherFName_EN,
-//                             "researcherLName_TH": request.body.researcherLName_TH,
-//                             "researcherLName_EN": request.body.researcherLName_EN,
-//                             "gender": request.body.gender,
-//                             "personalID": request.body.personalID,
-//                             "birthDate": request.body.birthDate,
-//                             "departmentId": request.body.departmentId,
-//                             "positionId": request.body.positionId,
-//                             "academicLevelId": request.body.academicLevelId,
-//                             "bachelorGraduation": request.body.bachelorGraduation,
-//                             "masterGraduation": request.body.masterGraduation,
-//                             "doctoralGraduation": request.body.doctoralGraduation,
-//                             "target": request.body.target,
-//                             "assignDate": request.body.assignDate,
-//                             "retirementStatus": request.body.retirementStatus,
-//                             "researcherPic": request.body.researcherPic,
-//                             "editedDate": Date.now()
-//                         }
-//                     }
-//                     Researcher_Control.updateResearcherByID(new ObjectId(request.body.researcherId), query, this);
-//                 }
-//             }, function (code, err, result) {
-//                 if (err) {
-//                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-//                 }
-//                 else {
-//                     Return_Control.responseWithCode(ReturnCode.success, "Researcher with _id: " + request.body.researcherId + " has updated successfully.", response);
-//                 }
+// if (!requiredReady) {
+//     var alert = "Input Not Valid, check if some data is required."
+//     console.log(alert);
+//     Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+// }
+// else if (!booleanReady) {
+//     var alert = "Input Not Valid, check if some data is not boolean."
+//     console.log(alert);
+//     Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
+// }
+// else if (!objectIdReady) {
+//     var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+//     console.log(alert);
+//     Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+// }
+// else if (!numberReady) {
+//     var alert = "Input Not Valid, check if some data must contain only numeric character."
+//     console.log(alert);
+//     Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "004", alert, response)
+// }
+// else if (request.body.personalID.length != 13) {
+//     var alert = "Input Not Valid, check if personalId is in a correct pattern. (13 numeric-only character)"
+//     console.log(alert);
+//     Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "005", alert, response)
+// }
+// else {
+//     flow.exec(
+//         function () {
+//             Department_Control.checkDepartmentByID(new ObjectId(request.body.departmentId), this);
+//         }, function (code, err, functionCallback) {
+//             if (err) {
+//                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
 //             }
-//         );
-//     }
+//             else {
+//                 Position_Control.checkPositionByID(new ObjectId(request.body.positionId), this);
+//             }
+//         }, function (code, err, functionCallback) {
+//             if (err) {
+//                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//             }
+//             else {
+//                 AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(request.body.academicLevelId), this);
+//             }
+//         }, function (code, err, functionCallback) {
+//             if (err) {
+//                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//             }
+//             else {
+//                 let query = { "_id": true }
+//                 Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), query, this);
+//             }
+//         }, function (code, err, result) {
+//             if (err) {
+//                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//             }
+//             else {
+//                 let query = {
+//                     $set: {
+//                         "researcherFName_TH": request.body.researcherFName_TH,
+//                         "researcherFName_EN": request.body.researcherFName_EN,
+//                         "researcherLName_TH": request.body.researcherLName_TH,
+//                         "researcherLName_EN": request.body.researcherLName_EN,
+//                         "gender": request.body.gender,
+//                         "personalID": request.body.personalID,
+//                         "birthDate": request.body.birthDate,
+//                         "departmentId": request.body.departmentId,
+//                         "positionId": request.body.positionId,
+//                         "academicLevelId": request.body.academicLevelId,
+//                         "bachelorGraduation": request.body.bachelorGraduation,
+//                         "masterGraduation": request.body.masterGraduation,
+//                         "doctoralGraduation": request.body.doctoralGraduation,
+//                         "target": request.body.target,
+//                         "assignDate": request.body.assignDate,
+//                         "retirementStatus": request.body.retirementStatus,
+//                         "researcherPic": request.body.researcherPic,
+//                         "editedDate": Date.now()
+//                     }
+//                 }
+//                 Researcher_Control.updateResearcherByID(new ObjectId(request.body.researcherId), query, this);
+//             }
+//         }, function (code, err, result) {
+//             if (err) {
+//                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+//             }
+//             else {
+//                 Return_Control.responseWithCode(ReturnCode.success, "Researcher with _id: " + request.body.researcherId + " has updated successfully.", response);
+//             }
+//         }
+//     );
+// }
 // });
+
+router.post('/editResearcherTotal/', function (request, response) {
+    var methodCode = "85";
+
+    var requiredData = [];
+    requiredData.push(request.body.researcherId);
+    requiredData.push(request.body.citationTotal);
+    requiredData.push(request.body.publicationTotal);
+    var requiredReady = Validate.requiredData_Check(requiredData)
+
+    var objectIdData = [];
+    objectIdData.push(request.body.researcherId);
+    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+
+    var numberData = [];
+    numberData.push(request.body.personalID);
+    var numberReady = Validate.numberData_Check(numberData)
+
+    if (!requiredReady) {
+        var alert = "Input Not Valid, check if some data is required."
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+    }
+    else if (!objectIdReady) {
+        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+    }
+    else {
+        flow.exec(
+            function () {
+                    let query = { "_id": true }
+                    Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), query, this);
+            }, function (code, err, result) {
+                if (err) {
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                }
+                else {
+                    let query = {
+                        $set: {
+                            "citationTotal": request.body.citationTotal,
+                            "publicationTotal": request.body.publicationTotal,
+                            "editedDate": Date.now()
+                        }
+                    }
+                    Researcher_Control.updateResearcherByID(new ObjectId(request.body.researcherId), query, this);
+                }
+            }, function (code, err, result) {
+                if (err) {
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                }
+                else {
+                    Return_Control.responseWithCode(ReturnCode.success, "Researcher with _id: " + request.body.researcherId + " has updated successfully.", response);
+                }
+            }
+        );
+    }
+});
 
 router.post('/getAllResearcherName/', function (request, response) {
     var methodCode = "44";

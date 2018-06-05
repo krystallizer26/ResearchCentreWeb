@@ -103,6 +103,8 @@ router.get('/insertResearcherSheet', function (req, res) {
       const rows = data.valueRanges[0].values;
       var fail_info = null;
       var dataSend = [];
+      let j = 0;
+      console.log("rows = " + rows.length)
       for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
         var formData = {
           researcherName_TH: validateValueInRow(rows[i], 0),
@@ -178,26 +180,14 @@ router.get('/insertResearcherSheet', function (req, res) {
           method: 'POST',
           form: formData
         }).then(function (response) {
-          response = JSON.parse(response)
-          if (response.code != '999999') {
-            console.log('FAILED => ' + response.code + ' ---> ' + response.message);
-          } else {
-            console.log('--------- SUCCESS !!!');
-          }
+          if (j == rows.length - 2)
+            res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
+          else
+            j++;
         }).catch(function (err) {
           console.log('ERROR => ' + err.message);
         });
       }
-
-      // res.json({
-      //   code: '999999',
-      //   message: dataSend
-      // });
-
-      res.json({
-        code: '999999',
-        message: 'Processing... Please Wait!'
-      });
     }
   });
 });
@@ -218,6 +208,7 @@ router.get('/insertPublicationWorkSheet', function (req, res) {
       const rows = data.valueRanges[0].values;
       var fail_info = null;
       var dataSend = [];
+      let j = 0
       for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
         var formData = {
           researcherName: validateValueInRow(rows[i], 0),
@@ -239,6 +230,7 @@ router.get('/insertPublicationWorkSheet', function (req, res) {
           masterTeachingDepartmentName_TH: validateValueInRow(rows[i], 17),
           doctoryTeachingDepartmentName_TH: validateValueInRow(rows[i], 18),
           graduationYear: validateValueInRow(rows[i], 20),
+          doi: validateValueInRow(rows[i], 21),
           publicationRaw: null
         };
         dataSend.push(formData);
@@ -248,32 +240,19 @@ router.get('/insertPublicationWorkSheet', function (req, res) {
           method: 'POST',
           form: formData
         }).then(function (response) {
-          response = JSON.parse(response)
-          if (response.code != '999999') {
-            console.log('FAILED => ' + response.code + ' ---> ' + response.message);
-          } else {
-            //console.log('--------- SUCCESS !!!');
-          }
+          if (j == rows.length - 2)
+            res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
+          else
+            j++;
         }).catch(function (err) {
           console.log('ERROR => ' + err.message);
         });
       }
-
-      // res.json({
-      //   code: '999999',
-      //   message: dataSend
-      // });
-
-      res.json({
-        code: '999999',
-        message: 'Processing... Please Wait!'
-      });
     }
   });
 });
 
 router.get('/insertResearchFundSheet', function (req, res) {
-
   sheets.spreadsheets.values.batchGet({
     spreadsheetId: sheetId,
     ranges: ["'ทุนวิจัย'"],
@@ -288,6 +267,7 @@ router.get('/insertResearchFundSheet', function (req, res) {
       const rows = data.valueRanges[0].values;
       var fail_info = null;
       var dataSend = [];
+      let j = 0;
       for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
         var formData = {
           researcherName: validateValueInRow(rows[i], 0),
@@ -326,26 +306,14 @@ router.get('/insertResearchFundSheet', function (req, res) {
           method: 'POST',
           form: formData
         }).then(function (response) {
-          response = JSON.parse(response)
-          if (response.code != '999999') {
-            console.log('FAILED => ' + response.code + ' ---> ' + response.message);
-          } else {
-            //console.log('--------- SUCCESS !!!');
-          }
+          if (j == rows.length - 2)
+            res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
+          else
+            j++;
         }).catch(function (err) {
           console.log('ERROR => ' + err.message);
         });
       }
-
-      // res.json({
-      //   code: '999999',
-      //   message: dataSend
-      // });
-
-      res.json({
-        code: '999999',
-        message: 'Processing... Please Wait!'
-      });
     }
   });
 });
@@ -366,6 +334,7 @@ router.get('/insertRewardSheet', function (req, res) {
       const rows = data.valueRanges[0].values;
       var fail_info = null;
       var dataSend = [];
+      let j = 0
       for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
         var formData = {
           researcherName: validateValueInRow(rows[i], 0),
@@ -384,26 +353,14 @@ router.get('/insertRewardSheet', function (req, res) {
           method: 'POST',
           form: formData
         }).then(function (response) {
-          response = JSON.parse(response)
-          if (response.code != '999999') {
-            console.log('FAILED => ' + response.code + ' ---> ' + response.message);
-          } else {
-            //console.log('--------- SUCCESS !!!');
-          }
+          if (j == rows.length - 2)
+          res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
+        else
+          j++;
         }).catch(function (err) {
           console.log('ERROR => ' + err.message);
         });
       }
-
-      // res.json({
-      //   code: '999999',
-      //   message: dataSend
-      // });
-
-      res.json({
-        code: '999999',
-        message: 'Processing... Please Wait!'
-      });
     }
   });
 });
@@ -424,6 +381,7 @@ router.get('/insertIntellectualPropertySheet', function (req, res) {
       const rows = data.valueRanges[0].values;
       var fail_info = null;
       var dataSend = [];
+      let j = 0;
       for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
         var formData = {
           researcherName: validateValueInRow(rows[i], 0),
@@ -444,26 +402,14 @@ router.get('/insertIntellectualPropertySheet', function (req, res) {
           method: 'POST',
           form: formData
         }).then(function (response) {
-          response = JSON.parse(response)
-          if (response.code != '999999') {
-            console.log('FAILED => ' + response.code + ' ---> ' + response.message);
-          } else {
-            //console.log('--------- SUCCESS !!!');
-          }
+          if (j == rows.length - 2)
+            res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
+          else
+            j++;
         }).catch(function (err) {
           console.log('ERROR => ' + err.message);
         });
       }
-
-      // res.json({
-      //   code: '999999',
-      //   message: dataSend
-      // });
-
-      res.json({
-        code: '999999',
-        message: 'Processing... Please Wait!'
-      });
     }
   });
 });
@@ -484,6 +430,7 @@ router.get('/insertThesisSheet', function (req, res) {
       const rows = data.valueRanges[0].values;
       var fail_info = null;
       var dataSend = [];
+      let j = 0
       for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
         var formData = {
           researcherName: validateValueInRow(rows[i], 0),
@@ -517,26 +464,14 @@ router.get('/insertThesisSheet', function (req, res) {
           method: 'POST',
           form: formData
         }).then(function (response) {
-          response = JSON.parse(response)
-          if (response.code != '999999') {
-            console.log('FAILED => ' + response.code + ' ---> ' + response.message);
-          } else {
-            //console.log('--------- SUCCESS !!!');
-          }
+          if (j == rows.length - 2)
+            res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
+          else
+            j++;
         }).catch(function (err) {
           console.log('ERROR => ' + err.message);
         });
       }
-
-      // res.json({
-      //   code: '999999',
-      //   message: dataSend
-      // });
-
-      res.json({
-        code: '999999',
-        message: 'Processing... Please Wait!'
-      });
     }
   });
 });
@@ -623,23 +558,24 @@ router.get('/insertTeacherTrainingSheet', function (req, res) {
       const rows = data.valueRanges[0].values;
       var fail_info = null;
       var dataSend = [];
+      let j = 0
       for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
         var formData = {
           researcherName: validateValueInRow(rows[i], 0),
           researcherPersonalID: validateValueInRow(rows[i], 1),
 
-          researchTopic: validateValueInRow(rows[i],4),
-          trainingName: validateValueInRow(rows[i],5),
-          trainingType: validateValueInRow(rows[i],6),
-          trainingLevel: validateValueInRow(rows[i],7),
-          trainingYear: validateValueInRow(rows[i],8),
-          trainingStartDate: validateValueInRow(rows[i],9),
-          trainingFinishDate: validateValueInRow(rows[i],10),
-          trainingLocation: validateValueInRow(rows[i],11),
-          scholarshipType: validateValueInRow(rows[i],12),
-          scholarshipLimit: validateValueInRow(rows[i],13),
-          orderCode: validateValueInRow(rows[i],15),
-          approveDate: validateValueInRow(rows[i],16)
+          researchTopic: validateValueInRow(rows[i], 4),
+          trainingName: validateValueInRow(rows[i], 5),
+          trainingType: validateValueInRow(rows[i], 6),
+          trainingLevel: validateValueInRow(rows[i], 7),
+          trainingYear: validateValueInRow(rows[i], 8),
+          trainingStartDate: validateValueInRow(rows[i], 9),
+          trainingFinishDate: validateValueInRow(rows[i], 10),
+          trainingLocation: validateValueInRow(rows[i], 11),
+          scholarshipType: validateValueInRow(rows[i], 12),
+          scholarshipLimit: validateValueInRow(rows[i], 13),
+          orderCode: validateValueInRow(rows[i], 15),
+          approveDate: validateValueInRow(rows[i], 16)
         };
         dataSend.push(formData);
 
@@ -648,26 +584,14 @@ router.get('/insertTeacherTrainingSheet', function (req, res) {
           method: 'POST',
           form: formData
         }).then(function (response) {
-          response = JSON.parse(response)
-          if (response.code != '999999') {
-            console.log('FAILED => ' + response.code + ' ---> ' + response.message);
-          } else {
-            //console.log('--------- SUCCESS !!!');
-          }
+          if (j == rows.length - 2)
+            res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
+          else
+            j++;
         }).catch(function (err) {
           console.log('ERROR => ' + err.message);
         });
       }
-
-      // res.json({
-      //   code: '999999',
-      //   message: dataSend
-      // });
-
-      res.json({
-        code: '999999',
-        message: 'Processing... Please Wait!'
-      });
     }
   });
 });
