@@ -1,3 +1,6 @@
+ิbody{
+    font-size: 30px !important;
+}
 .picturepofile {
   max-width: 33%;
   position: absolute;
@@ -89,3 +92,24 @@
 .card-collapse .card-body {
     padding: 15px 0px 5px;
 }
+
+
+.font_title_th{
+    font-size: 22px;
+  }
+  .font_title_en{
+    font-size: 16px;
+  }
+  
+  .font_detail_th{
+    font-size: 18px;
+  }
+  .font_detail_en{
+    font-size: 14px;
+    color: #d0d0d0;
+  }
+
+  .font-app{
+    font-size: 18px;
+    size: 18px;
+  }
