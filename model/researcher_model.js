@@ -58,6 +58,18 @@ var Researcher_Schema = new Schema({
     publicationLifeTime: { type: Number, default: 0 },
     publicationTCI: { type: Number, default: 0 },
 
+    organizationTel: { type: String, default: 0 },
+    mobileTel: { type: String, default: 0 },
+    email: { type: String, default: 0 },
+    workplace: { type: String, default: 0 },
+    facebook: { type: String, default: 0 },
+    twitter: { type: String, default: 0 },
+    instragram: { type: String, default: 0 },
+    line: { type: String, default: 0 },
+    personalSite: { type: String, default: 0 },
+    insignia1: { type: String, default: 0 },
+    insignia2: { type: String, default: 0 },
+
     createdDate: { type: Date, default: Date.now },
     editedDate: { type: Date, default: Date.now }
 });

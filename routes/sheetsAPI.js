@@ -155,6 +155,17 @@ router.get('/insertResearcherSheet', function (req, res) {
           publication2560: validateValueInRow(rows[i], 47),
           publicationLifeTime: validateValueInRow(rows[i], 48),
           publicationTCI: validateValueInRow(rows[i], 49),
+          organizationTel: validateValueInRow(rows[i], 50),
+          mobileTel: validateValueInRow(rows[i], 51),
+          email: validateValueInRow(rows[i], 52),
+          workplace: validateValueInRow(rows[i], 53),
+          facebook: validateValueInRow(rows[i], 54),
+          twitter: validateValueInRow(rows[i], 55),
+          instragram: validateValueInRow(rows[i], 56),
+          line: validateValueInRow(rows[i], 57),
+          personalSite: validateValueInRow(rows[i], 58),
+          insignia1: validateValueInRow(rows[i], 59),
+          insignia2: validateValueInRow(rows[i], 60),
           researcherPic: null
         };
         dataSend.push(formData);
