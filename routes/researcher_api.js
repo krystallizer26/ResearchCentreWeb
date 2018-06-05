@@ -103,6 +103,18 @@ router.post('/newResearcher_EachScrap', function (request, response) {
             researcher.publication2560 = request.body.publication2560
             researcher.publicationLifeTime = request.body.publicationLifeTime
             researcher.publicationTCI = request.body.publicationTCI
+            
+            researcher.organizationTel = request.body.organizationTel
+            researcher.mobileTel = request.body.mobileTel
+            researcher.email = request.body.email
+            researcher.workplace = request.body.workplace
+            researcher.facebook = request.body.facebook
+            researcher.twitter = request.body.twitter
+            researcher.instragram = request.body.instragram
+            researcher.line = request.body.line
+            researcher.personalSite = request.body.personalSite
+            researcher.insignia1 = request.body.insignia1
+            researcher.insignia2 = request.body.insignia2
 
             researcher.researcherPic = request.body.researcherPic
 
@@ -241,6 +253,23 @@ router.post('/newResearcher_EachScrap', function (request, response) {
 //         );
 //     }
 // });
+
+router.post('/getAllResearcherName/', function (request, response) {
+    var methodCode = "44";
+
+    flow.exec(
+        function () {
+            Researcher_Control.getAllResearcherName(this);
+        }, function (code, err, functionCallback) {
+            if (err) {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+            }
+            else {
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Researcher Completed", functionCallback, response)
+            }
+        }
+    );
+});
 
 router.post('/getAllResearcherPreview/', function (request, response) {
     var methodCode = "44";

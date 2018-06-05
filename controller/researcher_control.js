@@ -227,6 +227,32 @@ module.exports = {
             }
         });
     },
+    getAllResearcherName: function (callback) {
+        Researcher.find({}, {
+            "_id": true,
+            "researcherName_TH": true,
+            "researcherName_EN": true
+        }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "431";
+                var alert = "Error in getAllAcademicLevel , Error : " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback) {
+                let errCode = "432";
+                var alert = "Get All Researcher Completed! ";
+                //console.log(alert);
+                callback(errCode, null, functionCallback)
+            }
+            else {
+                let errCode = "433";
+                var alert = "No Researcher Founded";
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+        });
+    },
     getAllResearcherPreview: function (callback) {
         Researcher.find({}, {
             "_id": true,
