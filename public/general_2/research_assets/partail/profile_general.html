@@ -54,11 +54,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
               <h2 class="up-header" style="font-size: 30px;">
 
 
-                  {{researchData.academicLevelData.academicLevelName_TH_Short}} {{researchData.researcherName_TH}}
+                  {{researchData.researcherName_TH}}
                 </h2>
                 <br>
             <h2 class="up-header " style="font-size: 17px;">
-              {{researchData.academicLevelData.academicLevelName_EN_Short}} {{researchData.researcherName_EN}}
+               {{researchData.researcherName_EN}}
             </h2>
        
             <h5 class="up-sub-header">
@@ -254,15 +254,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
 
             <div class="row profile-detail" >
               <legend style="margin-bottom: 0.5rem;">
-                  <span class="font_title_th"> ตำแหน่งงาน </span><span class="font_title_en">Position</span></legend>
+                  <span class="font_title_th"> ตำแหน่ง </span><span class="font_title_en">Position</span></legend>
                   
               
               <div class="row">
                 <div class="col" style="margin-left: 12px;">
 
-                    <span class="font_detail_th">  {{researchData.positionData.positionName_TH}} </span>  
+                    <span class="font_detail_th">   {{researchData.academicLevelData.academicLevelName_TH_Short}} </span>  
                     &#09;
-                    <span class="font_detail_en">{{researchData.positionData.positionName_EN}} </span> 
+                    <span class="font_detail_en">{{researchData.academicLevelData.academicLevelName_EN_Short}}</span> 
                    
                 </div>
               </div>
@@ -412,17 +412,35 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
             <hr/>
           </div>
 
-
         <div>
-
-            
-            
-            
-
-
         <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoAward()">More Awards <i class="os-icon os-icon-arrow-2-right"></i></button>
 
       </div>
     </div>
+  </div>
+
+    <div class="element-wrapper">
+      <div class="element-box">
+
+        <h6 class="element-header">
+          <span class="icon-trophy" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> 
+          <span class="font_title_th"> อบรมสัมมนา </span><span class="font_title_en">Training</span>
+         
+        </h6>
+
+        <div ng-repeat="award in awards">
+            <div class="row" >
+              <div class= "col-sm-1"><div class="icon-trophy" style="font-size: 18px;color: #dfdfdf;"></div></div>
+              <div class= "col-sm-10">ชื่องานอบรม XXXXXXXXXX, หัวข้อการอบรม XXXXXXXXXXXXXXX, DD/MM/YYYY </div>
+            </div>
+            <hr/>
+          </div>
+
+        <div>
+        <button type="button" class="btn btn-primary" style="float: right;" ng-click="gotoAward()">More Awards <i class="os-icon os-icon-arrow-2-right"></i></button>
+
+      </div>
+    </div>
+  </div>
 
   </div><!--  col 7 -->

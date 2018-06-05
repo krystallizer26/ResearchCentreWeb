@@ -608,11 +608,54 @@ router.get('/insertTeacherTrainingSheet', function (req, res) {
         code: 'FAILED',
         message: 'The API returned an error: ' + err
       });
-    } else {
+    } {
       const rows = data.valueRanges[0].values;
+      var fail_info = null;
+      var dataSend = [];
+      for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+        var formData = {
+          researcherName: validateValueInRow(rows[i], 0),
+          researcherPersonalID: validateValueInRow(rows[i], 1),
+
+          researchTopic: validateValueInRow(rows[i],4),
+          trainingName: validateValueInRow(rows[i],5),
+          trainingType: validateValueInRow(rows[i],6),
+          trainingLevel: validateValueInRow(rows[i],7),
+          trainingYear: validateValueInRow(rows[i],8),
+          trainingStartDate: validateValueInRow(rows[i],9),
+          trainingFinishDate: validateValueInRow(rows[i],10),
+          trainingLocation: validateValueInRow(rows[i],11),
+          scholarshipType: validateValueInRow(rows[i],12),
+          scholarshipLimit: validateValueInRow(rows[i],13),
+          orderCode: validateValueInRow(rows[i],15),
+          approveDate: validateValueInRow(rows[i],16)
+        };
+        dataSend.push(formData);
+
+        rp({
+          uri: 'http://localhost:2000/api/newResearcherTraining_EachScrap',
+          method: 'POST',
+          form: formData
+        }).then(function (response) {
+          response = JSON.parse(response)
+          if (response.code != '999999') {
+            console.log('FAILED => ' + response.code + ' ---> ' + response.message);
+          } else {
+            //console.log('--------- SUCCESS !!!');
+          }
+        }).catch(function (err) {
+          console.log('ERROR => ' + err.message);
+        });
+      }
+
+      // res.json({
+      //   code: '999999',
+      //   message: dataSend
+      // });
+
       res.json({
         code: '999999',
-        message: rows
+        message: 'Processing... Please Wait!'
       });
     }
   });
