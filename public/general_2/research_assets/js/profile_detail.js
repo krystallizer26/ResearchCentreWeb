@@ -31,4 +31,10 @@ app.controller('profileDetailCtrl', function($scope, $http , $state) {
     $state.go("profileDetail.thesistitle");
   }
 
+  $scope.gotoTraining = function () {
+    $('li.active').removeClass('active');
+    $('#tab7').addClass('active');
+    $state.go("profileDetail.training");
+  }
+
 });

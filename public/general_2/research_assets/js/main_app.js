@@ -84,6 +84,12 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider) {
       templateUrl: "./general_2/research_assets/partail/profile_research_grants.html",
       controller: 'profileDetailresearchGrantsCtrl'
     })
+    .state('profileDetail.training', {
+      url: '/training',
+      cache: false,
+      templateUrl: "./general_2/research_assets/partail/profile_training.html",
+      controller: 'trainingCtrl'
+    })
 
 });
 
