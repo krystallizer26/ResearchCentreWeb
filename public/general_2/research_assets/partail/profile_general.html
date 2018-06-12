@@ -101,15 +101,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
               </h6>
               <div class="row" style="padding: 8px;">
                 <div class= "col-sm-2"><div class="os-icon os-icon-phone" style="font-size: 27px;color: #047bf8;"></div></div>
-                <div class= "col-sm-8 font-app">02-888888888 : 000,125</div>
+                <div class= "col-sm-8 font-app"> +66–2-3298400-11 EXT. {{researchData.organizationTel}}</div>
               </div>
               <div class="row" style="padding: 8px;">
                 <div class= "col-sm-2"><div class="os-icon os-icon-mail" style="font-size: 27px;color: #047bf8;"></div></div>
-                <div class= "col-sm-8 font-app">tawan.s@kmitl.ac.th</div>
+                <div class= "col-sm-8 font-app"><a href="mailto:{{researchData.email}}">{{researchData.email}}</a></div>
               </div>
               <div class="row" style="padding: 8px;">
                 <div class= "col-sm-2"><div class="os-icon os-icon-map" style="font-size: 27px;color: #047bf8;"></div></div>
-                <div class= "col-sm-8 font-app">อาคารพระจอมเกล้า ห้อง 111</div>
+                <div class= "col-sm-8 font-app">{{researchData.workplace}}</div>
+              </div>
+              <div class="row" style="padding: 8px;">
+                <!-- <div class= "col-sm-2">i</div>
+                <div class= "col-sm-2">i</div>
+                <div class= "col-sm-2">i</div> -->
               </div>
             </div>
           </div>
@@ -243,9 +248,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
               <div class="row">
                 <div class="col" style="margin-left: 12px;">
 
-                    <span class="font_detail_th">   {{researchData.academicLevelData.academicLevelName_TH_Short}} </span>  
+                    <span class="font_detail_th">   {{researchData.academicLevelData.academicLevelName_TH}} </span>  
                     &#09;
-                    <span class="font_detail_en">{{researchData.academicLevelData.academicLevelName_EN_Short}}</span> 
+                    <span class="font_detail_en">{{researchData.academicLevelData.academicLevelName_EN}}</span> 
                    
                 </div>
               </div>
@@ -326,12 +331,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
      
         <div class="row">
           <div class="col font-app" style="margin-left: 12px;">
-            เครื่องราชอิสริยาภรณ์สูงสุดลำดับที่ 1
+            {{researchData.insignia1}}
           </div>
         </div>
         <div class="row">
           <div class="col font-app" style="margin-left: 12px;">
-            เครื่องราชอิสริยาภรณ์สูงสุดลำดับที่ 2
+            {{researchData.insignia2}}
           </div>
         </div>
 

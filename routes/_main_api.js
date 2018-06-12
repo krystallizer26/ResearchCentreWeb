@@ -186,7 +186,7 @@ router.get('/scrapAllData', function (request2, response) {
                             uri: 'http://localhost:2000/api/insertPublicationWorkSheet',
                             method: 'GET'
                         }, function (err, res2, body) {
-                            let r = JSON.parse(body)
+                            //let r = JSON.parse(body)
                             response.json({ code: "999999", message: "Scraping Complete :)" })
                         })
                     })
