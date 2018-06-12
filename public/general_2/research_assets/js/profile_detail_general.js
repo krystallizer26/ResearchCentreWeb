@@ -55,8 +55,9 @@ app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service
                 {
 
                   console.log("-*-------------------------------");
-                console.log("getResearcherfromID " +JSON.stringify(data));
-
+                console.log("getResearcherfromID ");
+                console.log(data);
+                console.log("getResearcherfromID Printed");
 
                 $scope.researchData  = data.data;
                 //console.log($scope.researchData)

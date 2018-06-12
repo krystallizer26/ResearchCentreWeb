@@ -101,15 +101,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
               </h6>
               <div class="row" style="padding: 8px;">
                 <div class= "col-sm-2"><div class="os-icon os-icon-phone" style="font-size: 27px;color: #047bf8;"></div></div>
-                <div class= "col-sm-8 font-app">02-888888888 : 000,125</div>
+                <div class= "col-sm-8 font-app"> +66–2-3298400-11 EXT. {{researchData.organizationTel}}</div>
               </div>
               <div class="row" style="padding: 8px;">
                 <div class= "col-sm-2"><div class="os-icon os-icon-mail" style="font-size: 27px;color: #047bf8;"></div></div>
-                <div class= "col-sm-8 font-app">tawan.s@kmitl.ac.th</div>
+                <div class= "col-sm-8 font-app"><a href="mailto:{{researchData.email}}">{{researchData.email}}</a></div>
               </div>
               <div class="row" style="padding: 8px;">
                 <div class= "col-sm-2"><div class="os-icon os-icon-map" style="font-size: 27px;color: #047bf8;"></div></div>
-                <div class= "col-sm-8 font-app">อาคารพระจอมเกล้า ห้อง 111</div>
+                <div class= "col-sm-8 font-app">{{researchData.workplace}}</div>
+              </div>
+              <div class="row  justify-content-center" style="padding: 8px;">
+                <div class= "col-sm-1"><a style="text-decoration: none;" href="#"><i class="entypo-icon-facebook-with-circle" style="font-size: 27px !important; color: #010696;"></i></a></div>
+                <div class= "col-sm-1"><a href="#"><img src="/general_2/assets/img/LINE_SOCIAL_Circle_typeA.png" style="width: 26px"></a></div>
+                <div class= "col-sm-1"><a style="text-decoration: none;" href="#"><i class="entypo-icon-twitter-with-circle" style="font-size: 27px !important; color: #43ccf7;"></i></a></div>
+                <div class= "col-sm-1"><a style="text-decoration: none;" href="#"><i class="entypo-icon-instagram-with-circle" style="font-size: 27px !important; color: #000000;"></i></a></div>
+                <div class= "col-sm-1"><a style="text-decoration: none;" href="#"><i class="entypo-icon-linkedin-with-circle" style="font-size: 27px !important; color: #053d85;"></i></a></div>
               </div>
             </div>
           </div>
@@ -126,10 +133,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
             
              
           </h6>
-          <div ng-repeat="paper in Publication">
+          <div ng-repeat="paper in Publication | orderBy: '-publishYear'">
             <div class="row">
               <div class= "col-sm-1"><div class="icon-doc" style="font-size: 18px;color: #dfdfdf;"></div></div>
-              <div class= "col-sm-10 font-app">{{paper.publicationName}} {{paper.publicationAuthor}} {{paper.publishLocation}}<strong></strong></div>
+              <div class= "col-sm-10 font-app"><a href="http://doi.org/{{item.publicationRaw}}">{{paper.publicationName}}</a>. <b>{{paper.publicationAuthor}}</b>. <I>{{paper.publishLocation}}</I>.<strong></strong></div>
             </div>
             <hr/>
           </div>
@@ -148,7 +155,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
             
    
           </h6>
-          <div ng-repeat="inte in intellectualProperty">
+          <div ng-repeat="inte in intellectualProperty | orderBy: '-scholarshipYear'">
             <div class="row">
               <div class= "dccol-sm-1"><div class="icon-badge" style="font-size: 18px;color: #dfdfdf;"></div></div>
               <div class= "col-sm-10 font-app"><b>{{inte.intPropertyCode}}</b>  {{inte.intPropertyName}}<strong> {{inte.intPropertyRegisterDate}}</strong></div>
@@ -243,9 +250,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
               <div class="row">
                 <div class="col" style="margin-left: 12px;">
 
-                    <span class="font_detail_th">   {{researchData.academicLevelData.academicLevelName_TH_Short}} </span>  
+                    <span class="font_detail_th">   {{researchData.academicLevelData.academicLevelName_TH}} </span>  
                     &#09;
-                    <span class="font_detail_en">{{researchData.academicLevelData.academicLevelName_EN_Short}}</span> 
+                    <span class="font_detail_en">{{researchData.academicLevelData.academicLevelName_EN}}</span> 
                    
                 </div>
               </div>
@@ -326,12 +333,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
      
         <div class="row">
           <div class="col font-app" style="margin-left: 12px;">
-            เครื่องราชอิสริยาภรณ์สูงสุดลำดับที่ 1
+            {{researchData.insignia1}}
           </div>
         </div>
         <div class="row">
           <div class="col font-app" style="margin-left: 12px;">
-            เครื่องราชอิสริยาภรณ์สูงสุดลำดับที่ 2
+            {{researchData.insignia2}}
           </div>
         </div>
 

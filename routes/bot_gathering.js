@@ -42,8 +42,8 @@ var code = data.securecode;
   .goto('https://www.scopus.com/search/form.uri?display=authorLookup&clear=t&origin=searchbasic&txGid=ddab0b1e35c0e69a2fb5b0a117d67d49')
   .waitWindowLoad()
 
-    .type('input[name = st1 ]', data.lastname)
-    .type('input[name = st2 ]', data.firstname)
+    .insert('input[name = st1 ]', data.lastname)
+    .insert('input[name = st2 ]', data.firstname)
     .click('#authorMainSearch')
     .waitWindowLoad()
     
