@@ -10,7 +10,7 @@ module.exports = {
 
         flow.exec(
             function () {
-                Researcher_Control.checkResearcherByResearcherName(thesis.researcherName, this);
+                Researcher_Control.checkResearcherByPersonalID(thesis.researcherPersonalID, this);
             }, function (code, err, functionCallback) {
                 if (!err) {
                     thesis.researcherId = functionCallback._id

@@ -45,6 +45,7 @@ router.post('/newThesis_EachScrap', function (request, response) {
             function () {
                 var thesis = new Thesis();
                 thesis.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
+                thesis.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
                 thesis.studentName = Validate.scrappingCleanUp(request.body.studentName)
                 thesis.studentCode = Validate.scrappingCleanUp(request.body.studentCode)
                 thesis.studentTel = Validate.scrappingCleanUp(request.body.studentTel)

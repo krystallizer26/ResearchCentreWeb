@@ -90,6 +90,21 @@ module.exports = {
             }
         );
     },
+    newResearcher_Dummy: function (researcher, callback) {
+        researcher.save(function (error, saveResponse) {
+            if (error) {
+                console.log("Save Dummy Failed")
+                let errCode = "361";
+                var alert = "Saving Researcher fail, Error: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null);
+            }
+            else {
+                console.log("Save Dummy Completed")
+                callback("362", null, saveResponse)
+            }
+        });
+    },
     updateResearcherByID: function (researcherId, newvalues, callback) {
         var myquery = { "_id": researcherId };
         console.log("In Method: " + JSON.stringify(newvalues))

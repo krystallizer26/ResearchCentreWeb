@@ -131,6 +131,29 @@ router.post('/newResearcher_EachScrap', function (request, response) {
     );
 });
 
+router.get('/newResearcher_Dummy', function (request, response) {
+    var methodCode = "36";
+
+    flow.exec(
+        function () {
+            var researcher = new Researcher();
+            researcher._id = new ObjectId("111111111111111111111111")
+            researcher.researcherName_TH = "สำหรับเก็บข้อมูลที่ไม่พบข้อมูลของนิวจัยที่เกี่ยวข้อง"
+            researcher.researcherName_EN = "Researcher Not Found"
+
+            Researcher_Control.newResearcher_Dummy(researcher, this);
+
+        }, function (code, err, functionCallback) {
+            if (err) {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+            }
+            else {
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "New Researcher was saved successfully as _id defined", functionCallback._id, response);
+            }
+        }
+    );
+});
+
 // router.post('/editResearcher/', function (request, response) {
 //     var methodCode = "39";
 
