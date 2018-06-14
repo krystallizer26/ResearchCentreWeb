@@ -138,8 +138,8 @@ router.get('/newResearcher_Dummy', function (request, response) {
         function () {
             var researcher = new Researcher();
             researcher._id = new ObjectId("111111111111111111111111")
-            researcher.researcherName_TH = "สำหรับเก็บข้อมูลที่ไม่พบข้อมูลของนิวจัยที่เกี่ยวข้อง"
-            researcher.researcherName_EN = "Researcher Not Found"
+            researcher.researcherName_TH = "___สำหรับเก็บข้อมูลที่ไม่พบข้อมูลของนักวิจัยที่เกี่ยวข้อง"
+            researcher.researcherName_EN = "___Researcher Not Found"
 
             Researcher_Control.newResearcher_Dummy(researcher, this);
 
@@ -470,7 +470,7 @@ router.post('/deleteResearcher/', function (request, response) {
     }
 });
 
-router.post('/wipeResearcher/', function (request, response) {
+router.get('/wipeResearcher/', function (request, response) {
     var methodCode = "65";
 
     flow.exec(

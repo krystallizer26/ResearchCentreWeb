@@ -336,7 +336,7 @@ router.post('/deleteThesis/', function (request, response) {
     }
 });
 
-router.post('/wipeThesis/', function (request, response) {
+router.get('/wipeThesis/', function (request, response) {
     var methodCode = "78";
 
     flow.exec(

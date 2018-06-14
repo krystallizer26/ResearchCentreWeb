@@ -28,7 +28,7 @@ var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepa
 var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 var Publication_Control = require("../controller/publication_control.js");
 
-router.post('/newPublication_EachScrap', function (request, response) {
+router.post('/newPublication', function (request, response) {
     var methodCode = "45";
 
     var requiredData = [];
@@ -404,7 +404,7 @@ router.post('/deletePublication/', function (request, response) {
     }
 });
 
-router.post('/wipePublication/', function (request, response) {
+router.get('/wipePublication/', function (request, response) {
     var methodCode = "64";
 
     flow.exec(

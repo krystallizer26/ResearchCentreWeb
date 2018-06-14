@@ -49,6 +49,25 @@ module.exports = {
             }
         });
     },
+    checkDoctoryTeachingDepartmentName: function (doctoryTeachingDepartmentName_TH, callback) {
+        DoctoryTeachingDepartment.findOne({ "doctoryTeachingDepartmentName_TH": doctoryTeachingDepartmentName_TH }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "541";
+                var alert = "Error in finding DoctoryTeachingDepartment with name: " + doctoryTeachingDepartmentName_TH + "\nError: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback) {
+                callback("542", null, functionCallback)
+            }
+            else {
+                let errCode = "543";
+                var alert = doctoryTeachingDepartmentName_TH + " not founded";
+                //console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+        });
+    },
     checkAndInsertDoctoryTeachingByDoctoryTeachingDepartmentName: function (doctoryTeachingDepartmentName_TH, doctoryTeachingDepartmentName_EN, callback) {
         DoctoryTeachingDepartment.findOne({ "doctoryTeachingDepartmentName_TH": doctoryTeachingDepartmentName_TH }, function (error, functionCallback) {
             if (error) {

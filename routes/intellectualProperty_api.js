@@ -236,7 +236,7 @@ router.post('/deleteIntellectualProperty/', function (request, response) {
     }
 });
 
-router.post('/wipeIntellectualProperty/', function (request, response) {
+router.get('/wipeIntellectualProperty/', function (request, response) {
     var methodCode = "72";
 
     flow.exec(

@@ -3,6 +3,7 @@ var ObjectId = require('mongodb').ObjectId;
 
 var Publication = require('../model/publication_model.js');
 var Researcher_Control = require("../controller/researcher_control.js");
+var Validate = require("../controller/validation_controller.js");
 
 module.exports = {
     newPublication: function (publication, callback) {
@@ -20,59 +21,102 @@ module.exports = {
             }
         });
     },
-    newPublication_fromScrap: function (publication, callback) {
-        console.log("Saving Publication: " + publication.publicationName);
+    newPublication_fromScrap: function (publication_bulk, callback) {
+        let j = 0
+        let scrapingData = JSON.parse(JSON.stringify(publication_bulk))
 
-        flow.exec(
-            function () {
-                Researcher_Control.checkResearcherByPersonalID(publication.researcherPersonalID, this);
-            }, function (code, err, functionCallback) {
-                if (!err) {
-                    publication.researcherId = functionCallback._id
-                }
-                else {
-                    console.log("Researcher with Personal Id " + publication.researcherPersonalID + "not found for publication named " + publication.publicationName)
-                    publication.researcherId = "111111111111111111111111"
-                }
-                BachelorTeachingDepartment_Control.checkAndInsertBachelorTeachingByBachelorTeachingDepartmentName(publication.bachelorTeachingDepartmentName_TH, publication.bachelorTeachingDepartmentName_EN, this);
-            }, function (code, err, functionCallback) {
-                if (!err) {
-                    publication.bachelorTeachingDepartmentId = functionCallback._id
-                }
-                else {
-                    publication.bachelorTeachingDepartmentId = null
-                }
-                MasterTeachingDepartment_Control.checkAndInsertMasterTeachingByMasterTeachingDepartmentName(publication.masterTeachingDepartmentName_TH, publication.masterTeachingDepartmentName_EN, this);
-            }, function (code, err, functionCallback) {
-                if (!err) {
-                    publication.masterTeachingDepartmentId = functionCallback._id
-                }
-                else {
-                    publication.masterTeachingDepartmentId = null
-                }
-                DoctoryTeachingDepartment_Control.checkAndInsertDoctoryTeachingByDoctoryTeachingDepartmentName(publication.doctoryTeachingDepartmentName_TH, publication.doctoryTeachingDepartmentName_EN, this);
-            }, function (code, err, functionCallback) {
-                if (!err) {
-                    publication.doctoryTeachingDepartmentId = functionCallback._id
-                }
-                else {
-                    publication.doctoryTeachingDepartmentId = null
-                }
+        var publication = new Publication();
+        var requiredData = [];
+        requiredData.push(scrapingData.publicationName);
+        requiredData.push(scrapingData.researcherPersonalID);
+        requiredData.push(scrapingData.researcherName);
+        var requiredReady = Validate.requiredData_Check(requiredData);
 
-                publication.save(function (error, saveResponse) {
-                    if (error) {
-                        let errCode = "582";
-                        var alert = "Saving Publication fail, Error: " + error.message + "@" + publication.publicationName;
-                        console.log("ERROR Code: " + errCode + " " + alert);
-                        callback(errCode, alert, null);
+        if (!requiredReady) {
+            var alert = "Input Not Valid, check if some data is required. >> publicationName : " + scrapingData.publicationName + " >> researcherPersonalID : " + scrapingData.researcherPersonalID + " >> researcherName : " + scrapingData.researcherName
+            console.log(alert);
+            callback("New Publications was saved successfully")
+        }
+        else {
+            publication.researcherName = Validate.scrappingCleanUp(scrapingData.researcherName)
+            //console.log("researcherName ; " + scrapingData.researcherName + " >> " + publication.researcherName)
+            publication.researcherPersonalID = Validate.scrappingCleanUp(scrapingData.researcherPersonalID)
+            publication.publicationName = Validate.scrappingCleanUp(scrapingData.publicationName)
+            publication.publicationAuthor = Validate.scrappingCleanUp(scrapingData.publicationAuthor)
+            publication.publishLocation = Validate.scrappingCleanUp(scrapingData.publishLocation)
+            publication.publishYear = Validate.scrappingCleanUp(scrapingData.publishYear)
+            publication.publishType_raw = Validate.scrappingCleanUp(scrapingData.publishType_raw)
+            publication.publishType = "Others"
+            if (publication.publishType_raw == "วารสารฯ ระดับนานาชาติ")
+                publication.publishType = "InternationalJournal"
+            if (publication.publishType_raw == "การประชุมฯ ระดับนานาชาติ")
+                publication.publishType = "InternationalConference"
+            if (publication.publishType_raw == "วารสารฯ ระดับชาติ")
+                publication.publishType = "NationalJournal"
+            publication.scholarType = Validate.scrappingCleanUp(scrapingData.scholarType)
+            publication.address = Validate.scrappingCleanUp(scrapingData.address)
+            publication.publicationDatabase = Validate.scrappingCleanUp(scrapingData.publicationDatabase)
+            publication.impactFactor = Validate.scrappingCleanUp(scrapingData.impactFactor)
+            publication.quartile = Validate.scrappingCleanUp(scrapingData.quartile)
+            publication.weight = Validate.scrappingCleanUp(scrapingData.weight)
+            publication.detail = Validate.scrappingCleanUp(scrapingData.detail)
+
+            publication.studentName = Validate.scrappingCleanUp(scrapingData.studentName)
+            publication.bachelorTeachingDepartmentName_TH = Validate.scrappingCleanUp(scrapingData.bachelorTeachingDepartmentName_TH)
+            //console.log("bachelorTeachingDepartmentName_TH ; " + scrapingData.bachelorTeachingDepartmentName_TH + " >> " + publication.bachelorTeachingDepartmentName_TH)
+            publication.masterTeachingDepartmentName_TH = Validate.scrappingCleanUp(scrapingData.masterTeachingDepartmentName_TH)
+            publication.doctoryTeachingDepartmentName_TH = Validate.scrappingCleanUp(scrapingData.doctoryTeachingDepartmentName_TH)
+            publication.graduationYear = Validate.scrappingCleanUp(scrapingData.graduationYear)
+            publication.publicationRaw = Validate.scrappingCleanUp(scrapingData.doi)
+
+            flow.exec(
+                function () {
+                    Researcher_Control.checkResearcherByPersonalID(publication.researcherPersonalID, this);
+                }, function (code, err, functionCallback) {
+                    if (!err) {
+                        publication.researcherId = functionCallback._id
                     }
                     else {
-                        callback("583", null, saveResponse)
+                        console.log("Researcher with Personal Id " + publication.researcherPersonalID + "not found for publication named " + publication.publicationName)
+                        publication.researcherId = "111111111111111111111111"
                     }
-                });
+                    BachelorTeachingDepartment_Control.checkBachelorTeachingDepartmentName(publication.bachelorTeachingDepartmentName_TH, this);
+                }, function (code, err, functionCallback) {
+                    if (!err) {
+                        publication.bachelorTeachingDepartmentId = functionCallback._id
+                    }
+                    else {
+                        publication.bachelorTeachingDepartmentId = null
+                    }
+                    MasterTeachingDepartment_Control.checkMasterTeachingDepartmentName(publication.masterTeachingDepartmentName_TH, this);
+                }, function (code, err, functionCallback) {
+                    if (!err) {
+                        publication.masterTeachingDepartmentId = functionCallback._id
+                    }
+                    else {
+                        publication.masterTeachingDepartmentId = null
+                    }
+                    DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentName(publication.doctoryTeachingDepartmentName_TH, this);
+                }, function (code, err, functionCallback) {
+                    if (!err) {
+                        publication.doctoryTeachingDepartmentId = functionCallback._id
+                    }
+                    else {
+                        publication.doctoryTeachingDepartmentId = null
+                    }
 
-            }
-        );
+                    publication.save(function (error, saveResponse) {
+                        if (error) {
+                            let errCode = "582";
+                            var alert = "Saving Publication fail, Error: " + error.message + "@" + publication.publicationName;
+                            console.log("ERROR Code: " + errCode + " " + alert);
+                            }
+                    });
+                    callback("New Publications was saved successfully")
+                }
+            );
+        }
+
     },
     updatePublicationByID: function (publicationId, publication, callback) {
         var myquery = { "_id": publicationId };
@@ -267,7 +311,7 @@ module.exports = {
             for (let i = 0; i < pubilcation.length; i++) {
                 getFullPublicationPreview(pubilcation[i], function (a) {
                     //console.log("a >> " + JSON.stringify(a))
-                    forCallback.push(a);
+                    forCallback[i] = a;
                     if (j == pubilcation.length - 1)
                         callback("561", null, forCallback);
                     else

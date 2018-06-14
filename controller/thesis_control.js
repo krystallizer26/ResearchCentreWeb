@@ -2,10 +2,19 @@ var flow = require('../services/flow.js')
 var ObjectId = require('mongodb').ObjectId;
 
 var Thesis = require('../model/thesis_model.js');
+
+var Validate = require("../controller/validation_controller.js");
 var Researcher_Control = require("../controller/researcher_control.js");
+var Position_Control = require("../controller/position_control.js");
+var Keyword_Control = require("../controller/keyword_control.js");
+var AcademicLevel_Control = require("../controller/academicLevel_control.js");
+var Department_Control = require("../controller/department_control.js");
+var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
 module.exports = {
-    newThesis_fromScrap: function (thesis, callback) {
+    newThesis: function (thesis, callback) {
         console.log("Saving Thesis: " + thesis.thesisName_TH);
 
         flow.exec(
@@ -49,6 +58,85 @@ module.exports = {
                 });
             }
         );
+    },
+    newThesis_fromScrap: function (publication_bulk, callback) {
+        let j = 0
+        let scrapingData = JSON.parse(JSON.stringify(publication_bulk))
+
+        var thesis = new Thesis();
+
+        var requiredData = [];
+        requiredData.push( scrapingData.researcherName);
+        var requiredReady = Validate.requiredData_Check(requiredData);
+
+        if (!requiredReady) {
+            var alert = "Input Not Valid, check if some data is required."
+            console.log(alert);
+            callback("New thesis was saved successfully")
+        }
+        else {
+            thesis.researcherName = Validate.scrappingCleanUp( scrapingData.researcherName)
+            thesis.researcherPersonalID = Validate.scrappingCleanUp( scrapingData.researcherPersonalID)
+            thesis.studentName = Validate.scrappingCleanUp( scrapingData.studentName)
+            thesis.studentCode = Validate.scrappingCleanUp( scrapingData.studentCode)
+            thesis.studentTel = Validate.scrappingCleanUp( scrapingData.studentTel)
+            thesis.studentEmail = Validate.scrappingCleanUp( scrapingData.studentEmail)
+            thesis.masterDepartmentName = Validate.scrappingCleanUp( scrapingData.masterDepartmentName)
+            thesis.doctoryDepartmentName = Validate.scrappingCleanUp( scrapingData.doctoryDepartmentName)
+            thesis.thesisName_TH = Validate.scrappingCleanUp( scrapingData.thesisName_TH)
+            thesis.thesisName_EN = Validate.scrappingCleanUp( scrapingData.thesisName_EN)
+            thesis.coProfessor1 = Validate.scrappingCleanUp( scrapingData.coProfessor1)
+            thesis.coProfessor2 = Validate.scrappingCleanUp( scrapingData.coProfessor2)
+            thesis.chiefCommitee = Validate.scrappingCleanUp( scrapingData.chiefCommitee)
+            thesis.commitee1 = Validate.scrappingCleanUp( scrapingData.commitee1)
+            thesis.commitee2 = Validate.scrappingCleanUp( scrapingData.commitee2)
+            thesis.commitee3 = Validate.scrappingCleanUp( scrapingData.commitee3)
+            thesis.professorAssignDate = Validate.scrappingCleanUp( scrapingData.professorAssignDate)
+            thesis.thesisNameAssignDate = Validate.scrappingCleanUp( scrapingData.thesisNameAssignDate)
+            thesis.thesisNameAnnounceDate = Validate.scrappingCleanUp( scrapingData.thesisNameAnnounceDate)
+            thesis.qualifyTestDate = Validate.scrappingCleanUp( scrapingData.qualifyTestDate)
+            thesis.outlineTestDate = Validate.scrappingCleanUp( scrapingData.outlineTestDate)
+            thesis.thesisTestDate = Validate.scrappingCleanUp( scrapingData.thesisTestDate)
+            thesis.gradutionDate = Validate.scrappingCleanUp( scrapingData.gradutionDate)
+            flow.exec(
+                function () {
+                    Researcher_Control.checkResearcherByPersonalID(thesis.researcherPersonalID, this);
+                }, function (code, err, functionCallback) {
+                    if (!err) {
+                        thesis.researcherId = functionCallback._id
+                    }
+                    else {
+                        console.log("Researcher with Name " + thesis.researcherName + " not found for Thesis named " + thesis.thesisName_TH)
+                        thesis.researcherId = "111111111111111111111111"
+                    }
+                    MasterTeachingDepartment_Control.checkMasterTeachingDepartmentName(thesis.masterDepartmentName, this);
+                }, function (code, err, functionCallback) {
+                    if (!err) {
+                        thesis.masterDepartmentId = functionCallback._id
+                    }
+                    else {
+                        thesis.masterDepartmentId = null
+                    }
+                    DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentName(thesis.doctoryDepartmentName, this);
+                }, function (code, err, functionCallback) {
+                    if (!err) {
+                        thesis.doctoryDepartmentId = functionCallback._id
+                    }
+                    else {
+                        thesis.doctoryDepartmentId = null
+                    }
+
+                    thesis.save(function (error, saveResponse) {
+                        if (error) {
+                            let errCode = "772";
+                            var alert = "Saving Thesis fail, Error: " + error.message + "@" + thesis.thesisName_TH;
+                            console.log("ERROR Code: " + errCode + " " + alert);
+                        }
+                    });
+                    callback("New thesis was saved successfully")
+                }
+            );
+        }
     },
 
     getAllThesisPreview: function (callback) {

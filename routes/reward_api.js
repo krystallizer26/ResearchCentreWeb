@@ -233,7 +233,7 @@ router.post('/deleteReward/', function (request, response) {
     }
 });
 
-router.post('/wipeReward/', function (request, response) {
+router.get('/wipeReward/', function (request, response) {
     var methodCode = "62";
 
     flow.exec(

@@ -50,6 +50,25 @@ module.exports = {
             }
         });
     },
+    checkBachelorTeachingDepartmentName: function (bachelorTeachingDepartmentName_TH, callback) {
+        BachelorTeachingDepartment.findOne({ "bachelorTeachingDepartmentName_TH": bachelorTeachingDepartmentName_TH }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "521";
+                var alert = "Error in finding BachelorTeachingDepartment with name: " + bachelorTeachingDepartmentName_TH + "\nError: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback) {
+                callback("522", null, functionCallback)
+            }
+            else {
+                let errCode = "523";
+                var alert = bachelorTeachingDepartmentName_TH + " not founded";
+                //console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+        });
+    },
     checkAndInsertBachelorTeachingByBachelorTeachingDepartmentName: function (bachelorTeachingDepartmentName_TH, bachelorTeachingDepartmentName_EN, callback) {
         BachelorTeachingDepartment.findOne({ "bachelorTeachingDepartmentName_TH": bachelorTeachingDepartmentName_TH }, function (error, functionCallback) {
             if (error) {
