@@ -144,12 +144,18 @@ module.exports = {
             "_id": true,
             "researcherId": true,
             "studentName": true,
+            "studentCode":true,
             "masterDepartmentId": true,
             "doctoryDepartmentId": true,
             "thesisName_TH": true,
             "thesisName_EN": true,
             "coProfessor1": true,
-            "coProfessor2": true
+            "coProfessor2": true,
+            "thesisNameAssignDate": true,
+            "thesisNameAnnounceDate": true,
+            "qualifyTestDate": true,
+            "outlineTestDate": true,
+            "thesisTestDate": true
         }, function (error, functionCallback) {
             if (error) {
                 let errCode = "781";
@@ -177,12 +183,18 @@ module.exports = {
             "_id": true,
             "researcherId": true,
             "studentName": true,
+            "studentCode":true,
             "masterDepartmentId": true,
             "doctoryDepartmentId": true,
             "thesisName_TH": true,
             "thesisName_EN": true,
             "coProfessor1": true,
-            "coProfessor2": true
+            "coProfessor2": true,
+            "thesisNameAssignDate": true,
+            "thesisNameAnnounceDate": true,
+            "qualifyTestDate": true,
+            "outlineTestDate": true,
+            "thesisTestDate": true
         }, { sort: { "thesisName_TH": -1 }, limit: limitNum }
             , function (error, functionCallback) {
                 if (error) {
