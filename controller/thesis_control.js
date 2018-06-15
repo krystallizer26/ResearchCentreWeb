@@ -66,7 +66,7 @@ module.exports = {
         var thesis = new Thesis();
 
         var requiredData = [];
-        requiredData.push( scrapingData.researcherName);
+        requiredData.push(scrapingData.researcherName);
         var requiredReady = Validate.requiredData_Check(requiredData);
 
         if (!requiredReady) {
@@ -75,29 +75,29 @@ module.exports = {
             callback("New thesis was saved successfully")
         }
         else {
-            thesis.researcherName = Validate.scrappingCleanUp( scrapingData.researcherName)
-            thesis.researcherPersonalID = Validate.scrappingCleanUp( scrapingData.researcherPersonalID)
-            thesis.studentName = Validate.scrappingCleanUp( scrapingData.studentName)
-            thesis.studentCode = Validate.scrappingCleanUp( scrapingData.studentCode)
-            thesis.studentTel = Validate.scrappingCleanUp( scrapingData.studentTel)
-            thesis.studentEmail = Validate.scrappingCleanUp( scrapingData.studentEmail)
-            thesis.masterDepartmentName = Validate.scrappingCleanUp( scrapingData.masterDepartmentName)
-            thesis.doctoryDepartmentName = Validate.scrappingCleanUp( scrapingData.doctoryDepartmentName)
-            thesis.thesisName_TH = Validate.scrappingCleanUp( scrapingData.thesisName_TH)
-            thesis.thesisName_EN = Validate.scrappingCleanUp( scrapingData.thesisName_EN)
-            thesis.coProfessor1 = Validate.scrappingCleanUp( scrapingData.coProfessor1)
-            thesis.coProfessor2 = Validate.scrappingCleanUp( scrapingData.coProfessor2)
-            thesis.chiefCommitee = Validate.scrappingCleanUp( scrapingData.chiefCommitee)
-            thesis.commitee1 = Validate.scrappingCleanUp( scrapingData.commitee1)
-            thesis.commitee2 = Validate.scrappingCleanUp( scrapingData.commitee2)
-            thesis.commitee3 = Validate.scrappingCleanUp( scrapingData.commitee3)
-            thesis.professorAssignDate = Validate.scrappingCleanUp( scrapingData.professorAssignDate)
-            thesis.thesisNameAssignDate = Validate.scrappingCleanUp( scrapingData.thesisNameAssignDate)
-            thesis.thesisNameAnnounceDate = Validate.scrappingCleanUp( scrapingData.thesisNameAnnounceDate)
-            thesis.qualifyTestDate = Validate.scrappingCleanUp( scrapingData.qualifyTestDate)
-            thesis.outlineTestDate = Validate.scrappingCleanUp( scrapingData.outlineTestDate)
-            thesis.thesisTestDate = Validate.scrappingCleanUp( scrapingData.thesisTestDate)
-            thesis.gradutionDate = Validate.scrappingCleanUp( scrapingData.gradutionDate)
+            thesis.researcherName = Validate.scrappingCleanUp(scrapingData.researcherName)
+            thesis.researcherPersonalID = Validate.scrappingCleanUp(scrapingData.researcherPersonalID)
+            thesis.studentName = Validate.scrappingCleanUp(scrapingData.studentName)
+            thesis.studentCode = Validate.scrappingCleanUp(scrapingData.studentCode)
+            thesis.studentTel = Validate.scrappingCleanUp(scrapingData.studentTel)
+            thesis.studentEmail = Validate.scrappingCleanUp(scrapingData.studentEmail)
+            thesis.masterDepartmentName = Validate.scrappingCleanUp(scrapingData.masterDepartmentName)
+            thesis.doctoryDepartmentName = Validate.scrappingCleanUp(scrapingData.doctoryDepartmentName)
+            thesis.thesisName_TH = Validate.scrappingCleanUp(scrapingData.thesisName_TH)
+            thesis.thesisName_EN = Validate.scrappingCleanUp(scrapingData.thesisName_EN)
+            thesis.coProfessor1 = Validate.scrappingCleanUp(scrapingData.coProfessor1)
+            thesis.coProfessor2 = Validate.scrappingCleanUp(scrapingData.coProfessor2)
+            thesis.chiefCommitee = Validate.scrappingCleanUp(scrapingData.chiefCommitee)
+            thesis.commitee1 = Validate.scrappingCleanUp(scrapingData.commitee1)
+            thesis.commitee2 = Validate.scrappingCleanUp(scrapingData.commitee2)
+            thesis.commitee3 = Validate.scrappingCleanUp(scrapingData.commitee3)
+            thesis.professorAssignDate = Validate.scrappingCleanUp(scrapingData.professorAssignDate)
+            thesis.thesisNameAssignDate = Validate.scrappingCleanUp(scrapingData.thesisNameAssignDate)
+            thesis.thesisNameAnnounceDate = Validate.scrappingCleanUp(scrapingData.thesisNameAnnounceDate)
+            thesis.qualifyTestDate = Validate.scrappingCleanUp(scrapingData.qualifyTestDate)
+            thesis.outlineTestDate = Validate.scrappingCleanUp(scrapingData.outlineTestDate)
+            thesis.thesisTestDate = Validate.scrappingCleanUp(scrapingData.thesisTestDate)
+            thesis.gradutionDate = Validate.scrappingCleanUp(scrapingData.gradutionDate)
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(thesis.researcherPersonalID, this);
@@ -144,7 +144,7 @@ module.exports = {
             "_id": true,
             "researcherId": true,
             "studentName": true,
-            "studentCode":true,
+            "studentCode": true,
             "masterDepartmentId": true,
             "doctoryDepartmentId": true,
             "thesisName_TH": true,
@@ -155,7 +155,8 @@ module.exports = {
             "thesisNameAnnounceDate": true,
             "qualifyTestDate": true,
             "outlineTestDate": true,
-            "thesisTestDate": true
+            "thesisTestDate": true,
+            "gradutionDate": true
         }, function (error, functionCallback) {
             if (error) {
                 let errCode = "781";
@@ -183,7 +184,7 @@ module.exports = {
             "_id": true,
             "researcherId": true,
             "studentName": true,
-            "studentCode":true,
+            "studentCode": true,
             "masterDepartmentId": true,
             "doctoryDepartmentId": true,
             "thesisName_TH": true,
@@ -194,7 +195,8 @@ module.exports = {
             "thesisNameAnnounceDate": true,
             "qualifyTestDate": true,
             "outlineTestDate": true,
-            "thesisTestDate": true
+            "thesisTestDate": true,
+            "gradutionDate": true
         }, { sort: { "thesisName_TH": -1 }, limit: limitNum }
             , function (error, functionCallback) {
                 if (error) {
@@ -286,9 +288,10 @@ module.exports = {
         }
         else {
             for (let i = 0; i < thesis.length; i++) {
+                //console.log(" >W> " + thesis[i].thesisName_TH)
                 getFullThesisPreview(thesis[i], function (a) {
                     //console.log("a >> " + JSON.stringify(a))
-                    forCallback.push(a);
+                    forCallback[i] = a;
                     if (j == thesis.length - 1)
                         callback("...", null, forCallback);
                     else
@@ -312,7 +315,7 @@ var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDe
 
 function getFullThesisPreview(input, callback) {
     let thesisData = JSON.parse(JSON.stringify(input));
-    console.log("getFullThesisPreview for " + thesisData.researchName)
+    console.log("getFullThesisPreview for " + thesisData.thesisName_TH)
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)
@@ -346,6 +349,10 @@ function getFullThesisPreview(input, callback) {
                 thesisData["doctoryTeachingDepartmentName_TH"] = "Not found";
                 thesisData["doctoryTeachingDepartmentName_EN"] = "Not found";
             }
+
+            thesisData["thesisStatus"] = checkThesisStatus(thesisData);
+            thesisData["qeStatus"] = checkQEStatus(thesisData);
+
             callback(thesisData)
         }
     );
@@ -387,7 +394,44 @@ function getFullThesis(input, callback) {
                 thesisData["doctoryTeachingDepartmentName_TH"] = "Not found";
                 thesisData["doctoryTeachingDepartmentName_EN"] = "Not found";
             }
+
+            thesisData["thesisStatus"] = checkThesisStatus(thesisData);
+            thesisData["qeStatus"] = checkQEStatus(thesisData);
+
             callback(thesisData)
         }
     );
+}
+
+function checkThesisStatus(thesisData) {
+    let status = null;
+    if (thesisData.gradutionDate != "")
+        status = "จบการศึกษาแล้ว"
+    else if (thesisData.thesisTestDate != "")
+        status = "ผ่านการสอบวิทยานิพนธ์แล้ว >> รอการจบการศึกษา"
+    else if (thesisData.outlineTestDate != "")
+        status = "ผ่านการสอบเค้าโครงแล้ว >> รอสอบวิทยานิพนธ์"
+    else if (thesisData.thesisNameAnnounceDate != "")
+        status = "ผ่านการเสนอหัวข้อแล้ว >> รอการประกาศหัวข้อ"
+    else if (thesisData.thesisNameAssignDate != "")
+        status = "ผ่านการแต่งตั้งอาจารย์ที่ปรึกษาแล้ว >> รอการเสนอหัวข้อ"
+    else if (thesisData.professorAssignDate != "")
+        status = "รอการแต่งตั้งอาจารย์ที่ปรึกษา"
+    else
+        status = "N/A"
+    return status
+}
+
+function checkQEStatus(thesisData) {
+    let status = null;
+    if (thesisData.doctoryTeachingDepartmentName_TH != "") {
+        if (thesisData.qualifyTestDate != "")
+            status = "ผ่านการสอบคุณสมบัติแล้ว";
+        else
+            status = "รอสอบคุณสมบัติ";
+    }
+    else{
+        status = "นักศึกษาปริญญาโท ไม่จำเป็นต้องสอบคุณสมบัติ"
+    }
+    return status
 }
