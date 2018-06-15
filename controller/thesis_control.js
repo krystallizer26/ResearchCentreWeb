@@ -352,6 +352,7 @@ function getFullThesisPreview(input, callback) {
 
             thesisData["thesisStatus"] = checkThesisStatus(thesisData);
             thesisData["qeStatus"] = checkQEStatus(thesisData);
+            thesisData["studentType"] = checkStudentType(thesisData);
 
             callback(thesisData)
         }
@@ -397,6 +398,7 @@ function getFullThesis(input, callback) {
 
             thesisData["thesisStatus"] = checkThesisStatus(thesisData);
             thesisData["qeStatus"] = checkQEStatus(thesisData);
+            thesisData["studentType"] = checkStudentType(thesisData);
 
             callback(thesisData)
         }
@@ -430,8 +432,19 @@ function checkQEStatus(thesisData) {
         else
             status = "รอสอบคุณสมบัติ";
     }
-    else{
+    else {
         status = "นักศึกษาปริญญาโท ไม่จำเป็นต้องสอบคุณสมบัติ"
+    }
+    return status
+}
+
+function checkStudentType(thesisData) {
+    let status = null;
+    if (thesisData.doctoryTeachingDepartmentName_TH != "") {
+        status = "นักศึกษาปริญญาเอก";
+    }
+    else {
+        status = "นักศึกษาปริญญาโท"
     }
     return status
 }
