@@ -239,7 +239,7 @@ router.post('/deleteResearcherTraining/', function (request, response) {
     }
 });
 
-router.post('/wipeResearcherTraining/', function (request, response) {
+router.get('/wipeResearcherTraining/', function (request, response) {
     var methodCode = "84";
 
     flow.exec(

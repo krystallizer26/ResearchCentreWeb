@@ -7,11 +7,11 @@ module.exports = {
         let nullNotFounded = true;
         for (var i = 0; i < requiredInput.length; i++) {
             //console.log("Checking.. @"+i+":" +requiredInput[i]);
-            if (requiredInput[i] == null){
+            if (requiredInput[i] == null) {
                 nullNotFounded = false;
                 break;
             }
-            else if (requiredInput[i].length < 1){
+            else if (requiredInput[i].length < 1) {
                 nullNotFounded = false;
                 break;
             }
@@ -24,7 +24,7 @@ module.exports = {
         let wrongNotFounded = true;
         for (var i = 0; i < requiredInput.length; i++) {
             //console.log("Checking.. @"+i+":" +requiredInput[i]);
-            if (requiredInput[i] != "true" && requiredInput[i] != "false" ){
+            if (requiredInput[i] != "true" && requiredInput[i] != "false") {
                 wrongNotFounded = false;
                 break;
             }
@@ -37,7 +37,7 @@ module.exports = {
         let wrongNotFounded = true;
         for (var i = 0; i < requiredInput.length; i++) {
             //console.log("Checking.. @"+i+":" +requiredInput[i]);
-            if (!ObjectId.isValid(requiredInput[i])){
+            if (!ObjectId.isValid(requiredInput[i])) {
                 wrongNotFounded = false;
                 break;
             }
@@ -50,7 +50,7 @@ module.exports = {
         let wrongNotFounded = true;
         for (var i = 0; i < requiredInput.length; i++) {
             //console.log("Checking.. @"+i+":" +requiredInput[i]);
-            if (isNaN(requiredInput[i])){
+            if (isNaN(requiredInput[i])) {
                 wrongNotFounded = false;
                 break;
             }
@@ -59,12 +59,16 @@ module.exports = {
     },
     scrappingCleanUp: function (input) {
         //console.log("input: " + input);
-        let string = input;
-        string = string.replace(/\\n/g, ' ')
-        string = string.replace(/\\u/g, '-')
-        string = string.replace(/\\r/g, ' ')
-        string = string.trim()
-        //console.log("output: " + string);
-        return (string);
+        if (input) {
+            let string = input;
+            string = string.replace(/\\n/g, ' ')
+            string = string.replace(/\\u/g, '-')
+            string = string.replace(/\\r/g, ' ')
+            string = string.trim()
+            //console.log("output: " + string);
+            return (string);
+        }
+        else
+            return ""
     }
 };

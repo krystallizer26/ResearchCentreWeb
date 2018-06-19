@@ -19,102 +19,70 @@ router.get('/deleteAllData', function (request2, response) {
         form: formData,
         method: 'POST'
     }, function (err, res2, body) {
-        j++;
-        if (j == 7) {
-            scrapResearcher(response);
-        }
-    })
+        request({
+            header: {
+                'User-Agent': 'Super Agent/0.0.1',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            uri: 'http://localhost:2000/api/wipePublication',
+            form: formData,
+            method: 'POST'
+        }, function (err, res2, body) {
 
-    request({
-        header: {
-            'User-Agent': 'Super Agent/0.0.1',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        uri: 'http://localhost:2000/api/wipePublication',
-        form: formData,
-        method: 'POST'
-    }, function (err, res2, body) {
-        j++;
-        if (j == 7) {
-            scrapResearcher(response);
-        }
-    })
+            request({
+                header: {
+                    'User-Agent': 'Super Agent/0.0.1',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                uri: 'http://localhost:2000/api/wipeResearcher',
+                form: formData,
+                method: 'POST'
+            }, function (err, res2, body) {
+                request({
+                    header: {
+                        'User-Agent': 'Super Agent/0.0.1',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    uri: 'http://localhost:2000/api/wipeResearcherTraining',
+                    form: formData,
+                    method: 'POST'
+                }, function (err, res2, body) {
+                    request({
+                        header: {
+                            'User-Agent': 'Super Agent/0.0.1',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        uri: 'http://localhost:2000/api/wipeResearchFund',
+                        form: formData,
+                        method: 'POST'
+                    }, function (err, res2, body) {
+                        request({
+                            header: {
+                                'User-Agent': 'Super Agent/0.0.1',
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            uri: 'http://localhost:2000/api/wipeReward',
+                            form: formData,
+                            method: 'POST'
+                        }, function (err, res2, body) {
+                            request({
+                                header: {
+                                    'User-Agent': 'Super Agent/0.0.1',
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                uri: 'http://localhost:2000/api/wipeThesis',
+                                form: formData,
+                                method: 'POST'
+                            }, function (err, res2, body) {
+                                scrapResearcher(response);
+                            })
+                        })
+                    })
+                })
+            })
 
-    request({
-        header: {
-            'User-Agent': 'Super Agent/0.0.1',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        uri: 'http://localhost:2000/api/wipeResearcher',
-        form: formData,
-        method: 'POST'
-    }, function (err, res2, body) {
-        j++;
-        if (j == 7) {
-            scrapResearcher(response);
-        }
+        })
     })
-
-    request({
-        header: {
-            'User-Agent': 'Super Agent/0.0.1',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        uri: 'http://localhost:2000/api/wipeResearcherTraining',
-        form: formData,
-        method: 'POST'
-    }, function (err, res2, body) {
-        j++;
-        if (j == 7) {
-            scrapResearcher(response);
-        }
-    })
-
-    request({
-        header: {
-            'User-Agent': 'Super Agent/0.0.1',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        uri: 'http://localhost:2000/api/wipeResearchFund',
-        form: formData,
-        method: 'POST'
-    }, function (err, res2, body) {
-        j++;
-        if (j == 7) {
-            scrapResearcher(response);
-        }
-    })
-
-    request({
-        header: {
-            'User-Agent': 'Super Agent/0.0.1',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        uri: 'http://localhost:2000/api/wipeReward',
-        form: formData,
-        method: 'POST'
-    }, function (err, res2, body) {
-        j++;
-        if (j == 7) {
-            scrapResearcher(response);
-        }
-    })
-
-    request({
-        header: {
-            'User-Agent': 'Super Agent/0.0.1',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        uri: 'http://localhost:2000/api/wipeThesis',
-        form: formData,
-        method: 'POST'
-    }, function (err, res2, body) {
-        j++;
-        if (j == 7) {
-            scrapResearcher(response);
-        }
-    })
-
 })
 
 function scrapResearcher(response) {
@@ -129,14 +97,21 @@ function scrapResearcher(response) {
         uri: 'http://localhost:2000/api/insertResearcherSheet',
         method: 'GET'
     }, function (err, res2, body) {
-        let r = JSON.parse(body)
-        response.json({ code: "999999", message: r.message + " scraping others!!!" })
+        request({
+            header: {
+                'User-Agent': 'Super Agent/0.0.1',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            uri: 'http://localhost:2000/api/newResearcher_Dummy',
+            method: 'GET'
+        }, function (err, res2, body) {
+            response.json({ code: "999999", message: "Scraping Complete :)" })
+            //scrapOthers(response)
+        })
     })
-
 }
 
-router.get('/scrapAllData', function (request2, response) {
-    var methodCode = "!!";
+function scrapOthers(response) {
 
     request({
         header: {
@@ -194,6 +169,6 @@ router.get('/scrapAllData', function (request2, response) {
             })
         })
     })
-})
+}
 
 module.exports = router;

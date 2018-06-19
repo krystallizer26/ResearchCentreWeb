@@ -28,7 +28,7 @@ var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepa
 var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 var Publication_Control = require("../controller/publication_control.js");
 
-router.post('/newPublication_EachScrap', function (request, response) {
+router.post('/newPublication', function (request, response) {
     var methodCode = "45";
 
     var requiredData = [];
@@ -58,6 +58,9 @@ router.post('/newPublication_EachScrap', function (request, response) {
                     publication.publishType = "InternationalJournal"
                 if (publication.publishType_raw == "การประชุมฯ ระดับนานาชาติ")
                     publication.publishType = "InternationalConference"
+                    if (publication.publishType_raw == "การประชุมฯ ระดับชาติ")
+                    publication.publishType = "NationalConference"
+                    
                 if (publication.publishType_raw == "วารสารฯ ระดับชาติ")
                     publication.publishType = "NationalJournal"
                 publication.scholarType = Validate.scrappingCleanUp(request.body.scholarType)
@@ -404,7 +407,7 @@ router.post('/deletePublication/', function (request, response) {
     }
 });
 
-router.post('/wipePublication/', function (request, response) {
+router.get('/wipePublication/', function (request, response) {
     var methodCode = "64";
 
     flow.exec(

@@ -2,10 +2,19 @@ var flow = require('../services/flow.js')
 var ObjectId = require('mongodb').ObjectId;
 
 var ResearchFund = require('../model/researchFund_model.js');
+
+var Validate = require("../controller/validation_controller.js");
 var Researcher_Control = require("../controller/researcher_control.js");
+var Position_Control = require("../controller/position_control.js");
+var Keyword_Control = require("../controller/keyword_control.js");
+var AcademicLevel_Control = require("../controller/academicLevel_control.js");
+var Department_Control = require("../controller/department_control.js");
+var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
 module.exports = {
-    newResearchFund_fromScrap: function (researchFund, callback) {
+    newResearchFund: function (researchFund, callback) {
         console.log("Saving ResearchFund: " + researchFund.researchName);
 
         flow.exec(
@@ -34,6 +43,76 @@ module.exports = {
 
             }
         );
+    },
+    newResearchFund_fromScrap: function (publication_bulk, callback) {
+        let j = 0
+        let scrapingData = JSON.parse(JSON.stringify(publication_bulk))
+
+        var researchFund = new ResearchFund();
+        var requiredData = [];
+        requiredData.push(scrapingData.researcherName);
+        requiredData.push(scrapingData.researcherPersonalID);
+        requiredData.push(scrapingData.researchName);
+        var requiredReady = Validate.requiredData_Check(requiredData);
+
+        if (!requiredReady) {
+            var alert = "Input Not Valid, check if some data is required."
+            console.log(alert);
+            callback("New Publications was saved successfully")
+        }
+        else {
+            researchFund.researcherName = Validate.scrappingCleanUp(scrapingData.researcherName)
+            researchFund.researcherPersonalID = Validate.scrappingCleanUp(scrapingData.researcherPersonalID)
+            researchFund.researchName = Validate.scrappingCleanUp(scrapingData.researchName)
+            researchFund.fundSource = Validate.scrappingCleanUp(scrapingData.fundSource)
+            researchFund.scholarshipYear = Validate.scrappingCleanUp(scrapingData.scholarshipYear)
+            researchFund.scholarshipStart = Validate.scrappingCleanUp(scrapingData.scholarshipStart)
+            researchFund.scholarshipEnd = Validate.scrappingCleanUp(scrapingData.scholarshipEnd)
+            researchFund.progress6MonthDate = Validate.scrappingCleanUp(scrapingData.progress6MonthDate)
+            researchFund.progress6MonthPercent = Validate.scrappingCleanUp(scrapingData.progress6MonthPercent)
+            researchFund.progress12MonthDate = Validate.scrappingCleanUp(scrapingData.progress12MonthDate)
+            researchFund.progress12MonthPercent = Validate.scrappingCleanUp(scrapingData.progress12MonthPercent)
+            researchFund.extend1 = Validate.scrappingCleanUp(scrapingData.extend1)
+            researchFund.extend2 = Validate.scrappingCleanUp(scrapingData.extend2)
+            researchFund.fullPaperDate = Validate.scrappingCleanUp(scrapingData.fullPaperDate)
+
+            researchFund.result1 = Validate.scrappingCleanUp(scrapingData.result1)
+            researchFund.result2 = Validate.scrappingCleanUp(scrapingData.result2)
+            researchFund.finishDate = Validate.scrappingCleanUp(scrapingData.finishDate)
+            researchFund.perYear = Validate.scrappingCleanUp(scrapingData.perYear)
+            researchFund.continueYear = Validate.scrappingCleanUp(scrapingData.continueYear)
+            researchFund.maximumFund = Validate.scrappingCleanUp(scrapingData.maximumFund)
+            researchFund.ratio = Validate.scrappingCleanUp(scrapingData.ratio)
+            researchFund.role = Validate.scrappingCleanUp(scrapingData.role)
+            researchFund.before2561Inside = Validate.scrappingCleanUp(scrapingData.before2561Inside)
+            researchFund.before2561Outside = Validate.scrappingCleanUp(scrapingData.before2561Outside)
+            researchFund.after2561 = Validate.scrappingCleanUp(scrapingData.after2561)
+            researchFund.detail = Validate.scrappingCleanUp(scrapingData.detail)
+
+            flow.exec(
+                function () {
+                    Researcher_Control.checkResearcherByPersonalID(researchFund.researcherPersonalID, this);
+                }, function (code, err, functionCallback) {
+                    if (!err) {
+                        researchFund.researcherId = functionCallback._id
+                    }
+                    else {
+                        console.log("Researcher with personalID " + researchFund.researcherPersonalID + " not found for Research named " + researchFund.researchName)
+                        researchFund.researcherId = "111111111111111111111111"
+                    }
+
+                    researchFund.save(function (error, saveResponse) {
+                        if (error) {
+                            let errCode = "621";
+                            var alert = "Saving researchFund fail, Error: " + error.message + "@" + researchFund.researchName;
+                            console.log("ERROR Code: " + errCode + " " + alert);
+                        }
+                    });
+                    callback("New Researcher was saved successfully")
+
+                }
+            );
+        }
     },
 
     checkResearchFundByID: function (researchFundId, callback) {

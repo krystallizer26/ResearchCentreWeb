@@ -18,6 +18,15 @@ const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const CLIENT_SECRET_PATH = 'googleapis_credentials/client_secret.json';
 const TOKEN_PATH = 'googleapis_credentials/credentials.json';
 
+var Researcher_Control = require("../controller/researcher_control.js");
+var Publication_Control = require("../controller/publication_control.js");
+var ResearchFund_Control = require("../controller/researchFund_control.js");
+var Reward_Control = require("../controller/reward_control.js");
+var IntellectualProperty_Control = require("../controller/intellectualProperty_control.js");
+var Thesis_Control = require("../controller/thesis_control.js");
+var ResearcherTraining_Control = require("../controller/researcherTraining_control.js");
+
+
 var clientAuth = null;
 
 // DATA SETUP =================================================
@@ -97,103 +106,94 @@ router.get('/insertResearcherSheet', function (req, res) {
     if (err) {
       res.json({
         code: 'FAILED',
-        message: 'The API returned an error: ' + err
+        message: 'The API returned an error: ' + err + ": data >> " + data
       });
     } else {
-      const rows = data.valueRanges[0].values;
-      var fail_info = null;
-      var dataSend = [];
-      let j = 0;
-      console.log("rows = " + rows.length)
-      for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
-        var formData = {
-          researcherName_TH: validateValueInRow(rows[i], 0),
-          researcherName_EN: validateValueInRow(rows[i], 2),
-          personalID: validateValueInRow(rows[i], 1),
-          departmentName_TH: validateValueInRow(rows[i], 3),
-          academicPositionName_TH: validateValueInRow(rows[i], 4),
-          academicPositionName_EN: validateValueInRow(rows[i], 6),
-          positionName_TH: validateValueInRow(rows[i], 5),
-          bachelorGraduation: validateValueInRow(rows[i], 7),
-          masterGraduation: validateValueInRow(rows[i], 8),
-          doctoralGraduation: validateValueInRow(rows[i], 9),
-          assignDate: validateValueInRow(rows[i], 10),
-          birthDate: validateValueInRow(rows[i], 11),
-          retirementStatus: validateValueInRow(rows[i], 12),
-          target: validateValueInRow(rows[i], 28),
-          bachelorTeachingDepartmentName_TH: validateValueInRow(rows[i], 13),
-          bachelor_AcademicYear: validateValueInRow(rows[i], 14),
-          bachelor_FacultyBoard_Comment: validateValueInRow(rows[i], 15),
-          bachelor_CouncilBoard_Comment: validateValueInRow(rows[i], 16),
-          bachelor_InstituteBoard_Comment: validateValueInRow(rows[i], 17),
-          masterTeachingDepartmentName_TH: validateValueInRow(rows[i], 18),
-          master_AcademicYear: validateValueInRow(rows[i], 19),
-          master_FacultyBoard_Comment: validateValueInRow(rows[i], 20),
-          master_CouncilBoard_Comment: validateValueInRow(rows[i], 21),
-          master_InstituteBoard_Comment: validateValueInRow(rows[i], 22),
-          doctoryTeachingDepartmentName_TH: validateValueInRow(rows[i], 23),
-          doctory_AcademicYear: validateValueInRow(rows[i], 24),
-          doctory_FacultyBoard_Comment: validateValueInRow(rows[i], 25),
-          doctory_CouncilBoard_Comment: validateValueInRow(rows[i], 26),
-          doctory_InstituteBoard_Comment: validateValueInRow(rows[i], 27),
-          keyword1_TH: validateValueInRow(rows[i], 34),
-          keyword2_TH: validateValueInRow(rows[i], 35),
-          keyword3_TH: validateValueInRow(rows[i], 36),
-          keyword4_TH: validateValueInRow(rows[i], 37),
-          keyword5_TH: validateValueInRow(rows[i], 38),
-          keyword1_EN: validateValueInRow(rows[i], 29),
-          keyword2_EN: validateValueInRow(rows[i], 30),
-          keyword3_EN: validateValueInRow(rows[i], 31),
-          keyword4_EN: validateValueInRow(rows[i], 32),
-          keyword5_EN: validateValueInRow(rows[i], 33),
-          scopusBefore2560: validateValueInRow(rows[i], 39),
-          citationBefore2560: validateValueInRow(rows[i], 40),
-          hIndex: validateValueInRow(rows[i], 41),
-          citationTotal: validateValueInRow(rows[i], 42),
-          citationAfter2560: validateValueInRow(rows[i], 43),
-          citationLifeTime: validateValueInRow(rows[i], 44),
-          citationTCI: validateValueInRow(rows[i], 45),
-          publicationTotal: validateValueInRow(rows[i], 46),
-          publication2560: validateValueInRow(rows[i], 47),
-          publicationLifeTime: validateValueInRow(rows[i], 48),
-          publicationTCI: validateValueInRow(rows[i], 49),
-          organizationTel: validateValueInRow(rows[i], 50),
-          mobileTel: validateValueInRow(rows[i], 51),
-          email: validateValueInRow(rows[i], 52),
-          workplace: validateValueInRow(rows[i], 53),
-          facebook: validateValueInRow(rows[i], 54),
-          twitter: validateValueInRow(rows[i], 55),
-          instragram: validateValueInRow(rows[i], 56),
-          line: validateValueInRow(rows[i], 57),
-          personalSite: validateValueInRow(rows[i], 58),
-          insignia1: validateValueInRow(rows[i], 59),
-          insignia2: validateValueInRow(rows[i], 60),
-          researcherPic: null
-        };
-        dataSend.push(formData);
-        // for (var k=0; k<deptData.length; k++) if (deptData[k].departmentName_TH == rows[i][3].trim()) { formData.departmentId = deptData[k]._id;  break; }
-        // for (var k=0; k<positionData.length; k++) if (positionData[k].positionName_TH == rows[i][5].trim()) { formData.positionId = positionData[k]._id;  break; }
-        // for (var k=0; k<academicData.length; k++) if (academicData[k].academicLevelName_TH == rows[i][4].trim()) { formData.academicLevelId = academicData[k]._id;  break; }
-
-        rp({
-          uri: 'http://localhost:2000/api/newResearcher_EachScrap',
-          method: 'POST',
-          form: formData
-        }).then(function (response) {
-          if (j == rows.length - 2)
-            res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
-          else
-            j++;
-        }).catch(function (err) {
-          console.log('ERROR => ' + err.message);
-        });
-      }
+      scrapingResearcher(data.valueRanges[0].values, function (message) {
+        res.json({ code: '999999', message: message });
+      })
     }
   });
 });
 
-router.get('/insertPublicationWorkSheet', function (req, res) {
+async function scrapingResearcher(rows, callback) {
+  let j = 0;
+  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+    let scrapingData = {
+      researcherName_TH: validateValueInRow(rows[i], 0),
+      researcherName_EN: validateValueInRow(rows[i], 2),
+      personalID: validateValueInRow(rows[i], 1),
+      departmentName_TH: validateValueInRow(rows[i], 3),
+      academicPositionName_TH: validateValueInRow(rows[i], 4),
+      academicPositionName_EN: validateValueInRow(rows[i], 6),
+      positionName_TH: validateValueInRow(rows[i], 5),
+      bachelorGraduation: validateValueInRow(rows[i], 7),
+      masterGraduation: validateValueInRow(rows[i], 8),
+      doctoralGraduation: validateValueInRow(rows[i], 9),
+      assignDate: validateValueInRow(rows[i], 10),
+      birthDate: validateValueInRow(rows[i], 11),
+      retirementStatus: validateValueInRow(rows[i], 12),
+      target: validateValueInRow(rows[i], 28),
+      bachelorTeachingDepartmentName_TH: validateValueInRow(rows[i], 13),
+      bachelor_AcademicYear: validateValueInRow(rows[i], 14),
+      bachelor_FacultyBoard_Comment: validateValueInRow(rows[i], 15),
+      bachelor_CouncilBoard_Comment: validateValueInRow(rows[i], 16),
+      bachelor_InstituteBoard_Comment: validateValueInRow(rows[i], 17),
+      masterTeachingDepartmentName_TH: validateValueInRow(rows[i], 18),
+      master_AcademicYear: validateValueInRow(rows[i], 19),
+      master_FacultyBoard_Comment: validateValueInRow(rows[i], 20),
+      master_CouncilBoard_Comment: validateValueInRow(rows[i], 21),
+      master_InstituteBoard_Comment: validateValueInRow(rows[i], 22),
+      doctoryTeachingDepartmentName_TH: validateValueInRow(rows[i], 23),
+      doctory_AcademicYear: validateValueInRow(rows[i], 24),
+      doctory_FacultyBoard_Comment: validateValueInRow(rows[i], 25),
+      doctory_CouncilBoard_Comment: validateValueInRow(rows[i], 26),
+      doctory_InstituteBoard_Comment: validateValueInRow(rows[i], 27),
+      keyword1_TH: validateValueInRow(rows[i], 34),
+      keyword2_TH: validateValueInRow(rows[i], 35),
+      keyword3_TH: validateValueInRow(rows[i], 36),
+      keyword4_TH: validateValueInRow(rows[i], 37),
+      keyword5_TH: validateValueInRow(rows[i], 38),
+      keyword1_EN: validateValueInRow(rows[i], 29),
+      keyword2_EN: validateValueInRow(rows[i], 30),
+      keyword3_EN: validateValueInRow(rows[i], 31),
+      keyword4_EN: validateValueInRow(rows[i], 32),
+      keyword5_EN: validateValueInRow(rows[i], 33),
+      scopusBefore2560: validateValueInRow(rows[i], 39),
+      citationBefore2560: validateValueInRow(rows[i], 40),
+      hIndex: validateValueInRow(rows[i], 41),
+      citationTotal: validateValueInRow(rows[i], 42),
+      citationAfter2560: validateValueInRow(rows[i], 43),
+      citationLifeTime: validateValueInRow(rows[i], 44),
+      citationTCI: validateValueInRow(rows[i], 45),
+      publicationTotal: validateValueInRow(rows[i], 46),
+      publication2560: validateValueInRow(rows[i], 47),
+      publicationLifeTime: validateValueInRow(rows[i], 48),
+      publicationTCI: validateValueInRow(rows[i], 49),
+      organizationTel: validateValueInRow(rows[i], 50),
+      mobileTel: validateValueInRow(rows[i], 51),
+      email: validateValueInRow(rows[i], 52),
+      workplace: validateValueInRow(rows[i], 53),
+      facebook: validateValueInRow(rows[i], 54),
+      twitter: validateValueInRow(rows[i], 55),
+      instragram: validateValueInRow(rows[i], 56),
+      line: validateValueInRow(rows[i], 57),
+      personalSite: validateValueInRow(rows[i], 58),
+      insignia1: validateValueInRow(rows[i], 59),
+      insignia2: validateValueInRow(rows[i], 60),
+      researcherPic: null
+    }
+    Researcher_Control.newResearcher_fromScrap(scrapingData, function () {
+      j++
+      if (j == rows.length - 1)
+        callback(j + " rows of researcher are saved")
+    })
+  }
+}
 
+// --------------------------------------------------------------------------------------------
+
+router.get('/insertPublicationWorkSheet', function (req, res) {
   sheets.spreadsheets.values.batchGet({
     spreadsheetId: sheetId,
     ranges: ["'ผลงานวิจัย'"],
@@ -202,55 +202,50 @@ router.get('/insertPublicationWorkSheet', function (req, res) {
     if (err) {
       res.json({
         code: 'FAILED',
-        message: 'The API returned an error: ' + err
+        message: 'The API returned an error: ' + err + ": data >> " + data
       });
     } else {
-      const rows = data.valueRanges[0].values;
-      var fail_info = null;
-      var dataSend = [];
-      let j = 0
-      for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
-        var formData = {
-          researcherName: validateValueInRow(rows[i], 0),
-          researcherPersonalID: validateValueInRow(rows[i], 1),
-          publicationName: validateValueInRow(rows[i], 3),
-          publicationAuthor: validateValueInRow(rows[i], 4),
-          publishLocation: validateValueInRow(rows[i], 5),
-          publishYear: validateValueInRow(rows[i], 6),
-          publishType_raw: validateValueInRow(rows[i], 7),
-          scholarType: validateValueInRow(rows[i], 8),
-          address: validateValueInRow(rows[i], 9),
-          publicationDatabase: validateValueInRow(rows[i], 11),
-          impactFactor: validateValueInRow(rows[i], 12),
-          quartile: validateValueInRow(rows[i], 13),
-          weight: validateValueInRow(rows[i], 14),
-          detail: validateValueInRow(rows[i], 15),
-          studentName: validateValueInRow(rows[i], 19),
-          bachelorTeachingDepartmentName_TH: validateValueInRow(rows[i], 16),
-          masterTeachingDepartmentName_TH: validateValueInRow(rows[i], 17),
-          doctoryTeachingDepartmentName_TH: validateValueInRow(rows[i], 18),
-          graduationYear: validateValueInRow(rows[i], 20),
-          doi: validateValueInRow(rows[i], 21),
-          publicationRaw: null
-        };
-        dataSend.push(formData);
-
-        rp({
-          uri: 'http://localhost:2000/api/newPublication_EachScrap',
-          method: 'POST',
-          form: formData
-        }).then(function (response) {
-          if (j == rows.length - 2)
-            res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
-          else
-            j++;
-        }).catch(function (err) {
-          console.log('ERROR => ' + err.message);
-        });
-      }
+      scrapingPublication(data.valueRanges[0].values, function (message) {
+        res.json({ code: '999999', message: message });
+      })
     }
   });
 });
+
+async function scrapingPublication(rows, callback) {
+  let j = 0;
+  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+    let scrapingData = {
+      researcherName: validateValueInRow(rows[i], 0),
+      researcherPersonalID: validateValueInRow(rows[i], 1),
+      publicationName: validateValueInRow(rows[i], 3),
+      publicationAuthor: validateValueInRow(rows[i], 4),
+      publishLocation: validateValueInRow(rows[i], 5),
+      publishYear: validateValueInRow(rows[i], 6),
+      publishType_raw: validateValueInRow(rows[i], 7),
+      scholarType: validateValueInRow(rows[i], 8),
+      address: validateValueInRow(rows[i], 9),
+      publicationDatabase: validateValueInRow(rows[i], 11),
+      impactFactor: validateValueInRow(rows[i], 12),
+      quartile: validateValueInRow(rows[i], 13),
+      weight: validateValueInRow(rows[i], 14),
+      detail: validateValueInRow(rows[i], 15),
+      studentName: validateValueInRow(rows[i], 19),
+      bachelorTeachingDepartmentName_TH: validateValueInRow(rows[i], 16),
+      masterTeachingDepartmentName_TH: validateValueInRow(rows[i], 17),
+      doctoryTeachingDepartmentName_TH: validateValueInRow(rows[i], 18),
+      graduationYear: validateValueInRow(rows[i], 20),
+      doi: validateValueInRow(rows[i], 21)
+    }
+    Publication_Control.newPublication_fromScrap(scrapingData, function () {
+      j++
+      if (j == rows.length - 1)
+        callback(j + " rows of publication are saved")
+    })
+  }
+}
+
+// --------------------------------------------------------------------------------------------
 
 router.get('/insertResearchFundSheet', function (req, res) {
   sheets.spreadsheets.values.batchGet({
@@ -261,62 +256,58 @@ router.get('/insertResearchFundSheet', function (req, res) {
     if (err) {
       res.json({
         code: 'FAILED',
-        message: 'The API returned an error: ' + err
+        message: 'The API returned an error: ' + err + ": data >> " + data
       });
     } else {
-      const rows = data.valueRanges[0].values;
-      var fail_info = null;
-      var dataSend = [];
-      let j = 0;
-      for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
-        var formData = {
-          researcherName: validateValueInRow(rows[i], 0),
-          researcherPersonalID: validateValueInRow(rows[i], 1),
-
-          researchName: validateValueInRow(rows[i], 4),
-          fundSource: validateValueInRow(rows[i], 6),
-
-          scholarshipYear: validateValueInRow(rows[i], 9),
-          scholarshipStart: validateValueInRow(rows[i], 10),
-          scholarshipEnd: validateValueInRow(rows[i], 11),
-          progress6MonthDate: validateValueInRow(rows[i], 12),
-          progress6MonthPercent: validateValueInRow(rows[i], 13),
-          progress12MonthDate: validateValueInRow(rows[i], 14),
-          progress12MonthPercent: validateValueInRow(rows[i], 15),
-          extend1: validateValueInRow(rows[i], 16),
-          extend2: validateValueInRow(rows[i], 17),
-          fullPaperDate: validateValueInRow(rows[i], 18),
-          result1: validateValueInRow(rows[i], 19),
-          result2: validateValueInRow(rows[i], 20),
-          finishDate: validateValueInRow(rows[i], 21),
-          perYear: validateValueInRow(rows[i], 22),
-          continueYear: validateValueInRow(rows[i], 23),
-          maximumFund: validateValueInRow(rows[i], 24),
-          ratio: validateValueInRow(rows[i], 25),
-          role: validateValueInRow(rows[i], 26),
-          before2561Inside: validateValueInRow(rows[i], 27),
-          before2561Outside: validateValueInRow(rows[i], 28),
-          after2561: validateValueInRow(rows[i], 29),
-          detail: validateValueInRow(rows[i], 30)
-        };
-        dataSend.push(formData);
-
-        rp({
-          uri: 'http://localhost:2000/api/newResearchFund_EachScrap',
-          method: 'POST',
-          form: formData
-        }).then(function (response) {
-          if (j == rows.length - 2)
-            res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
-          else
-            j++;
-        }).catch(function (err) {
-          console.log('ERROR => ' + err.message);
-        });
-      }
+      scrapingResearchFund(data.valueRanges[0].values, function (message) {
+        res.json({ code: '999999', message: message });
+      })
     }
   });
 });
+
+async function scrapingResearchFund(rows, callback) {
+  let j = 0;
+  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+    let scrapingData = {
+      researcherName: validateValueInRow(rows[i], 0),
+      researcherPersonalID: validateValueInRow(rows[i], 1),
+
+      researchName: validateValueInRow(rows[i], 4),
+      fundSource: validateValueInRow(rows[i], 6),
+
+      scholarshipYear: validateValueInRow(rows[i], 7),
+      scholarshipStart: validateValueInRow(rows[i], 9),
+      scholarshipEnd: null,
+      progress6MonthDate: validateValueInRow(rows[i], 10),
+      progress6MonthPercent: validateValueInRow(rows[i], 11),
+      progress12MonthDate: validateValueInRow(rows[i], 12),
+      progress12MonthPercent: validateValueInRow(rows[i], 13),
+      extend1: validateValueInRow(rows[i], 14),
+      extend2: validateValueInRow(rows[i], 15),
+      fullPaperDate: validateValueInRow(rows[i], 16),
+      result1: validateValueInRow(rows[i], 17),
+      result2: validateValueInRow(rows[i], 18),
+      finishDate: validateValueInRow(rows[i], 19),
+      perYear: validateValueInRow(rows[i], 20),
+      continueYear: validateValueInRow(rows[i], 21),
+      maximumFund: validateValueInRow(rows[i], 22),
+      ratio: validateValueInRow(rows[i], 23),
+      role: validateValueInRow(rows[i], 24),
+      before2561Inside: validateValueInRow(rows[i], 25),
+      before2561Outside: validateValueInRow(rows[i], 26),
+      after2561: validateValueInRow(rows[i], 27),
+      detail: validateValueInRow(rows[i], 28)
+    }
+    ResearchFund_Control.newResearchFund_fromScrap(scrapingData, function () {
+      j++
+      if (j == rows.length - 1)
+        callback(j + " rows of researchFund are saved")
+    })
+  }
+}
+
+// --------------------------------------------------------------------------------------------
 
 router.get('/insertRewardSheet', function (req, res) {
 
@@ -328,42 +319,38 @@ router.get('/insertRewardSheet', function (req, res) {
     if (err) {
       res.json({
         code: 'FAILED',
-        message: 'The API returned an error: ' + err
+        message: 'The API returned an error: ' + err + ": data >> " + data
       });
     } else {
-      const rows = data.valueRanges[0].values;
-      var fail_info = null;
-      var dataSend = [];
-      let j = 0
-      for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
-        var formData = {
-          researcherName: validateValueInRow(rows[i], 0),
-          researcherPersonalID: validateValueInRow(rows[i], 1),
-
-          rewardName: validateValueInRow(rows[i], 4),
-          studentName: validateValueInRow(rows[i], 5),
-          rewardYear: validateValueInRow(rows[i], 6),
-          rewardDate: validateValueInRow(rows[i], 7),
-          rewardRank: validateValueInRow(rows[i], 8)
-        };
-        dataSend.push(formData);
-
-        rp({
-          uri: 'http://localhost:2000/api/newReward_EachScrap',
-          method: 'POST',
-          form: formData
-        }).then(function (response) {
-          if (j == rows.length - 2)
-          res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
-        else
-          j++;
-        }).catch(function (err) {
-          console.log('ERROR => ' + err.message);
-        });
-      }
+      scrapingReward(data.valueRanges[0].values, function (message) {
+        res.json({ code: '999999', message: message });
+      })
     }
   });
 });
+
+async function scrapingReward(rows, callback) {
+  let j = 0;
+  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+    let scrapingData = {
+      researcherName: validateValueInRow(rows[i], 0),
+      researcherPersonalID: validateValueInRow(rows[i], 1),
+
+      rewardName: validateValueInRow(rows[i], 4),
+      studentName: validateValueInRow(rows[i], 5),
+      rewardYear: validateValueInRow(rows[i], 6),
+      rewardDate: validateValueInRow(rows[i], 7),
+      rewardRank: validateValueInRow(rows[i], 8)
+    }
+    Reward_Control.newReward_fromScrap(scrapingData, function () {
+      j++
+      if (j == rows.length - 1)
+        callback(j + " rows of reward are saved")
+    })
+  }
+}
+
+// --------------------------------------------------------------------------------------------
 
 router.get('/insertIntellectualPropertySheet', function (req, res) {
 
@@ -378,41 +365,37 @@ router.get('/insertIntellectualPropertySheet', function (req, res) {
         message: 'The API returned an error: ' + err
       });
     } else {
-      const rows = data.valueRanges[0].values;
-      var fail_info = null;
-      var dataSend = [];
-      let j = 0;
-      for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
-        var formData = {
-          researcherName: validateValueInRow(rows[i], 0),
-          researcherPersonalID: validateValueInRow(rows[i], 1),
-
-          intPropertyCode: validateValueInRow(rows[i], 4),
-          intPropertyRegisterDate: validateValueInRow(rows[i], 5),
-          licenseCode: validateValueInRow(rows[i], 6),
-          intPropertyName: validateValueInRow(rows[i], 7),
-          licenseType: validateValueInRow(rows[i], 8),
-          claimBy: validateValueInRow(rows[i], 9),
-          coCreation: validateValueInRow(rows[i], 10)
-        };
-        dataSend.push(formData);
-
-        rp({
-          uri: 'http://localhost:2000/api/newIntellectualProperty_EachScrap',
-          method: 'POST',
-          form: formData
-        }).then(function (response) {
-          if (j == rows.length - 2)
-            res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
-          else
-            j++;
-        }).catch(function (err) {
-          console.log('ERROR => ' + err.message);
-        });
-      }
+      scrapingIntellectualProperty(data.valueRanges[0].values, function (message) {
+        res.json({ code: '999999', message: message });
+      })
     }
   });
 });
+
+async function scrapingIntellectualProperty(rows, callback) {
+  let j = 0;
+  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+    let scrapingData = {
+      researcherName: validateValueInRow(rows[i], 0),
+      researcherPersonalID: validateValueInRow(rows[i], 1),
+
+      intPropertyCode: validateValueInRow(rows[i], 4),
+      intPropertyRegisterDate: validateValueInRow(rows[i], 5),
+      licenseCode: validateValueInRow(rows[i], 6),
+      intPropertyName: validateValueInRow(rows[i], 7),
+      licenseType: validateValueInRow(rows[i], 8),
+      claimBy: validateValueInRow(rows[i], 9),
+      coCreation: validateValueInRow(rows[i], 10)
+    }
+    IntellectualProperty_Control.newIntellectualProperty_fromScrap(scrapingData, function () {
+      j++
+      if (j == rows.length - 1)
+        callback(j + " rows of reward are saved")
+    })
+  }
+}
+
+// --------------------------------------------------------------------------------------------
 
 router.get('/insertThesisSheet', function (req, res) {
 
@@ -427,54 +410,51 @@ router.get('/insertThesisSheet', function (req, res) {
         message: 'The API returned an error: ' + err
       });
     } else {
-      const rows = data.valueRanges[0].values;
-      var fail_info = null;
-      var dataSend = [];
-      let j = 0
-      for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
-        var formData = {
-          researcherName: validateValueInRow(rows[i], 0),
-
-          studentName: rows[i][2] + " " + validateValueInRow(rows[i], 4),
-          studentCode: validateValueInRow(rows[i], 5),
-          studentTel: validateValueInRow(rows[i], 6),
-          studentEmail: validateValueInRow(rows[i], 7),
-          masterDepartmentName: validateValueInRow(rows[i], 8),
-          doctoryDepartmentName: validateValueInRow(rows[i], 9),
-          thesisName_TH: validateValueInRow(rows[i], 10),
-          thesisName_EN: validateValueInRow(rows[i], 11),
-          coProfessor1: validateValueInRow(rows[i], 12),
-          coProfessor2: validateValueInRow(rows[i], 13),
-          chiefCommitee: validateValueInRow(rows[i], 14),
-          commitee1: validateValueInRow(rows[i], 15),
-          commitee2: validateValueInRow(rows[i], 16),
-          commitee3: validateValueInRow(rows[i], 17),
-          professorAssignDate: validateValueInRow(rows[i], 18),
-          thesisNameAssignDate: validateValueInRow(rows[i], 19),
-          thesisNameAnnounceDate: validateValueInRow(rows[i], 20),
-          qualifyTestDate: validateValueInRow(rows[i], 21),
-          outlineTestDate: validateValueInRow(rows[i], 22),
-          thesisTestDate: validateValueInRow(rows[i], 23),
-          gradutionDate: validateValueInRow(rows[i], 24),
-        };
-        dataSend.push(formData);
-
-        rp({
-          uri: 'http://localhost:2000/api/newThesis_EachScrap',
-          method: 'POST',
-          form: formData
-        }).then(function (response) {
-          if (j == rows.length - 2)
-            res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
-          else
-            j++;
-        }).catch(function (err) {
-          console.log('ERROR => ' + err.message);
-        });
-      }
+      scrapingThesis(data.valueRanges[0].values, function (message) {
+        res.json({ code: '999999', message: message });
+      })
     }
   });
 });
+
+async function scrapingThesis(rows, callback) {
+  let j = 0;
+  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+    let scrapingData = {
+      researcherName: validateValueInRow(rows[i], 0),
+      researcherPersonalID: validateValueInRow(rows[i], 1),
+
+      studentName: rows[i][3] + " " + validateValueInRow(rows[i], 5),
+      studentCode: validateValueInRow(rows[i], 6),
+      studentTel: validateValueInRow(rows[i], 7),
+      studentEmail: validateValueInRow(rows[i], 8),
+      masterDepartmentName: validateValueInRow(rows[i], 9),
+      doctoryDepartmentName: validateValueInRow(rows[i], 10),
+      thesisName_TH: validateValueInRow(rows[i], 11),
+      thesisName_EN: validateValueInRow(rows[i], 12),
+      coProfessor1: validateValueInRow(rows[i], 13),
+      coProfessor2: validateValueInRow(rows[i], 14),
+      chiefCommitee: validateValueInRow(rows[i], 15),
+      commitee1: validateValueInRow(rows[i], 16),
+      commitee2: validateValueInRow(rows[i], 17),
+      commitee3: validateValueInRow(rows[i], 18),
+      professorAssignDate: validateValueInRow(rows[i], 19),
+      thesisNameAssignDate: validateValueInRow(rows[i], 20),
+      thesisNameAnnounceDate: validateValueInRow(rows[i], 21),
+      qualifyTestDate: validateValueInRow(rows[i], 22),
+      outlineTestDate: validateValueInRow(rows[i], 23),
+      thesisTestDate: validateValueInRow(rows[i], 24),
+      gradutionDate: validateValueInRow(rows[i], 25)
+    }
+    Thesis_Control.newThesis_fromScrap(scrapingData, function () {
+      j++
+      if (j == rows.length - 1)
+        callback(j + " rows of reward are saved")
+    })
+  }
+}
+
+// --------------------------------------------------------------------------------------------
 
 router.get('/insertAcademicServiceSheet', function (req, res) {
 
@@ -542,6 +522,8 @@ router.get('/insertStaffTrainingSheet', function (req, res) {
   });
 });
 
+// --------------------------------------------------------------------------------------------
+
 router.get('/insertTeacherTrainingSheet', function (req, res) {
 
   sheets.spreadsheets.values.batchGet({
@@ -554,14 +536,19 @@ router.get('/insertTeacherTrainingSheet', function (req, res) {
         code: 'FAILED',
         message: 'The API returned an error: ' + err
       });
-    } {
-      const rows = data.valueRanges[0].values;
-      var fail_info = null;
-      var dataSend = [];
-      let j = 0
-      for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
-        var formData = {
-          researcherName: validateValueInRow(rows[i], 0),
+    } else {
+      scrapingResearcherTraining(data.valueRanges[0].values, function (message) {
+        res.json({ code: '999999', message: message });
+      })
+    }
+  });
+});
+
+async function scrapingResearcherTraining(rows, callback) {
+  let j = 0;
+  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+    let scrapingData = {
+      researcherName: validateValueInRow(rows[i], 0),
           researcherPersonalID: validateValueInRow(rows[i], 1),
 
           researchTopic: validateValueInRow(rows[i], 4),
@@ -576,25 +563,16 @@ router.get('/insertTeacherTrainingSheet', function (req, res) {
           scholarshipLimit: validateValueInRow(rows[i], 13),
           orderCode: validateValueInRow(rows[i], 15),
           approveDate: validateValueInRow(rows[i], 16)
-        };
-        dataSend.push(formData);
-
-        rp({
-          uri: 'http://localhost:2000/api/newResearcherTraining_EachScrap',
-          method: 'POST',
-          form: formData
-        }).then(function (response) {
-          if (j == rows.length - 2)
-            res.json({ code: '999999', message: (j + 1) + " row of data(s) added" });
-          else
-            j++;
-        }).catch(function (err) {
-          console.log('ERROR => ' + err.message);
-        });
-      }
     }
-  });
-});
+    ResearcherTraining_Control.newResearcherTraining_fromScrap(scrapingData, function () {
+      j++
+      if (j == rows.length - 1)
+        callback(j + " rows of reward are saved")
+    })
+  }
+}
+
+// --------------------------------------------------------------------------------------------
 
 router.get('/getDataSetup', async function (req, res) {
 

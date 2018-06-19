@@ -49,6 +49,25 @@ module.exports = {
             }
         });
     },
+    checkMasterTeachingDepartmentName: function (masterTeachingDepartmentName_TH, callback) {
+        MasterTeachingDepartment.findOne({ "masterTeachingDepartmentName_TH": masterTeachingDepartmentName_TH }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "531";
+                var alert = "Error in finding MasterTeachingDepartment with name: " + masterTeachingDepartmentName_TH + "\nError: " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback) {
+                callback("532", null, functionCallback)
+            }
+            else {
+                let errCode = "533";
+                var alert = masterTeachingDepartmentName_TH + " not founded";
+                //console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+        });
+    },
     checkAndInsertMasterTeachingByMasterTeachingDepartmentName: function (masterTeachingDepartmentName_TH, masterTeachingDepartmentName_EN, callback) {
         MasterTeachingDepartment.findOne({ "masterTeachingDepartmentName_TH": masterTeachingDepartmentName_TH }, function (error, functionCallback) {
             if (error) {

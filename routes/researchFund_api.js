@@ -253,7 +253,7 @@ router.post('/deleteResearchFund/', function (request, response) {
     }
 });
 
-router.post('/wipeResearchFund/', function (request, response) {
+router.get('/wipeResearchFund/', function (request, response) {
     var methodCode = "63";
 
     flow.exec(

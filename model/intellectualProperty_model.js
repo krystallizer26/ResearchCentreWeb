@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var IntellectualProperty_Schema = new Schema({
     researcherId: { type: String, required: true },
-    intPropertyCode: { type: String, required: true },
+    intPropertyCode: { type: String, default: null },
     intPropertyRegisterDate: { type: String, default: null },
     licenseCode: { type: String, default: null },
     intPropertyName: { type: String, default: null },

@@ -4,8 +4,18 @@ var ObjectId = require('mongodb').ObjectId;
 var ResearcherTraining = require('../model/researcherTraining_model.js');
 var Researcher_Control = require("../controller/researcher_control.js");
 
+var Validate = require("../controller/validation_controller.js");
+var Researcher_Control = require("../controller/researcher_control.js");
+var Position_Control = require("../controller/position_control.js");
+var Keyword_Control = require("../controller/keyword_control.js");
+var AcademicLevel_Control = require("../controller/academicLevel_control.js");
+var Department_Control = require("../controller/department_control.js");
+var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+
 module.exports = {
-    newResearcherTraining_fromScrap: function (researcherTraining, callback) {
+    newResearcherTraining: function (researcherTraining, callback) {
         console.log("Saving ResearcherTraining: " + researcherTraining.trainingName);
 
         flow.exec(
@@ -34,6 +44,60 @@ module.exports = {
 
             }
         );
+    },
+    newResearcherTraining_fromScrap: function (publication_bulk, callback) {
+        let j = 0
+        let scrapingData = JSON.parse(JSON.stringify(publication_bulk))
+
+        var researcherTraining = new ResearcherTraining();
+        var requiredData = [];
+        requiredData.push(scrapingData.researcherName);
+        var requiredReady = Validate.requiredData_Check(requiredData);
+
+        if (!requiredReady) {
+            var alert = "Input Not Valid, check if some data is required."
+            console.log(alert);
+            callback("New researcherTraining was saved successfully")
+        }
+        else {
+            researcherTraining.researcherName = Validate.scrappingCleanUp(scrapingData.researcherName)
+            researcherTraining.researcherPersonalID = Validate.scrappingCleanUp(scrapingData.researcherPersonalID)
+            researcherTraining.researchTopic = Validate.scrappingCleanUp(scrapingData.researchTopic)
+            researcherTraining.trainingName = Validate.scrappingCleanUp(scrapingData.trainingName)
+            researcherTraining.trainingType = Validate.scrappingCleanUp(scrapingData.trainingType)
+            researcherTraining.trainingLevel = Validate.scrappingCleanUp(scrapingData.trainingLevel)
+            researcherTraining.trainingYear = Validate.scrappingCleanUp(scrapingData.trainingYear)
+            researcherTraining.trainingStartDate = Validate.scrappingCleanUp(scrapingData.trainingStartDate)
+            researcherTraining.trainingFinishDate = Validate.scrappingCleanUp(scrapingData.trainingFinishDate)
+            researcherTraining.trainingLocation = Validate.scrappingCleanUp(scrapingData.trainingLocation)
+            researcherTraining.scholarshipType = Validate.scrappingCleanUp(scrapingData.scholarshipType)
+            researcherTraining.scholarshipLimit = Validate.scrappingCleanUp(scrapingData.scholarshipLimit)
+            researcherTraining.orderCode = Validate.scrappingCleanUp(scrapingData.orderCode)
+            researcherTraining.approveDate = Validate.scrappingCleanUp(scrapingData.approveDate)
+            researcherTraining.researcherName = Validate.scrappingCleanUp(scrapingData.researcherName)
+            flow.exec(
+                function () {
+                    Researcher_Control.checkResearcherByPersonalID(researcherTraining.researcherPersonalID, this);
+                }, function (code, err, functionCallback) {
+                    if (!err) {
+                        researcherTraining.researcherId = functionCallback._id
+                    }
+                    else {
+                        console.log("Researcher with Personal ID " + researcherTraining.researcherPersonalID + " not found for ResearcherTraining named " + researcherTraining.trainingName)
+                        researcherTraining.researcherId = "111111111111111111111111"
+                    }
+
+                    researcherTraining.save(function (error, saveResponse) {
+                        if (error) {
+                            let errCode = "831";
+                            var alert = "Saving Publication fail, Error: " + error.message + "@" + researcherTraining.researchName;
+                            console.log("ERROR Code: " + errCode + " " + alert);
+                        }
+                    });
+                    callback("New researcherTraining was saved successfully")
+                }
+            )
+        }
     },
 
     checkResearcherTrainingByID: function (researcherTrainingId, callback) {
