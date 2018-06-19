@@ -84,7 +84,31 @@ app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service
                 }
                 else
                 {
-                $scope.Publication  = data.data;
+
+                  $scope.Publication = [];
+                  let buf_publication = data.data;
+                  buf_publication.forEach(function(item){
+                    if(item.publishType == "InternationalJournal")
+                    {
+                      $scope.Publication.push(item);
+                    }
+                    else if(item.publishType == "NationalJournal")
+                    {
+          
+                    }
+                    else if(item.publishType == "InternationalConference" | item.publishType == "NationalConference" )
+                    {
+                   
+                    }
+                    else if(item.publishType == "Others")
+                    {
+             
+                    }
+                    else{
+             
+                    }
+              })
+            
                 console.log("Publication");
                 console.log($scope.Publication);
               }
