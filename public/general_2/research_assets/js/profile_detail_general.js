@@ -72,7 +72,7 @@ app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service
 
             let dataObj = {
               researcherId : researcher_id,
-              limit : 3
+              limit : 0
             };
 
             $http.post('/api/getAllPublicationPreviewByResearcherId/',dataObj)
