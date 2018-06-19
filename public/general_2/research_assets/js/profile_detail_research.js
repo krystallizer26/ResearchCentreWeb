@@ -35,7 +35,7 @@ app.controller('profileDetailResearchCtrl', function($scope, $http,global_servic
             {
               $scope.pb_national.push(item);
             }
-            else if(item.publishType == "InternationalConference")
+            else if(item.publishType == "InternationalConference" | item.publishType == "NationalConference" )
             {
               $scope.pb_conference.push(item);
             }
