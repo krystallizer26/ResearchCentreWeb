@@ -248,7 +248,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
                           
                             </h6>
                             <div >
-                                <div class="row" ng-repeat="item in pb_book">
+                                <div class="row" ng-repeat="item in pb_book | orderBy: '-publishYear'">
                                   <!-- <div class= "col-sm-1"><div class="icon-doc" style="font-size: 18px;color: #dfdfdf;"></div>  </div> -->
                                   <div class="col-sm-1 icon-doc" style="font-size: 18px;color: #dfdfdf;"></div> 
                                   
