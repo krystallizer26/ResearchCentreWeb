@@ -20,6 +20,14 @@ app.controller('profileDetailThesistitleCtrl', function($scope, $http,global_ser
       {
       console.log("getAllThesisPreviewByResearcherId");
       $scope.thesis = data.data;
+      $scope.thesis.forEach(function(item){
+        item.studentName =  item.studentName.replace('รศ.', "").replace('ดร.', "").replace('อ.', "").replace('ผศ.', "").replace('ศ.', "")
+
+
+      })
+
+    
+
       console.log($scope.thesis)
     }
   })
