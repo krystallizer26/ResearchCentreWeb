@@ -24,8 +24,8 @@ var Researcher_Schema = new Schema({
         keyword_EN: String,
         keyword_Combine: String,
     }],
-
     keywordString: { type: String, default: null },
+    
     bachelorTeachingDepartmentId: { type: String, default: null },
     bachelor_AcademicYear: { type: Number, default: null },
     bachelor_FacultyBoard_Comment: { type: String, default: null },
@@ -58,17 +58,17 @@ var Researcher_Schema = new Schema({
     publicationLifeTime: { type: Number, default: 0 },
     publicationTCI: { type: Number, default: 0 },
 
-    organizationTel: { type: String, default: 0 },
-    mobileTel: { type: String, default: 0 },
-    email: { type: String, default: 0 },
-    workplace: { type: String, default: 0 },
-    facebook: { type: String, default: 0 },
-    twitter: { type: String, default: 0 },
-    instragram: { type: String, default: 0 },
-    line: { type: String, default: 0 },
-    personalSite: { type: String, default: 0 },
-    insignia1: { type: String, default: 0 },
-    insignia2: { type: String, default: 0 },
+    organizationTel: { type: String, default: null },
+    mobileTel: { type: String, default: null },
+    email: { type: String, default: null },
+    workplace: { type: String, default: null },
+    facebook: { type: String, default: null },
+    twitter: { type: String, default: null },
+    instragram: { type: String, default: null },
+    line: { type: String, default: null },
+    personalSite: { type: String, default: null },
+    insignia1: { type: String, default: null },
+    insignia2: { type: String, default: null },
 
     createdDate: { type: Date, default: Date.now },
     editedDate: { type: Date, default: Date.now }
