@@ -11,13 +11,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
       <span class="icon-chemistry" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> อบรมสัมมนา / Training
     </h6>
     
-    <div ng-repeat="item in thesis">
-        <div class="row">
-          <div class= "col-sm-1"><div class="icon-chemistry" style="font-size: 18px;color: #dfdfdf;"></div></div>
-          <div class= "col-sm-10"><strong> {{item.thesisName_TH}} / {{item.thesisName_EN}}</strong> {{item.masterTeachingDepartmentName_TH}} ,{{item.studentName}}</div>
-        </div>
-        <hr/>
+    <div ng-repeat="training in trainingList | orderBy: '-trainingYear'">
+      <div class="row" >
+        <div class= "col-sm-1"><div class="icon-trophy" style="font-size: 18px;color: #dfdfdf;"></div></div>
+        <div class= "col-sm-10 font-app"><strong style="font-weight: 600;">ชื่องานอบรม</strong> {{training.trainingName}}, <strong style="font-weight: 600;">หัวข้อการอบรม</strong> {{training.researchTopic}}, <strong style="font-weight: 600;">{{training.trainingYear}}</strong> </div>
       </div>
+      <hr/>
+    </div>
 </div>
 
 <!-- <div class="element-wrapper" style="padding-bottom: 0.5rem;">
