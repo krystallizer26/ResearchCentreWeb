@@ -70,12 +70,17 @@ app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service
             });
 
 
-            let dataObj = {
+            let dataObjforpublic = {
               researcherId : researcher_id,
               limit : 0
             };
 
-            $http.post('/api/getAllPublicationPreviewByResearcherId/',dataObj)
+            let dataObj = {
+              researcherId : researcher_id,
+              limit : 3
+            };
+
+            $http.post('/api/getAllPublicationPreviewByResearcherId/',dataObjforpublicdataObj)
             .success(function(data, status, headers, config) {
                 //console.log("-----------"+ JSON.stringify(data));
                 if(data.code != "999999")
