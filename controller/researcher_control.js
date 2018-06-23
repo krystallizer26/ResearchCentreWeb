@@ -13,6 +13,7 @@ var Department_Control = require("../controller/department_control.js");
 var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
 var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
 var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+var Publication_Control = require("../controller/publication_control.js");
 
 module.exports = {
     newResearcher: function (researcher, callback) {
@@ -427,11 +428,13 @@ module.exports = {
         for (let i = 0; i < researcher.length; i++) {
             getFullResearcherPreview(researcher[i], function (a) {
                 //console.log("a >> " + JSON.stringify(a))
+                //console.log("#" + i + " completed")
                 forCallback.push(a);
-                if (j == researcher.length - 1)
+                j++
+                if (j == researcher.length) {
+                    console.log("ALL SET")
                     callback("561", null, forCallback);
-                else
-                    j++;
+                }
             });
         }
 
@@ -549,20 +552,20 @@ function getFullResearcherPreview(input, callback) {
             else {
                 researcherData["academicLevelData"] = [];
             }
-            Publication_Control.getAllPublicationPreviewByResearcherId(new ObjectId(researcherData._id), this);
+            Publication_Control.getAllPublicationPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
 
             // forCallback_getFullResearcherPreview.push(researcherData)
         }, function (code, err, functionCallback) {
 
             researcherData["publicationString"] = ""
-            if (functionCallback) {
+            if (functionCallback.length > 0) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
-                    
+
                     j++
-                    if (j == functionCallback.length){
-                        console.log("researcherData[publicationString] >> " + researcherData["publicationString"] + " for " + researcherData["researcherName_TH"])
+                    if (j == functionCallback.length) {
+                        //console.log("researcherData[publicationString] >> " + researcherData["publicationString"] + " for " + researcherData["researcherName_TH"])
                         callback(researcherData)
                     }
                 }

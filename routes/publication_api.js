@@ -207,6 +207,7 @@ router.post('/getAllPublicationPreview/', function (request, response) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
             else {
+                console.log("READY !!")
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Publication Completed", functionCallback, response)
             }
         }
