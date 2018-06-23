@@ -134,7 +134,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
             
              
           </h6>
-          <div ng-repeat="paper in Publication | orderBy: '-publishYear'">
+          <div ng-repeat="paper in Publication | orderBy: '-publishYear' | limitTo:3 ">
             <div class="row">
               <div class= "col-sm-1"><div class="icon-doc" style="font-size: 18px;color: #dfdfdf;"></div></div>
               <div class= "col-sm-10 font-app"><a href="http://doi.org/{{item.publicationRaw}}">{{paper.publicationName}}</a>. <b>{{paper.publicationAuthor}}</b>. <I>{{paper.publishLocation}}</I>.<strong></strong></div>

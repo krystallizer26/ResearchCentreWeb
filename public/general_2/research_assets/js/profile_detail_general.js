@@ -80,7 +80,7 @@ app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service
               limit : 3
             };
 
-            $http.post('/api/getAllPublicationPreviewByResearcherId/',dataObj)
+            $http.post('/api/getAllPublicationPreviewByResearcherId/',dataObjforpublicdataObj)
             .success(function(data, status, headers, config) {
                 ////console.log("-----------"+ JSON.stringify(data));
                 if(data.code != "999999")
@@ -89,30 +89,30 @@ app.controller('profileDetailGeneralCtrl', function($scope, $http,global_service
                 }
                 else
                 {
-                  $scope.Publication = data.data;
-                  // $scope.Publication = [];
-                  // let buf_publication = data.data;
-                  // buf_publication.forEach(function(item){
-                  //   if(item.publishType == "InternationalJournal")
-                  //   {
-                  //     $scope.Publication.push(item);
-                  //   }
-                  //   else if(item.publishType == "NationalJournal")
-                  //   {
-          
-                  //   }
-                  //   else if(item.publishType == "InternationalConference" | item.publishType == "NationalConference" )
-                  //   {
-                   
-                  //   }
-                  //   else if(item.publishType == "Others")
-                  //   {
+                  //$scope.Publication = data.data;
+                  $scope.Publication = [];
+                  let buf_publication = data.data;
+                  buf_publication.forEach(function(item){
+                    if(item.publishType == "InternationalJournal")
+                    {
+                      $scope.Publication.push(item);
+                    }
+                    else if(item.publishType == "NationalJournal" &&  $scope.Publication.length < 3)
+                    {
+                      $scope.Publication.push(item);
+                    }
+                    else if(item.publishType == "InternationalConference" | item.publishType == "NationalConference" &&  $scope.Publication.length < 3)
+                    {
+                      $scope.Publication.push(item);
+                    }
+                    else if(item.publishType == "Others" &&  $scope.Publication.length < 3)
+                    {
+                      $scope.Publication.push(item);
+                    }
+                    else{
              
-                  //   }
-                  //   else{
-             
-                  //   }
-              // })
+                    }
+              })
             
                 //console.log("Publication");
                 //console.log($scope.Publication);
