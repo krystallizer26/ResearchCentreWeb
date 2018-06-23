@@ -189,7 +189,7 @@ module.exports = {
                             let errCode = "361";
                             var alert = "Saving Researcher fail, Error: " + error.message;
                             console.log("ERROR Code: " + errCode + " " + alert);
-                             }
+                        }
                     });
                     callback("New Researcher was saved successfully")
                 }
@@ -390,7 +390,7 @@ module.exports = {
         }, function (error, functionCallback) {
             if (error) {
                 let errCode = "431";
-                var alert = "Error in getAllAcademicLevel , Error : " + error.message;
+                var alert = "Error in Researcher , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -549,7 +549,27 @@ function getFullResearcherPreview(input, callback) {
             else {
                 researcherData["academicLevelData"] = [];
             }
-            callback(researcherData)
+            Publication_Control.getAllPublicationPreviewByResearcherId(new ObjectId(researcherData._id), this);
+
+            // forCallback_getFullResearcherPreview.push(researcherData)
+        }, function (code, err, functionCallback) {
+
+            researcherData["publicationString"] = ""
+            if (functionCallback) {
+                let j = 0
+                for (let i = 0; i < functionCallback.length; i++) {
+                    researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
+                    
+                    j++
+                    if (j == functionCallback.length){
+                        console.log("researcherData[publicationString] >> " + researcherData["publicationString"] + " for " + researcherData["researcherName_TH"])
+                        callback(researcherData)
+                    }
+                }
+            }
+            else {
+                callback(researcherData)
+            }
 
             // forCallback_getFullResearcherPreview.push(researcherData)
         }
