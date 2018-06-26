@@ -227,6 +227,7 @@ module.exports = {
         });
     },
     checkResearcherByID: function (researcherId, query, callback) {
+        console.log("researcherId >q> " + researcherId )
         Researcher.findOne({ "_id": researcherId }, query, function (error, functionCallback) {
             if (error) {
                 let errCode = "381";

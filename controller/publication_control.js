@@ -110,7 +110,7 @@ module.exports = {
                             let errCode = "582";
                             var alert = "Saving Publication fail, Error: " + error.message + "@" + publication.publicationName;
                             console.log("ERROR Code: " + errCode + " " + alert);
-                            }
+                        }
                     });
                     callback("New Publications was saved successfully")
                 }
@@ -340,7 +340,6 @@ function getFullPublicationPreview(input, callback) {
     let departmentId_tmp = null;
     flow.exec(
         function () {
-            //console.log("history.requestId: "+history.requestID)
             Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId), {}, this)
         }, function (code, err, functionCallback) {
             if (functionCallback) {
@@ -397,8 +396,7 @@ function getFullPublication(input, callback) {
     let departmentId_tmp = null;
     flow.exec(
         function () {
-            //console.log("history.requestId: "+history.requestID)
-            Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId), this)
+            Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId), {}, this)
         }, function (code, err, functionCallback) {
             if (functionCallback) {
                 publicationData["researcherId"] = functionCallback._id;
