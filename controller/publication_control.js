@@ -5,6 +5,7 @@ var Publication = require('../model/publication_model.js');
 var Researcher_Control = require("../controller/researcher_control.js");
 var Validate = require("../controller/validation_controller.js");
 
+            
 module.exports = {
     newPublication: function (publication, callback) {
         console.log("Saving Publication: " + publication.publicationName_TH);
@@ -338,9 +339,13 @@ function getFullPublicationPreview(input, callback) {
     let academicLevelId_tmp = null;
     let positionId_tmp = null;
     let departmentId_tmp = null;
+    var Researcher_Control = require("../controller/researcher_control.js");
     flow.exec(
         function () {
-            Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId), {}, this)
+            console.log("(publicationData.researcherId for " +new ObjectId(publicationData.researcherId))
+            Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId),{}, this)
+            
+            
         }, function (code, err, functionCallback) {
             if (functionCallback) {
                 publicationData["researcherName_TH"] = functionCallback.researcherName_TH;
@@ -394,6 +399,8 @@ function getFullPublication(input, callback) {
     let academicLevelId_tmp = null;
     let positionId_tmp = null;
     let departmentId_tmp = null;
+    var Researcher_Control = require("../controller/researcher_control.js");
+    
     flow.exec(
         function () {
             Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId), {}, this)
