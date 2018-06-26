@@ -58,9 +58,8 @@ router.post('/newPublication', function (request, response) {
                     publication.publishType = "InternationalJournal"
                 if (publication.publishType_raw == "การประชุมฯ ระดับนานาชาติ")
                     publication.publishType = "InternationalConference"
-                    if (publication.publishType_raw == "การประชุมฯ ระดับชาติ")
+                if (publication.publishType_raw == "การประชุมฯ ระดับชาติ")
                     publication.publishType = "NationalConference"
-                    
                 if (publication.publishType_raw == "วารสารฯ ระดับชาติ")
                     publication.publishType = "NationalJournal"
                 publication.scholarType = Validate.scrappingCleanUp(request.body.scholarType)
@@ -89,65 +88,6 @@ router.post('/newPublication', function (request, response) {
                 }
             }
         );
-    }
-});
-
-router.post('/newPublication_bulk', function (request, response) {
-    var methodCode = "51";
-
-    var requiredData = [];
-    requiredData.push(request.body.publicationData);
-    var requiredReady = Validate.requiredData_Check(requiredData)
-
-    if (!requiredReady) {
-        let alert = "Input Not Valid, check if some data is required.";
-        console.log(alert);
-        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else {
-        let publicationData = JSON.parse(request.body.publicationData);
-        publicationData = publicationData.feed.entry;
-
-        let researcherCount = publicationData.length;
-        console.log("Inserting " + researcherCount + " researchers");
-
-        var counter = [];
-        for (let i = 0; i < researcherCount; i++) {
-            counter.push(i);
-        }
-
-        let currentPos = 0;
-        flow.serialForEach(counter, function (val) {
-            currentPos = val
-
-            var publication = new Publication();
-            publication.researcherName = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชื่อ"]["$t"])
-            publication.publicationName = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชื่อผลงานวิจัย"]["$t"])
-            publication.publicationAuthor = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชือเจ้าของผลงาน"]["$t"])
-            publication.publishLocation = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$แหล่งเผยแพร่ผลงาน"]["$t"])
-            publication.publishYear = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ปีพ.ศ."]["$t"])
-            publication.publishType = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ลักษณะการเผยแพร่"]["$t"])
-            publication.scholarType = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ประเภททุนที่สนับสนุน"]["$t"])
-            publication.address = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$address"]["$t"])
-            publication.publicationDatabase = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ฐานข้อมูล"]["$t"])
-            publication.impactFactor = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$impactfactor"]["$t"])
-            publication.quartile = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$quartile"]["$t"])
-            publication.weight = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ค่าน้ำหนัก"]["$t"])
-            publication.detail = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$หมายเหตุ"]["$t"])
-
-            publication.studentName = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ชื่อนักศึกษา"]["$t"])
-            publication.bachelorTeachingDepartmentName_TH = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$หลักสูตรระดับปริญญาตรี"]["$t"])
-            publication.masterTeachingDepartmentName_TH = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$หลักสูตรระดับปริญญาโท"]["$t"])
-            publication.doctoryTeachingDepartmentName_TH = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$หลักสูตรระดับปริญญาโท_2"]["$t"])
-            publication.graduationYear = Validate.scrappingCleanUp(publicationData[currentPos]["gsx$ปีที่สำเร็จการศึกษา"]["$t"])
-
-            Publication_Control.newPublication_fromScrap(publication, this);
-
-        }, function (code, err, finctionCallback) {
-            // do nothing after each loop
-        }, function () {
-            Return_Control.responseWithCode(ReturnCode.success, "New Publication(s) was saved successfully", response);
-        });
     }
 });
 
@@ -246,8 +186,6 @@ router.post('/newPublication_bulk', function (request, response) {
 //     }
 // });
 
-
-
 router.post('/getAllPublicationPreview/', function (request, response) {
     var methodCode = "47";
 
@@ -269,6 +207,7 @@ router.post('/getAllPublicationPreview/', function (request, response) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
             }
             else {
+                console.log("READY !!")
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Publication Completed", functionCallback, response)
             }
         }

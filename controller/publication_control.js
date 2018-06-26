@@ -5,6 +5,7 @@ var Publication = require('../model/publication_model.js');
 var Researcher_Control = require("../controller/researcher_control.js");
 var Validate = require("../controller/validation_controller.js");
 
+            
 module.exports = {
     newPublication: function (publication, callback) {
         console.log("Saving Publication: " + publication.publicationName_TH);
@@ -110,7 +111,7 @@ module.exports = {
                             let errCode = "582";
                             var alert = "Saving Publication fail, Error: " + error.message + "@" + publication.publicationName;
                             console.log("ERROR Code: " + errCode + " " + alert);
-                            }
+                        }
                     });
                     callback("New Publications was saved successfully")
                 }
@@ -338,10 +339,13 @@ function getFullPublicationPreview(input, callback) {
     let academicLevelId_tmp = null;
     let positionId_tmp = null;
     let departmentId_tmp = null;
+    var Researcher_Control = require("../controller/researcher_control.js");
     flow.exec(
         function () {
-            //console.log("history.requestId: "+history.requestID)
-            Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId), {}, this)
+            console.log("(publicationData.researcherId for " +new ObjectId(publicationData.researcherId))
+            Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId),{}, this)
+            
+            
         }, function (code, err, functionCallback) {
             if (functionCallback) {
                 publicationData["researcherName_TH"] = functionCallback.researcherName_TH;
@@ -395,10 +399,11 @@ function getFullPublication(input, callback) {
     let academicLevelId_tmp = null;
     let positionId_tmp = null;
     let departmentId_tmp = null;
+    var Researcher_Control = require("../controller/researcher_control.js");
+    
     flow.exec(
         function () {
-            //console.log("history.requestId: "+history.requestID)
-            Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId), this)
+            Researcher_Control.checkResearcherByID(new ObjectId(publicationData.researcherId), {}, this)
         }, function (code, err, functionCallback) {
             if (functionCallback) {
                 publicationData["researcherId"] = functionCallback._id;
