@@ -178,6 +178,8 @@ module.exports = {
             "researchTopic": true,
             "trainingName": true,
             "trainingType": true,
+            "trainingStartDate": true,
+            "trainingFinishDate": true,
             "trainingLocation": true,
             "trainingYear": true
         }, function (error, functionCallback) {
@@ -208,6 +210,8 @@ module.exports = {
             "researcherId": true,
             "researchTopic": true,
             "trainingName": true,
+            "trainingStartDate": true,
+            "trainingFinishDate": true,
             "trainingType": true,
             "trainingLocation": true,
             "trainingYear": true
@@ -294,6 +298,10 @@ function getFullResearcherTrainingPreview(input, callback) {
                 researcherTrainingData["researcherName_TH"] = "Not found";
                 researcherTrainingData["researcherName_EN"] = "Not found";
             }
+
+            let start = input.trainingStartDate.split('/')
+            let finish = input.trainingFinishDate.split('/')
+            researcherTrainingData["dateDisplay"] = start[0] + " - " + finish[0] + " / " + finish[1] + " / " + finish[2];
             callback(researcherTrainingData)
         }
     );

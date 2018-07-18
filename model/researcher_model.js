@@ -70,6 +70,13 @@ var Researcher_Schema = new Schema({
     insignia1: { type: String, default: null },
     insignia2: { type: String, default: null },
 
+    totalCitationNotSelf: { type: Number , default: null },
+    citation2014: { type: Number, default: null },
+    citation2015: { type: Number, default: null },
+    citation2016: { type: Number, default: null },
+    citation2017: { type: Number, default: null },
+    citation2018: { type: Number, default: null },
+
     createdDate: { type: Date, default: Date.now },
     editedDate: { type: Date, default: Date.now }
 });

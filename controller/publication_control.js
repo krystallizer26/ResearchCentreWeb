@@ -50,6 +50,8 @@ module.exports = {
             publication.publishType = "Others"
             if (publication.publishType_raw == "วารสารฯ ระดับนานาชาติ")
                 publication.publishType = "InternationalJournal"
+            if (publication.publishType_raw == "วารสารฯ ระดับนานาชาติ")
+                publication.publishType = "InternationalJournal"
             if (publication.publishType_raw == "การประชุมฯ ระดับนานาชาติ")
                 publication.publishType = "InternationalConference"
             if (publication.publishType_raw == "วารสารฯ ระดับชาติ")

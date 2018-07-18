@@ -98,6 +98,10 @@ module.exports = {
             thesis.outlineTestDate = Validate.scrappingCleanUp(scrapingData.outlineTestDate)
             thesis.thesisTestDate = Validate.scrappingCleanUp(scrapingData.thesisTestDate)
             thesis.gradutionDate = Validate.scrappingCleanUp(scrapingData.gradutionDate)
+            thesis.gradutionProduct = []
+            thesis.gradutionProduct.push(Validate.scrappingCleanUp(scrapingData.gradutionProduct1))
+            thesis.gradutionProduct.push(Validate.scrappingCleanUp(scrapingData.gradutionProduct2))
+            thesis.gradutionProduct.push(Validate.scrappingCleanUp(scrapingData.gradutionProduct3))
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(thesis.researcherPersonalID, this);
@@ -413,14 +417,8 @@ function checkThesisStatus(thesisData) {
         status = "ผ่านการสอบวิทยานิพนธ์แล้ว >> รอการจบการศึกษา"
     else if (thesisData.outlineTestDate != "")
         status = "ผ่านการสอบเค้าโครงแล้ว >> รอสอบวิทยานิพนธ์"
-    else if (thesisData.thesisNameAnnounceDate != "")
-        status = "ผ่านการเสนอหัวข้อแล้ว >> รอการประกาศหัวข้อ"
-    else if (thesisData.thesisNameAssignDate != "")
-        status = "ผ่านการแต่งตั้งอาจารย์ที่ปรึกษาแล้ว >> รอการเสนอหัวข้อ"
-    else if (thesisData.professorAssignDate != "")
-        status = "รอการแต่งตั้งอาจารย์ที่ปรึกษา"
     else
-        status = "N/A"
+        status = "รอการสอบเค้าโครง"
     return status
 }
 

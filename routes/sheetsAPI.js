@@ -181,6 +181,12 @@ async function scrapingResearcher(rows, callback) {
       personalSite: validateValueInRow(rows[i], 58),
       insignia1: validateValueInRow(rows[i], 59),
       insignia2: validateValueInRow(rows[i], 60),
+      totalCitationNotSelf: validateValueInRow(rows[i], 61),
+      citation2014: validateValueInRow(rows[i], 62),
+      citation2015: validateValueInRow(rows[i], 63),
+      citation2016: validateValueInRow(rows[i], 64),
+      citation2017: validateValueInRow(rows[i], 65),
+      citation2018: validateValueInRow(rows[i], 66),
       researcherPic: null
     }
     Researcher_Control.newResearcher_fromScrap(scrapingData, function () {
@@ -278,7 +284,7 @@ async function scrapingResearchFund(rows, callback) {
 
       scholarshipYear: validateValueInRow(rows[i], 7),
       scholarshipStart: validateValueInRow(rows[i], 9),
-      scholarshipEnd: null,
+      scholarshipPeriod: validateValueInRow(rows[i], 8),
       progress6MonthDate: validateValueInRow(rows[i], 10),
       progress6MonthPercent: validateValueInRow(rows[i], 11),
       progress12MonthDate: validateValueInRow(rows[i], 12),
@@ -337,10 +343,11 @@ async function scrapingReward(rows, callback) {
       researcherPersonalID: validateValueInRow(rows[i], 1),
 
       rewardName: validateValueInRow(rows[i], 4),
-      studentName: validateValueInRow(rows[i], 5),
-      rewardYear: validateValueInRow(rows[i], 6),
-      rewardDate: validateValueInRow(rows[i], 7),
-      rewardRank: validateValueInRow(rows[i], 8)
+      rewardFrom: validateValueInRow(rows[i], 5),
+      studentName: validateValueInRow(rows[i], 6),
+      rewardYear: validateValueInRow(rows[i], 7),
+      rewardDate: validateValueInRow(rows[i], 8),
+      rewardRank: validateValueInRow(rows[i], 9)
     }
     Reward_Control.newReward_fromScrap(scrapingData, function () {
       j++
@@ -441,10 +448,13 @@ async function scrapingThesis(rows, callback) {
       professorAssignDate: validateValueInRow(rows[i], 19),
       thesisNameAssignDate: validateValueInRow(rows[i], 20),
       thesisNameAnnounceDate: validateValueInRow(rows[i], 21),
-      qualifyTestDate: validateValueInRow(rows[i], 22),
-      outlineTestDate: validateValueInRow(rows[i], 23),
+      qualifyTestDate: validateValueInRow(rows[i], 23),
+      outlineTestDate: validateValueInRow(rows[i], 22),
       thesisTestDate: validateValueInRow(rows[i], 24),
-      gradutionDate: validateValueInRow(rows[i], 25)
+      gradutionDate: validateValueInRow(rows[i], 25),
+      gradutionProduct1: validateValueInRow(rows[i], 26),
+      gradutionProduct2: validateValueInRow(rows[i], 27),
+      gradutionProduct3: validateValueInRow(rows[i], 28),
     }
     Thesis_Control.newThesis_fromScrap(scrapingData, function () {
       j++
