@@ -437,7 +437,8 @@ module.exports = {
             getFullResearcherPreview(researcher[i], function (a) {
                 //console.log("a >> " + JSON.stringify(a))
                 //console.log("#" + i + " completed")
-                forCallback.push(a);
+                forCallback[i] = a;
+                
                 j++
                 if (j == researcher.length) {
                     console.log("ALL SET")
