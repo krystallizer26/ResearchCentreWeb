@@ -131,6 +131,13 @@ module.exports = {
             researcher.personalSite = scrapingData.personalSite
             researcher.insignia1 = scrapingData.insignia1
             researcher.insignia2 = scrapingData.insignia2
+            
+            researcher.totalCitationNotSelf = scrapingData.totalCitationNotSelf
+            researcher.citation2014 = scrapingData.citation2014
+            researcher.citation2015 = scrapingData.citation2015
+            researcher.citation2016 = scrapingData.citation2016
+            researcher.citation2017 = scrapingData.citation2017
+            researcher.citation2018 = scrapingData.citation2018
 
             researcher.researcherPic = scrapingData.researcherPic
 

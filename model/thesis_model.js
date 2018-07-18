@@ -22,7 +22,8 @@ var Thesis_Schema = new Schema({
     qualifyTestDate: { type: String, default: null },
     outlineTestDate: { type: String, default: null },
     thesisTestDate: { type: String, default: null },
-    gradutionDate: { type: String, default: null }
+    gradutionDate: { type: String, default: null },
+    gradutionProduct: { type: [String], default: null },
 });
 
 module.exports = mongoose.model('Thesis', Thesis_Schema);

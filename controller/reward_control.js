@@ -65,6 +65,7 @@ module.exports = {
             reward.researcherPersonalID = Validate.scrappingCleanUp(scrapingData.researcherPersonalID)
             reward.rewardYear = Validate.scrappingCleanUp(scrapingData.rewardYear)
             reward.rewardName = Validate.scrappingCleanUp(scrapingData.rewardName)
+            reward.rewardFrom = Validate.scrappingCleanUp(scrapingData.rewardFrom)
             reward.studentName = Validate.scrappingCleanUp(scrapingData.studentName)
             reward.rewardDate = Validate.scrappingCleanUp(scrapingData.rewardDate)
             reward.rewardRank = Validate.scrappingCleanUp(scrapingData.rewardRank)
@@ -99,6 +100,7 @@ module.exports = {
             "_id": true,
             "researcherId": true,
             "rewardName": true,
+            "rewardFrom": true,
             "rewardYear": true,
             "rewardDate": true,
             "rewardRank": true
@@ -129,6 +131,7 @@ module.exports = {
             "_id": true,
             "researcherId": true,
             "rewardName": true,
+            "rewardFrom": true,
             "rewardYear": true,
             "rewardDate": true,
             "rewardRank": true

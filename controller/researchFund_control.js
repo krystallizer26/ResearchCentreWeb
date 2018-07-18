@@ -67,7 +67,7 @@ module.exports = {
             researchFund.fundSource = Validate.scrappingCleanUp(scrapingData.fundSource)
             researchFund.scholarshipYear = Validate.scrappingCleanUp(scrapingData.scholarshipYear)
             researchFund.scholarshipStart = Validate.scrappingCleanUp(scrapingData.scholarshipStart)
-            researchFund.scholarshipEnd = Validate.scrappingCleanUp(scrapingData.scholarshipEnd)
+            researchFund.scholarshipPeriod = Validate.scrappingCleanUp(scrapingData.scholarshipPeriod)
             researchFund.progress6MonthDate = Validate.scrappingCleanUp(scrapingData.progress6MonthDate)
             researchFund.progress6MonthPercent = Validate.scrappingCleanUp(scrapingData.progress6MonthPercent)
             researchFund.progress12MonthDate = Validate.scrappingCleanUp(scrapingData.progress12MonthDate)
@@ -185,7 +185,7 @@ module.exports = {
             }
         });
     },
-
+    
     getAllResearchFundPreview: function (callback) {
         ResearchFund.find({}, {
             "_id": true,
@@ -193,6 +193,7 @@ module.exports = {
             "researchName": true,
             "fundSource": true,
             "fundSource2": true,
+            "scholarshipPeriod": true,
             "scholarshipYear": true
         }, function (error, functionCallback) {
             if (error) {
@@ -223,6 +224,7 @@ module.exports = {
             "researchName": true,
             "fundSource": true,
             "fundSource2": true,
+            "scholarshipPeriod": true,
             "scholarshipYear": true
         }, { sort: { "scholarshipYear": -1 }, limit: limitNum }
             , function (error, functionCallback) {
