@@ -14,7 +14,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
         
        <div ng-repeat="inte in intellectualProperty">
             <div class="row">
-              <div class= "dccol-sm-1"><div class="icon-badge" style="font-size: 18px;color: #dfdfdf;"></div></div>
+              <div class= "dccol-sm-1"><div class="icon-badge" style="font-size: 18px;color: #6a6a6a;"></div></div>
               <div class= "col-sm-10"><b>{{inte.intPropertyCode}}</b>  {{inte.intPropertyName}}<strong> {{inte.intPropertyRegisterDate}}</strong></div>
             </div>
             <hr/>
@@ -33,32 +33,34 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
     <span ng-repeat="inte in intellectualProperty">
     <div>
       <div class="row">
-        <div class= "col-sm-4"><div class="icon-pencil" style="font-size: 18px;color: #dfdfdf;"> <span> ชื่อสิ่งประดิษฐ์ / Name: </span></div>  </div>
+        <div class= "col-sm-4"><div class="icon-pencil" style="font-size: 18px;color: #6a6a6a;"> <span> ชื่อสิ่งประดิษฐ์ / Name: </span></div>  </div>
         <div class= "col-sm-6">{{inte.intPropertyName}}</div>
       </div>
       <hr style="margin-left: 33%;">
     </div>
     <div>
       <div class="row">
-        <div class= "col-sm-4"><div class="icon-calendar" style="font-size: 18px;color: #dfdfdf;"> <span> วันที่ได้รับการจดทะเบียน / Date of registration: </span></div>  </div>
-        <div class= "col-sm-6">{{inte.intPropertyRegisterDate}}</div>
-      </div>
-      <hr style="margin-left: 33%;">
-    </div>
-    <div>
-      <div class="row">
-        <div class= "col-sm-4"><div class="icon-drawer" style="font-size: 18px;color: #dfdfdf;"><span> เลขที่คำขอ / No.: </span></div></div>
+        <div class= "col-sm-4"><div class="icon-drawer" style="font-size: 18px;color: #6a6a6a;"><span> เลขที่คำขอ / No.: </span></div></div>
         <div class= "col-sm-6">{{inte.intPropertyCode}}</div>
       </div>
       <hr style="margin-left: 33%;">
     </div>
     <div>
       <div class="row">
-        <div class= "col-sm-4"><div class="icon-drawer" style="font-size: 18px;color: #dfdfdf;"><span>  ทะเบียนสิทธิบัตร / Patent application: </span></div></div>
+        <div class= "col-sm-4"><div class="icon-drawer" style="font-size: 18px;color: #6a6a6a;"><span>  ทะเบียนสิทธิบัตร / Patent application: </span></div></div>
         <div class= "col-sm-6">{{inte.licenseCode}}</div>
       </div>
       <hr style="margin-left: 33%;">
     </div>
+    <div>
+      <div class="row">
+        <div class= "col-sm-4"><div class="icon-calendar" style="font-size: 18px;color: #6a6a6a;"> <span> วันที่ได้รับการจดทะเบียน / Date of registration: </span></div>  </div>
+        <div class= "col-sm-6">{{inte.intPropertyRegisterDate}}</div>
+      </div>
+      <hr style="margin-left: 33%;">
+    </div>
+  
+    
       <hr style="">
     </span>
       </div>

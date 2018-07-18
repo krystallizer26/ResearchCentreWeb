@@ -16,7 +16,12 @@ var session = require('express-session');
 
 var app = express();
 
-mongoose.connect(config.dbUrl, function (err) {
+const option = {
+    socketTimeoutMS: 30000,
+    keepAlive: true,
+    reconnectTries: 30000
+};
+mongoose.connect(config.dbUrl,option, function (err) {
     console.log("Connecting Database...")
     if (err) {
         console.log("********************************!!! WARNING plzzz !!!*********************************");

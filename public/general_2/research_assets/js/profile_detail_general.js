@@ -31,6 +31,11 @@ app.controller('profileDetailGeneralCtrl', function ($scope, $http, global_servi
     $('#tab6').addClass('active');
     $state.go("profileDetail.thesistitle");
   }
+  $scope.gotoTraing = function () {
+    $('li.active').removeClass('active');
+    $('#tab7').addClass('active');
+    $state.go("profileDetail.training");
+  }
 
   var researcher_id = global_service.get_research_id(researcher_id);
   //console.log(researcher_id);
