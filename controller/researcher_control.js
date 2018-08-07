@@ -536,7 +536,7 @@ function getFullResearcher(num, input, callback) {
 }
 
 
-function getFullResearcherPreview(num,input, callback) {
+function getFullResearcherPreview(num, input, callback) {
     let researcherData = JSON.parse(JSON.stringify(input));
     //console.log("getFullResearcherData for " + researcherData.researcherName_TH)
     flow.exec(
@@ -572,11 +572,11 @@ function getFullResearcherPreview(num,input, callback) {
             // forCallback_getFullResearcherPreview.push(researcherData)
         }, function (code, err, functionCallback) {
             console.log("#" + num + " Publication_Control back <3")
-            
+
             if (functionCallback) {
-                console.log("#" + num + " constructing pub <3 @length="+functionCallback.length)
+                console.log("#" + num + " constructing pub <3 @length=" + functionCallback.length)
                 let j = 0
-                for (let i = 0; i < functionCallback.length; i++) {
+                for (let i = 0; i < functionCallback.length || functionCallback.length == 0; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
                     j++
                     if (j >= functionCallback.length) {
@@ -594,7 +594,7 @@ function getFullResearcherPreview(num,input, callback) {
             console.log("#" + num + " Thesis_Control back <3")
             if (functionCallback) {
                 let j = 0
-                for (let i = 0; i < functionCallback.length; i++) {
+                for (let i = 0; i < functionCallback.length || functionCallback.length == 0; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].thesisName_TH + "," + functionCallback[i].thesisName_EN + " / "
                     j++
                     if (j >= functionCallback.length) {
@@ -610,7 +610,7 @@ function getFullResearcherPreview(num,input, callback) {
             console.log("#" + num + " IntellectualProperty_Control back <3")
             if (functionCallback) {
                 let j = 0
-                for (let i = 0; i < functionCallback.length; i++) {
+                for (let i = 0; i < functionCallback.length || functionCallback.length == 0; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].intPropertyName + " / "
                     j++
                     if (j >= functionCallback.length) {
@@ -626,7 +626,7 @@ function getFullResearcherPreview(num,input, callback) {
             console.log("#" + num + " Reward_Control back <3")
             if (functionCallback) {
                 let j = 0
-                for (let i = 0; i < functionCallback.length; i++) {
+                for (let i = 0; i < functionCallback.length || functionCallback.length == 0; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].rewardName + " / "
                     j++
                     if (j >= functionCallback.length) {
