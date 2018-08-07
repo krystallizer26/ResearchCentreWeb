@@ -1,42 +1,42 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 // DATABASE SETUP
-var ObjectId = require('mongodb').ObjectId;
+let ObjectId = require('mongodb').ObjectId;
 
 
 //มิดเดิ้ลแว อยุ่ข้างบนเสมอ ก่อน get ไว้ทำ log  // เฉพาะ ที่ accessเข้าไฟล์นี้  ดูจากต้นทาง app.ut(/???,....);
 // middleware to use for all requests
 
 //Must use
-var flow = require('../services/flow.js')
-var ReturnCode = require('../model/returnCode.js');
-var Validate = require("../controller/validation_controller.js");
-var Return_Control = require('../controller/return_control.js');
+let flow = require('../services/flow.js')
+let ReturnCode = require('../model/returnCode.js');
+let Validate = require("../controller/validation_controller.js");
+let Return_Control = require('../controller/return_control.js');
 
 //Model
-var DoctoryTeachingDepartment = require('../model/doctoryTeachingDepartment_model.js');
+let DoctoryTeachingDepartment = require('../model/doctoryTeachingDepartment_model.js');
 
 //Controller
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
 router.post('/newDoctoryTeachingDepartment', function (request, response) {
-    var methodCode = "31";
+    let methodCode = "31";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.doctoryTeachingDepartmentName_TH);
     requiredData.push(request.body.doctoryTeachingDepartmentName_EN);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
             function () {
-                var doctoryTeachingDepartment = new DoctoryTeachingDepartment();
+                let doctoryTeachingDepartment = new DoctoryTeachingDepartment();
                 doctoryTeachingDepartment.doctoryTeachingDepartmentName_TH = request.body.doctoryTeachingDepartmentName_TH;
                 doctoryTeachingDepartment.doctoryTeachingDepartmentName_EN = request.body.doctoryTeachingDepartmentName_EN;
                 DoctoryTeachingDepartment_Control.newDoctoryTeachingDepartment(doctoryTeachingDepartment, this);
@@ -53,25 +53,25 @@ router.post('/newDoctoryTeachingDepartment', function (request, response) {
 });
 
 router.post('/editDoctoryTeachingDepartment/', function (request, response) {
-    var methodCode = "32";
+    let methodCode = "32";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.doctoryTeachingDepartmentId);
     requiredData.push(request.body.doctoryTeachingDepartmentName_TH);
     requiredData.push(request.body.doctoryTeachingDepartmentName_EN);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.doctoryTeachingDepartmentId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -84,7 +84,7 @@ router.post('/editDoctoryTeachingDepartment/', function (request, response) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    var doctoryTeachingDepartment = new DoctoryTeachingDepartment();
+                    let doctoryTeachingDepartment = new DoctoryTeachingDepartment();
                     doctoryTeachingDepartment.doctoryTeachingDepartmentName_TH = request.body.doctoryTeachingDepartmentName_TH;
                     doctoryTeachingDepartment.doctoryTeachingDepartmentName_EN = request.body.doctoryTeachingDepartmentName_EN;
                     DoctoryTeachingDepartment_Control.updateDoctoryTeachingDepartmentByID(new ObjectId(request.body.doctoryTeachingDepartmentId), doctoryTeachingDepartment, this);
@@ -102,7 +102,7 @@ router.post('/editDoctoryTeachingDepartment/', function (request, response) {
 });
 
 router.post('/getAllDoctoryTeachingDepartment/', function (request, response) {
-    var methodCode = "33";
+    let methodCode = "33";
 
     flow.exec(
         function () {
@@ -120,23 +120,23 @@ router.post('/getAllDoctoryTeachingDepartment/', function (request, response) {
 });
 
 router.post('/getDoctoryTeachingDepartmentfromID/', function (request, response) {
-    var methodCode = "34";
+    let methodCode = "34";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.doctoryTeachingDepartmentId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.doctoryTeachingDepartmentId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -157,23 +157,23 @@ router.post('/getDoctoryTeachingDepartmentfromID/', function (request, response)
 });
 
 router.post('/deleteDoctoryTeachingDepartment/', function (request, response) {
-    var methodCode = "35";
+    let methodCode = "35";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.doctoryTeachingDepartmentId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.doctoryTeachingDepartmentId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }

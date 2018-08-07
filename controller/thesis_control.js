@@ -1,17 +1,17 @@
-var flow = require('../services/flow.js')
-var ObjectId = require('mongodb').ObjectId;
+let flow = require('../services/flow.js')
+let ObjectId = require('mongodb').ObjectId;
 
-var Thesis = require('../model/thesis_model.js');
+let Thesis = require('../model/thesis_model.js');
 
-var Validate = require("../controller/validation_controller.js");
-var Researcher_Control = require("../controller/researcher_control.js");
-var Position_Control = require("../controller/position_control.js");
-var Keyword_Control = require("../controller/keyword_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var Department_Control = require("../controller/department_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Validate = require("../controller/validation_controller.js");
+let Researcher_Control = require("../controller/researcher_control.js");
+let Position_Control = require("../controller/position_control.js");
+let Keyword_Control = require("../controller/keyword_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let Department_Control = require("../controller/department_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
 module.exports = {
     newThesis: function (thesis, callback) {
@@ -48,7 +48,7 @@ module.exports = {
                 thesis.save(function (error, saveResponse) {
                     if (error) {
                         let errCode = "772";
-                        var alert = "Saving Thesis fail, Error: " + error.message + "@" + thesis.thesisName_TH;
+                        let alert = "Saving Thesis fail, Error: " + error.message + "@" + thesis.thesisName_TH;
                         console.log("ERROR Code: " + errCode + " " + alert);
                         callback(errCode, alert, null);
                     }
@@ -63,14 +63,14 @@ module.exports = {
         let j = 0
         let scrapingData = JSON.parse(JSON.stringify(publication_bulk))
 
-        var thesis = new Thesis();
+        let thesis = new Thesis();
 
-        var requiredData = [];
+        let requiredData = [];
         requiredData.push(scrapingData.researcherName);
-        var requiredReady = Validate.requiredData_Check(requiredData);
+        let requiredReady = Validate.requiredData_Check(requiredData);
 
         if (!requiredReady) {
-            var alert = "Input Not Valid, check if some data is required."
+            let alert = "Input Not Valid, check if some data is required."
             console.log(alert);
             callback("New thesis was saved successfully")
         }
@@ -103,7 +103,7 @@ module.exports = {
             thesis.gradutionProduct.push(Validate.scrappingCleanUp(scrapingData.gradutionProduct2))
             thesis.gradutionProduct.push(Validate.scrappingCleanUp(scrapingData.gradutionProduct3))
 
-            var Researcher_Control = require("../controller/researcher_control.js");
+            let Researcher_Control = require("../controller/researcher_control.js");
 
             flow.exec(
                 function () {
@@ -136,7 +136,7 @@ module.exports = {
                     thesis.save(function (error, saveResponse) {
                         if (error) {
                             let errCode = "772";
-                            var alert = "Saving Thesis fail, Error: " + error.message + "@" + thesis.thesisName_TH;
+                            let alert = "Saving Thesis fail, Error: " + error.message + "@" + thesis.thesisName_TH;
                             console.log("ERROR Code: " + errCode + " " + alert);
                         }
                     });
@@ -167,19 +167,19 @@ module.exports = {
         }, function (error, functionCallback) {
             if (error) {
                 let errCode = "781";
-                var alert = "Error in getAllThesisPreview , Error : " + error.message;
+                let alert = "Error in getAllThesisPreview , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
             else if (functionCallback.length > 0) {
                 let errCode = "782";
-                var alert = "Get All Thesis Completed! ";
+                let alert = "Get All Thesis Completed! ";
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "783";
-                var alert = "No Thesis Founded";
+                let alert = "No Thesis Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -208,19 +208,19 @@ module.exports = {
             , function (error, functionCallback) {
                 if (error) {
                     let errCode = "791";
-                    var alert = "Error in getAllThesisPreviewByResearcherId , Error : " + error.message;
+                    let alert = "Error in getAllThesisPreviewByResearcherId , Error : " + error.message;
                     console.log("ERROR Code: " + errCode + " " + alert);
                     callback(errCode, alert, null)
                 }
                 else if (functionCallback.length > 0) {
                     let errCode = "792";
-                    var alert = "Get All Thesis Completed! ";
+                    let alert = "Get All Thesis Completed! ";
                     //console.log(alert);
                     callback(errCode, null, functionCallback)
                 }
                 else {
                     let errCode = "793";
-                    var alert = "No Thesis Founded";
+                    let alert = "No Thesis Founded";
                     //console.log("ERROR Code: " + errCode + " " + alert);
                     callback(errCode, alert, null)
                 }
@@ -231,7 +231,7 @@ module.exports = {
         Thesis.findOne({ "_id": thesisId }, function (error, functionCallback) {
             if (error) {
                 let errCode = "801";
-                var alert = "Error in finding Thesis with _id: " + thesisId + "\nError: " + error.message;
+                let alert = "Error in finding Thesis with _id: " + thesisId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -240,7 +240,7 @@ module.exports = {
             }
             else {
                 let errCode = "803";
-                var alert = "Thesis with _id: " + thesisId + " not found";
+                let alert = "Thesis with _id: " + thesisId + " not found";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, functionCallback)
             }
@@ -251,7 +251,7 @@ module.exports = {
         Thesis.remove({ "_id": thesisId }, function (error, deleteCallback) {
             if (error) {
                 let errCode = "811";
-                var alert = "Error in deleting Thesis with _id " + thesisId + " Error: " + error.message;
+                let alert = "Error in deleting Thesis with _id " + thesisId + " Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -265,7 +265,7 @@ module.exports = {
         Thesis.remove({}, function (error, deleteCallback) {
             if (error) {
                 let errCode = "821";
-                var alert = "Error in wiping Thesis Error: " + error.message;
+                let alert = "Error in wiping Thesis Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -313,12 +313,12 @@ module.exports = {
 
 //---------------------------------------------
 
-var Department_Control = require("../controller/department_control.js");
-var Position_Control = require("../controller/position_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Department_Control = require("../controller/department_control.js");
+let Position_Control = require("../controller/position_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
 function getFullThesisPreview(input, callback) {
     let thesisData = JSON.parse(JSON.stringify(input));

@@ -14,7 +14,7 @@ const Nightmare = require('nightmare');
 
 require('nightmare-window-manager')(Nightmare);
 
-var nightmare = Nightmare({
+let nightmare = Nightmare({
     show: true,
     waitTimeout: 50000, 
     gotoTimeout: 50000, // in mssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
@@ -30,15 +30,15 @@ function bot_gathering(data,callback)
   console.log("bot_gathering()  = " + JSON.stringify(data));
   let publictation=0
   let citetation =0
-var vo = require('vo');
+let vo = require('vo');
 
 vo(function * () {
 
-var enter_code =[];
-var code = data.securecode;
+let enter_code =[];
+let code = data.securecode;
 
 
-  var title = yield nightmare  .windowManager()
+  let title = yield nightmare  .windowManager()
   .goto('https://www.scopus.com/search/form.uri?display=authorLookup&clear=t&origin=searchbasic&txGid=ddab0b1e35c0e69a2fb5b0a117d67d49')
   .waitWindowLoad()
 
@@ -49,7 +49,7 @@ var code = data.securecode;
     
      publictation =yield nightmare                                                                                                                                                                         
     .evaluate(function() {                                                                                                                                                                         
-        var buf = document.querySelector("#resultsDocumentsCol1 > a").innerHTML;                                                                                                                                
+        let buf = document.querySelector("#resultsDocumentsCol1 > a").innerHTML;                                                                                                                                
         return buf;                                                                                                                                                                      
     })
     
@@ -59,7 +59,7 @@ var code = data.securecode;
 
      citetation =yield nightmare                                                                                                                                                                         
     .evaluate(function() {                                                                                                                                                                         
-        var buf = document.querySelector("#totalCiteCount").innerHTML;                                                                                                                                
+        let buf = document.querySelector("#totalCiteCount").innerHTML;                                                                                                                                
         return buf;                                                                                                                                                                      
     })
     console.log('citetation = '+citetation);
@@ -85,13 +85,13 @@ var code = data.securecode;
 
 
     
-    var form = {
+    let form = {
         researcherId : data._id,
         publicationTotal :publictation.trim(),
         citationTotal : citetation.trim()
     }
-    var formData = querystring.stringify(form);
-    var contentLength = formData.length;
+    let formData = querystring.stringify(form);
+    let contentLength = formData.length;
     request({
       header : {
         'User-Agent':       'Super Agent/0.0.1',

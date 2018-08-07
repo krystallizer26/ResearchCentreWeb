@@ -1,42 +1,42 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 // DATABASE SETUP
-var ObjectId = require('mongodb').ObjectId;
+let ObjectId = require('mongodb').ObjectId;
 
 
 //มิดเดิ้ลแว อยุ่ข้างบนเสมอ ก่อน get ไว้ทำ log  // เฉพาะ ที่ accessเข้าไฟล์นี้  ดูจากต้นทาง app.ut(/???,....);
 // middleware to use for all requests
 
 //Must use
-var flow = require('../services/flow.js')
-var ReturnCode = require('../model/returnCode.js');
-var Validate = require("../controller/validation_controller.js");
-var Return_Control = require('../controller/return_control.js');
+let flow = require('../services/flow.js')
+let ReturnCode = require('../model/returnCode.js');
+let Validate = require("../controller/validation_controller.js");
+let Return_Control = require('../controller/return_control.js');
 
 //Model
-var Department = require('../model/department_model.js');
+let Department = require('../model/department_model.js');
 
 //Controller
-var Department_Control = require("../controller/department_control.js");
+let Department_Control = require("../controller/department_control.js");
 
 router.post('/newDepartment', function (request, response) {
-    var methodCode = "01";
+    let methodCode = "01";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.departmentName_TH);
     requiredData.push(request.body.departmentName_EN);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
             function () {
-                var department = new Department();
+                let department = new Department();
                 department.departmentName_TH = request.body.departmentName_TH;
                 department.departmentName_EN = request.body.departmentName_EN;
                 Department_Control.newDepartment(department, this);
@@ -53,25 +53,25 @@ router.post('/newDepartment', function (request, response) {
 });
 
 router.post('/editDepartment/', function (request, response) {
-    var methodCode = "02";
+    let methodCode = "02";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.departmentId);
     requiredData.push(request.body.departmentName_TH);
     requiredData.push(request.body.departmentName_EN);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.departmentId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -84,7 +84,7 @@ router.post('/editDepartment/', function (request, response) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    var department = new Department();
+                    let department = new Department();
                     department.departmentName_TH = request.body.departmentName_TH;
                     department.departmentName_EN = request.body.departmentName_EN;
                     Department_Control.updateDepartmentByID(new ObjectId(request.body.departmentId), department, this);
@@ -102,7 +102,7 @@ router.post('/editDepartment/', function (request, response) {
 });
 
 router.post('/getAllDepartment/', function (request, response) {
-    var methodCode = "03";
+    let methodCode = "03";
 
     flow.exec(
         function () {
@@ -120,23 +120,23 @@ router.post('/getAllDepartment/', function (request, response) {
 });
 
 router.post('/getDepartmentfromID/', function (request, response) {
-    var methodCode = "04";
+    let methodCode = "04";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.departmentId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.departmentId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -157,23 +157,23 @@ router.post('/getDepartmentfromID/', function (request, response) {
 });
 
 router.post('/deleteDepartment/', function (request, response) {
-    var methodCode = "05";
+    let methodCode = "05";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.departmentId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.departmentId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }

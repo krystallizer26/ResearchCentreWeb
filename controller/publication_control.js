@@ -1,9 +1,9 @@
-var flow = require('../services/flow.js')
-var ObjectId = require('mongodb').ObjectId;
+let flow = require('../services/flow.js')
+let ObjectId = require('mongodb').ObjectId;
 
-var Publication = require('../model/publication_model.js');
-var Researcher_Control = require("../controller/researcher_control.js");
-var Validate = require("../controller/validation_controller.js");
+let Publication = require('../model/publication_model.js');
+let Researcher_Control = require("../controller/researcher_control.js");
+let Validate = require("../controller/validation_controller.js");
 
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
             console.log("Saving Publication >> COMPLETED ");
             if (error) {
                 let errCode = "441";
-                var alert = "Saving Publication fail, Error: " + error.message;
+                let alert = "Saving Publication fail, Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null);
             }
@@ -26,15 +26,15 @@ module.exports = {
         let j = 0
         let scrapingData = JSON.parse(JSON.stringify(publication_bulk))
 
-        var publication = new Publication();
-        var requiredData = [];
+        let publication = new Publication();
+        let requiredData = [];
         requiredData.push(scrapingData.publicationName);
         requiredData.push(scrapingData.researcherPersonalID);
         requiredData.push(scrapingData.researcherName);
-        var requiredReady = Validate.requiredData_Check(requiredData);
+        let requiredReady = Validate.requiredData_Check(requiredData);
 
         if (!requiredReady) {
-            var alert = "Input Not Valid, check if some data is required. >> publicationName : " + scrapingData.publicationName + " >> researcherPersonalID : " + scrapingData.researcherPersonalID + " >> researcherName : " + scrapingData.researcherName
+            let alert = "Input Not Valid, check if some data is required. >> publicationName : " + scrapingData.publicationName + " >> researcherPersonalID : " + scrapingData.researcherPersonalID + " >> researcherName : " + scrapingData.researcherName
             console.log(alert);
             callback("New Publications was saved successfully")
         }
@@ -72,7 +72,7 @@ module.exports = {
             publication.graduationYear = Validate.scrappingCleanUp(scrapingData.graduationYear)
             publication.publicationRaw = Validate.scrappingCleanUp(scrapingData.doi)
 
-            var Researcher_Control = require("../controller/researcher_control.js");
+            let Researcher_Control = require("../controller/researcher_control.js");
 
             flow.exec(
                 function () {
@@ -113,7 +113,7 @@ module.exports = {
                     publication.save(function (error, saveResponse) {
                         if (error) {
                             let errCode = "582";
-                            var alert = "Saving Publication fail, Error: " + error.message + "@" + publication.publicationName;
+                            let alert = "Saving Publication fail, Error: " + error.message + "@" + publication.publicationName;
                             console.log("ERROR Code: " + errCode + " " + alert);
                         }
                     });
@@ -124,8 +124,8 @@ module.exports = {
 
     },
     updatePublicationByID: function (publicationId, publication, callback) {
-        var myquery = { "_id": publicationId };
-        var newvalues = {
+        let myquery = { "_id": publicationId };
+        let newvalues = {
             $set: {
                 "researcherId": publication.researcherId,
                 "publicationName": publication.publicationName,
@@ -150,7 +150,7 @@ module.exports = {
         Publication.updateOne(myquery, newvalues, function (error, updateResponse) {
             if (error) {
                 let errCode = "451";
-                var alert = "Error in updating Publication with _id: " + publicationId + "\nError: " + error.message;
+                let alert = "Error in updating Publication with _id: " + publicationId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -162,7 +162,7 @@ module.exports = {
         Publication.findOne({ "_id": publicationId }, function (error, functionCallback) {
             if (error) {
                 let errCode = "461";
-                var alert = "Error in finding Publication with _id: " + publicationId + "\nError: " + error.message;
+                let alert = "Error in finding Publication with _id: " + publicationId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -171,7 +171,7 @@ module.exports = {
             }
             else {
                 let errCode = "463";
-                var alert = "Publication with _id: " + publicationId + " not found";
+                let alert = "Publication with _id: " + publicationId + " not found";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, functionCallback)
             }
@@ -181,19 +181,19 @@ module.exports = {
         Publication.find({}, {}, function (error, functionCallback) {
             if (error) {
                 let errCode = "471";
-                var alert = "Error in getAllPublication , Error : " + error.message;
+                let alert = "Error in getAllPublication , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
             else if (functionCallback.length > 0) {
                 let errCode = "472";
-                var alert = "Get All Publication Completed! " + JSON.stringify(functionCallback);
+                let alert = "Get All Publication Completed! " + JSON.stringify(functionCallback);
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "473";
-                var alert = "No Publication Founded";
+                let alert = "No Publication Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -203,7 +203,7 @@ module.exports = {
         Publication.remove({ "_id": publicationId }, function (error, newsCallback) {
             if (error) {
                 let errCode = "481";
-                var alert = "Error in deleting Publication with _id " + publicationId + " Error: " + error.message;
+                let alert = "Error in deleting Publication with _id " + publicationId + " Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -217,7 +217,7 @@ module.exports = {
         Publication.remove({}, function (error, deleteCallback) {
             if (error) {
                 let errCode = "751";
-                var alert = "Error in wiping Reward Error: " + error.message;
+                let alert = "Error in wiping Reward Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -241,19 +241,19 @@ module.exports = {
         }, function (error, functionCallback) {
             if (error) {
                 let errCode = "591";
-                var alert = "Error in getAllPublicationPreview , Error : " + error.message;
+                let alert = "Error in getAllPublicationPreview , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
             else if (functionCallback.length > 0) {
                 let errCode = "592";
-                var alert = "Get All Publication Completed! ";
+                let alert = "Get All Publication Completed! ";
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "593";
-                var alert = "No Researcher Founded";
+                let alert = "No Researcher Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -274,19 +274,19 @@ module.exports = {
             , function (error, functionCallback) {
                 if (error) {
                     let errCode = "611";
-                    var alert = "Error in getAllPublicationPreview , Error : " + error.message;
+                    let alert = "Error in getAllPublicationPreview , Error : " + error.message;
                     console.log("ERROR Code: " + errCode + " " + alert);
                     callback(errCode, alert, null)
                 }
                 else if (functionCallback) {
                     let errCode = "612";
-                    var alert = "Get All Publication Completed! ";
+                    let alert = "Get All Publication Completed! ";
                     //console.log(alert);
                     callback(errCode, null, functionCallback)
                 }
                 else {
                     let errCode = "613";
-                    var alert = "No Researcher Founded";
+                    let alert = "No Researcher Founded";
                     console.log("ERROR Code: " + errCode + " " + alert);
                     callback(errCode, alert, null)
                 }
@@ -330,12 +330,12 @@ module.exports = {
 
 //---------------------------------------------
 
-var Department_Control = require("../controller/department_control.js");
-var Position_Control = require("../controller/position_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Department_Control = require("../controller/department_control.js");
+let Position_Control = require("../controller/position_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
 function getFullPublicationPreview(input, callback) {
     let publicationData = JSON.parse(JSON.stringify(input));
@@ -343,7 +343,7 @@ function getFullPublicationPreview(input, callback) {
     let academicLevelId_tmp = null;
     let positionId_tmp = null;
     let departmentId_tmp = null;
-    var Researcher_Control = require("../controller/researcher_control.js");
+    let Researcher_Control = require("../controller/researcher_control.js");
     flow.exec(
         function () {
             console.log("(publicationData.researcherId for " + new ObjectId(publicationData.researcherId))
@@ -403,7 +403,7 @@ function getFullPublication(input, callback) {
     let academicLevelId_tmp = null;
     let positionId_tmp = null;
     let departmentId_tmp = null;
-    var Researcher_Control = require("../controller/researcher_control.js");
+    let Researcher_Control = require("../controller/researcher_control.js");
 
     flow.exec(
         function () {

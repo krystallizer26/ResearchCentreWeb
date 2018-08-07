@@ -1,48 +1,48 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 // DATABASE SETUP
-var ObjectId = require('mongodb').ObjectId;
+let ObjectId = require('mongodb').ObjectId;
 
 //Must use
-var flow = require('../services/flow.js')
-var ReturnCode = require('../model/returnCode.js');
-var Validate = require("../controller/validation_controller.js");
-var Return_Control = require('../controller/return_control.js');
+let flow = require('../services/flow.js')
+let ReturnCode = require('../model/returnCode.js');
+let Validate = require("../controller/validation_controller.js");
+let Return_Control = require('../controller/return_control.js');
 
 //Model
-var ResearchFund = require('../model/researchFund_model.js');
+let ResearchFund = require('../model/researchFund_model.js');
 
 //Controller
-var Researcher_Control = require("../controller/researcher_control.js");
-var Position_Control = require("../controller/position_control.js");
-var Keyword_Control = require("../controller/keyword_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var Department_Control = require("../controller/department_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
-var Publication_Control = require("../controller/publication_control.js");
-var ResearchFund_Control = require("../controller/researchFund_control.js");
+let Researcher_Control = require("../controller/researcher_control.js");
+let Position_Control = require("../controller/position_control.js");
+let Keyword_Control = require("../controller/keyword_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let Department_Control = require("../controller/department_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Publication_Control = require("../controller/publication_control.js");
+let ResearchFund_Control = require("../controller/researchFund_control.js");
 
 router.post('/newResearchFund_EachScrap', function (request, response) {
-    var methodCode = "52";
+    let methodCode = "52";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.researcherName);
     requiredData.push(request.body.researcherPersonalID);
     requiredData.push(request.body.researchName);
-    var requiredReady = Validate.requiredData_Check(requiredData);
+    let requiredReady = Validate.requiredData_Check(requiredData);
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
             function () {
-                var researchFund = new ResearchFund();
+                let researchFund = new ResearchFund();
                 researchFund.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
                 researchFund.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
                 researchFund.researchName = Validate.scrappingCleanUp(request.body.researchName)
@@ -86,7 +86,7 @@ router.post('/newResearchFund_EachScrap', function (request, response) {
 });
 
 router.post('/getAllResearchFundPreview/', function (request, response) {
-    var methodCode = "53";
+    let methodCode = "53";
 
     flow.exec(
         function () {
@@ -113,20 +113,20 @@ router.post('/getAllResearchFundPreview/', function (request, response) {
 });
 
 router.post('/getAllResearchFundPreviewByResearcherId/', function (request, response) {
-    var methodCode = "54";
+    let methodCode = "54";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.researcherId);
     requiredData.push(request.body.limit);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var numberData = [];
+    let numberData = [];
     numberData.push(request.body.limit);
-    var numberReady = Validate.numberData_Check(numberData)
+    let numberReady = Validate.numberData_Check(numberData)
 
-    var objectData = [];
+    let objectData = [];
     objectData.push(request.body.researcherId);
-    var objectReady = Validate.objectIDData_Check(objectData)
+    let objectReady = Validate.objectIDData_Check(objectData)
 
     if (!requiredReady) {
         let alert = "Input Not Valid, check if some data is required.";
@@ -170,23 +170,23 @@ router.post('/getAllResearchFundPreviewByResearcherId/', function (request, resp
 });
 
 router.post('/getResearchFundfromID/', function (request, response) {
-    var methodCode = "55";
+    let methodCode = "55";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.researchFundId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.researchFundId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -210,23 +210,23 @@ router.post('/getResearchFundfromID/', function (request, response) {
 });
 
 router.post('/deleteResearchFund/', function (request, response) {
-    var methodCode = "56";
+    let methodCode = "56";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.researchFundId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.researchFundId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -254,7 +254,7 @@ router.post('/deleteResearchFund/', function (request, response) {
 });
 
 router.get('/wipeResearchFund/', function (request, response) {
-    var methodCode = "63";
+    let methodCode = "63";
 
     flow.exec(
         function () {

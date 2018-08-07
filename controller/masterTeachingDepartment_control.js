@@ -1,4 +1,4 @@
-var MasterTeachingDepartment = require('../model/masterTeachingDepartment_model.js');
+let MasterTeachingDepartment = require('../model/masterTeachingDepartment_model.js');
 
 module.exports = {
     newMasterTeachingDepartment: function (masterTeachingDepartment, callback) {
@@ -7,7 +7,7 @@ module.exports = {
             console.log("Saving MasterTeachingDepartment >> COMPLETED ");
             if (error) {
                 let errCode = "261";
-                var alert = "Saving MasterTeachingDepartment fail, Error: " + error.message;
+                let alert = "Saving MasterTeachingDepartment fail, Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null);
             }
@@ -17,12 +17,12 @@ module.exports = {
         });
     },
     updateMasterTeachingDepartmentByID: function (masterTeachingDepartmentId, masterTeachingDepartment, callback) {
-        var myquery = { "_id": masterTeachingDepartmentId };
-        var newvalues = { $set: { "masterTeachingDepartmentName_TH": masterTeachingDepartment.masterTeachingDepartmentName_TH, "masterTeachingDepartmentName_EN": masterTeachingDepartment.masterTeachingDepartmentName_EN, "editedDate": Date.now() } };
+        let myquery = { "_id": masterTeachingDepartmentId };
+        let newvalues = { $set: { "masterTeachingDepartmentName_TH": masterTeachingDepartment.masterTeachingDepartmentName_TH, "masterTeachingDepartmentName_EN": masterTeachingDepartment.masterTeachingDepartmentName_EN, "editedDate": Date.now() } };
         MasterTeachingDepartment.updateOne(myquery, newvalues, function (error, updateResponse) {
             if (error) {
                 let errCode = "271";
-                var alert = "Error in updating MasterTeachingDepartment with _id: " + masterTeachingDepartmentId + "\nError: " + error.message;
+                let alert = "Error in updating MasterTeachingDepartment with _id: " + masterTeachingDepartmentId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -34,7 +34,7 @@ module.exports = {
         MasterTeachingDepartment.findOne({ "_id": masterTeachingDepartmentId }, function (error, functionCallback) {
             if (error) {
                 let errCode = "281";
-                var alert = "Error in finding MasterTeachingDepartment with _id: " + masterTeachingDepartmentId + "\nError: " + error.message;
+                let alert = "Error in finding MasterTeachingDepartment with _id: " + masterTeachingDepartmentId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -43,7 +43,7 @@ module.exports = {
             }
             else {
                 let errCode = "283";
-                var alert = "MasterTeachingDepartment with _id: " + masterTeachingDepartmentId + " not found";
+                let alert = "MasterTeachingDepartment with _id: " + masterTeachingDepartmentId + " not found";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, functionCallback)
             }
@@ -53,7 +53,7 @@ module.exports = {
         MasterTeachingDepartment.findOne({ "masterTeachingDepartmentName_TH": masterTeachingDepartmentName_TH }, function (error, functionCallback) {
             if (error) {
                 let errCode = "531";
-                var alert = "Error in finding MasterTeachingDepartment with name: " + masterTeachingDepartmentName_TH + "\nError: " + error.message;
+                let alert = "Error in finding MasterTeachingDepartment with name: " + masterTeachingDepartmentName_TH + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -62,7 +62,7 @@ module.exports = {
             }
             else {
                 let errCode = "533";
-                var alert = masterTeachingDepartmentName_TH + " not founded";
+                let alert = masterTeachingDepartmentName_TH + " not founded";
                 //console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -72,7 +72,7 @@ module.exports = {
         MasterTeachingDepartment.findOne({ "masterTeachingDepartmentName_TH": masterTeachingDepartmentName_TH }, function (error, functionCallback) {
             if (error) {
                 let errCode = "531";
-                var alert = "Error in finding MasterTeachingDepartment with name: " + masterTeachingDepartmentName_TH + "\nError: " + error.message;
+                let alert = "Error in finding MasterTeachingDepartment with name: " + masterTeachingDepartmentName_TH + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -80,16 +80,16 @@ module.exports = {
                 callback("532", null, functionCallback)
             }
             else {
-                var alert = "MasterTeachingDepartment with masterTeachingDepartmentName_TH: " + masterTeachingDepartmentName_TH + " not found";
+                let alert = "MasterTeachingDepartment with masterTeachingDepartmentName_TH: " + masterTeachingDepartmentName_TH + " not found";
                 
-                var masterTeachingDepartment = new MasterTeachingDepartment();
+                let masterTeachingDepartment = new MasterTeachingDepartment();
                 masterTeachingDepartment.masterTeachingDepartmentName_TH = masterTeachingDepartmentName_TH;
                 masterTeachingDepartment.masterTeachingDepartmentName_EN = masterTeachingDepartmentName_EN;
                 console.log("Saving MasterTeachingDepartment: " + masterTeachingDepartment.masterTeachingDepartmentName_TH);
                 masterTeachingDepartment.save(function (error, saveResponse) {
                     if (error) {
                         let errCode = "533";
-                        var alert = "Saving MasterTeachingDepartment fail, Error: " + error.message;
+                        let alert = "Saving MasterTeachingDepartment fail, Error: " + error.message;
                         console.log("ERROR Code: " + errCode + " " + alert);
                         callback(errCode, alert, null);
                     }
@@ -104,19 +104,19 @@ module.exports = {
         MasterTeachingDepartment.find({}, {}, function (error, functionCallback) {
             if (error) {
                 let errCode = "291";
-                var alert = "Error in getAllMasterTeachingDepartment , Error : " + error.message;
+                let alert = "Error in getAllMasterTeachingDepartment , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
             else if (functionCallback) {
                 let errCode = "292";
-                var alert = "Get All MasterTeachingDepartment Completed! " + JSON.stringify(functionCallback);
+                let alert = "Get All MasterTeachingDepartment Completed! " + JSON.stringify(functionCallback);
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "293";
-                var alert = "No MasterTeachingDepartment Founded";
+                let alert = "No MasterTeachingDepartment Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -126,7 +126,7 @@ module.exports = {
         MasterTeachingDepartment.remove({ "_id": masterTeachingDepartmentId }, function (error, newsCallback) {
             if (error) {
                 let errCode = "301";
-                var alert = "Error in deleting MasterTeachingDepartment with _id " + masterTeachingDepartmentId + " Error: " + error.message;
+                let alert = "Error in deleting MasterTeachingDepartment with _id " + masterTeachingDepartmentId + " Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }

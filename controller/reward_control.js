@@ -1,17 +1,17 @@
-var flow = require('../services/flow.js')
-var ObjectId = require('mongodb').ObjectId;
+let flow = require('../services/flow.js')
+let ObjectId = require('mongodb').ObjectId;
 
-var Reward = require('../model/reward_model.js');
+let Reward = require('../model/reward_model.js');
 
-var Validate = require("../controller/validation_controller.js");
-var Researcher_Control = require("../controller/researcher_control.js");
-var Position_Control = require("../controller/position_control.js");
-var Keyword_Control = require("../controller/keyword_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var Department_Control = require("../controller/department_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Validate = require("../controller/validation_controller.js");
+let Researcher_Control = require("../controller/researcher_control.js");
+let Position_Control = require("../controller/position_control.js");
+let Keyword_Control = require("../controller/keyword_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let Department_Control = require("../controller/department_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
 module.exports = {
     newReward: function (reward, callback) {
@@ -32,7 +32,7 @@ module.exports = {
                 reward.save(function (error, saveResponse) {
                     if (error) {
                         let errCode = "681";
-                        var alert = "Saving Publication fail, Error: " + error.message + "@" + reward.rewardName;
+                        let alert = "Saving Publication fail, Error: " + error.message + "@" + reward.rewardName;
                         console.log("ERROR Code: " + errCode + " " + alert);
                         callback(errCode, alert, null);
                     }
@@ -48,15 +48,15 @@ module.exports = {
         let j = 0
         let scrapingData = JSON.parse(JSON.stringify(publication_bulk))
 
-        var reward = new Reward();
-        var requiredData = [];
+        let reward = new Reward();
+        let requiredData = [];
         requiredData.push(scrapingData.researcherName);
         requiredData.push(scrapingData.researcherPersonalID);
         requiredData.push(scrapingData.rewardName);
-        var requiredReady = Validate.requiredData_Check(requiredData);
+        let requiredReady = Validate.requiredData_Check(requiredData);
 
         if (!requiredReady) {
-            var alert = "Input Not Valid, check if some data is required."
+            let alert = "Input Not Valid, check if some data is required."
             console.log(alert);
             callback("New Publications was saved successfully")
         }
@@ -70,7 +70,7 @@ module.exports = {
             reward.rewardDate = Validate.scrappingCleanUp(scrapingData.rewardDate)
             reward.rewardRank = Validate.scrappingCleanUp(scrapingData.rewardRank)
 
-            var Researcher_Control = require("../controller/researcher_control.js");
+            let Researcher_Control = require("../controller/researcher_control.js");
 
             flow.exec(
                 function () {
@@ -87,7 +87,7 @@ module.exports = {
                     reward.save(function (error, saveResponse) {
                         if (error) {
                             let errCode = "681";
-                            var alert = "Saving Publication fail, Error: " + error.message + "@" + reward.rewardName;
+                            let alert = "Saving Publication fail, Error: " + error.message + "@" + reward.rewardName;
                             console.log("ERROR Code: " + errCode + " " + alert);
                         }
                     });
@@ -109,19 +109,19 @@ module.exports = {
         }, function (error, functionCallback) {
             if (error) {
                 let errCode = "691";
-                var alert = "Error in getAllRewardPreview , Error : " + error.message;
+                let alert = "Error in getAllRewardPreview , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
             else if (functionCallback.length > 0) {
                 let errCode = "692";
-                var alert = "Get All Reward Completed! ";
+                let alert = "Get All Reward Completed! ";
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "693";
-                var alert = "No Reward Founded";
+                let alert = "No Reward Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -141,19 +141,19 @@ module.exports = {
             , function (error, functionCallback) {
                 if (error) {
                     let errCode = "701";
-                    var alert = "Error in getAllRewardPreviewByResearcherId , Error : " + error.message;
+                    let alert = "Error in getAllRewardPreviewByResearcherId , Error : " + error.message;
                     console.log("ERROR Code: " + errCode + " " + alert);
                     callback(errCode, alert, null)
                 }
                 else if (functionCallback.length > 0) {
                     let errCode = "702";
-                    var alert = "Get All Reward Completed! ";
+                    let alert = "Get All Reward Completed! ";
                     //console.log(alert);
                     callback(errCode, null, functionCallback)
                 }
                 else {
                     let errCode = "703";
-                    var alert = "No Reward Founded";
+                    let alert = "No Reward Founded";
                     //console.log("ERROR Code: " + errCode + " " + alert);
                     callback(errCode, alert, null)
                 }
@@ -164,7 +164,7 @@ module.exports = {
         Reward.findOne({ "_id": rewardId }, function (error, functionCallback) {
             if (error) {
                 let errCode = "711";
-                var alert = "Error in finding Reward with _id: " + rewardId + "\nError: " + error.message;
+                let alert = "Error in finding Reward with _id: " + rewardId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -173,7 +173,7 @@ module.exports = {
             }
             else {
                 let errCode = "713";
-                var alert = "Reward with _id: " + rewardId + " not found";
+                let alert = "Reward with _id: " + rewardId + " not found";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, functionCallback)
             }
@@ -184,7 +184,7 @@ module.exports = {
         Reward.remove({ "_id": rewardId }, function (error, deleteCallback) {
             if (error) {
                 let errCode = "721";
-                var alert = "Error in deleting Reward with _id " + rewardId + " Error: " + error.message;
+                let alert = "Error in deleting Reward with _id " + rewardId + " Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -198,7 +198,7 @@ module.exports = {
         Reward.remove({}, function (error, deleteCallback) {
             if (error) {
                 let errCode = "731";
-                var alert = "Error in wiping Reward Error: " + error.message;
+                let alert = "Error in wiping Reward Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -245,12 +245,12 @@ module.exports = {
 
 //---------------------------------------------
 
-var Department_Control = require("../controller/department_control.js");
-var Position_Control = require("../controller/position_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Department_Control = require("../controller/department_control.js");
+let Position_Control = require("../controller/position_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
 function getFullRewardPreview(input, callback) {
     let rewardData = JSON.parse(JSON.stringify(input));

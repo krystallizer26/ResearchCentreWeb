@@ -1,42 +1,42 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 // DATABASE SETUP
-var ObjectId = require('mongodb').ObjectId;
+let ObjectId = require('mongodb').ObjectId;
 
 
 //มิดเดิ้ลแว อยุ่ข้างบนเสมอ ก่อน get ไว้ทำ log  // เฉพาะ ที่ accessเข้าไฟล์นี้  ดูจากต้นทาง app.ut(/???,....);
 // middleware to use for all requests
 
 //Must use
-var flow = require('../services/flow.js')
-var ReturnCode = require('../model/returnCode.js');
-var Validate = require("../controller/validation_controller.js");
-var Return_Control = require('../controller/return_control.js');
+let flow = require('../services/flow.js')
+let ReturnCode = require('../model/returnCode.js');
+let Validate = require("../controller/validation_controller.js");
+let Return_Control = require('../controller/return_control.js');
 
 //Model
-var BachelorTeachingDepartment = require('../model/bachelorTeachingDepartment_model.js');
+let BachelorTeachingDepartment = require('../model/bachelorTeachingDepartment_model.js');
 
 //Controller
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
 
 router.post('/newBachelorTeachingDepartment', function (request, response) {
-    var methodCode = "21";
+    let methodCode = "21";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.bachelorTeachingDepartmentName_TH);
     requiredData.push(request.body.bachelorTeachingDepartmentName_EN);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
             function () {
-                var bachelorTeachingDepartment = new BachelorTeachingDepartment();
+                let bachelorTeachingDepartment = new BachelorTeachingDepartment();
                 bachelorTeachingDepartment.bachelorTeachingDepartmentName_TH = request.body.bachelorTeachingDepartmentName_TH;
                 bachelorTeachingDepartment.bachelorTeachingDepartmentName_EN = request.body.bachelorTeachingDepartmentName_EN;
                 BachelorTeachingDepartment_Control.newBachelorTeachingDepartment(bachelorTeachingDepartment, this);
@@ -53,25 +53,25 @@ router.post('/newBachelorTeachingDepartment', function (request, response) {
 });
 
 router.post('/editBachelorTeachingDepartment/', function (request, response) {
-    var methodCode = "22";
+    let methodCode = "22";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.bachelorTeachingDepartmentId);
     requiredData.push(request.body.bachelorTeachingDepartmentName_TH);
     requiredData.push(request.body.bachelorTeachingDepartmentName_EN);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.bachelorTeachingDepartmentId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -84,7 +84,7 @@ router.post('/editBachelorTeachingDepartment/', function (request, response) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    var bachelorTeachingDepartment = new BachelorTeachingDepartment();
+                    let bachelorTeachingDepartment = new BachelorTeachingDepartment();
                     bachelorTeachingDepartment.bachelorTeachingDepartmentName_TH = request.body.bachelorTeachingDepartmentName_TH;
                     bachelorTeachingDepartment.bachelorTeachingDepartmentName_EN = request.body.bachelorTeachingDepartmentName_EN;
                     BachelorTeachingDepartment_Control.updateBachelorTeachingDepartmentByID(new ObjectId(request.body.bachelorTeachingDepartmentId), bachelorTeachingDepartment, this);
@@ -102,7 +102,7 @@ router.post('/editBachelorTeachingDepartment/', function (request, response) {
 });
 
 router.post('/getAllBachelorTeachingDepartment/', function (request, response) {
-    var methodCode = "23";
+    let methodCode = "23";
 
     flow.exec(
         function () {
@@ -120,23 +120,23 @@ router.post('/getAllBachelorTeachingDepartment/', function (request, response) {
 });
 
 router.post('/getBachelorTeachingDepartmentfromID/', function (request, response) {
-    var methodCode = "24";
+    let methodCode = "24";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.bachelorTeachingDepartmentId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.bachelorTeachingDepartmentId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -157,23 +157,23 @@ router.post('/getBachelorTeachingDepartmentfromID/', function (request, response
 });
 
 router.post('/deleteBachelorTeachingDepartment/', function (request, response) {
-    var methodCode = "25";
+    let methodCode = "25";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.bachelorTeachingDepartmentId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.bachelorTeachingDepartmentId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }

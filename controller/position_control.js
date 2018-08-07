@@ -1,4 +1,4 @@
-var Position = require('../model/position_model.js');
+let Position = require('../model/position_model.js');
 
 module.exports = {
     newPosition: function (position, callback) {
@@ -7,7 +7,7 @@ module.exports = {
             console.log("Saving Position >> COMPLETED ");
             if (error) {
                 let errCode = "061";
-                var alert = "Saving Position fail, Error: " + error.message;
+                let alert = "Saving Position fail, Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null);
             }
@@ -17,12 +17,12 @@ module.exports = {
         });
     },
     updatePositionByID: function (positionId, position, callback) {
-        var myquery = { "_id": positionId };
-        var newvalues = { $set: { "positionName_TH": position.positionName_TH, "positionName_EN": position.positionName_EN, "editedDate": Date.now() } };
+        let myquery = { "_id": positionId };
+        let newvalues = { $set: { "positionName_TH": position.positionName_TH, "positionName_EN": position.positionName_EN, "editedDate": Date.now() } };
         Position.updateOne(myquery, newvalues, function (error, updateResponse) {
             if (error) {
                 let errCode = "071";
-                var alert = "Error in updating Position with _id: " + positionId + "\nError: " + error.message;
+                let alert = "Error in updating Position with _id: " + positionId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -34,7 +34,7 @@ module.exports = {
         Position.findOne({ "_id": positionId }, function (error, functionCallback) {
             if (error) {
                 let errCode = "081";
-                var alert = "Error in finding Position with _id: " + positionId + "\nError: " + error.message;
+                let alert = "Error in finding Position with _id: " + positionId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -43,7 +43,7 @@ module.exports = {
             }
             else {
                 let errCode = "083";
-                var alert = "Position with _id: " + positionId + " not found";
+                let alert = "Position with _id: " + positionId + " not found";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, functionCallback)
             }
@@ -53,7 +53,7 @@ module.exports = {
         Position.findOne({ "positionName_TH": positionName_TH }, function (error, functionCallback) {
             if (error) {
                 let errCode = "521";
-                var alert = "Error in finding Position with name: " + positionName_TH + "\nError: " + error.message;
+                let alert = "Error in finding Position with name: " + positionName_TH + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -62,7 +62,7 @@ module.exports = {
             }
             else {
                 let errCode = "523";
-                var alert = positionName_TH + " not founded";
+                let alert = positionName_TH + " not founded";
                 //console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -72,7 +72,7 @@ module.exports = {
         Position.findOne({ "positionName_TH": positionName_TH }, function (error, functionCallback) {
             if (error) {
                 let errCode = "501";
-                var alert = "Error in finding Position with name: " + positionName_TH + "\nError: " + error.message;
+                let alert = "Error in finding Position with name: " + positionName_TH + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -80,16 +80,16 @@ module.exports = {
                 callback("502", null, functionCallback)
             }
             else {
-                var alert = "Position with positionName_TH: " + positionName_TH + " not found";
+                let alert = "Position with positionName_TH: " + positionName_TH + " not found";
                 
-                var position = new Position();
+                let position = new Position();
                 position.positionName_TH = positionName_TH;
                 position.positionName_EN = positionName_EN;
                 console.log("Saving Position: " + position.positionName_TH);
                 position.save(function (error, saveResponse) {
                     if (error) {
                         let errCode = "503";
-                        var alert = "Saving Position fail, Error: " + error.message;
+                        let alert = "Saving Position fail, Error: " + error.message;
                         console.log("ERROR Code: " + errCode + " " + alert);
                         callback(errCode, alert, null);
                     }
@@ -105,19 +105,19 @@ module.exports = {
         Position.find({}, {}, function (error, functionCallback) {
             if (error) {
                 let errCode = "091";
-                var alert = "Error in getAllPosition , Error : " + error.message;
+                let alert = "Error in getAllPosition , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
             else if (functionCallback) {
                 let errCode = "092";
-                var alert = "Get All Position Completed! " + JSON.stringify(functionCallback);
+                let alert = "Get All Position Completed! " + JSON.stringify(functionCallback);
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "093";
-                var alert = "No Position Founded";
+                let alert = "No Position Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -127,7 +127,7 @@ module.exports = {
         Position.remove({ "_id": positionId }, function (error, newsCallback) {
             if (error) {
                 let errCode = "101";
-                var alert = "Error in deleting Position with _id " + positionId + " Error: " + error.message;
+                let alert = "Error in deleting Position with _id " + positionId + " Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }

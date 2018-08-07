@@ -1,23 +1,23 @@
-var flow = require('../services/flow.js')
-var ObjectId = require('mongodb').ObjectId;
+let flow = require('../services/flow.js')
+let ObjectId = require('mongodb').ObjectId;
 
-var Researcher = require('../model/researcher_model.js');
+let Researcher = require('../model/researcher_model.js');
 
-var Validate = require("../controller/validation_controller.js");
+let Validate = require("../controller/validation_controller.js");
 
-var Researcher_Control = require("../controller/researcher_control.js");
-var Position_Control = require("../controller/position_control.js");
-var Keyword_Control = require("../controller/keyword_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var Department_Control = require("../controller/department_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
-var Publication_Control = require("../controller/publication_control.js");
+let Researcher_Control = require("../controller/researcher_control.js");
+let Position_Control = require("../controller/position_control.js");
+let Keyword_Control = require("../controller/keyword_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let Department_Control = require("../controller/department_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Publication_Control = require("../controller/publication_control.js");
 
-var Thesis_Control = require("../controller/thesis_control.js");
-var IntellectualProperty_Control = require("../controller/intellectualProperty_control.js");
-var Reward_Control = require("../controller/reward_control.js");
+let Thesis_Control = require("../controller/thesis_control.js");
+let IntellectualProperty_Control = require("../controller/intellectualProperty_control.js");
+let Reward_Control = require("../controller/reward_control.js");
 
 module.exports = {
     newResearcher: function (researcher, callback) {
@@ -26,7 +26,7 @@ module.exports = {
             console.log("Saving Researcher >> COMPLETED ");
             if (error) {
                 let errCode = "361";
-                var alert = "Saving Researcher fail, Error: " + error.message;
+                let alert = "Saving Researcher fail, Error: " + error.message;
                 //console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null);
             }
@@ -39,16 +39,16 @@ module.exports = {
         let j = 0
         let scrapingData = JSON.parse(JSON.stringify(publication_bulk))
 
-        var researcher = new Researcher();
-        // var requiredData = [];
+        let researcher = new Researcher();
+        // let requiredData = [];
         // requiredData.push(scrapingData.publicationName);
         // requiredData.push(scrapingData.researcherPersonalID);
         // requiredData.push(scrapingData.researcherName);
-        // var requiredReady = Validate.requiredData_Check(requiredData);
-        var requiredReady = true
+        // let requiredReady = Validate.requiredData_Check(requiredData);
+        let requiredReady = true
 
         if (!requiredReady) {
-            var alert = "Input Not Valid, check if some data is required. >> publicationName : " + scrapingData.publicationName + " >> researcherPersonalID : " + scrapingData.researcherPersonalID + " >> researcherName : " + scrapingData.researcherName
+            let alert = "Input Not Valid, check if some data is required. >> publicationName : " + scrapingData.publicationName + " >> researcherPersonalID : " + scrapingData.researcherPersonalID + " >> researcherName : " + scrapingData.researcherName
             console.log(alert);
             callback("New Publications was saved successfully")
         }
@@ -199,7 +199,7 @@ module.exports = {
                     researcher.save(function (error, saveResponse) {
                         if (error) {
                             let errCode = "361";
-                            var alert = "Saving Researcher fail, Error: " + error.message;
+                            let alert = "Saving Researcher fail, Error: " + error.message;
                             console.log("ERROR Code: " + errCode + " " + alert);
                         }
                     });
@@ -213,7 +213,7 @@ module.exports = {
             if (error) {
                 console.log("Save Dummy Failed")
                 let errCode = "361";
-                var alert = "Saving Researcher fail, Error: " + error.message;
+                let alert = "Saving Researcher fail, Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null);
             }
@@ -224,12 +224,12 @@ module.exports = {
         });
     },
     updateResearcherByID: function (researcherId, newvalues, callback) {
-        var myquery = { "_id": researcherId };
+        let myquery = { "_id": researcherId };
         console.log("In Method: " + JSON.stringify(newvalues))
         Researcher.updateOne(myquery, newvalues, function (error, updateResponse) {
             if (error) {
                 let errCode = "371";
-                var alert = "Error in updating Researcher with _id: " + researcherId + "\nError: " + error.message;
+                let alert = "Error in updating Researcher with _id: " + researcherId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -242,7 +242,7 @@ module.exports = {
         Researcher.findOne({ "_id": researcherId }, query, function (error, functionCallback) {
             if (error) {
                 let errCode = "381";
-                var alert = "Error in finding Researcher with _id: " + researcherId + "\nError: " + error.message;
+                let alert = "Error in finding Researcher with _id: " + researcherId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -251,7 +251,7 @@ module.exports = {
             }
             else {
                 let errCode = "383";
-                var alert = "Researcher with _id: " + researcherId + " not found";
+                let alert = "Researcher with _id: " + researcherId + " not found";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, functionCallback)
             }
@@ -261,7 +261,7 @@ module.exports = {
         Researcher.findOne({ "researcherName_TH": researcherName_TH }, function (error, functionCallback) {
             if (error) {
                 let errCode = "571";
-                var alert = "Error in finding Researcher with name: " + researcherName_TH + "\nError: " + error.message;
+                let alert = "Error in finding Researcher with name: " + researcherName_TH + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -270,7 +270,7 @@ module.exports = {
             }
             else {
                 let errCode = "573";
-                var alert = "Researcher with name: " + researcherName_TH + " not found";
+                let alert = "Researcher with name: " + researcherName_TH + " not found";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, functionCallback)
             }
@@ -280,7 +280,7 @@ module.exports = {
         Researcher.findOne({ "personalID": personalID }, function (error, functionCallback) {
             if (error) {
                 let errCode = "591";
-                var alert = "Error in finding Researcher with personalID: " + personalID + "\nError: " + error.message;
+                let alert = "Error in finding Researcher with personalID: " + personalID + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -289,7 +289,7 @@ module.exports = {
             }
             else {
                 let errCode = "593";
-                var alert = "Researcher with personalID: " + personalID + " not found";
+                let alert = "Researcher with personalID: " + personalID + " not found";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, functionCallback)
             }
@@ -298,15 +298,15 @@ module.exports = {
     checkBindedKeywordwithResearcher: function (researcherId, keywordId, callback) {
         Researcher.findOne({ $and: [{ "_id": researcherId }, { "keywordIdArray": keywordId }] }, function (error, findCallback) {
             if (error) {
-                var alert = "Error in finding Researcher with _id: " + researcherId + "with bankaccoount Id: " + keywordId + "\nError: " + error.message;
+                let alert = "Error in finding Researcher with _id: " + researcherId + "with bankaccoount Id: " + keywordId + "\nError: " + error.message;
                 callback("391", alert, null)
             }
             else if (findCallback) {
-                var alert = "Keyword with _id: " + keywordId + " is already binded to this Researcher";
+                let alert = "Keyword with _id: " + keywordId + " is already binded to this Researcher";
                 callback("392", alert, null)
             }
             else {
-                var alert = "Keyword with _id: " + keywordId + " is not binded to this Researcher";
+                let alert = "Keyword with _id: " + keywordId + " is not binded to this Researcher";
                 callback("393", alert, null)
             }
         });
@@ -314,7 +314,7 @@ module.exports = {
     bindKeywordtoResearcher: function (researcherId, keywordId, callback) {
         Researcher.update({ "_id": researcherId }, { $push: { "keywordIdArray": keywordId } }, function (error, findCallback) {
             if (error) {
-                var alert = "Error in updating Researcher with _id: " + researcherId + "with Keyword Id: " + keywordId + "\nError: " + error.message;
+                let alert = "Error in updating Researcher with _id: " + researcherId + "with Keyword Id: " + keywordId + "\nError: " + error.message;
                 callback("401", alert, null)
             }
             else {
@@ -325,7 +325,7 @@ module.exports = {
     removeKeywordfromResearcher: function (researcherId, keywordId, callback) {
         Researcher.update({ "_id": researcherId }, { $pull: { "keywordIdArray": keywordId } }, function (error, findCallback) {
             if (error) {
-                var alert = "Error in updating Researcher with _id: " + researcherId + "with Keyword Id: " + keywordId + "\nError: " + error.message;
+                let alert = "Error in updating Researcher with _id: " + researcherId + "with Keyword Id: " + keywordId + "\nError: " + error.message;
                 callback("411", alert, null)
             }
             else {
@@ -338,7 +338,7 @@ module.exports = {
         Researcher.remove({}, function (error, deleteCallback) {
             if (error) {
                 let errCode = "761";
-                var alert = "Error in wiping Reward Error: " + error.message;
+                let alert = "Error in wiping Reward Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -352,7 +352,7 @@ module.exports = {
         Researcher.remove({ "_id": researcherId }, function (error, newsCallback) {
             if (error) {
                 let errCode = "421";
-                var alert = "Error in deleting Researcher with _id " + researcherId + " Error: " + error.message;
+                let alert = "Error in deleting Researcher with _id " + researcherId + " Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -369,19 +369,19 @@ module.exports = {
         }, function (error, functionCallback) {
             if (error) {
                 let errCode = "431";
-                var alert = "Error in getAllAcademicLevel , Error : " + error.message;
+                let alert = "Error in getAllAcademicLevel , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
             else if (functionCallback) {
                 let errCode = "432";
-                var alert = "Get All Researcher Completed! ";
+                let alert = "Get All Researcher Completed! ";
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "433";
-                var alert = "No Researcher Founded";
+                let alert = "No Researcher Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -403,19 +403,19 @@ module.exports = {
         }, function (error, functionCallback) {
             if (error) {
                 let errCode = "431";
-                var alert = "Error in Researcher , Error : " + error.message;
+                let alert = "Error in Researcher , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
             else if (functionCallback) {
                 let errCode = "432";
-                var alert = "Get All Researcher Completed! ";
+                let alert = "Get All Researcher Completed! ";
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "433";
-                var alert = "No Researcher Founded";
+                let alert = "No Researcher Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -458,7 +458,7 @@ module.exports = {
 
 // async function qqqqqq(a) {
 
-//     var forCallback = []
+//     let forCallback = []
 
 //     const  z = await Promise.all(a.map(async (a1) => {
 //         const contents = await getFullResearcherPreview(a1)
@@ -467,13 +467,13 @@ module.exports = {
 //     return z
 // }
 
-var Position_Control = require("../controller/position_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Position_Control = require("../controller/position_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
-var forCallback_getFullResearcherPreview = []
+let forCallback_getFullResearcherPreview = []
 
 function getFullResearcher(input, callback) {
     let researcherData = JSON.parse(JSON.stringify(input));

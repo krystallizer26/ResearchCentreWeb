@@ -1,42 +1,42 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 // DATABASE SETUP
-var ObjectId = require('mongodb').ObjectId;
+let ObjectId = require('mongodb').ObjectId;
 
 
 //มิดเดิ้ลแว อยุ่ข้างบนเสมอ ก่อน get ไว้ทำ log  // เฉพาะ ที่ accessเข้าไฟล์นี้  ดูจากต้นทาง app.ut(/???,....);
 // middleware to use for all requests
 
 //Must use
-var flow = require('../services/flow.js')
-var ReturnCode = require('../model/returnCode.js');
-var Validate = require("../controller/validation_controller.js");
-var Return_Control = require('../controller/return_control.js');
+let flow = require('../services/flow.js')
+let ReturnCode = require('../model/returnCode.js');
+let Validate = require("../controller/validation_controller.js");
+let Return_Control = require('../controller/return_control.js');
 
 //Model
-var Position = require('../model/position_model.js');
+let Position = require('../model/position_model.js');
 
 //Controller
-var Position_Control = require("../controller/position_control.js");
+let Position_Control = require("../controller/position_control.js");
 
 router.post('/newPosition', function (request, response) {
-    var methodCode = "06";
+    let methodCode = "06";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.positionName_TH);
     requiredData.push(request.body.positionName_EN);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
             function () {
-                var position = new Position();
+                let position = new Position();
                 position.positionName_TH = request.body.positionName_TH;
                 position.positionName_EN = request.body.positionName_EN;
                 Position_Control.newPosition(position, this);
@@ -53,25 +53,25 @@ router.post('/newPosition', function (request, response) {
 });
 
 router.post('/editPosition/', function (request, response) {
-    var methodCode = "07";
+    let methodCode = "07";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.positionId);
     requiredData.push(request.body.positionName_TH);
     requiredData.push(request.body.positionName_EN);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.positionId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -84,7 +84,7 @@ router.post('/editPosition/', function (request, response) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    var position = new Position();
+                    let position = new Position();
                     position.positionName_TH = request.body.positionName_TH;
                     position.positionName_EN = request.body.positionName_EN;
                     Position_Control.updatePositionByID(new ObjectId(request.body.positionId), position, this);
@@ -102,7 +102,7 @@ router.post('/editPosition/', function (request, response) {
 });
 
 router.post('/getAllPosition/', function (request, response) {
-    var methodCode = "08";
+    let methodCode = "08";
 
     flow.exec(
         function () {
@@ -119,23 +119,23 @@ router.post('/getAllPosition/', function (request, response) {
 });
 
 router.post('/getPositionfromID/', function (request, response) {
-    var methodCode = "09";
+    let methodCode = "09";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.positionId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.positionId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -156,23 +156,23 @@ router.post('/getPositionfromID/', function (request, response) {
 });
 
 router.post('/deletePosition/', function (request, response) {
-    var methodCode = "10";
+    let methodCode = "10";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.positionId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.positionId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }

@@ -1,9 +1,9 @@
-var ObjectId = require('mongodb').ObjectId
-var flow = require('../services/flow.js')
+let ObjectId = require('mongodb').ObjectId
+let flow = require('../services/flow.js')
 
-var Keyword = require('../model/keyword_model.js');
+let Keyword = require('../model/keyword_model.js');
 
-var Keyword_Control = require("../controller/keyword_control.js");
+let Keyword_Control = require("../controller/keyword_control.js");
 
 module.exports = {
     newKeyword: function (keyword, callback) {
@@ -12,7 +12,7 @@ module.exports = {
             console.log("Saving Keyword >> COMPLETED ");
             if (error) {
                 let errCode = "111";
-                var alert = "Saving Keyword fail, Error: " + error.message;
+                let alert = "Saving Keyword fail, Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null);
             }
@@ -22,12 +22,12 @@ module.exports = {
         });
     },
     updateKeywordByID: function (keywordId, keyword, callback) {
-        var myquery = { "_id": keywordId };
-        var newvalues = { $set: { "keywordName_TH": keyword.keywordName_TH, "keywordName_EN": keyword.keywordName_EN, "editedDate": Date.now() } };
+        let myquery = { "_id": keywordId };
+        let newvalues = { $set: { "keywordName_TH": keyword.keywordName_TH, "keywordName_EN": keyword.keywordName_EN, "editedDate": Date.now() } };
         Keyword.updateOne(myquery, newvalues, function (error, updateResponse) {
             if (error) {
                 let errCode = "121";
-                var alert = "Error in updating Keyword with _id: " + keywordId + "\nError: " + error.message;
+                let alert = "Error in updating Keyword with _id: " + keywordId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -39,7 +39,7 @@ module.exports = {
         Keyword.findOne({ "_id": keywordId }, function (error, functionCallback) {
             if (error) {
                 let errCode = "131";
-                var alert = "Error in finding Keyword with _id: " + keywordId + "\nError: " + error.message;
+                let alert = "Error in finding Keyword with _id: " + keywordId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -48,7 +48,7 @@ module.exports = {
             }
             else {
                 let errCode = "133";
-                var alert = "Keyword with _id: " + keywordId + " not found";
+                let alert = "Keyword with _id: " + keywordId + " not found";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, functionCallback)
             }
@@ -58,19 +58,19 @@ module.exports = {
         Keyword.find({}, {}, function (error, functionCallback) {
             if (error) {
                 let errCode = "141";
-                var alert = "Error in getAllKeyword , Error : " + error.message;
+                let alert = "Error in getAllKeyword , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
             else if (functionCallback) {
                 let errCode = "142";
-                var alert = "Get All Keyword Completed! " + JSON.stringify(functionCallback);
+                let alert = "Get All Keyword Completed! " + JSON.stringify(functionCallback);
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "143";
-                var alert = "No Keyword Founded";
+                let alert = "No Keyword Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -80,7 +80,7 @@ module.exports = {
         Keyword.remove({ "_id": keywordId }, function (error, newsCallback) {
             if (error) {
                 let errCode = "151";
-                var alert = "Error in deleting Keyword with _id " + keywordId + " Error: " + error.message;
+                let alert = "Error in deleting Keyword with _id " + keywordId + " Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -107,7 +107,7 @@ function checkKeywordByID(keywordId,query, callback) {
     Keyword.findOne({ "_id": keywordId },query, function (error, functionCallback) {
         if (error) {
             let errCode = "...";
-            var alert = "Error in finding Keyword with _id: " + keywordId + "\nError: " + error.message;
+            let alert = "Error in finding Keyword with _id: " + keywordId + "\nError: " + error.message;
             console.log("ERROR Code: " + errCode + " " + alert);
             callback(errCode, alert, null)
         }
@@ -116,7 +116,7 @@ function checkKeywordByID(keywordId,query, callback) {
         }
         else {
             let errCode = "...";
-            var alert = "Keyword with _id: " + keywordId + " not found";
+            let alert = "Keyword with _id: " + keywordId + " not found";
             console.log("ERROR Code: " + errCode + " " + alert);
             callback(errCode, alert, functionCallback)
         }

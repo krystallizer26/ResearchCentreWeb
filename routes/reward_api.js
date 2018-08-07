@@ -1,48 +1,48 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 // DATABASE SETUP
-var ObjectId = require('mongodb').ObjectId;
+let ObjectId = require('mongodb').ObjectId;
 
 //Must use
-var flow = require('../services/flow.js')
-var ReturnCode = require('../model/returnCode.js');
-var Validate = require("../controller/validation_controller.js");
-var Return_Control = require('../controller/return_control.js');
+let flow = require('../services/flow.js')
+let ReturnCode = require('../model/returnCode.js');
+let Validate = require("../controller/validation_controller.js");
+let Return_Control = require('../controller/return_control.js');
 
 //Model
-var Reward = require('../model/reward_model.js');
+let Reward = require('../model/reward_model.js');
 
 //Controller
-var Researcher_Control = require("../controller/researcher_control.js");
-var Position_Control = require("../controller/position_control.js");
-var Keyword_Control = require("../controller/keyword_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var Department_Control = require("../controller/department_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
-var Publication_Control = require("../controller/publication_control.js");
-var Reward_Control = require("../controller/reward_control.js");
+let Researcher_Control = require("../controller/researcher_control.js");
+let Position_Control = require("../controller/position_control.js");
+let Keyword_Control = require("../controller/keyword_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let Department_Control = require("../controller/department_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Publication_Control = require("../controller/publication_control.js");
+let Reward_Control = require("../controller/reward_control.js");
 
 router.post('/newReward_EachScrap', function (request, response) {
-    var methodCode = "57";
+    let methodCode = "57";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.researcherName);
     requiredData.push(request.body.researcherPersonalID);
     requiredData.push(request.body.rewardName);
-    var requiredReady = Validate.requiredData_Check(requiredData);
+    let requiredReady = Validate.requiredData_Check(requiredData);
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         //console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
             function () {
-                var reward = new Reward();
+                let reward = new Reward();
                 reward.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
                 reward.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
                 reward.rewardYear = Validate.scrappingCleanUp(request.body.rewardYear)
@@ -66,7 +66,7 @@ router.post('/newReward_EachScrap', function (request, response) {
 });
 
 router.post('/getAllRewardPreview/', function (request, response) {
-    var methodCode = "58";
+    let methodCode = "58";
 
     flow.exec(
         function () {
@@ -93,20 +93,20 @@ router.post('/getAllRewardPreview/', function (request, response) {
 });
 
 router.post('/getAllRewardPreviewByResearcherId/', function (request, response) {
-    var methodCode = "59";
+    let methodCode = "59";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.researcherId);
     requiredData.push(request.body.limit);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var numberData = [];
+    let numberData = [];
     numberData.push(request.body.limit);
-    var numberReady = Validate.numberData_Check(numberData)
+    let numberReady = Validate.numberData_Check(numberData)
 
-    var objectData = [];
+    let objectData = [];
     objectData.push(request.body.researcherId);
-    var objectReady = Validate.objectIDData_Check(objectData)
+    let objectReady = Validate.objectIDData_Check(objectData)
 
     if (!requiredReady) {
         let alert = "Input Not Valid, check if some data is required.";
@@ -150,23 +150,23 @@ router.post('/getAllRewardPreviewByResearcherId/', function (request, response) 
 });
 
 router.post('/getRewardfromID/', function (request, response) {
-    var methodCode = "60";
+    let methodCode = "60";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.rewardId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.rewardId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -190,23 +190,23 @@ router.post('/getRewardfromID/', function (request, response) {
 });
 
 router.post('/deleteReward/', function (request, response) {
-    var methodCode = "61";
+    let methodCode = "61";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.rewardId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.rewardId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -234,7 +234,7 @@ router.post('/deleteReward/', function (request, response) {
 });
 
 router.get('/wipeReward/', function (request, response) {
-    var methodCode = "62";
+    let methodCode = "62";
 
     flow.exec(
         function () {

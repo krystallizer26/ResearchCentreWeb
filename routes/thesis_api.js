@@ -1,49 +1,49 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 // DATABASE SETUP
-var ObjectId = require('mongodb').ObjectId;
+let ObjectId = require('mongodb').ObjectId;
 
 
 //มิดเดิ้ลแว อยุ่ข้างบนเสมอ ก่อน get ไว้ทำ log  // เฉพาะ ที่ accessเข้าไฟล์นี้  ดูจากต้นทาง app.ut(/???,....);
 // middleware to use for all requests
 
 //Must use
-var flow = require('../services/flow.js')
-var ReturnCode = require('../model/returnCode.js');
-var Validate = require("../controller/validation_controller.js");
-var Return_Control = require('../controller/return_control.js');
+let flow = require('../services/flow.js')
+let ReturnCode = require('../model/returnCode.js');
+let Validate = require("../controller/validation_controller.js");
+let Return_Control = require('../controller/return_control.js');
 
 //Model
-var Thesis = require('../model/thesis_model.js');
+let Thesis = require('../model/thesis_model.js');
 
 //Controller
-var Researcher_Control = require("../controller/researcher_control.js");
-var Position_Control = require("../controller/position_control.js");
-var Keyword_Control = require("../controller/keyword_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var Department_Control = require("../controller/department_control.js");
-var BachelorDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
-var Thesis_Control = require("../controller/thesis_control.js");
+let Researcher_Control = require("../controller/researcher_control.js");
+let Position_Control = require("../controller/position_control.js");
+let Keyword_Control = require("../controller/keyword_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let Department_Control = require("../controller/department_control.js");
+let BachelorDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Thesis_Control = require("../controller/thesis_control.js");
 
 router.post('/newThesis_EachScrap', function (request, response) {
-    var methodCode = "73";
+    let methodCode = "73";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.researcherName);
-    var requiredReady = Validate.requiredData_Check(requiredData);
+    let requiredReady = Validate.requiredData_Check(requiredData);
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
             function () {
-                var thesis = new Thesis();
+                let thesis = new Thesis();
                 thesis.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
                 thesis.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
                 thesis.studentName = Validate.scrappingCleanUp(request.body.studentName)
@@ -83,29 +83,29 @@ router.post('/newThesis_EachScrap', function (request, response) {
 });
 
 // router.post('/editThesis/', function (request, response) {
-//     var methodCode = "46";
+//     let methodCode = "46";
 
-//     var requiredData = [];
+//     let requiredData = [];
 //     requiredData.push(request.body.thesisId);
 //     requiredData.push(request.body.thesisName);
 //     requiredData.push(request.body.researcherId);
-//     var requiredReady = Validate.requiredData_Check(requiredData)
+//     let requiredReady = Validate.requiredData_Check(requiredData)
 
-//     var objectIdData = [];
+//     let objectIdData = [];
 //     objectIdData.push(request.body.thesisId);
 //     requiredData.push(request.body.researcherId);
 //     requiredData.push(request.body.bachelorDepartment);
 //     requiredData.push(request.body.masterDepartment);
 //     requiredData.push(request.body.doctoryDepartment);
-//     var objectIdReady = Validate.objectIDData_Check(objectIdData)
+//     let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
 //     if (!requiredReady) {
-//         var alert = "Input Not Valid, check if some data is required."
+//         let alert = "Input Not Valid, check if some data is required."
 //         console.log(alert);
 //         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
 //     }
 //     else if (!objectIdReady) {
-//         var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+//         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
 //         console.log(alert);
 //         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
 //     }
@@ -146,7 +146,7 @@ router.post('/newThesis_EachScrap', function (request, response) {
 //                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
 //                 }
 //                 else {
-//                     var thesis = new Thesis();
+//                     let thesis = new Thesis();
 //                     thesis.researcherId = request.body.researcherId;
 //                     thesis.thesisName = request.body.thesisName;
 //                     thesis.publishLocation = request.body.publishLocation;
@@ -178,7 +178,7 @@ router.post('/newThesis_EachScrap', function (request, response) {
 // });
 
 router.post('/getAllThesisPreview/', function (request, response) {
-    var methodCode = "74";
+    let methodCode = "74";
 
     flow.exec(
         function () {
@@ -205,16 +205,16 @@ router.post('/getAllThesisPreview/', function (request, response) {
 });
 
 router.post('/getAllThesisPreviewByResearcherId/', function (request, response) {
-    var methodCode = "75";
+    let methodCode = "75";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.researcherId);
     requiredData.push(request.body.limit);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var numberData = [];
+    let numberData = [];
     numberData.push(request.body.limit);
-    var numberReady = Validate.numberData_Check(numberData)
+    let numberReady = Validate.numberData_Check(numberData)
 
     if (!requiredReady) {
         let alert = "Input Not Valid, check if some data is required.";
@@ -253,23 +253,23 @@ router.post('/getAllThesisPreviewByResearcherId/', function (request, response) 
 });
 
 router.post('/getThesisfromID/', function (request, response) {
-    var methodCode = "76";
+    let methodCode = "76";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.thesisId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.thesisId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -293,23 +293,23 @@ router.post('/getThesisfromID/', function (request, response) {
 });
 
 router.post('/deleteThesis/', function (request, response) {
-    var methodCode = "77";
+    let methodCode = "77";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.thesisId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.thesisId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -337,7 +337,7 @@ router.post('/deleteThesis/', function (request, response) {
 });
 
 router.get('/wipeThesis/', function (request, response) {
-    var methodCode = "78";
+    let methodCode = "78";
 
     flow.exec(
         function () {

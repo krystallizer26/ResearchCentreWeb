@@ -1,13 +1,13 @@
-var express = require('express');
-var router = express.Router();
-var request = require('request');
-var rp = require('request-promise-native');
+let express = require('express');
+let router = express.Router();
+let request = require('request');
+let rp = require('request-promise-native');
 
 const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
 const OAuth2Client = google.auth.OAuth2;
-var sheets = google.sheets('v4');
+let sheets = google.sheets('v4');
 
 const sheetId = '1-jqRrxaiifgrxyrxNAiaBy0LTSRPq2NmwMjPsnMhL9A';    // research database
 // const sheetId = '1FQK00JrBtazJ247OmvPoPjfGympWwV5zLDpeP5iJdQ0';  // my test sheet
@@ -18,22 +18,22 @@ const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const CLIENT_SECRET_PATH = 'googleapis_credentials/client_secret.json';
 const TOKEN_PATH = 'googleapis_credentials/credentials.json';
 
-var Researcher_Control = require("../controller/researcher_control.js");
-var Publication_Control = require("../controller/publication_control.js");
-var ResearchFund_Control = require("../controller/researchFund_control.js");
-var Reward_Control = require("../controller/reward_control.js");
-var IntellectualProperty_Control = require("../controller/intellectualProperty_control.js");
-var Thesis_Control = require("../controller/thesis_control.js");
-var ResearcherTraining_Control = require("../controller/researcherTraining_control.js");
+let Researcher_Control = require("../controller/researcher_control.js");
+let Publication_Control = require("../controller/publication_control.js");
+let ResearchFund_Control = require("../controller/researchFund_control.js");
+let Reward_Control = require("../controller/reward_control.js");
+let IntellectualProperty_Control = require("../controller/intellectualProperty_control.js");
+let Thesis_Control = require("../controller/thesis_control.js");
+let ResearcherTraining_Control = require("../controller/researcherTraining_control.js");
 
 
-var clientAuth = null;
+let clientAuth = null;
 
 // DATA SETUP =================================================
-var deptData = [];
-var positionData = [];
-// var keywordData = [];
-var academicData = [];
+let deptData = [];
+let positionData = [];
+// let keywordData = [];
+let academicData = [];
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -118,7 +118,7 @@ router.get('/insertResearcherSheet', function (req, res) {
 
 async function scrapingResearcher(rows, callback) {
   let j = 0;
-  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+  for (let i = 1; i < rows.length; i++) {  // skip header row (i=0)
     let scrapingData = {
       researcherName_TH: validateValueInRow(rows[i], 0),
       researcherName_EN: validateValueInRow(rows[i], 2),
@@ -220,7 +220,7 @@ router.get('/insertPublicationWorkSheet', function (req, res) {
 
 async function scrapingPublication(rows, callback) {
   let j = 0;
-  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+  for (let i = 1; i < rows.length; i++) {  // skip header row (i=0)
     let scrapingData = {
       researcherName: validateValueInRow(rows[i], 0),
       researcherPersonalID: validateValueInRow(rows[i], 1),
@@ -274,7 +274,7 @@ router.get('/insertResearchFundSheet', function (req, res) {
 
 async function scrapingResearchFund(rows, callback) {
   let j = 0;
-  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+  for (let i = 1; i < rows.length; i++) {  // skip header row (i=0)
     let scrapingData = {
       researcherName: validateValueInRow(rows[i], 0),
       researcherPersonalID: validateValueInRow(rows[i], 1),
@@ -337,7 +337,7 @@ router.get('/insertRewardSheet', function (req, res) {
 
 async function scrapingReward(rows, callback) {
   let j = 0;
-  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+  for (let i = 1; i < rows.length; i++) {  // skip header row (i=0)
     let scrapingData = {
       researcherName: validateValueInRow(rows[i], 0),
       researcherPersonalID: validateValueInRow(rows[i], 1),
@@ -381,7 +381,7 @@ router.get('/insertIntellectualPropertySheet', function (req, res) {
 
 async function scrapingIntellectualProperty(rows, callback) {
   let j = 0;
-  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+  for (let i = 1; i < rows.length; i++) {  // skip header row (i=0)
     let scrapingData = {
       researcherName: validateValueInRow(rows[i], 0),
       researcherPersonalID: validateValueInRow(rows[i], 1),
@@ -426,7 +426,7 @@ router.get('/insertThesisSheet', function (req, res) {
 
 async function scrapingThesis(rows, callback) {
   let j = 0;
-  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+  for (let i = 1; i < rows.length; i++) {  // skip header row (i=0)
     let scrapingData = {
       researcherName: validateValueInRow(rows[i], 0),
       researcherPersonalID: validateValueInRow(rows[i], 1),
@@ -556,7 +556,7 @@ router.get('/insertTeacherTrainingSheet', function (req, res) {
 
 async function scrapingResearcherTraining(rows, callback) {
   let j = 0;
-  for (var i = 1; i < rows.length; i++) {  // skip header row (i=0)
+  for (let i = 1; i < rows.length; i++) {  // skip header row (i=0)
     let scrapingData = {
       researcherName: validateValueInRow(rows[i], 0),
           researcherPersonalID: validateValueInRow(rows[i], 1),
@@ -586,17 +586,17 @@ async function scrapingResearcherTraining(rows, callback) {
 
 router.get('/getDataSetup', async function (req, res) {
 
-  var response1 = await rp({
+  let response1 = await rp({
     uri: 'http://localhost:2000/api/getAllDepartment',
     method: 'POST',
     form: {}
   });
-  var response2 = await rp({
+  let response2 = await rp({
     uri: 'http://localhost:2000/api/getAllPosition',
     method: 'POST',
     form: {}
   });
-  var response3 = await rp({
+  let response3 = await rp({
     uri: 'http://localhost:2000/api/getAllAcademicLevel',
     method: 'POST',
     form: {}
@@ -606,26 +606,26 @@ router.get('/getDataSetup', async function (req, res) {
   if (response3.constructor != Object) response3 = JSON.parse(response3);
 
   if (response1.code == '999999' && response1.data.length > 0) {
-    var depts_new = response1.data;
-    for (var i = 0; i < depts_new.length; i++) {
-      var isNew = true;
-      for (var j = 0; j < deptData.length; j++) if (depts_new[i]._id == deptData[j]._id) { isNew = false; break; }
+    let depts_new = response1.data;
+    for (let i = 0; i < depts_new.length; i++) {
+      let isNew = true;
+      for (let j = 0; j < deptData.length; j++) if (depts_new[i]._id == deptData[j]._id) { isNew = false; break; }
       if (isNew) deptData.push(depts_new[i]);
     }
   }
   if (response2.code == '999999' && response2.data.length > 0) {
-    var pos_new = response2.data;
-    for (var i = 0; i < pos_new.length; i++) {
-      var isNew = true;
-      for (var j = 0; j < positionData.length; j++) if (pos_new[i]._id == positionData[j]._id) { isNew = false; break; }
+    let pos_new = response2.data;
+    for (let i = 0; i < pos_new.length; i++) {
+      let isNew = true;
+      for (let j = 0; j < positionData.length; j++) if (pos_new[i]._id == positionData[j]._id) { isNew = false; break; }
       if (isNew) positionData.push(pos_new[i]);
     }
   }
   if (response3.code == '999999' && response3.data.length > 0) {
-    var acads_new = response3.data;
-    for (var i = 0; i < acads_new.length; i++) {
-      var isNew = true;
-      for (var j = 0; j < academicData.length; j++) if (acads_new[i]._id == academicData[j]._id) { isNew = false; break; }
+    let acads_new = response3.data;
+    for (let i = 0; i < acads_new.length; i++) {
+      let isNew = true;
+      for (let j = 0; j < academicData.length; j++) if (acads_new[i]._id == academicData[j]._id) { isNew = false; break; }
       if (isNew) academicData.push(acads_new[i]);
     }
   }

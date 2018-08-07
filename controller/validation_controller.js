@@ -1,11 +1,11 @@
-var ObjectId = require('mongodb').ObjectId;
+let ObjectId = require('mongodb').ObjectId;
 
 module.exports = {
     requiredData_Check: function (requiredInput) {
         //console.log("Checking Data.. Length=" + requiredInput.length);
         //console.log(requiredInput.toString());
         let nullNotFounded = true;
-        for (var i = 0; i < requiredInput.length; i++) {
+        for (let i = 0; i < requiredInput.length; i++) {
             //console.log("Checking.. @"+i+":" +requiredInput[i]);
             if (requiredInput[i] == null) {
                 nullNotFounded = false;
@@ -22,7 +22,7 @@ module.exports = {
         //console.log("Checking Data.. Length=" + requiredInput.length);
         //console.log(requiredInput.toString());
         let wrongNotFounded = true;
-        for (var i = 0; i < requiredInput.length; i++) {
+        for (let i = 0; i < requiredInput.length; i++) {
             //console.log("Checking.. @"+i+":" +requiredInput[i]);
             if (requiredInput[i] != "true" && requiredInput[i] != "false") {
                 wrongNotFounded = false;
@@ -35,7 +35,7 @@ module.exports = {
         //console.log("Checking Data.. Length=" + requiredInput.length);
         //console.log(requiredInput.toString());
         let wrongNotFounded = true;
-        for (var i = 0; i < requiredInput.length; i++) {
+        for (let i = 0; i < requiredInput.length; i++) {
             //console.log("Checking.. @"+i+":" +requiredInput[i]);
             if (!ObjectId.isValid(requiredInput[i])) {
                 wrongNotFounded = false;
@@ -48,7 +48,7 @@ module.exports = {
         //console.log("Checking Data.. Length=" + requiredInput.length);
         //console.log(requiredInput.toString());
         let wrongNotFounded = true;
-        for (var i = 0; i < requiredInput.length; i++) {
+        for (let i = 0; i < requiredInput.length; i++) {
             //console.log("Checking.. @"+i+":" +requiredInput[i]);
             if (isNaN(requiredInput[i])) {
                 wrongNotFounded = false;

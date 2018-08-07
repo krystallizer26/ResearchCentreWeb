@@ -1,42 +1,42 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 // DATABASE SETUP
-var ObjectId = require('mongodb').ObjectId;
+let ObjectId = require('mongodb').ObjectId;
 
 
 //มิดเดิ้ลแว อยุ่ข้างบนเสมอ ก่อน get ไว้ทำ log  // เฉพาะ ที่ accessเข้าไฟล์นี้  ดูจากต้นทาง app.ut(/???,....);
 // middleware to use for all requests
 
 //Must use
-var flow = require('../services/flow.js')
-var ReturnCode = require('../model/returnCode.js');
-var Validate = require("../controller/validation_controller.js");
-var Return_Control = require('../controller/return_control.js');
+let flow = require('../services/flow.js')
+let ReturnCode = require('../model/returnCode.js');
+let Validate = require("../controller/validation_controller.js");
+let Return_Control = require('../controller/return_control.js');
 
 //Model
-var Keyword = require('../model/keyword_model.js');
+let Keyword = require('../model/keyword_model.js');
 
 //Controller
-var Keyword_Control = require("../controller/keyword_control.js");
+let Keyword_Control = require("../controller/keyword_control.js");
 
 router.post('/newKeyword', function (request, response) {
-    var methodCode = "11";
+    let methodCode = "11";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.keywordName_TH);
     requiredData.push(request.body.keywordName_EN);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
             function () {
-                var keyword = new Keyword();
+                let keyword = new Keyword();
                 keyword.keywordName_TH = request.body.keywordName_TH;
                 keyword.keywordName_EN = request.body.keywordName_EN;
                 Keyword_Control.newKeyword(keyword, this);
@@ -53,25 +53,25 @@ router.post('/newKeyword', function (request, response) {
 });
 
 router.post('/editKeyword/', function (request, response) {
-    var methodCode = "12";
+    let methodCode = "12";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.keywordId);
     requiredData.push(request.body.keywordName_TH);
     requiredData.push(request.body.keywordName_EN);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.keywordId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -84,7 +84,7 @@ router.post('/editKeyword/', function (request, response) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    var keyword = new Keyword();
+                    let keyword = new Keyword();
                     keyword.keywordName_TH = request.body.keywordName_TH;
                     keyword.keywordName_EN = request.body.keywordName_EN;
                     Keyword_Control.updateKeywordByID(new ObjectId(request.body.keywordId), keyword, this);
@@ -102,7 +102,7 @@ router.post('/editKeyword/', function (request, response) {
 });
 
 router.post('/getAllKeyword/', function (request, response) {
-    var methodCode = "13";
+    let methodCode = "13";
 
     flow.exec(
         function () {
@@ -120,23 +120,23 @@ router.post('/getAllKeyword/', function (request, response) {
 });
 
 router.post('/getKeywordfromID/', function (request, response) {
-    var methodCode = "14";
+    let methodCode = "14";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.keywordId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.keywordId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -157,23 +157,23 @@ router.post('/getKeywordfromID/', function (request, response) {
 });
 
 router.post('/deleteKeyword/', function (request, response) {
-    var methodCode = "15";
+    let methodCode = "15";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.keywordId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.keywordId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }

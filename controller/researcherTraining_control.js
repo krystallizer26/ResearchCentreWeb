@@ -1,18 +1,18 @@
-var flow = require('../services/flow.js')
-var ObjectId = require('mongodb').ObjectId;
+let flow = require('../services/flow.js')
+let ObjectId = require('mongodb').ObjectId;
 
-var ResearcherTraining = require('../model/researcherTraining_model.js');
-var Researcher_Control = require("../controller/researcher_control.js");
+let ResearcherTraining = require('../model/researcherTraining_model.js');
+let Researcher_Control = require("../controller/researcher_control.js");
 
-var Validate = require("../controller/validation_controller.js");
-var Researcher_Control = require("../controller/researcher_control.js");
-var Position_Control = require("../controller/position_control.js");
-var Keyword_Control = require("../controller/keyword_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var Department_Control = require("../controller/department_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Validate = require("../controller/validation_controller.js");
+let Researcher_Control = require("../controller/researcher_control.js");
+let Position_Control = require("../controller/position_control.js");
+let Keyword_Control = require("../controller/keyword_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let Department_Control = require("../controller/department_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
 module.exports = {
     newResearcherTraining: function (researcherTraining, callback) {
@@ -33,7 +33,7 @@ module.exports = {
                 researcherTraining.save(function (error, saveResponse) {
                     if (error) {
                         let errCode = "831";
-                        var alert = "Saving Publication fail, Error: " + error.message + "@" + researcherTraining.researchName;
+                        let alert = "Saving Publication fail, Error: " + error.message + "@" + researcherTraining.researchName;
                         console.log("ERROR Code: " + errCode + " " + alert);
                         callback(errCode, alert, null);
                     }
@@ -49,13 +49,13 @@ module.exports = {
         let j = 0
         let scrapingData = JSON.parse(JSON.stringify(publication_bulk))
 
-        var researcherTraining = new ResearcherTraining();
-        var requiredData = [];
+        let researcherTraining = new ResearcherTraining();
+        let requiredData = [];
         requiredData.push(scrapingData.researcherName);
-        var requiredReady = Validate.requiredData_Check(requiredData);
+        let requiredReady = Validate.requiredData_Check(requiredData);
 
         if (!requiredReady) {
-            var alert = "Input Not Valid, check if some data is required."
+            let alert = "Input Not Valid, check if some data is required."
             console.log(alert);
             callback("New researcherTraining was saved successfully")
         }
@@ -76,7 +76,7 @@ module.exports = {
             researcherTraining.approveDate = Validate.scrappingCleanUp(scrapingData.approveDate)
             researcherTraining.researcherName = Validate.scrappingCleanUp(scrapingData.researcherName)
 
-            var Researcher_Control = require("../controller/researcher_control.js");
+            let Researcher_Control = require("../controller/researcher_control.js");
 
             flow.exec(
                 function () {
@@ -93,7 +93,7 @@ module.exports = {
                     researcherTraining.save(function (error, saveResponse) {
                         if (error) {
                             let errCode = "831";
-                            var alert = "Saving Publication fail, Error: " + error.message + "@" + researcherTraining.researchName;
+                            let alert = "Saving Publication fail, Error: " + error.message + "@" + researcherTraining.researchName;
                             console.log("ERROR Code: " + errCode + " " + alert);
                         }
                     });
@@ -107,7 +107,7 @@ module.exports = {
         ResearcherTraining.findOne({ "_id": researcherTrainingId }, function (error, functionCallback) {
             if (error) {
                 let errCode = "861";
-                var alert = "Error in finding ResearcherTraining with _id: " + researcherTrainingId + "\nError: " + error.message;
+                let alert = "Error in finding ResearcherTraining with _id: " + researcherTrainingId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -116,7 +116,7 @@ module.exports = {
             }
             else {
                 let errCode = "863";
-                var alert = "ResearcherTraining with _id: " + researcherTrainingId + " not found";
+                let alert = "ResearcherTraining with _id: " + researcherTrainingId + " not found";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, functionCallback)
             }
@@ -127,19 +127,19 @@ module.exports = {
         ResearcherTraining.find({}, {}, function (error, functionCallback) {
             if (error) {
                 let errCode = "651";
-                var alert = "Error in getAllPublication , Error : " + error.message;
+                let alert = "Error in getAllPublication , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
             else if (functionCallback) {
                 let errCode = "652";
-                var alert = "Get All Publication Completed! " + JSON.stringify(functionCallback);
+                let alert = "Get All Publication Completed! " + JSON.stringify(functionCallback);
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "653";
-                var alert = "No Publication Founded";
+                let alert = "No Publication Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -150,7 +150,7 @@ module.exports = {
         ResearcherTraining.remove({ "_id": researcherTrainingId }, function (error, deleteCallback) {
             if (error) {
                 let errCode = "661";
-                var alert = "Error in deleting ResearcherTraining with _id " + researcherTrainingId + " Error: " + error.message;
+                let alert = "Error in deleting ResearcherTraining with _id " + researcherTrainingId + " Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -164,7 +164,7 @@ module.exports = {
         ResearcherTraining.remove({}, function (error, deleteCallback) {
             if (error) {
                 let errCode = "741";
-                var alert = "Error in wiping Reward Error: " + error.message;
+                let alert = "Error in wiping Reward Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -188,19 +188,19 @@ module.exports = {
         }, function (error, functionCallback) {
             if (error) {
                 let errCode = "841";
-                var alert = "Error in getAllResearcherTrainingPreview , Error : " + error.message;
+                let alert = "Error in getAllResearcherTrainingPreview , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
             else if (functionCallback.length > 0) {
                 let errCode = "842";
-                var alert = "Get All ResearcherTraining Completed! ";
+                let alert = "Get All ResearcherTraining Completed! ";
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "843";
-                var alert = "No ResearcherTraining Founded";
+                let alert = "No ResearcherTraining Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -222,19 +222,19 @@ module.exports = {
             , function (error, functionCallback) {
                 if (error) {
                     let errCode = "851";
-                    var alert = "Error in getAllResearcherTrainingPreviewByResearcherId , Error : " + error.message;
+                    let alert = "Error in getAllResearcherTrainingPreviewByResearcherId , Error : " + error.message;
                     console.log("ERROR Code: " + errCode + " " + alert);
                     callback(errCode, alert, null)
                 }
                 else if (functionCallback.length > 0) {
                     let errCode = "852";
-                    var alert = "Get All ResearcherTraining Completed! ";
+                    let alert = "Get All ResearcherTraining Completed! ";
                     //console.log(alert);
                     callback(errCode, null, functionCallback)
                 }
                 else {
                     let errCode = "853";
-                    var alert = "No ResearcherTraining Founded";
+                    let alert = "No ResearcherTraining Founded";
                     console.log("ERROR Code: " + errCode + " " + alert);
                     callback(errCode, alert, null)
                 }
@@ -278,12 +278,12 @@ module.exports = {
 
 //---------------------------------------------
 
-var Department_Control = require("../controller/department_control.js");
-var Position_Control = require("../controller/position_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Department_Control = require("../controller/department_control.js");
+let Position_Control = require("../controller/position_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
 function getFullResearcherTrainingPreview(input, callback) {
     let researcherTrainingData = JSON.parse(JSON.stringify(input));

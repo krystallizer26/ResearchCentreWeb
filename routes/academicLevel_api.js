@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 // DATABASE SETUP
-var ObjectId = require('mongodb').ObjectId;
+let ObjectId = require('mongodb').ObjectId;
 
 
 //มิดเดิ้ลแว อยุ่ข้างบนเสมอ ก่อน get ไว้ทำ log  // เฉพาะ ที่ accessเข้าไฟล์นี้  ดูจากต้นทาง app.ut(/???,....);
@@ -10,34 +10,34 @@ var ObjectId = require('mongodb').ObjectId;
 
 
 //Must use
-var flow = require('../services/flow.js')
-var ReturnCode = require('../model/returnCode.js');
-var Validate = require("../controller/validation_controller.js");
-var Return_Control = require('../controller/return_control.js');
+let flow = require('../services/flow.js')
+let ReturnCode = require('../model/returnCode.js');
+let Validate = require("../controller/validation_controller.js");
+let Return_Control = require('../controller/return_control.js');
 
 //Model
-var AcademicLevel = require('../model/academicLevel_model.js');
+let AcademicLevel = require('../model/academicLevel_model.js');
 
 //Controller
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
 
 router.post('/newAcademicLevel', function (request, response) {
-    var methodCode = "16";
+    let methodCode = "16";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.academicLevelName_TH);
     requiredData.push(request.body.academicLevelName_EN);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
             function () {
-                var academicLevel = new AcademicLevel();
+                let academicLevel = new AcademicLevel();
                 academicLevel.academicLevelName_TH = request.body.academicLevelName_TH;
                 academicLevel.academicLevelName_EN = request.body.academicLevelName_EN;
                 AcademicLevel_Control.newAcademicLevel(academicLevel, this);
@@ -54,25 +54,25 @@ router.post('/newAcademicLevel', function (request, response) {
 });
 
 router.post('/editAcademicLevel/', function (request, response) {
-    var methodCode = "17";
+    let methodCode = "17";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.academicLevelId);
     requiredData.push(request.body.academicLevelName_TH);
     requiredData.push(request.body.academicLevelName_EN);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.academicLevelId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -85,7 +85,7 @@ router.post('/editAcademicLevel/', function (request, response) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
                 }
                 else {
-                    var academicLevel = new AcademicLevel();
+                    let academicLevel = new AcademicLevel();
                     academicLevel.academicLevelName_TH = request.body.academicLevelName_TH;
                     academicLevel.academicLevelName_EN = request.body.academicLevelName_EN;
                     AcademicLevel_Control.updateAcademicLevelByID(new ObjectId(request.body.academicLevelId), academicLevel, this);
@@ -103,7 +103,7 @@ router.post('/editAcademicLevel/', function (request, response) {
 });
 
 router.post('/getAllAcademicLevel/', function (request, response) {
-    var methodCode = "18";
+    let methodCode = "18";
 
     flow.exec(
         function () {
@@ -121,23 +121,23 @@ router.post('/getAllAcademicLevel/', function (request, response) {
 });
 
 router.post('/getAcademicLevelfromID/', function (request, response) {
-    var methodCode = "19";
+    let methodCode = "19";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.academicLevelId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.academicLevelId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -158,23 +158,23 @@ router.post('/getAcademicLevelfromID/', function (request, response) {
 });
 
 router.post('/deleteAcademicLevel/', function (request, response) {
-    var methodCode = "20";
+    let methodCode = "20";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.academicLevelId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.academicLevelId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }

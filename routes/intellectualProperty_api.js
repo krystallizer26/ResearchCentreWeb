@@ -1,48 +1,48 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 // DATABASE SETUP
-var ObjectId = require('mongodb').ObjectId;
+let ObjectId = require('mongodb').ObjectId;
 
 //Must use
-var flow = require('../services/flow.js')
-var ReturnCode = require('../model/returnCode.js');
-var Validate = require("../controller/validation_controller.js");
-var Return_Control = require('../controller/return_control.js');
+let flow = require('../services/flow.js')
+let ReturnCode = require('../model/returnCode.js');
+let Validate = require("../controller/validation_controller.js");
+let Return_Control = require('../controller/return_control.js');
 
 //Model
-var IntellectualProperty = require('../model/intellectualProperty_model.js');
+let IntellectualProperty = require('../model/intellectualProperty_model.js');
 
 //Controller
-var Researcher_Control = require("../controller/researcher_control.js");
-var Position_Control = require("../controller/position_control.js");
-var Keyword_Control = require("../controller/keyword_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var Department_Control = require("../controller/department_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
-var Publication_Control = require("../controller/publication_control.js");
-var IntellectualProperty_Control = require("../controller/intellectualProperty_control.js");
+let Researcher_Control = require("../controller/researcher_control.js");
+let Position_Control = require("../controller/position_control.js");
+let Keyword_Control = require("../controller/keyword_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let Department_Control = require("../controller/department_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Publication_Control = require("../controller/publication_control.js");
+let IntellectualProperty_Control = require("../controller/intellectualProperty_control.js");
 
 router.post('/newIntellectualProperty_EachScrap', function (request, response) {
-    var methodCode = "...";
+    let methodCode = "...";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.researcherName);
     requiredData.push(request.body.researcherPersonalID);
     requiredData.push(request.body.intPropertyName);
-    var requiredReady = Validate.requiredData_Check(requiredData);
+    let requiredReady = Validate.requiredData_Check(requiredData);
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         //console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else {
         flow.exec(
             function () {
-                var intellectualProperty = new IntellectualProperty();
+                let intellectualProperty = new IntellectualProperty();
                 intellectualProperty.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
                 intellectualProperty.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
                 intellectualProperty.intPropertyCode = Validate.scrappingCleanUp(request.body.intPropertyCode)
@@ -69,7 +69,7 @@ router.post('/newIntellectualProperty_EachScrap', function (request, response) {
 });
 
 router.post('/getAllIntellectualPropertyPreview/', function (request, response) {
-    var methodCode = "68";
+    let methodCode = "68";
 
     flow.exec(
         function () {
@@ -96,20 +96,20 @@ router.post('/getAllIntellectualPropertyPreview/', function (request, response) 
 });
 
 router.post('/getAllIntellectualPropertyPreviewByResearcherId/', function (request, response) {
-    var methodCode = "69";
+    let methodCode = "69";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.researcherId);
     requiredData.push(request.body.limit);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var numberData = [];
+    let numberData = [];
     numberData.push(request.body.limit);
-    var numberReady = Validate.numberData_Check(numberData)
+    let numberReady = Validate.numberData_Check(numberData)
 
-    var objectData = [];
+    let objectData = [];
     objectData.push(request.body.researcherId);
-    var objectReady = Validate.objectIDData_Check(objectData)
+    let objectReady = Validate.objectIDData_Check(objectData)
 
     if (!requiredReady) {
         let alert = "Input Not Valid, check if some data is required.";
@@ -153,23 +153,23 @@ router.post('/getAllIntellectualPropertyPreviewByResearcherId/', function (reque
 });
 
 router.post('/getIntellectualPropertyfromID/', function (request, response) {
-    var methodCode = "70";
+    let methodCode = "70";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.intellectualPropertyId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.intellectualPropertyId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -193,23 +193,23 @@ router.post('/getIntellectualPropertyfromID/', function (request, response) {
 });
 
 router.post('/deleteIntellectualProperty/', function (request, response) {
-    var methodCode = "71";
+    let methodCode = "71";
 
-    var requiredData = [];
+    let requiredData = [];
     requiredData.push(request.body.intellectualPropertyId);
-    var requiredReady = Validate.requiredData_Check(requiredData)
+    let requiredReady = Validate.requiredData_Check(requiredData)
 
-    var objectIdData = [];
+    let objectIdData = [];
     objectIdData.push(request.body.intellectualPropertyId);
-    var objectIdReady = Validate.objectIDData_Check(objectIdData)
+    let objectIdReady = Validate.objectIDData_Check(objectIdData)
 
     if (!requiredReady) {
-        var alert = "Input Not Valid, check if some data is required."
+        let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
     }
     else if (!objectIdReady) {
-        var alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
+        let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
     }
@@ -237,7 +237,7 @@ router.post('/deleteIntellectualProperty/', function (request, response) {
 });
 
 router.get('/wipeIntellectualProperty/', function (request, response) {
-    var methodCode = "72";
+    let methodCode = "72";
 
     flow.exec(
         function () {

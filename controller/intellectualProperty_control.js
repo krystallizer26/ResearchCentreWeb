@@ -1,17 +1,17 @@
-var flow = require('../services/flow.js')
-var ObjectId = require('mongodb').ObjectId;
+let flow = require('../services/flow.js')
+let ObjectId = require('mongodb').ObjectId;
 
-var IntellectualProperty = require('../model/intellectualProperty_model.js');
+let IntellectualProperty = require('../model/intellectualProperty_model.js');
 
-var Validate = require("../controller/validation_controller.js");
-var Researcher_Control = require("../controller/researcher_control.js");
-var Position_Control = require("../controller/position_control.js");
-var Keyword_Control = require("../controller/keyword_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var Department_Control = require("../controller/department_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Validate = require("../controller/validation_controller.js");
+let Researcher_Control = require("../controller/researcher_control.js");
+let Position_Control = require("../controller/position_control.js");
+let Keyword_Control = require("../controller/keyword_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let Department_Control = require("../controller/department_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
 module.exports = {
     newIntellectualProperty: function (intellectualProperty, callback) {
@@ -32,7 +32,7 @@ module.exports = {
                 intellectualProperty.save(function (error, saveResponse) {
                     if (error) {
                         let errCode = "681";
-                        var alert = "Saving Publication fail, Error: " + error.message + "@" + intellectualProperty.intPropertyName;
+                        let alert = "Saving Publication fail, Error: " + error.message + "@" + intellectualProperty.intPropertyName;
                         console.log("ERROR Code: " + errCode + " " + alert);
                         callback(errCode, alert, null);
                     }
@@ -48,15 +48,15 @@ module.exports = {
         let j = 0
         let scrapingData = JSON.parse(JSON.stringify(publication_bulk))
 
-        var intellectualProperty = new IntellectualProperty();
-        var requiredData = [];
+        let intellectualProperty = new IntellectualProperty();
+        let requiredData = [];
         requiredData.push(scrapingData.researcherName);
         requiredData.push(scrapingData.researcherPersonalID);
         requiredData.push(scrapingData.intPropertyName);
-        var requiredReady = Validate.requiredData_Check(requiredData);
+        let requiredReady = Validate.requiredData_Check(requiredData);
 
         if (!requiredReady) {
-            var alert = "Input Not Valid, check if some data is required."
+            let alert = "Input Not Valid, check if some data is required."
             console.log(alert);
             callback("New Publications was saved successfully")
         }
@@ -72,7 +72,7 @@ module.exports = {
             intellectualProperty.claimBy = Validate.scrappingCleanUp(scrapingData.claimBy)
             intellectualProperty.coCreation = Validate.scrappingCleanUp(scrapingData.coCreation)
             
-            var Researcher_Control = require("../controller/researcher_control.js");
+            let Researcher_Control = require("../controller/researcher_control.js");
 
             flow.exec(
                 function () {
@@ -89,7 +89,7 @@ module.exports = {
                     intellectualProperty.save(function (error, saveResponse) {
                         if (error) {
                             let errCode = "681";
-                            var alert = "Saving intellectualProperty fail, Error: " + error.message + "@" + intellectualProperty.intPropertyName;
+                            let alert = "Saving intellectualProperty fail, Error: " + error.message + "@" + intellectualProperty.intPropertyName;
                             console.log("ERROR Code: " + errCode + " " + alert);
                             callback(errCode, alert, null);
                         }
@@ -117,19 +117,19 @@ module.exports = {
         }, function (error, functionCallback) {
             if (error) {
                 let errCode = "691";
-                var alert = "Error in getAllIntellectualPropertyPreview , Error : " + error.message;
+                let alert = "Error in getAllIntellectualPropertyPreview , Error : " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
             else if (functionCallback.length > 0) {
                 let errCode = "692";
-                var alert = "Get All IntellectualProperty Completed! ";
+                let alert = "Get All IntellectualProperty Completed! ";
                 //console.log(alert);
                 callback(errCode, null, functionCallback)
             }
             else {
                 let errCode = "693";
-                var alert = "No IntellectualProperty Founded";
+                let alert = "No IntellectualProperty Founded";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -150,19 +150,19 @@ module.exports = {
             , function (error, functionCallback) {
                 if (error) {
                     let errCode = "701";
-                    var alert = "Error in getAllIntellectualPropertyPreviewByResearcherId , Error : " + error.message;
+                    let alert = "Error in getAllIntellectualPropertyPreviewByResearcherId , Error : " + error.message;
                     console.log("ERROR Code: " + errCode + " " + alert);
                     callback(errCode, alert, null)
                 }
                 else if (functionCallback.length > 0) {
                     let errCode = "702";
-                    var alert = "Get All IntellectualProperty Completed! ";
+                    let alert = "Get All IntellectualProperty Completed! ";
                     //console.log(alert);
                     callback(errCode, null, functionCallback)
                 }
                 else {
                     let errCode = "703";
-                    var alert = "No IntellectualProperty Founded";
+                    let alert = "No IntellectualProperty Founded";
                     //console.log("ERROR Code: " + errCode + " " + alert);
                     callback(errCode, alert, null)
                 }
@@ -173,7 +173,7 @@ module.exports = {
         IntellectualProperty.findOne({ "_id": intellectualPropertyId }, function (error, functionCallback) {
             if (error) {
                 let errCode = "711";
-                var alert = "Error in finding IntellectualProperty with _id: " + intellectualPropertyId + "\nError: " + error.message;
+                let alert = "Error in finding IntellectualProperty with _id: " + intellectualPropertyId + "\nError: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -182,7 +182,7 @@ module.exports = {
             }
             else {
                 let errCode = "713";
-                var alert = "IntellectualProperty with _id: " + intellectualPropertyId + " not found";
+                let alert = "IntellectualProperty with _id: " + intellectualPropertyId + " not found";
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, functionCallback)
             }
@@ -193,7 +193,7 @@ module.exports = {
         IntellectualProperty.remove({ "_id": intellectualPropertyId }, function (error, deleteCallback) {
             if (error) {
                 let errCode = "721";
-                var alert = "Error in deleting IntellectualProperty with _id " + intellectualPropertyId + " Error: " + error.message;
+                let alert = "Error in deleting IntellectualProperty with _id " + intellectualPropertyId + " Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -207,7 +207,7 @@ module.exports = {
         IntellectualProperty.remove({}, function (error, deleteCallback) {
             if (error) {
                 let errCode = "731";
-                var alert = "Error in wiping IntellectualProperty Error: " + error.message;
+                let alert = "Error in wiping IntellectualProperty Error: " + error.message;
                 console.log("ERROR Code: " + errCode + " " + alert);
                 callback(errCode, alert, null)
             }
@@ -254,12 +254,12 @@ module.exports = {
 
 //---------------------------------------------
 
-var Department_Control = require("../controller/department_control.js");
-var Position_Control = require("../controller/position_control.js");
-var AcademicLevel_Control = require("../controller/academicLevel_control.js");
-var BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
+let Department_Control = require("../controller/department_control.js");
+let Position_Control = require("../controller/position_control.js");
+let AcademicLevel_Control = require("../controller/academicLevel_control.js");
+let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
+let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
+let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
 function getFullIntellectualPropertyPreview(input, callback) {
     let intellectualPropertyData = JSON.parse(JSON.stringify(input));
