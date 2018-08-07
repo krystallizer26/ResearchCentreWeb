@@ -23,6 +23,8 @@ app.controller('trainingCtrl', function($scope, $http,global_service) {
 
       console.log($scope.trainingList)
       //console.log($scope.thesis)
+        
+     
     }
   })
   .error(function(data, status, headers, config) {

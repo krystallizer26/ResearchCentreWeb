@@ -22,11 +22,14 @@ app.controller('profileDetailThesistitleCtrl', function($scope, $http,global_ser
       $scope.thesis = data.data;
       $scope.thesis.forEach(function(item){
         item.studentName =  item.studentName.replace('รศ.', "").replace('ดร.', "").replace('อ.', "").replace('ผศ.', "").replace('ศ.', "")
-
+        var year =  item.studentCode;
+        var yaers = "25"+ year.substring(0, 2);
+        item.year = yaers;
 
       })
 
-    
+
+      console.log($scope.trainingList)
 
       console.log($scope.thesis)
     }

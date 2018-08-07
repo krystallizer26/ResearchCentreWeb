@@ -14,7 +14,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
         <div ng-repeat="award in awards | orderBy: '-rewardYear'">
             <div class="row" >
               <div class= "col-sm-1"><div class="icon-trophy" style="font-size: 18px;color: #6a6a6a;"></div></div>
-              <div class= "col-sm-10">{{award.rewardYear}} , <b>{{award.rewardName}}</b></div>
+              <div class= "col-sm-10">{{award.rewardYear}} , <b>{{award.rewardName}}</b>, {{award.rewardFrom}}, {{award.rewardDate}}</div>
             </div>
             <hr/>
           </div>
