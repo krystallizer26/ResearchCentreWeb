@@ -75,6 +75,9 @@ module.exports = {
             researcherTraining.orderCode = Validate.scrappingCleanUp(scrapingData.orderCode)
             researcherTraining.approveDate = Validate.scrappingCleanUp(scrapingData.approveDate)
             researcherTraining.researcherName = Validate.scrappingCleanUp(scrapingData.researcherName)
+
+            var Researcher_Control = require("../controller/researcher_control.js");
+
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(researcherTraining.researcherPersonalID, this);

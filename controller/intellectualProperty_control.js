@@ -71,6 +71,9 @@ module.exports = {
             intellectualProperty.licenseType = Validate.scrappingCleanUp(scrapingData.licenseType)
             intellectualProperty.claimBy = Validate.scrappingCleanUp(scrapingData.claimBy)
             intellectualProperty.coCreation = Validate.scrappingCleanUp(scrapingData.coCreation)
+            
+            var Researcher_Control = require("../controller/researcher_control.js");
+
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(intellectualProperty.researcherPersonalID, this);
