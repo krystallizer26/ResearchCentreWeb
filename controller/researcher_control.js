@@ -580,6 +580,7 @@ function getFullResearcherPreview(num,input, callback) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
                     j++
                     if (j >= functionCallback.length) {
+                        console.log("#" + num + " constructing pub Completed <3")
                         Thesis_Control.getAllThesisPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
                     }
                 }
