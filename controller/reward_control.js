@@ -70,6 +70,8 @@ module.exports = {
             reward.rewardDate = Validate.scrappingCleanUp(scrapingData.rewardDate)
             reward.rewardRank = Validate.scrappingCleanUp(scrapingData.rewardRank)
 
+            var Researcher_Control = require("../controller/researcher_control.js");
+
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(reward.researcherPersonalID, this);

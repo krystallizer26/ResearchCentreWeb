@@ -662,24 +662,3 @@ function getFullResearcherPreview(num, input, callback) {
         }
     );
 }
-
-// function (code, err, functionCallback) {
-
-//     researcherData["publicationString"] = ""
-//     if (functionCallback.length > 0) {
-//         let j = 0
-//         for (let i = 0; i < functionCallback.length; i++) {
-//             researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
-
-//             j++
-//             if (j == functionCallback.length) {
-//                 //console.log("researcherData[publicationString] >> " + researcherData["publicationString"] + " for " + researcherData["researcherName_TH"])
-//                 callback(researcherData)
-//             }
-//         }
-//     }
-//     else {
-//         callback(researcherData)
-//     }
-//     // forCallback_getFullResearcherPreview.push(researcherData)
-// }
