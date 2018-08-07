@@ -571,7 +571,7 @@ function getFullResearcherPreview(input, callback) {
             // forCallback_getFullResearcherPreview.push(researcherData)
         }, function (code, err, functionCallback) {
 
-            if (functionCallback.length) {
+            if (functionCallback) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
