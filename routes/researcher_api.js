@@ -35,7 +35,6 @@ router.post('/newResearcher', function (request, response) {
     requiredData.push(request.body.researcherName_EN);
     requiredData.push(request.body.personalID);
     let requiredReady = Validate.requiredData_Check(requiredData);
-    let requiredReady = true
 
     if (!requiredReady) {
         let alert = "Input Not Valid, check if some data is required. "
