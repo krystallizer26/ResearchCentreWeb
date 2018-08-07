@@ -576,13 +576,18 @@ function getFullResearcherPreview(num, input, callback) {
             if (functionCallback) {
                 console.log("#" + num + " constructing pub <3 @length=" + functionCallback.length)
                 let j = 0
-                for (let i = 0; i < functionCallback.length || functionCallback.length == 0; i++) {
-                    researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
-                    j++
-                    if (j >= functionCallback.length) {
-                        console.log("#" + num + " constructing pub Completed <3")
-                        Thesis_Control.getAllThesisPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
+                if (functionCallback.length > 0) {
+                    for (let i = 0; i < functionCallback.length; i++) {
+                        researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
+                        j++
+                        if (j >= functionCallback.length) {
+                            console.log("#" + num + " constructing pub Completed <3")
+                            Thesis_Control.getAllThesisPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
+                        }
                     }
+                }
+                else {
+                    Thesis_Control.getAllThesisPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
                 }
             }
             else {
@@ -594,12 +599,17 @@ function getFullResearcherPreview(num, input, callback) {
             console.log("#" + num + " Thesis_Control back <3")
             if (functionCallback) {
                 let j = 0
-                for (let i = 0; i < functionCallback.length || functionCallback.length == 0; i++) {
-                    researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].thesisName_TH + "," + functionCallback[i].thesisName_EN + " / "
-                    j++
-                    if (j >= functionCallback.length) {
-                        IntellectualProperty_Control.getAllIntellectualPropertyPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
+                if (functionCallback.length > 0) {
+                    for (let i = 0; i < functionCallback.length; i++) {
+                        researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].thesisName_TH + "," + functionCallback[i].thesisName_EN + " / "
+                        j++
+                        if (j >= functionCallback.length) {
+                            IntellectualProperty_Control.getAllIntellectualPropertyPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
+                        }
                     }
+                }
+                else {
+                    IntellectualProperty_Control.getAllIntellectualPropertyPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
                 }
             }
             else {
@@ -610,12 +620,17 @@ function getFullResearcherPreview(num, input, callback) {
             console.log("#" + num + " IntellectualProperty_Control back <3")
             if (functionCallback) {
                 let j = 0
-                for (let i = 0; i < functionCallback.length || functionCallback.length == 0; i++) {
-                    researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].intPropertyName + " / "
-                    j++
-                    if (j >= functionCallback.length) {
-                        Reward_Control.getAllRewardPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
+                if (functionCallback.length > 0) {
+                    for (let i = 0; i < functionCallback.length; i++) {
+                        researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].intPropertyName + " / "
+                        j++
+                        if (j >= functionCallback.length) {
+                            Reward_Control.getAllRewardPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
+                        }
                     }
+                }
+                else {
+                    Reward_Control.getAllRewardPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
                 }
             }
             else {
@@ -626,14 +641,19 @@ function getFullResearcherPreview(num, input, callback) {
             console.log("#" + num + " Reward_Control back <3")
             if (functionCallback) {
                 let j = 0
-                for (let i = 0; i < functionCallback.length || functionCallback.length == 0; i++) {
-                    researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].rewardName + " / "
-                    j++
-                    if (j >= functionCallback.length) {
-                        console.log("#" + num + " Finishing <3")
-                        callback(researcherData)
+                if (functionCallback.length > 0) {
+                    for (let i = 0; i < functionCallback.length; i++) {
+                        researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].rewardName + " / "
+                        j++
+                        if (j >= functionCallback.length) {
+                            callback(researcherData)
+                        }
                     }
                 }
+                else {
+                    callback(researcherData)
+                }
+
             }
             else {
                 console.log("#" + num + " Finishing <3")
