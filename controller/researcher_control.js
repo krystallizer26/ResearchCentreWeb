@@ -574,7 +574,7 @@ function getFullResearcherPreview(num,input, callback) {
             console.log("#" + num + " Publication_Control back <3")
             
             if (functionCallback) {
-                console.log("#" + num + " constructing pub <3")
+                console.log("#" + num + " constructing pub <3 @length="+functionCallback.length)
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
