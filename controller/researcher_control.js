@@ -572,7 +572,9 @@ function getFullResearcherPreview(num,input, callback) {
             // forCallback_getFullResearcherPreview.push(researcherData)
         }, function (code, err, functionCallback) {
             console.log("#" + num + " Publication_Control back <3")
+            
             if (functionCallback) {
+                console.log("#" + num + " constructing pub <3")
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
@@ -583,6 +585,7 @@ function getFullResearcherPreview(num,input, callback) {
                 }
             }
             else {
+                console.log("#" + num + " NOT constructing pub <3")
                 Thesis_Control.getAllThesisPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
             }
 
