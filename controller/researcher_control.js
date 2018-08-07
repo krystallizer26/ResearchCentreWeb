@@ -15,6 +15,10 @@ var MasterTeachingDepartment_Control = require("../controller/masterTeachingDepa
 var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 var Publication_Control = require("../controller/publication_control.js");
 
+var Thesis_Control = require("../controller/thesis_control.js");
+var IntellectualProperty_Control = require("../controller/intellectualProperty_control.js");
+var Reward_Control = require("../controller/reward_control.js");
+
 module.exports = {
     newResearcher: function (researcher, callback) {
         console.log("Saving Researcher: " + researcher.researcherName_TH);
@@ -131,7 +135,7 @@ module.exports = {
             researcher.personalSite = scrapingData.personalSite
             researcher.insignia1 = scrapingData.insignia1
             researcher.insignia2 = scrapingData.insignia2
-            
+
             researcher.totalCitationNotSelf = scrapingData.totalCitationNotSelf
             researcher.citation2014 = scrapingData.citation2014
             researcher.citation2015 = scrapingData.citation2015
@@ -234,7 +238,7 @@ module.exports = {
         });
     },
     checkResearcherByID: function (researcherId, query, callback) {
-        console.log("researcherId >q> " + researcherId )
+        console.log("researcherId >q> " + researcherId)
         Researcher.findOne({ "_id": researcherId }, query, function (error, functionCallback) {
             if (error) {
                 let errCode = "381";
@@ -438,7 +442,7 @@ module.exports = {
                 //console.log("a >> " + JSON.stringify(a))
                 //console.log("#" + i + " completed")
                 forCallback[i] = a;
-                
+
                 j++
                 if (j == researcher.length) {
                     console.log("ALL SET")
@@ -473,6 +477,7 @@ var forCallback_getFullResearcherPreview = []
 
 function getFullResearcher(input, callback) {
     let researcherData = JSON.parse(JSON.stringify(input));
+    researcherData["publicationString"] = ""
     console.log("getFullResearcherData for " + researcherData.researcherName_TH)
     flow.exec(
         function () {
@@ -566,15 +571,57 @@ function getFullResearcherPreview(input, callback) {
             // forCallback_getFullResearcherPreview.push(researcherData)
         }, function (code, err, functionCallback) {
 
-            researcherData["publicationString"] = ""
             if (functionCallback.length > 0) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
-
                     j++
-                    if (j == functionCallback.length) {
-                        //console.log("researcherData[publicationString] >> " + researcherData["publicationString"] + " for " + researcherData["researcherName_TH"])
+                    if (j >= functionCallback.length) {
+                        Thesis_Control.getAllThesisPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
+                    }
+                }
+            }
+            else {
+                Thesis_Control.getAllThesisPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
+            }
+        }, function (code, err, functionCallback) {
+
+            if (functionCallback.length > 0) {
+                let j = 0
+                for (let i = 0; i < functionCallback.length; i++) {
+                    researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].thesisName_TH + "," + functionCallback[i].thesisName_EN + " / "
+                    j++
+                    if (j >= functionCallback.length) {
+                        IntellectualProperty_Control.getAllIntellectualPropertyPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
+                    }
+                }
+            }
+            else {
+                IntellectualProperty_Control.getAllIntellectualPropertyPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
+            }
+        }, function (code, err, functionCallback) {
+
+            if (functionCallback.length > 0) {
+                let j = 0
+                for (let i = 0; i < functionCallback.length; i++) {
+                    researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].intPropertyName + " / "
+                    j++
+                    if (j >= functionCallback.length) {
+                        Reward_Control.getAllRewardPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
+                    }
+                }
+            }
+            else {
+                Reward_Control.getAllRewardPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
+            }
+        }, function (code, err, functionCallback) {
+
+            if (functionCallback.length > 0) {
+                let j = 0
+                for (let i = 0; i < functionCallback.length; i++) {
+                    researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].rewardName + " / "
+                    j++
+                    if (j >= functionCallback.length) {
                         callback(researcherData)
                     }
                 }
@@ -582,8 +629,27 @@ function getFullResearcherPreview(input, callback) {
             else {
                 callback(researcherData)
             }
-
-            // forCallback_getFullResearcherPreview.push(researcherData)
         }
     );
 }
+
+// function (code, err, functionCallback) {
+
+//     researcherData["publicationString"] = ""
+//     if (functionCallback.length > 0) {
+//         let j = 0
+//         for (let i = 0; i < functionCallback.length; i++) {
+//             researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
+
+//             j++
+//             if (j == functionCallback.length) {
+//                 //console.log("researcherData[publicationString] >> " + researcherData["publicationString"] + " for " + researcherData["researcherName_TH"])
+//                 callback(researcherData)
+//             }
+//         }
+//     }
+//     else {
+//         callback(researcherData)
+//     }
+//     // forCallback_getFullResearcherPreview.push(researcherData)
+// }
