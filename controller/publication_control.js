@@ -72,8 +72,6 @@ module.exports = {
             publication.graduationYear = Validate.scrappingCleanUp(scrapingData.graduationYear)
             publication.publicationRaw = Validate.scrappingCleanUp(scrapingData.doi)
 
-            let Researcher_Control = require("../controller/researcher_control.js");
-
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(publication.researcherPersonalID, this);

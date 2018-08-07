@@ -103,8 +103,6 @@ module.exports = {
             thesis.gradutionProduct.push(Validate.scrappingCleanUp(scrapingData.gradutionProduct2))
             thesis.gradutionProduct.push(Validate.scrappingCleanUp(scrapingData.gradutionProduct3))
 
-            let Researcher_Control = require("../controller/researcher_control.js");
-
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(thesis.researcherPersonalID, this);
