@@ -112,6 +112,32 @@ router.post('/getAllResearchFundPreview/', function (request, response) {
     );
 });
 
+router.post('/getAllResearchFund/', function (request, response) {
+    let methodCode = "53";
+
+    flow.exec(
+        function () {
+            ResearchFund_Control.getAllResearchFund(this);
+        }, function (code, err, functionCallback) {
+            if (code === "631") {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+            }
+            else if (code === "632") {
+                ResearchFund_Control.getAllFullResearchFundDataPreview(functionCallback, this);
+            }
+            else {
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearchFund Founded", [], response)
+            }
+        }, function (code, err, functionCallback) {
+            if (err) {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+            }
+            else {
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearchFund Completed", functionCallback, response)
+            }
+        }
+    );
+});
 router.post('/getAllResearchFundPreviewByResearcherId/', function (request, response) {
     let methodCode = "54";
 
@@ -169,6 +195,62 @@ router.post('/getAllResearchFundPreviewByResearcherId/', function (request, resp
     }
 });
 
+router.post('/getAllResearchFundByResearcherId/', function (request, response) {
+    let methodCode = "54";
+
+    let requiredData = [];
+    requiredData.push(request.body.researcherId);
+    requiredData.push(request.body.limit);
+    let requiredReady = Validate.requiredData_Check(requiredData)
+
+    let numberData = [];
+    numberData.push(request.body.limit);
+    let numberReady = Validate.numberData_Check(numberData)
+
+    let objectData = [];
+    objectData.push(request.body.researcherId);
+    let objectReady = Validate.objectIDData_Check(objectData)
+
+    if (!requiredReady) {
+        let alert = "Input Not Valid, check if some data is required.";
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+    }
+    else if (!numberReady) {
+        let alert = "Input Not Valid, check if some data have to be number.";
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
+    }
+    else if (!objectReady) {
+        let alert = "Input Not Valid, check if some data have to be MongoDB ObjectId.";
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+    }
+    else {
+        flow.exec(
+            function () {
+                ResearchFund_Control.getAllResearchFundByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
+            }, function (code, err, functionCallback) {
+                if (code === "641") {
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                }
+                else if (code === "642") {
+                    ResearchFund_Control.getAllFullResearchFundDataPreview(functionCallback, this);
+                }
+                else {
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearchFund Founded", [], response)
+                }
+            }, function (code, err, functionCallback) {
+                if (err) {
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                }
+                else {
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearchFund Completed", functionCallback, response)
+                }
+            }
+        );
+    }
+});
 router.post('/getResearchFundfromID/', function (request, response) {
     let methodCode = "55";
 

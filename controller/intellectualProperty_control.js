@@ -136,6 +136,30 @@ module.exports = {
         });
     },
 
+    getAllIntellectualProperty: function (callback) {
+        IntellectualProperty.find({}, {
+        }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "691";
+                let alert = "Error in getAllIntellectualPropertyPreview , Error : " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback.length > 0) {
+                let errCode = "692";
+                let alert = "Get All IntellectualProperty Completed! ";
+                //console.log(alert);
+                callback(errCode, null, functionCallback)
+            }
+            else {
+                let errCode = "693";
+                let alert = "No IntellectualProperty Founded";
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+        });
+    },
+
     getAllIntellectualPropertyPreviewByResearcherId: function (researcherId, limitNum, callback) {
         IntellectualProperty.find({ "researcherId": researcherId }, {
             "_id": true,
@@ -146,6 +170,31 @@ module.exports = {
             "intPropertyName": true,
             "claimBy": true,
             "licenseType": true
+        }, { /*sort: { "intellectualPropertyYear": -1 },*/ limit: limitNum }
+            , function (error, functionCallback) {
+                if (error) {
+                    let errCode = "701";
+                    let alert = "Error in getAllIntellectualPropertyPreviewByResearcherId , Error : " + error.message;
+                    console.log("ERROR Code: " + errCode + " " + alert);
+                    callback(errCode, alert, null)
+                }
+                else if (functionCallback.length > 0) {
+                    let errCode = "702";
+                    let alert = "Get All IntellectualProperty Completed! ";
+                    //console.log(alert);
+                    callback(errCode, null, functionCallback)
+                }
+                else {
+                    let errCode = "703";
+                    let alert = "No IntellectualProperty Founded";
+                    //console.log("ERROR Code: " + errCode + " " + alert);
+                    callback(errCode, alert, null)
+                }
+            });
+    },
+
+    getAllIntellectualPropertyByResearcherId: function (researcherId, limitNum, callback) {
+        IntellectualProperty.find({ "researcherId": researcherId }, {
         }, { /*sort: { "intellectualPropertyYear": -1 },*/ limit: limitNum }
             , function (error, functionCallback) {
                 if (error) {

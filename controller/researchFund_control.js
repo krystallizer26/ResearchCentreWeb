@@ -216,6 +216,29 @@ module.exports = {
             }
         });
     },
+    
+    getAllResearchFund: function (callback) {
+        ResearchFund.find({}, {}, function (error, functionCallback) {
+            if (error) {
+                let errCode = "631";
+                let alert = "Error in getAllResearchFundPreview , Error : " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback.length > 0) {
+                let errCode = "632";
+                let alert = "Get All ResearchFund Completed! ";
+                //console.log(alert);
+                callback(errCode, null, functionCallback)
+            }
+            else {
+                let errCode = "633";
+                let alert = "No ResearchFund Founded";
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+        });
+    },
 
     getAllResearchFundPreviewByResearcherId: function (researcherId, limitNum, callback) {
         ResearchFund.find({ "researcherId": researcherId }, {
@@ -227,6 +250,30 @@ module.exports = {
             "scholarshipPeriod": true,
             "scholarshipYear": true
         }, { sort: { "scholarshipYear": -1 }, limit: limitNum }
+            , function (error, functionCallback) {
+                if (error) {
+                    let errCode = "641";
+                    let alert = "Error in getAllResearchFundPreviewByResearcherId , Error : " + error.message;
+                    console.log("ERROR Code: " + errCode + " " + alert);
+                    callback(errCode, alert, null)
+                }
+                else if (functionCallback.length > 0) {
+                    let errCode = "642";
+                    let alert = "Get All ResearchFund Completed! ";
+                    //console.log(alert);
+                    callback(errCode, null, functionCallback)
+                }
+                else {
+                    let errCode = "643";
+                    let alert = "No ResearchFund Founded";
+                    console.log("ERROR Code: " + errCode + " " + alert);
+                    callback(errCode, alert, null)
+                }
+            });
+    },
+
+    getAllResearchFundByResearcherId: function (researcherId, limitNum, callback) {
+        ResearchFund.find({ "researcherId": researcherId }, {}, { sort: { "scholarshipYear": -1 }, limit: limitNum }
             , function (error, functionCallback) {
                 if (error) {
                     let errCode = "641";

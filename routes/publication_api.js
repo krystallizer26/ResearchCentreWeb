@@ -214,6 +214,34 @@ router.post('/getAllPublicationPreview/', function (request, response) {
     );
 });
 
+router.post('/getAllPublication/', function (request, response) {
+    let methodCode = "47";
+
+    flow.exec(
+        function () {
+            Publication_Control.getAllPublication(this);
+        }, function (code, err, functionCallback) {
+            if (code === "591") {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+            }
+            else if (code === "592") {
+                Publication_Control.getAllFullPublicationDataPreview(functionCallback, this);
+            }
+            else {
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "No Publication Founded", [], response)
+            }
+        }, function (code, err, functionCallback) {
+            if (err) {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+            }
+            else {
+                console.log("READY !!")
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Publication Completed", functionCallback, response)
+            }
+        }
+    );
+});
+
 router.post('/getAllPublicationPreviewByResearcherId/', function (request, response) {
     let methodCode = "51";
 
@@ -240,6 +268,54 @@ router.post('/getAllPublicationPreviewByResearcherId/', function (request, respo
         flow.exec(
             function () {
                 Publication_Control.getAllPublicationPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
+            }, function (code, err, functionCallback) {
+                if (code === "611") {
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                }
+                else if (code === "612") {
+                    Publication_Control.getAllFullPublicationDataPreview(functionCallback, this);
+                }
+                else {
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "No Publication Founded", [], response)
+                }
+            }, function (code, err, functionCallback) {
+                if (err) {
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                }
+                else {
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Publication Completed", functionCallback, response)
+                }
+            }
+        );
+    }
+});
+
+router.post('/getAllPublicationByResearcherId/', function (request, response) {
+    let methodCode = "51";
+
+    let requiredData = [];
+    requiredData.push(request.body.researcherId);
+    requiredData.push(request.body.limit);
+    let requiredReady = Validate.requiredData_Check(requiredData)
+
+    let numberData = [];
+    numberData.push(request.body.limit);
+    let numberReady = Validate.numberData_Check(numberData)
+
+    if (!requiredReady) {
+        let alert = "Input Not Valid, check if some data is required.";
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+    }
+    else if (!numberReady) {
+        let alert = "Input Not Valid, check if some data have to be number.";
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
+    }
+    else {
+        flow.exec(
+            function () {
+                Publication_Control.getAllPublicationByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
             }, function (code, err, functionCallback) {
                 if (code === "611") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);

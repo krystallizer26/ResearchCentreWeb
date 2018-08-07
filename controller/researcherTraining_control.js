@@ -204,6 +204,29 @@ module.exports = {
         });
     },
 
+    getAllResearcherTraining: function (callback) {
+        ResearcherTraining.find({}, {}, function (error, functionCallback) {
+            if (error) {
+                let errCode = "841";
+                let alert = "Error in getAllResearcherTrainingPreview , Error : " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback.length > 0) {
+                let errCode = "842";
+                let alert = "Get All ResearcherTraining Completed! ";
+                //console.log(alert);
+                callback(errCode, null, functionCallback)
+            }
+            else {
+                let errCode = "843";
+                let alert = "No ResearcherTraining Founded";
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+        });
+    },
+
     getAllResearcherTrainingPreviewByResearcherId: function (researcherId, limitNum, callback) {
         ResearcherTraining.find({ "researcherId": researcherId }, {
             "_id": true,
@@ -216,6 +239,30 @@ module.exports = {
             "trainingLocation": true,
             "trainingYear": true
         }, { sort: { "trainingYear": -1 }, limit: limitNum }
+            , function (error, functionCallback) {
+                if (error) {
+                    let errCode = "851";
+                    let alert = "Error in getAllResearcherTrainingPreviewByResearcherId , Error : " + error.message;
+                    console.log("ERROR Code: " + errCode + " " + alert);
+                    callback(errCode, alert, null)
+                }
+                else if (functionCallback.length > 0) {
+                    let errCode = "852";
+                    let alert = "Get All ResearcherTraining Completed! ";
+                    //console.log(alert);
+                    callback(errCode, null, functionCallback)
+                }
+                else {
+                    let errCode = "853";
+                    let alert = "No ResearcherTraining Founded";
+                    console.log("ERROR Code: " + errCode + " " + alert);
+                    callback(errCode, alert, null)
+                }
+            });
+    },
+
+    getAllResearcherTrainingByResearcherId: function (researcherId, limitNum, callback) {
+        ResearcherTraining.find({ "researcherId": researcherId }, {}, { sort: { "trainingYear": -1 }, limit: limitNum }
             , function (error, functionCallback) {
                 if (error) {
                     let errCode = "851";

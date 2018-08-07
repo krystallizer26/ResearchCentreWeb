@@ -184,6 +184,30 @@ module.exports = {
         });
     },
 
+    getAllThesis: function (callback) {
+        Thesis.find({}, {
+        }, function (error, functionCallback) {
+            if (error) {
+                let errCode = "781";
+                let alert = "Error in getAllThesisPreview , Error : " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback.length > 0) {
+                let errCode = "782";
+                let alert = "Get All Thesis Completed! ";
+                //console.log(alert);
+                callback(errCode, null, functionCallback)
+            }
+            else {
+                let errCode = "783";
+                let alert = "No Thesis Founded";
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+        });
+    },
+
     getAllThesisPreviewByResearcherId: function (researcherId, limitNum, callback) {
         Thesis.find({ "researcherId": researcherId }, {
             "_id": true,
@@ -202,6 +226,30 @@ module.exports = {
             "outlineTestDate": true,
             "thesisTestDate": true,
             "gradutionDate": true
+        }, { sort: { "thesisName_TH": -1 }, limit: limitNum }
+            , function (error, functionCallback) {
+                if (error) {
+                    let errCode = "791";
+                    let alert = "Error in getAllThesisPreviewByResearcherId , Error : " + error.message;
+                    console.log("ERROR Code: " + errCode + " " + alert);
+                    callback(errCode, alert, null)
+                }
+                else if (functionCallback.length > 0) {
+                    let errCode = "792";
+                    let alert = "Get All Thesis Completed! ";
+                    //console.log(alert);
+                    callback(errCode, null, functionCallback)
+                }
+                else {
+                    let errCode = "793";
+                    let alert = "No Thesis Founded";
+                    //console.log("ERROR Code: " + errCode + " " + alert);
+                    callback(errCode, alert, null)
+                }
+            });
+    },
+    getAllThesisByResearcherId: function (researcherId, limitNum, callback) {
+        Thesis.find({ "researcherId": researcherId }, {
         }, { sort: { "thesisName_TH": -1 }, limit: limitNum }
             , function (error, functionCallback) {
                 if (error) {

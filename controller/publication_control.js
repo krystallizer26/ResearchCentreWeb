@@ -257,6 +257,29 @@ module.exports = {
             }
         });
     },
+
+    getAllPublication: function (callback) {
+        Publication.find({}, {}, function (error, functionCallback) {
+            if (error) {
+                let errCode = "591";
+                let alert = "Error in getAllPublicationPreview , Error : " + error.message;
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+            else if (functionCallback.length > 0) {
+                let errCode = "592";
+                let alert = "Get All Publication Completed! ";
+                //console.log(alert);
+                callback(errCode, null, functionCallback)
+            }
+            else {
+                let errCode = "593";
+                let alert = "No Researcher Founded";
+                console.log("ERROR Code: " + errCode + " " + alert);
+                callback(errCode, alert, null)
+            }
+        });
+    },
     getAllPublicationPreviewByResearcherId: function (researcherId, limitNum, callback) {
         Publication.find({ "researcherId": researcherId }, {
             "_id": true,
@@ -269,6 +292,29 @@ module.exports = {
             "publishType": true,
             "publicationDatabase": true
         }, { sort: { "publishYear": -1 }, limit: limitNum }
+            , function (error, functionCallback) {
+                if (error) {
+                    let errCode = "611";
+                    let alert = "Error in getAllPublicationPreview , Error : " + error.message;
+                    console.log("ERROR Code: " + errCode + " " + alert);
+                    callback(errCode, alert, null)
+                }
+                else if (functionCallback) {
+                    let errCode = "612";
+                    let alert = "Get All Publication Completed! ";
+                    //console.log(alert);
+                    callback(errCode, null, functionCallback)
+                }
+                else {
+                    let errCode = "613";
+                    let alert = "No Researcher Founded";
+                    console.log("ERROR Code: " + errCode + " " + alert);
+                    callback(errCode, alert, null)
+                }
+            });
+    },
+    getAllPublicationByResearcherId: function (researcherId, limitNum, callback) {
+        Publication.find({ "researcherId": researcherId }, {}, { sort: { "publishYear": -1 }, limit: limitNum }
             , function (error, functionCallback) {
                 if (error) {
                     let errCode = "611";

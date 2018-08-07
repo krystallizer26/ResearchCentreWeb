@@ -95,6 +95,33 @@ router.post('/getAllIntellectualPropertyPreview/', function (request, response) 
     );
 });
 
+router.post('/getAllIntellectualProperty/', function (request, response) {
+    let methodCode = "68";
+
+    flow.exec(
+        function () {
+            IntellectualProperty_Control.getAllIntellectualProperty(this);
+        }, function (code, err, functionCallback) {
+            if (code === "691") {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+            }
+            else if (code === "692") {
+                IntellectualProperty_Control.getAllFullIntellectualPropertyDataPreview(functionCallback, this);
+            }
+            else {
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "No IntellectualProperty Founded", [], response)
+            }
+        }, function (code, err, functionCallback) {
+            if (err) {
+                Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+            }
+            else {
+                Return_Control.responseWithCodeAndData(ReturnCode.success, "get All IntellectualProperty Completed", functionCallback, response)
+            }
+        }
+    );
+});
+
 router.post('/getAllIntellectualPropertyPreviewByResearcherId/', function (request, response) {
     let methodCode = "69";
 
@@ -130,6 +157,63 @@ router.post('/getAllIntellectualPropertyPreviewByResearcherId/', function (reque
         flow.exec(
             function () {
                 IntellectualProperty_Control.getAllIntellectualPropertyPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
+            }, function (code, err, functionCallback) {
+                if (code === "701") {
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                }
+                else if (code === "702") {
+                    IntellectualProperty_Control.getAllFullIntellectualPropertyDataPreview(functionCallback, this);
+                }
+                else {
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "No IntellectualProperty Founded", [], response)
+                }
+            }, function (code, err, functionCallback) {
+                if (err) {
+                    Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
+                }
+                else {
+                    Return_Control.responseWithCodeAndData(ReturnCode.success, "get All IntellectualProperty Completed", functionCallback, response)
+                }
+            }
+        );
+    }
+});
+
+router.post('/getAllIntellectualPropertyByResearcherId/', function (request, response) {
+    let methodCode = "69";
+
+    let requiredData = [];
+    requiredData.push(request.body.researcherId);
+    requiredData.push(request.body.limit);
+    let requiredReady = Validate.requiredData_Check(requiredData)
+
+    let numberData = [];
+    numberData.push(request.body.limit);
+    let numberReady = Validate.numberData_Check(numberData)
+
+    let objectData = [];
+    objectData.push(request.body.researcherId);
+    let objectReady = Validate.objectIDData_Check(objectData)
+
+    if (!requiredReady) {
+        let alert = "Input Not Valid, check if some data is required.";
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
+    }
+    else if (!numberReady) {
+        let alert = "Input Not Valid, check if some data have to be number.";
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
+    }
+    else if (!objectReady) {
+        let alert = "Input Not Valid, check if some data have to be MongoDB ObjectId.";
+        console.log(alert);
+        Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
+    }
+    else {
+        flow.exec(
+            function () {
+                IntellectualProperty_Control.getAllIntellectualPropertyByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
             }, function (code, err, functionCallback) {
                 if (code === "701") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
