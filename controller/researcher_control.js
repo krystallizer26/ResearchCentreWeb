@@ -536,7 +536,7 @@ function getFullResearcher(num, input, callback) {
 }
 
 
-function getFullResearcherPreview(input, callback) {
+function getFullResearcherPreview(num,input, callback) {
     let researcherData = JSON.parse(JSON.stringify(input));
     //console.log("getFullResearcherData for " + researcherData.researcherName_TH)
     flow.exec(
