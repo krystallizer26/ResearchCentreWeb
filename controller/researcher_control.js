@@ -438,7 +438,7 @@ module.exports = {
         let forCallback = [];
         let j = 0;
         for (let i = 0; i < researcher.length; i++) {
-            getFullResearcherPreview(i, researcher[i], function (a) {
+            getFullResearcherPreview(researcher[i], function (a) {
                 //console.log("a >> " + JSON.stringify(a))
                 //console.log("#" + i + " completed")
                 forCallback[i] = a;
@@ -536,7 +536,7 @@ function getFullResearcher(input, callback) {
 }
 
 
-function getFullResearcherPreview(num, input, callback) {
+function getFullResearcherPreview( input, callback) {
     let researcherData = JSON.parse(JSON.stringify(input));
     //console.log("getFullResearcherData for " + researcherData.researcherName_TH)
     flow.exec(
