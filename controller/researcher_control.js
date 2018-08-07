@@ -571,7 +571,7 @@ function getFullResearcherPreview(input, callback) {
             // forCallback_getFullResearcherPreview.push(researcherData)
         }, function (code, err, functionCallback) {
 
-            if (functionCallback.length > 0) {
+            if (functionCallback.length) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
@@ -586,7 +586,7 @@ function getFullResearcherPreview(input, callback) {
             }
         }, function (code, err, functionCallback) {
 
-            if (functionCallback.length > 0) {
+            if (functionCallback) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].thesisName_TH + "," + functionCallback[i].thesisName_EN + " / "
@@ -601,7 +601,7 @@ function getFullResearcherPreview(input, callback) {
             }
         }, function (code, err, functionCallback) {
 
-            if (functionCallback.length > 0) {
+            if (functionCallback.length) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].intPropertyName + " / "
@@ -616,7 +616,7 @@ function getFullResearcherPreview(input, callback) {
             }
         }, function (code, err, functionCallback) {
 
-            if (functionCallback.length > 0) {
+            if (functionCallback.length) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].rewardName + " / "
