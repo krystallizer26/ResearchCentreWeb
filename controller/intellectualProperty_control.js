@@ -160,7 +160,7 @@ module.exports = {
                 else {
                     let errCode = "703";
                     var alert = "No IntellectualProperty Founded";
-                    console.log("ERROR Code: " + errCode + " " + alert);
+                    //console.log("ERROR Code: " + errCode + " " + alert);
                     callback(errCode, alert, null)
                 }
             });

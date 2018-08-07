@@ -442,7 +442,7 @@ module.exports = {
                 //console.log("a >> " + JSON.stringify(a))
                 //console.log("#" + i + " completed")
                 forCallback[i] = a;
-
+                console.log("#"+i+" called back <3")
                 j++
                 if (j == researcher.length) {
                     console.log("ALL SET")

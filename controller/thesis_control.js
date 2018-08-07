@@ -218,7 +218,7 @@ module.exports = {
                 else {
                     let errCode = "793";
                     var alert = "No Thesis Founded";
-                    console.log("ERROR Code: " + errCode + " " + alert);
+                    //console.log("ERROR Code: " + errCode + " " + alert);
                     callback(errCode, alert, null)
                 }
             });
