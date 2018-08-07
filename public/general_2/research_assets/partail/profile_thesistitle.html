@@ -11,18 +11,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
       <span class="icon-chemistry" style="flex: 0 0 70px; color: #047bf8;font-size: 30px;margin-right: 12px;"></span> ที่ปรึกษาวิทยานิพนธ์ / Thesis Advisory
     </h6>
     
-    <div ng-repeat="item in thesis" ng-show="item.studentType == 'นักศึกษาปริญญาเอก'" >
+    <div ng-repeat="item in thesis | orderBy: '-year'" ng-show="item.studentType == 'นักศึกษาปริญญาเอก'" >
         <div class="row" >
           <div class= "col-sm-1"><div class="icon-chemistry" style="font-size: 18px;color: #6a6a6a;"></div></div>
-          <div class= "col-sm-10"><strong>{{item.studentName}} </strong> , {{item.thesisName_TH}}  &#09;  {{item.thesisName_EN}} &#09; , {{item.thesisStatus}} , {{item.thesisTestDate}}</div>
+          <div class= "col-sm-10"><strong>{{item.studentName}} </strong> , {{item.thesisName_TH}}  &#09;  {{item.thesisName_EN}} &#09; , {{item.thesisStatus}} , {{item.thesisTestDate}}, <b>{{item.year}} </b></div>
         </div>
         <hr/>
       </div>
 
-      <div ng-repeat="item in thesis" ng-show="item.studentType=='นักศึกษาปริญญาโท'" >
+      <div ng-repeat="item in thesis | orderBy: '-year'" ng-show="item.studentType=='นักศึกษาปริญญาโท'" >
         <div class="row" >
           <div class= "col-sm-1"><div class="icon-chemistry" style="font-size: 18px;color: #6a6a6a;"></div></div>
-          <div class= "col-sm-10"><strong>{{item.studentName}} </strong> , {{item.thesisName_TH}}  &#09;  {{item.thesisName_EN}} &#09; , {{item.thesisStatus}} , {{item.thesisTestDate}}</div>
+          <div class= "col-sm-10"><strong>{{item.studentName}} </strong> , {{item.thesisName_TH}}  &#09;  {{item.thesisName_EN}} &#09; , {{item.thesisStatus}} , {{item.thesisTestDate}}, <b>{{item.year}} </b></div>
         </div>
         <hr/>
       </div>

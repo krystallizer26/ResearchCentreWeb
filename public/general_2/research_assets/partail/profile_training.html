@@ -14,7 +14,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
     <div ng-repeat="training in trainingList | orderBy: '-trainingYear'">
       <div class="row" >
         <div class= "col-sm-1"><div class="icon-trophy" style="font-size: 18px;color: #6a6a6a;"></div></div>
-        <div class= "col-sm-10 font-app"><strong style="font-weight: 600;">ชื่องานอบรม</strong> {{training.trainingName}}, <strong style="font-weight: 600;">หัวข้อการอบรม</strong> {{training.researchTopic}}, <strong style="font-weight: 600;">{{training.trainingYear}}</strong> </div>
+        <div class= "col-sm-10 font-app"><strong style="font-weight: 600;">ชื่องานอบรม</strong> {{training.trainingName}}, <strong style="font-weight: 600;"></strong> {{training.researchTopic}}, <strong style="font-weight: 600;">{{training.dateDisplay}}</strong> </div>
       </div>
       <hr/>
     </div>
