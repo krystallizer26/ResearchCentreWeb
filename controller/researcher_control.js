@@ -456,18 +456,6 @@ module.exports = {
 
 //------
 
-// async function qqqqqq(a) {
-
-//     let forCallback = []
-
-//     const  z = await Promise.all(a.map(async (a1) => {
-//         const contents = await getFullResearcherPreview(a1)
-//         console.log("YEAH")
-//     }));
-//     return z
-// }
-
-
 let forCallback_getFullResearcherPreview = []
 
 function getFullResearcher(input, callback) {

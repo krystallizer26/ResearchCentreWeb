@@ -244,12 +244,6 @@ module.exports = {
 //---------------------------------------------
 
 let Department_Control = require("../controller/department_control.js");
-let Position_Control = require("../controller/position_control.js");
-let AcademicLevel_Control = require("../controller/academicLevel_control.js");
-let BachelorTeachingDepartment_Control = require("../controller/bachelorTeachingDepartment_control.js");
-let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
-let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
-
 function getFullRewardPreview(input, callback) {
     let rewardData = JSON.parse(JSON.stringify(input));
     console.log("getFullRewardPreview for " + rewardData.rewardName)
