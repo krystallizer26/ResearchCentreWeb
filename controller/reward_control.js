@@ -243,7 +243,6 @@ module.exports = {
 
 //---------------------------------------------
 
-let Department_Control = require("../controller/department_control.js");
 function getFullRewardPreview(input, callback) {
     let rewardData = JSON.parse(JSON.stringify(input));
     console.log("getFullRewardPreview for " + rewardData.rewardName)
