@@ -475,7 +475,7 @@ var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDe
 
 var forCallback_getFullResearcherPreview = []
 
-function getFullResearcher(num, input, callback) {
+function getFullResearcher(input, callback) {
     let researcherData = JSON.parse(JSON.stringify(input));
     researcherData["publicationString"] = ""
     console.log("getFullResearcherData for " + researcherData.researcherName_TH)
@@ -571,17 +571,17 @@ function getFullResearcherPreview(num, input, callback) {
 
             // forCallback_getFullResearcherPreview.push(researcherData)
         }, function (code, err, functionCallback) {
-            console.log("#" + num + " Publication_Control back <3")
+            //console.log("#" + num + " Publication_Control back <3")
 
             if (functionCallback) {
-                console.log("#" + num + " constructing pub <3 @length=" + functionCallback.length)
+                //console.log("#" + num + " constructing pub <3 @length=" + functionCallback.length)
                 let j = 0
                 if (functionCallback.length > 0) {
                     for (let i = 0; i < functionCallback.length; i++) {
                         researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].publicationName + " / "
                         j++
                         if (j >= functionCallback.length) {
-                            console.log("#" + num + " constructing pub Completed <3")
+                            //console.log("#" + num + " constructing pub Completed <3")
                             Thesis_Control.getAllThesisPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
                         }
                     }
@@ -591,12 +591,12 @@ function getFullResearcherPreview(num, input, callback) {
                 }
             }
             else {
-                console.log("#" + num + " NOT constructing pub <3")
+                //console.log("#" + num + " NOT constructing pub <3")
                 Thesis_Control.getAllThesisPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
             }
 
         }, function (code, err, functionCallback) {
-            console.log("#" + num + " Thesis_Control back <3")
+            //console.log("#" + num + " Thesis_Control back <3")
             if (functionCallback) {
                 let j = 0
                 if (functionCallback.length > 0) {
@@ -617,7 +617,7 @@ function getFullResearcherPreview(num, input, callback) {
             }
 
         }, function (code, err, functionCallback) {
-            console.log("#" + num + " IntellectualProperty_Control back <3")
+            //console.log("#" + num + " IntellectualProperty_Control back <3")
             if (functionCallback) {
                 let j = 0
                 if (functionCallback.length > 0) {
@@ -638,7 +638,7 @@ function getFullResearcherPreview(num, input, callback) {
             }
 
         }, function (code, err, functionCallback) {
-            console.log("#" + num + " Reward_Control back <3")
+            //console.log("#" + num + " Reward_Control back <3")
             if (functionCallback) {
                 let j = 0
                 if (functionCallback.length > 0) {
@@ -656,7 +656,7 @@ function getFullResearcherPreview(num, input, callback) {
 
             }
             else {
-                console.log("#" + num + " Finishing <3")
+                //console.log("#" + num + " Finishing <3")
                 callback(researcherData)
             }
         }
