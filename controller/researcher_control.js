@@ -438,11 +438,11 @@ module.exports = {
         let forCallback = [];
         let j = 0;
         for (let i = 0; i < researcher.length; i++) {
-            getFullResearcherPreview(researcher[i], function (a) {
+            getFullResearcherPreview(i, researcher[i], function (a) {
                 //console.log("a >> " + JSON.stringify(a))
                 //console.log("#" + i + " completed")
                 forCallback[i] = a;
-                console.log("#"+i+" called back <3")
+                console.log("#" + i + " called back <3")
                 j++
                 if (j == researcher.length) {
                     console.log("ALL SET")
@@ -475,7 +475,7 @@ var DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDe
 
 var forCallback_getFullResearcherPreview = []
 
-function getFullResearcher(input, callback) {
+function getFullResearcher(num, input, callback) {
     let researcherData = JSON.parse(JSON.stringify(input));
     researcherData["publicationString"] = ""
     console.log("getFullResearcherData for " + researcherData.researcherName_TH)
@@ -538,7 +538,7 @@ function getFullResearcher(input, callback) {
 
 function getFullResearcherPreview(input, callback) {
     let researcherData = JSON.parse(JSON.stringify(input));
-    console.log("getFullResearcherData for " + researcherData.researcherName_TH)
+    //console.log("getFullResearcherData for " + researcherData.researcherName_TH)
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)
@@ -566,11 +566,12 @@ function getFullResearcherPreview(input, callback) {
             else {
                 researcherData["academicLevelData"] = [];
             }
+
             Publication_Control.getAllPublicationPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
 
             // forCallback_getFullResearcherPreview.push(researcherData)
         }, function (code, err, functionCallback) {
-
+            console.log("#" + num + " Publication_Control back <3")
             if (functionCallback) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
@@ -584,8 +585,9 @@ function getFullResearcherPreview(input, callback) {
             else {
                 Thesis_Control.getAllThesisPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
             }
-        }, function (code, err, functionCallback) {
 
+        }, function (code, err, functionCallback) {
+            console.log("#" + num + " Thesis_Control back <3")
             if (functionCallback) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
@@ -599,8 +601,9 @@ function getFullResearcherPreview(input, callback) {
             else {
                 IntellectualProperty_Control.getAllIntellectualPropertyPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
             }
-        }, function (code, err, functionCallback) {
 
+        }, function (code, err, functionCallback) {
+            console.log("#" + num + " IntellectualProperty_Control back <3")
             if (functionCallback) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
@@ -614,19 +617,22 @@ function getFullResearcherPreview(input, callback) {
             else {
                 Reward_Control.getAllRewardPreviewByResearcherId(new ObjectId(researcherData._id), 0, this);
             }
-        }, function (code, err, functionCallback) {
 
+        }, function (code, err, functionCallback) {
+            console.log("#" + num + " Reward_Control back <3")
             if (functionCallback) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].rewardName + " / "
                     j++
                     if (j >= functionCallback.length) {
+                        console.log("#" + num + " Finishing <3")
                         callback(researcherData)
                     }
                 }
             }
             else {
+                console.log("#" + num + " Finishing <3")
                 callback(researcherData)
             }
         }
