@@ -601,7 +601,7 @@ function getFullResearcherPreview(input, callback) {
             }
         }, function (code, err, functionCallback) {
 
-            if (functionCallback.length) {
+            if (functionCallback) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].intPropertyName + " / "
@@ -616,7 +616,7 @@ function getFullResearcherPreview(input, callback) {
             }
         }, function (code, err, functionCallback) {
 
-            if (functionCallback.length) {
+            if (functionCallback) {
                 let j = 0
                 for (let i = 0; i < functionCallback.length; i++) {
                     researcherData["publicationString"] = researcherData["publicationString"] + functionCallback[i].rewardName + " / "
