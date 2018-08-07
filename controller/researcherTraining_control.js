@@ -5,7 +5,6 @@ let ResearcherTraining = require('../model/researcherTraining_model.js');
 let Researcher_Control = require("../controller/researcher_control.js");
 
 let Validate = require("../controller/validation_controller.js");
-let Researcher_Control = require("../controller/researcher_control.js");
 let Position_Control = require("../controller/position_control.js");
 let Keyword_Control = require("../controller/keyword_control.js");
 let AcademicLevel_Control = require("../controller/academicLevel_control.js");
