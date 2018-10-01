@@ -4,7 +4,7 @@ let ObjectId = require('mongodb').ObjectId;
 let IntellectualProperty = require('../model/intellectualProperty_model.js');
 
 let Validate = require("../controller/validation_controller.js");
-let Researcher_Control = require("../controller/researcher_control.js");
+let Researcher_Control = require("./researcher_control.js");
 let Position_Control = require("../controller/position_control.js");
 let Keyword_Control = require("../controller/keyword_control.js");
 let AcademicLevel_Control = require("../controller/academicLevel_control.js");
@@ -71,9 +71,8 @@ module.exports = {
             intellectualProperty.licenseType = Validate.scrappingCleanUp(scrapingData.licenseType)
             intellectualProperty.claimBy = Validate.scrappingCleanUp(scrapingData.claimBy)
             intellectualProperty.coCreation = Validate.scrappingCleanUp(scrapingData.coCreation)
-            
-            let Researcher_Control = require("../controller/researcher_control.js");
 
+            let Researcher_Control = require("./researcher_control.js");
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(intellectualProperty.researcherPersonalID, this);
@@ -307,6 +306,9 @@ module.exports = {
 function getFullIntellectualPropertyPreview(input, callback) {
     let intellectualPropertyData = JSON.parse(JSON.stringify(input));
     console.log("getFullIntellectualPropertyPreview for " + intellectualPropertyData.researchName)
+
+    let Researcher_Control = require("./researcher_control.js");
+
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)
@@ -328,6 +330,8 @@ function getFullIntellectualPropertyPreview(input, callback) {
 function getFullIntellectualProperty(input, callback) {
     let intellectualPropertyData = JSON.parse(JSON.stringify(input));
     console.log("getFullIntellectualProperty for " + intellectualPropertyData.researchName)
+
+    let Researcher_Control = require("./researcher_control.js");
 
     flow.exec(
         function () {

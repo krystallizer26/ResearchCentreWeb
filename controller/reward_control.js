@@ -4,7 +4,7 @@ let ObjectId = require('mongodb').ObjectId;
 let Reward = require('../model/reward_model.js');
 
 let Validate = require("../controller/validation_controller.js");
-let Researcher_Control = require("../controller/researcher_control.js");
+let Researcher_Control = require("./researcher_control.js");
 let Position_Control = require("../controller/position_control.js");
 let Keyword_Control = require("../controller/keyword_control.js");
 let AcademicLevel_Control = require("../controller/academicLevel_control.js");
@@ -70,6 +70,7 @@ module.exports = {
             reward.rewardDate = Validate.scrappingCleanUp(scrapingData.rewardDate)
             reward.rewardRank = Validate.scrappingCleanUp(scrapingData.rewardRank)
 
+            let Researcher_Control = require("./researcher_control.js");
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(reward.researcherPersonalID, this);
@@ -295,6 +296,7 @@ module.exports = {
 function getFullRewardPreview(input, callback) {
     let rewardData = JSON.parse(JSON.stringify(input));
     console.log("getFullRewardPreview for " + rewardData.rewardName)
+    let Researcher_Control = require("./researcher_control.js");
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)
@@ -316,6 +318,7 @@ function getFullRewardPreview(input, callback) {
 function getFullReward(input, callback) {
     let rewardData = JSON.parse(JSON.stringify(input));
     console.log("getFullReward for " + rewardData.rewardName)
+    let Researcher_Control = require("./researcher_control.js");
 
     flow.exec(
         function () {

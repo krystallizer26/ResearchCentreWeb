@@ -13,9 +13,17 @@ module.exports = function (app, passport) {
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function (req, res) {
-        console.log("index");
-        res.sendfile('public/general_2/index.html'); // load the index.ejs file
+
+        console.log(".hostname = " + JSON.stringify(req.hostname)+ "/research_directory");
+        
+        console.log("test research_directory ");
+        res.sendfile('public/general_2/index.html');
     });
+
+    // app.get('/', function (req, res) {
+    //     console.log("index");
+    //     res.sendfile('public/general_2/index.html'); // load the index.ejs file
+    // });
 
     function get_each_researcher(name_ary,leng){
         
@@ -73,6 +81,8 @@ module.exports = function (app, passport) {
 
     app.get('/bot', function (req, res) {
         console.log(" /getAllResearcherName");
+
+        
         
         
     var form = {
@@ -119,6 +129,7 @@ module.exports = function (app, passport) {
     });
 
     
+
      app.get('/research_centre', function (req, res) {
          console.log("template 2 ");
          res.sendfile('public/general/index.html'); // load the index.ejs file
