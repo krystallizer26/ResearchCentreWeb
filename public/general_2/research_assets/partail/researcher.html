@@ -5,6 +5,11 @@
         background-color: #fd7e14!important;
     }
 
+      .blur-hover:hover:enabled{
+                        color: rgba(0, 0, 0, 0.3);
+                        box-shadow: .1em .1em 3em rgba(200, 200, 200, 0.5);
+                    }
+                 
 
         .loader {
     display: grid;
@@ -517,7 +522,7 @@
 
             <br><br>-->
             
-            <div class="all-wrapper rentals orange" style="max-width: 1600px;  " >
+            <div class="all-wrapper rentals orange" style="max-width: 1600px;    " >
               <!--------------------
               START - Top Bar
               -------------------->
@@ -588,7 +593,7 @@
                 <!--------------------
                 START - Property Index Filters
                 -------------------->
-                <div class="filter-side">
+                <div class="filter-side" style="overflow-x: scroll;">
                   <div class="filters-header">
                     <h4>
                       Filter
@@ -631,7 +636,7 @@
                           <span style="font-size: 22px;">ชื่อนักวิจัย</span> &nbsp;  <span style="color: #cccaca;">name</span>
                       </h6>
                       <div class="filter-body">
-                       <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ชื่อนักวิจัย" ng-model="search.researcherName_TH" >
+                       <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ชื่อนักวิจัย" ng-model="search.researcherStringName" >
                       </div>
                     </div>
                     
@@ -704,13 +709,12 @@
    </div>
   
                     <div class="row " >
-                    <div class="property-item col-md-6  " ng-repeat="item in researcher_list | filter:search:strict  | orderBy:order" >
-               
-                 
-                      <a class="item-media-w">
+                    <div class="property-item col-md-6  " ng-repeat="item in researcher_list | filter:search:strict  | orderBy:order" ng-click="gotoProfile(item._id)" >
+                
+                      <a class="item-media-w ">
                <!--          <div class="item-media" style="background-image: url(http://www.science.kmitl.ac.th/wp-content/uploads/2018/01/DSC_5232-683x1024.jpg)"></div>
                    -->
-                     <div class="item-media card-image" style="background-image: url( './general_2/ResearcherPic/{{item.researcherName_TH}}.jpg'), url( 'http://www.science.kmitl.ac.th/assets/img/person/noimg.jpg');"></div>
+                     <div class="item-media card-image"  style="height: 70%;  margin-top: 68px!important;background-image: url( './general_2/ResearcherPic/{{item.researcherName_TH}}.jpg'), url( 'http://www.science.kmitl.ac.th/assets/img/person/noimg.jpg');"></div>
                    
                       </a>
                       <div class="">
@@ -773,9 +777,9 @@
                         <!--<div class="item-price">
                             <strong>$350</strong><span>/per night</span>
                           </div>-->
-                          <div class="item-buttons">
+                         <!--  <div class="item-buttons">
                             <a class="btn btn-outline-primary" ng-click="gotoProfile(item._id)"><span>Details</span><i class="os-icon os-icon-arrow-2-right"></i></a>
-                          </div>
+                          </div>-->
                         </div>
                       </div>
                     </div>

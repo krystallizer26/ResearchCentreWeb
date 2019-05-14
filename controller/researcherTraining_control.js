@@ -2,7 +2,7 @@ let flow = require('../services/flow.js')
 let ObjectId = require('mongodb').ObjectId;
 
 let ResearcherTraining = require('../model/researcherTraining_model.js');
-let Researcher_Control = require("../controller/researcher_control.js");
+let Researcher_Control = require("./researcher_control.js");
 
 let Validate = require("../controller/validation_controller.js");
 let Position_Control = require("../controller/position_control.js");
@@ -75,6 +75,7 @@ module.exports = {
             researcherTraining.approveDate = Validate.scrappingCleanUp(scrapingData.approveDate)
             researcherTraining.researcherName = Validate.scrappingCleanUp(scrapingData.researcherName)
 
+            let Researcher_Control = require("./researcher_control.js");
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(researcherTraining.researcherPersonalID, this);
@@ -326,6 +327,7 @@ module.exports = {
 function getFullResearcherTrainingPreview(input, callback) {
     let researcherTrainingData = JSON.parse(JSON.stringify(input));
     //console.log("getFullResearcherTrainingPreview for " + researcherTrainingData.researchName)
+    let Researcher_Control = require("./researcher_control.js");
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)
@@ -352,6 +354,7 @@ function getFullResearcherTraining(input, callback) {
     let researcherTrainingData = JSON.parse(JSON.stringify(input));
     console.log("getFullResearcherTraining for " + researcherTrainingData.researchName)
 
+    let Researcher_Control = require("./researcher_control.js");
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)
@@ -370,7 +373,7 @@ function getFullResearcherTraining(input, callback) {
             let finish = input.trainingFinishDate.split('/')
             researcherTrainingData["dateDisplay"] = start[0] + " - " + finish[0] + " / " + finish[1] + " / " + finish[2];
             callback(researcherTrainingData)
-            
+
         }
     );
 }

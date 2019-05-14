@@ -11031,6 +11031,17 @@ body:before {
   bottom: 0px;
   right: 0px;
 }
+body:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background: -webkit-gradient(linear, left top, right bottom, from(#D7BBEA), to(#65A8F1));
+  background: linear-gradient(to bottom right, #00277c, #ffc73a);
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+}
 
 body.full-screen {
   padding: 0px;
@@ -11069,13 +11080,14 @@ strong {
   margin: 0px auto;
   position: relative;
   min-height: 100%;
+  margin-bottom: -30px;
 }
 
 .all-wrapper.with-pattern {
   -webkit-box-shadow: none;
           box-shadow: none;
   border-radius: 0px;
-  background-image: url("../img/bg-pattern2.png");
+  background-image: url("../img/banner2.jpg");
   background-size: contain;
   background-repeat: repeat;
   background-position: 0 0;
@@ -13826,8 +13838,7 @@ body.menu-side-right .layout-w {
 }
 
 .menu-position-top.menu-w.menu-with-image {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(21, 32, 70, 0.1)), color-stop(75%, rgba(16, 20, 41, 0.2)), to(rgba(14, 21, 53, 0.65))), url(../img/menu_bg.jpg) !important;
-  background-image: linear-gradient(to bottom, rgba(21, 32, 70, 0.1) 0%, rgba(16, 20, 41, 0.2) 75%, rgba(14, 21, 53, 0.65) 100%), url(/general_2/assets/images/banner-doctors.jpg) !important;
+  background-image: url(/general_2/assets/images/banner2.jpg) !important;
   background-color: transparent;
   background-size: cover;
   background-position: center center;

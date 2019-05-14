@@ -2,7 +2,7 @@ let flow = require('../services/flow.js')
 let ObjectId = require('mongodb').ObjectId;
 
 let Publication = require('../model/publication_model.js');
-let Researcher_Control = require("../controller/researcher_control.js");
+let Researcher_Control = require("./researcher_control.js");
 let Validate = require("../controller/validation_controller.js");
 
 
@@ -72,6 +72,7 @@ module.exports = {
             publication.graduationYear = Validate.scrappingCleanUp(scrapingData.graduationYear)
             publication.publicationRaw = Validate.scrappingCleanUp(scrapingData.doi)
 
+            let Researcher_Control = require("../controller/researcher_control.js");
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(publication.researcherPersonalID, this);

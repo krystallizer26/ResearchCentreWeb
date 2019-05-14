@@ -5,7 +5,6 @@ let Researcher = require('../model/researcher_model.js');
 
 let Validate = require("../controller/validation_controller.js");
 
-let Researcher_Control = require("../controller/researcher_control.js");
 let Position_Control = require("../controller/position_control.js");
 let Keyword_Control = require("../controller/keyword_control.js");
 let AcademicLevel_Control = require("../controller/academicLevel_control.js");
@@ -238,7 +237,7 @@ module.exports = {
         });
     },
     checkResearcherByID: function (researcherId, query, callback) {
-        console.log("researcherId >q> " + researcherId)
+        //console.log("researcherId >q> " + researcherId)
         Researcher.findOne({ "_id": researcherId }, query, function (error, functionCallback) {
             if (error) {
                 let errCode = "381";
@@ -461,6 +460,7 @@ let forCallback_getFullResearcherPreview = []
 function getFullResearcher(input, callback) {
     let researcherData = JSON.parse(JSON.stringify(input));
     researcherData["publicationString"] = ""
+    researcherData["researcherStringName"] =  researcherData.researcherName_TH + " / " +  researcherData.researcherName_EN
     console.log("getFullResearcherData for " + researcherData.researcherName_TH)
     flow.exec(
         function () {
@@ -522,6 +522,8 @@ function getFullResearcher(input, callback) {
 function getFullResearcherPreview( input, callback) {
     let researcherData = JSON.parse(JSON.stringify(input));
     //console.log("getFullResearcherData for " + researcherData.researcherName_TH)
+    researcherData["publicationString"] = ""
+    researcherData["researcherStringName"] =  researcherData.researcherName_TH + " / " +  researcherData.researcherName_EN
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)

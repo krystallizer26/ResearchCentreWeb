@@ -4,7 +4,7 @@ let ObjectId = require('mongodb').ObjectId;
 let ResearchFund = require('../model/researchFund_model.js');
 
 let Validate = require("../controller/validation_controller.js");
-let Researcher_Control = require("../controller/researcher_control.js");
+let Researcher_Control = require("./researcher_control.js");
 let Position_Control = require("../controller/position_control.js");
 let Keyword_Control = require("../controller/keyword_control.js");
 let AcademicLevel_Control = require("../controller/academicLevel_control.js");
@@ -89,6 +89,7 @@ module.exports = {
             researchFund.after2561 = Validate.scrappingCleanUp(scrapingData.after2561)
             researchFund.detail = Validate.scrappingCleanUp(scrapingData.detail)
 
+            let Researcher_Control = require("./researcher_control.js");
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(researchFund.researcherPersonalID, this);
@@ -336,6 +337,7 @@ module.exports = {
 function getFullResearchFundPreview(input, callback) {
     let researchFundData = JSON.parse(JSON.stringify(input));
     console.log("getFullResearchFundPreview for " + researchFundData.researchName)
+    let Researcher_Control = require("./researcher_control.js");
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)
@@ -358,6 +360,7 @@ function getFullResearchFund(input, callback) {
     let researchFundData = JSON.parse(JSON.stringify(input));
     console.log("getFullResearchFund for " + researchFundData.researchName)
 
+    let Researcher_Control = require("./researcher_control.js");
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)

@@ -4,7 +4,7 @@ let ObjectId = require('mongodb').ObjectId;
 let Thesis = require('../model/thesis_model.js');
 
 let Validate = require("../controller/validation_controller.js");
-let Researcher_Control = require("../controller/researcher_control.js");
+let Researcher_Control = require("./researcher_control.js");
 let Position_Control = require("../controller/position_control.js");
 let Keyword_Control = require("../controller/keyword_control.js");
 let AcademicLevel_Control = require("../controller/academicLevel_control.js");
@@ -103,6 +103,7 @@ module.exports = {
             thesis.gradutionProduct.push(Validate.scrappingCleanUp(scrapingData.gradutionProduct2))
             thesis.gradutionProduct.push(Validate.scrappingCleanUp(scrapingData.gradutionProduct3))
 
+            let Researcher_Control = require("./researcher_control.js");
             flow.exec(
                 function () {
                     Researcher_Control.checkResearcherByPersonalID(thesis.researcherPersonalID, this);
@@ -363,6 +364,7 @@ module.exports = {
 function getFullThesisPreview(input, callback) {
     let thesisData = JSON.parse(JSON.stringify(input));
     console.log("getFullThesisPreview for " + thesisData.thesisName_TH)
+    let Researcher_Control = require("./researcher_control.js");
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)
@@ -409,6 +411,7 @@ function getFullThesisPreview(input, callback) {
 function getFullThesis(input, callback) {
     let thesisData = JSON.parse(JSON.stringify(input));
     console.log("getFullThesis for " + thesisData.thesisName_TH)
+    let Researcher_Control = require("./researcher_control.js");
     flow.exec(
         function () {
             //console.log("history.requestId: "+history.requestID)
