@@ -255,7 +255,7 @@ function scrapPublication(callback) {
             });
         } else {
             scrapingPublication(data.valueRanges[0].values, function(message) {
-                res.json({ code: '999999', message: message });
+                callback(message)
             })
         }
     });
@@ -315,7 +315,7 @@ function scrapResearchFundSheet(callback) {
             });
         } else {
             scrapingResearchFund(data.valueRanges[0].values, function(message) {
-                res.json({ code: '999999', message: message });
+                callback(message)
             })
         }
     });
@@ -383,7 +383,7 @@ function scrapReward(callback) {
             });
         } else {
             scrapingReward(data.valueRanges[0].values, function(message) {
-                res.json({ code: '999999', message: message });
+                callback(message)
             })
         }
     });
@@ -432,7 +432,7 @@ function scrapIntellectualProperty(callback) {
             });
         } else {
             scrapingIntellectualProperty(data.valueRanges[0].values, function(message) {
-                res.json({ code: '999999', message: message });
+                callback(message)
             })
         }
     });
@@ -482,7 +482,7 @@ function scrapThesis(callback) {
             });
         } else {
             scrapingThesis(data.valueRanges[0].values, function(message) {
-                res.json({ code: '999999', message: message });
+                callback(message)
             })
         }
     });
@@ -617,7 +617,7 @@ function scrapTeacherTraining(callback) {
             });
         } else {
             scrapingResearcherTraining(data.valueRanges[0].values, function(message) {
-                res.json({ code: '999999', message: message });
+                callback(message)
             })
         }
     });
