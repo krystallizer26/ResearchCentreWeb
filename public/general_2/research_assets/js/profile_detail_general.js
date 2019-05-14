@@ -1,4 +1,4 @@
-app.controller('profileDetailGeneralCtrl', function ($scope, $http, global_service, $state) {
+app.controller('profileDetailGeneralCtrl', function ($scope, $http,$location, global_service, $state) {
   //console.log("profileDetailGeneralCtrl start");
 
   $scope.gotoHome = function () {
@@ -37,15 +37,26 @@ app.controller('profileDetailGeneralCtrl', function ($scope, $http, global_servi
     $state.go("profileDetail.training");
   }
 
-  var researcher_id = global_service.get_research_id(researcher_id);
-  //console.log(researcher_id);
-  ////alert("id ===> " +researcher_id);
-
-  //$scope.researchData = {}
-  let dataObjGetResearcherfromID = {
-    researcherId: researcher_id
-  };
-
+  var researcher_id = global_service.get_research_id();
+  let dataObjGetResearcherfromID ={};
+  var searchObject = $location.search();
+  // console.log("searchObject ===> "+searchObject);
+  // console.log(searchObject);
+  if(researcher_id == undefined){
+    dataObjGetResearcherfromID = {
+      researcherId: searchObject.researcherId
+    };
+    global_service.set_research_id(searchObject.researcherId);
+    console.log(dataObjGetResearcherfromID);
+  }else{
+    dataObjGetResearcherfromID = {
+      researcherId: researcher_id
+    };
+    console.log(dataObjGetResearcherfromID);
+  }
+  
+   
+  
 
   ////console.log("==== data getResearcherfromID ==== "+JSON.stringify(dataObjGetResearcherfromID));
   $http.post('/api/getResearcherfromID/', dataObjGetResearcherfromID)
