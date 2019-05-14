@@ -129,7 +129,7 @@ schedule.scheduleJob('0 3 10 0 *', function(date_called) {
 
 // route definitions ==============================================
 router.get('/insertResearcherSheet', function(req, res) {
-    scrapResearcher(function() {
+    scrapResearcher(function(message) {
         res.json({ code: '999999', message: message });
     })
 });
@@ -237,7 +237,7 @@ async function scrapingResearcher(rows, callback) {
 // --------------------------------------------------------------------------------------------
 
 router.get('/insertPublicationWorkSheet', function(req, res) {
-    scrapPublication(function() {
+    scrapPublication(function(message) {
         res.json({ code: '999999', message: message });
     })
 });
@@ -297,7 +297,7 @@ async function scrapingPublication(rows, callback) {
 // --------------------------------------------------------------------------------------------
 
 router.get('/insertResearchFundSheet', function(req, res) {
-    scrapResearchFundSheet(function() {
+    scrapResearchFundSheet(function(message) {
         res.json({ code: '999999', message: message });
     })
 });
@@ -365,7 +365,7 @@ async function scrapingResearchFund(rows, callback) {
 // --------------------------------------------------------------------------------------------
 
 router.get('/insertRewardSheet', function(req, res) {
-    scrapReward(function() {
+    scrapReward(function(message) {
         res.json({ code: '999999', message: message });
     })
 });
@@ -414,7 +414,7 @@ async function scrapingReward(rows, callback) {
 // --------------------------------------------------------------------------------------------
 
 router.get('/insertIntellectualPropertySheet', function(req, res) {
-    scrapIntellectualProperty(function() {
+    scrapIntellectualProperty(function(message) {
         res.json({ code: '999999', message: message });
     })
 });
@@ -464,7 +464,7 @@ async function scrapingIntellectualProperty(rows, callback) {
 // --------------------------------------------------------------------------------------------
 
 router.get('/insertThesisSheet', function(req, res) {
-    scrapThesis(function() {
+    scrapThesis(function(message) {
         res.json({ code: '999999', message: message });
     })
 });
@@ -599,7 +599,7 @@ router.get('/insertStaffTrainingSheet', function(req, res) {
 // --------------------------------------------------------------------------------------------
 
 router.get('/insertTeacherTrainingSheet', function(req, res) {
-    scrapTeacherTraining(function() {
+    scrapTeacherTraining(function(message) {
         res.json({ code: '999999', message: message });
     })
 });
