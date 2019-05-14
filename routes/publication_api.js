@@ -28,7 +28,7 @@ let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepa
 let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 let Publication_Control = require("../controller/publication_control.js");
 
-router.post('/newPublication', function (request, response) {
+router.post('/newPublication', function(request, response) {
     let methodCode = "45";
 
     let requiredData = [];
@@ -41,10 +41,9 @@ router.post('/newPublication', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 let publication = new Publication();
                 publication.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
                 publication.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
@@ -79,11 +78,11 @@ router.post('/newPublication', function (request, response) {
 
                 Publication_Control.newPublication_fromScrap(publication, this);
 
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "New Publication was saved successfully as _id defined", functionCallback._id, response);
                 }
             }
@@ -186,27 +185,26 @@ router.post('/newPublication', function (request, response) {
 //     }
 // });
 
-router.post('/getAllPublicationPreview/', function (request, response) {
+router.post('/getAllPublicationPreview/', function(request, response) {
     let methodCode = "47";
 
     flow.exec(
-        function () {
+        function() {
             Publication_Control.getAllPublicationPreview(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "591") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "592") {
+            } else if (code === "592") {
                 Publication_Control.getAllFullPublicationDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No Publication Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 console.log("READY !!")
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Publication Completed", functionCallback, response)
             }
@@ -214,27 +212,26 @@ router.post('/getAllPublicationPreview/', function (request, response) {
     );
 });
 
-router.post('/getAllPublication/', function (request, response) {
+router.post('/getAllPublication/', function(request, response) {
     let methodCode = "47";
 
     flow.exec(
-        function () {
+        function() {
             Publication_Control.getAllPublication(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "591") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "592") {
+            } else if (code === "592") {
                 Publication_Control.getAllFullPublicationDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No Publication Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 console.log("READY !!")
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Publication Completed", functionCallback, response)
             }
@@ -242,7 +239,7 @@ router.post('/getAllPublication/', function (request, response) {
     );
 });
 
-router.post('/getAllPublicationPreviewByResearcherId/', function (request, response) {
+router.post('/getAllPublicationPreviewByResearcherId/', function(request, response) {
     let methodCode = "51";
 
     let requiredData = [];
@@ -258,31 +255,28 @@ router.post('/getAllPublicationPreviewByResearcherId/', function (request, respo
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Publication_Control.getAllPublicationPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (code === "611") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else if (code === "612") {
+                } else if (code === "612") {
                     Publication_Control.getAllFullPublicationDataPreview(functionCallback, this);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "No Publication Founded", [], response)
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Publication Completed", functionCallback, response)
                 }
             }
@@ -290,7 +284,7 @@ router.post('/getAllPublicationPreviewByResearcherId/', function (request, respo
     }
 });
 
-router.post('/getAllPublicationByResearcherId/', function (request, response) {
+router.post('/getAllPublicationByResearcherId/', function(request, response) {
     let methodCode = "51";
 
     let requiredData = [];
@@ -306,31 +300,28 @@ router.post('/getAllPublicationByResearcherId/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Publication_Control.getAllPublicationByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (code === "611") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else if (code === "612") {
+                } else if (code === "612") {
                     Publication_Control.getAllFullPublicationDataPreview(functionCallback, this);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "No Publication Founded", [], response)
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Publication Completed", functionCallback, response)
                 }
             }
@@ -338,7 +329,7 @@ router.post('/getAllPublicationByResearcherId/', function (request, response) {
     }
 });
 
-router.post('/getPublicationfromID/', function (request, response) {
+router.post('/getPublicationfromID/', function(request, response) {
     let methodCode = "48";
 
     let requiredData = [];
@@ -353,24 +344,23 @@ router.post('/getPublicationfromID/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Publication_Control.checkPublicationByID(new ObjectId(request.body.publicationId), query, this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Publication_Control.getFullPublicationData(functionCallback, this);
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 //console.log("functionCallback: "+ JSON.stringify(functionCallback))
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get Researcher with _id " + request.body.researcherId + " Completed", functionCallback, response)
             }
@@ -378,7 +368,7 @@ router.post('/getPublicationfromID/', function (request, response) {
     }
 });
 
-router.post('/deletePublication/', function (request, response) {
+router.post('/deletePublication/', function(request, response) {
     let methodCode = "49";
 
     let requiredData = [];
@@ -393,28 +383,26 @@ router.post('/deletePublication/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Publication_Control.checkPublicationByID(new ObjectId(request.body.publicationId), this);
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (code != "232") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Publication_Control.deletePublicationByID(new ObjectId(request.body.publicationId), this);
                 }
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCode(ReturnCode.success, "Publication_Control with _id: " + request.body.publicationId + " has deleted successfully.", response);
                 }
             }
@@ -422,23 +410,32 @@ router.post('/deletePublication/', function (request, response) {
     }
 });
 
-router.get('/wipePublication/', function (request, response) {
+router.get('/wipePublication/', function(request, response) {
     let methodCode = "64";
 
     flow.exec(
-        function () {
+        function() {
             Publication_Control.wipePublication(this);
 
-        }, function (code, err, result) {
+        },
+        function(code, err, result) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCode(ReturnCode.success, "All Publication has been deleted successfully.", response);
             }
         }
     );
 });
+
+
+var schedule = require('node-schedule');
+schedule.scheduleJob('0 3 * * *', function(date_called) {
+    Publication_Control.wipePublication(function(code, err, result) {
+        console.log("PUBLICATION WIPED")
+    });
+});
+
 
 module.exports = router;
 

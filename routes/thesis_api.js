@@ -28,7 +28,7 @@ let MasterDepartment_Control = require("../controller/masterTeachingDepartment_c
 let DoctoryDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 let Thesis_Control = require("../controller/thesis_control.js");
 
-router.post('/newThesis_EachScrap', function (request, response) {
+router.post('/newThesis_EachScrap', function(request, response) {
     let methodCode = "73";
 
     let requiredData = [];
@@ -39,10 +39,9 @@ router.post('/newThesis_EachScrap', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 let thesis = new Thesis();
                 thesis.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
                 thesis.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
@@ -70,11 +69,11 @@ router.post('/newThesis_EachScrap', function (request, response) {
 
                 Thesis_Control.newThesis_fromScrap(thesis, this);
 
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "New Thesis was saved successfully as _id defined", functionCallback._id, response);
                 }
             }
@@ -177,60 +176,58 @@ router.post('/newThesis_EachScrap', function (request, response) {
 //     }
 // });
 
-router.post('/getAllThesisPreview/', function (request, response) {
+router.post('/getAllThesisPreview/', function(request, response) {
     let methodCode = "74";
 
     flow.exec(
-        function () {
+        function() {
             Thesis_Control.getAllThesisPreview(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "781") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "782") {
+            } else if (code === "782") {
                 Thesis_Control.getAllFullThesisDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No Thesis Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Thesis Completed", functionCallback, response)
             }
         }
     );
 });
 
-router.post('/getAllThesis/', function (request, response) {
+router.post('/getAllThesis/', function(request, response) {
     let methodCode = "74";
 
     flow.exec(
-        function () {
+        function() {
             Thesis_Control.getAllThesis(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "781") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "782") {
+            } else if (code === "782") {
                 Thesis_Control.getAllFullThesisDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No Thesis Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Thesis Completed", functionCallback, response)
             }
         }
     );
 });
-router.post('/getAllThesisPreviewByResearcherId/', function (request, response) {
+router.post('/getAllThesisPreviewByResearcherId/', function(request, response) {
     let methodCode = "75";
 
     let requiredData = [];
@@ -246,31 +243,28 @@ router.post('/getAllThesisPreviewByResearcherId/', function (request, response) 
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Thesis_Control.getAllThesisPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (code === "791") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else if (code === "792") {
+                } else if (code === "792") {
                     Thesis_Control.getAllFullThesisDataPreview(functionCallback, this);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "No Thesis Founded", [], response)
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Thesis Completed", functionCallback, response)
                 }
             }
@@ -278,7 +272,7 @@ router.post('/getAllThesisPreviewByResearcherId/', function (request, response) 
     }
 });
 
-router.post('/getAllThesisByResearcherId/', function (request, response) {
+router.post('/getAllThesisByResearcherId/', function(request, response) {
     let methodCode = "75";
 
     let requiredData = [];
@@ -294,38 +288,35 @@ router.post('/getAllThesisByResearcherId/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Thesis_Control.getAllThesisByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (code === "791") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else if (code === "792") {
+                } else if (code === "792") {
                     Thesis_Control.getAllFullThesisDataPreview(functionCallback, this);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "No Thesis Founded", [], response)
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Thesis Completed", functionCallback, response)
                 }
             }
         );
     }
 });
-router.post('/getThesisfromID/', function (request, response) {
+router.post('/getThesisfromID/', function(request, response) {
     let methodCode = "76";
 
     let requiredData = [];
@@ -340,24 +331,23 @@ router.post('/getThesisfromID/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Thesis_Control.checkThesisByID(new ObjectId(request.body.thesisId), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Thesis_Control.getFullThesisData(functionCallback, this);
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 //console.log("functionCallback: "+ JSON.stringify(functionCallback))
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get Thesis with _id " + request.body.thesisId + " Completed", functionCallback, response)
             }
@@ -365,7 +355,7 @@ router.post('/getThesisfromID/', function (request, response) {
     }
 });
 
-router.post('/deleteThesis/', function (request, response) {
+router.post('/deleteThesis/', function(request, response) {
     let methodCode = "77";
 
     let requiredData = [];
@@ -380,28 +370,26 @@ router.post('/deleteThesis/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Thesis_Control.checkThesisByID(new ObjectId(request.body.thesisId), this);
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (code != "802") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Thesis_Control.deleteThesisByID(new ObjectId(request.body.thesisId), this);
                 }
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCode(ReturnCode.success, "Thesis_Control with _id: " + request.body.thesisId + " has deleted successfully.", response);
                 }
             }
@@ -409,22 +397,29 @@ router.post('/deleteThesis/', function (request, response) {
     }
 });
 
-router.get('/wipeThesis/', function (request, response) {
+router.get('/wipeThesis/', function(request, response) {
     let methodCode = "78";
 
     flow.exec(
-        function () {
+        function() {
             Thesis_Control.wipeThesis(this);
 
-        }, function (code, err, result) {
+        },
+        function(code, err, result) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCode(ReturnCode.success, "All Thesis has been deleted successfully.", response);
             }
         }
     );
+});
+
+var schedule = require('node-schedule');
+schedule.scheduleJob('0 3 * * *', function(date_called) {
+    Thesis_Control.wipeThesis(function(code, err, result) {
+        console.log("THESIS WIPED")
+    });
 });
 
 module.exports = router;

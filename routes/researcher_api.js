@@ -27,7 +27,7 @@ let BachelorTeachingDepartment_Control = require("../controller/bachelorTeaching
 let MasterTeachingDepartment_Control = require("../controller/masterTeachingDepartment_control.js");
 let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDepartment_control.js");
 
-router.post('/newResearcher', function (request, response) {
+router.post('/newResearcher', function(request, response) {
     let methodCode = "36";
 
     let requiredData = [];
@@ -40,10 +40,9 @@ router.post('/newResearcher', function (request, response) {
         let alert = "Input Not Valid, check if some data is required. "
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, alert, response);
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 let researcher = new Researcher();
                 researcher.researcherName_TH = Validate.scrappingCleanUp(request.body.researcherName_TH)
                 researcher.researcherName_EN = Validate.scrappingCleanUp(request.body.researcherName_EN)
@@ -55,11 +54,11 @@ router.post('/newResearcher', function (request, response) {
 
                 Researcher_Control.newResearcher(researcher, this);
 
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "New Researcher was saved successfully as _id defined", functionCallback._id, response);
                 }
             }
@@ -67,11 +66,11 @@ router.post('/newResearcher', function (request, response) {
     }
 });
 
-router.get('/newResearcher_Dummy', function (request, response) {
+router.get('/newResearcher_Dummy', function(request, response) {
     let methodCode = "36";
 
     flow.exec(
-        function () {
+        function() {
             let researcher = new Researcher();
             researcher._id = new ObjectId("111111111111111111111111")
             researcher.researcherName_TH = "___สำหรับเก็บข้อมูลที่ไม่พบข้อมูลของนักวิจัยที่เกี่ยวข้อง"
@@ -80,18 +79,18 @@ router.get('/newResearcher_Dummy', function (request, response) {
 
             Researcher_Control.newResearcher_Dummy(researcher, this);
 
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "New Researcher was saved successfully as _id defined", functionCallback._id, response);
             }
         }
     );
 });
 
-router.post('/editResearcher/', function (request, response) {
+router.post('/editResearcher/', function(request, response) {
     let methodCode = "39";
 
     let requiredData = [];
@@ -123,74 +122,70 @@ router.post('/editResearcher/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!booleanReady) {
+    } else if (!booleanReady) {
         let alert = "Input Not Valid, check if some data is not boolean."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data must contain only numeric character."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "004", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Department_Control.checkDepartmentByID(new ObjectId(request.body.departmentId), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Position_Control.checkPositionByID(new ObjectId(request.body.positionId), this);
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     AcademicLevel_Control.checkAcademicLevelByID(new ObjectId(request.body.academicLevelId), this);
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     BachelorTeachingDepartment_Control.checkBachelorTeachingDepartmentByID(new ObjectId(request.body.bachelorTeachingDepartmentId), this);
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     MasterTeachingDepartment_Control.checkMasterTeachingDepartmentByID(new ObjectId(request.body.masterTeachingDepartmentId), this);
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     DoctoryTeachingDepartment_Control.checkDoctoryTeachingDepartmentByID(new ObjectId(request.body.doctoryTeachingDepartmentId), this);
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     let query = { "_id": true }
                     Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), query, this);
                 }
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
 
                     let keywordString = ""
                     for (let i = 0; i < request.body.keywordArray.length; i++) {
@@ -253,11 +248,11 @@ router.post('/editResearcher/', function (request, response) {
                     }
                     Researcher_Control.updateResearcherByID(new ObjectId(request.body.researcherId), query, this);
                 }
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCode(ReturnCode.success, "Researcher with _id: " + request.body.researcherId + " has updated successfully.", response);
                 }
             }
@@ -265,7 +260,7 @@ router.post('/editResearcher/', function (request, response) {
     }
 });
 
-router.post('/editResearcherPublication/', function (request, response) {
+router.post('/editResearcherPublication/', function(request, response) {
     let methodCode = "85";
 
     let requiredData = [];
@@ -286,22 +281,20 @@ router.post('/editResearcherPublication/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 let query = { "_id": true }
                 Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), query, this);
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     let query = {
                         $set: {
                             "citationTotal": request.body.citationTotal,
@@ -311,11 +304,11 @@ router.post('/editResearcherPublication/', function (request, response) {
                     }
                     Researcher_Control.updateResearcherByID(new ObjectId(request.body.researcherId), query, this);
                 }
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCode(ReturnCode.success, "Researcher with _id: " + request.body.researcherId + " has updated successfully.", response);
                 }
             }
@@ -323,51 +316,50 @@ router.post('/editResearcherPublication/', function (request, response) {
     }
 });
 
-router.post('/getAllResearcherName/', function (request, response) {
+router.post('/getAllResearcherName/', function(request, response) {
     let methodCode = "44";
 
     flow.exec(
-        function () {
+        function() {
             Researcher_Control.getAllResearcherName(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Researcher Completed", functionCallback, response)
             }
         }
     );
 });
 
-router.post('/getAllResearcherPreview/', function (request, response) {
+router.post('/getAllResearcherPreview/', function(request, response) {
     let methodCode = "44";
 
     flow.exec(
-        function () {
+        function() {
             Researcher_Control.getAllResearcherPreview(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "431") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "432") {
+            } else if (code === "432") {
                 Researcher_Control.getAllFullResearcherDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No Researcher Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Researcher Completed", functionCallback, response)
             }
         }
     );
 });
 
-router.post('/getResearcherfromID/', function (request, response) {
+router.post('/getResearcherfromID/', function(request, response) {
     let methodCode = "42";
 
     let requiredData = [];
@@ -382,24 +374,23 @@ router.post('/getResearcherfromID/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), {}, this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Researcher_Control.getFullResearcherData(functionCallback, this);
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 //console.log("functionCallback: "+ JSON.stringify(functionCallback))
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get Researcher with _id " + request.body.researcherId + " Completed", functionCallback, response)
             }
@@ -408,7 +399,7 @@ router.post('/getResearcherfromID/', function (request, response) {
 });
 
 
-router.post('/deleteResearcher/', function (request, response) {
+router.post('/deleteResearcher/', function(request, response) {
     let methodCode = "43";
 
     let requiredData = [];
@@ -423,29 +414,27 @@ router.post('/deleteResearcher/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 let query = { "_id": true }
                 Researcher_Control.checkResearcherByID(new ObjectId(request.body.researcherId), this);
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (code != "382") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Researcher_Control.deleteResearcherByID(new ObjectId(request.body.researcherId), this);
                 }
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCode(ReturnCode.success, "Researcher with _id: " + request.body.researcherId + " has deleted successfully.", response);
                 }
             }
@@ -453,22 +442,29 @@ router.post('/deleteResearcher/', function (request, response) {
     }
 });
 
-router.get('/wipeResearcher/', function (request, response) {
+router.get('/wipeResearcher/', function(request, response) {
     let methodCode = "65";
 
     flow.exec(
-        function () {
+        function() {
             Researcher_Control.wipeResearcher(this);
 
-        }, function (code, err, result) {
+        },
+        function(code, err, result) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCode(ReturnCode.success, "All Researcher has been deleted successfully.", response);
             }
         }
     );
+});
+
+var schedule = require('node-schedule');
+schedule.scheduleJob('0 3 * * *', function(date_called) {
+    Researcher_Control.wipeResearcher(function(code, err, result) {
+        console.log("RESEARCHER WIPED")
+    });
 });
 
 module.exports = router;

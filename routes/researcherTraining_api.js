@@ -25,7 +25,7 @@ let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDe
 let Publication_Control = require("../controller/publication_control.js");
 let ResearcherTraining_Control = require("../controller/researcherTraining_control.js");
 
-router.post('/newResearcherTraining_EachScrap', function (request, response) {
+router.post('/newResearcherTraining_EachScrap', function(request, response) {
     let methodCode = "79";
 
     let requiredData = [];
@@ -36,10 +36,9 @@ router.post('/newResearcherTraining_EachScrap', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 let researcherTraining = new ResearcherTraining();
                 researcherTraining.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
                 researcherTraining.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
@@ -56,14 +55,14 @@ router.post('/newResearcherTraining_EachScrap', function (request, response) {
                 researcherTraining.orderCode = Validate.scrappingCleanUp(request.body.orderCode)
                 researcherTraining.approveDate = Validate.scrappingCleanUp(request.body.approveDate)
                 researcherTraining.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
-                
+
                 ResearcherTraining_Control.newResearcherTraining_fromScrap(researcherTraining, this);
 
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "New Publication was saved successfully as _id defined", functionCallback._id, response);
                 }
             }
@@ -71,61 +70,59 @@ router.post('/newResearcherTraining_EachScrap', function (request, response) {
     }
 });
 
-router.post('/getAllResearcherTrainingPreview/', function (request, response) {
+router.post('/getAllResearcherTrainingPreview/', function(request, response) {
     let methodCode = "80";
 
     flow.exec(
-        function () {
+        function() {
             ResearcherTraining_Control.getAllResearcherTrainingPreview(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "841") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "842") {
+            } else if (code === "842") {
                 ResearcherTraining_Control.getAllFullResearcherTrainingDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearcherTraining Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearcherTraining Completed", functionCallback, response)
             }
         }
     );
 });
 
-router.post('/getAllResearcherTraining/', function (request, response) {
+router.post('/getAllResearcherTraining/', function(request, response) {
     let methodCode = "80";
 
     flow.exec(
-        function () {
+        function() {
             ResearcherTraining_Control.getAllResearcherTrainingPreview(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "841") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "842") {
+            } else if (code === "842") {
                 ResearcherTraining_Control.getAllFullResearcherTrainingDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearcherTraining Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearcherTraining Completed", functionCallback, response)
             }
         }
     );
 });
 
-router.post('/getAllResearcherTrainingPreviewByResearcherId/', function (request, response) {
+router.post('/getAllResearcherTrainingPreviewByResearcherId/', function(request, response) {
     let methodCode = "81";
 
     let requiredData = [];
@@ -145,36 +142,32 @@ router.post('/getAllResearcherTrainingPreviewByResearcherId/', function (request
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else if (!objectReady) {
+    } else if (!objectReady) {
         let alert = "Input Not Valid, check if some data have to be MongoDB ObjectId.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 ResearcherTraining_Control.getAllResearcherTrainingPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (code === "851") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else if (code === "852") {
+                } else if (code === "852") {
                     ResearcherTraining_Control.getAllFullResearcherTrainingDataPreview(functionCallback, this);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearcherTraining Founded", [], response)
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearcherTraining Completed", functionCallback, response)
                 }
             }
@@ -182,7 +175,7 @@ router.post('/getAllResearcherTrainingPreviewByResearcherId/', function (request
     }
 });
 
-router.post('/getAllResearcherTrainingByResearcherId/', function (request, response) {
+router.post('/getAllResearcherTrainingByResearcherId/', function(request, response) {
     let methodCode = "81";
 
     let requiredData = [];
@@ -202,36 +195,32 @@ router.post('/getAllResearcherTrainingByResearcherId/', function (request, respo
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else if (!objectReady) {
+    } else if (!objectReady) {
         let alert = "Input Not Valid, check if some data have to be MongoDB ObjectId.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 ResearcherTraining_Control.getAllResearcherTrainingByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (code === "851") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else if (code === "852") {
+                } else if (code === "852") {
                     ResearcherTraining_Control.getAllFullResearcherTrainingDataPreview(functionCallback, this);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearcherTraining Founded", [], response)
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearcherTraining Completed", functionCallback, response)
                 }
             }
@@ -239,7 +228,7 @@ router.post('/getAllResearcherTrainingByResearcherId/', function (request, respo
     }
 });
 
-router.post('/getResearcherTrainingfromID/', function (request, response) {
+router.post('/getResearcherTrainingfromID/', function(request, response) {
     let methodCode = "82";
 
     let requiredData = [];
@@ -254,24 +243,23 @@ router.post('/getResearcherTrainingfromID/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 ResearcherTraining_Control.checkResearcherTrainingByID(new ObjectId(request.body.researcherTrainingId), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     ResearcherTraining_Control.getFullResearcherTrainingData(functionCallback, this);
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 //console.log("functionCallback: "+ JSON.stringify(functionCallback))
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get ResearcherTraining with _id " + request.body.researcherTrainingId + " Completed", functionCallback, response)
             }
@@ -279,7 +267,7 @@ router.post('/getResearcherTrainingfromID/', function (request, response) {
     }
 });
 
-router.post('/deleteResearcherTraining/', function (request, response) {
+router.post('/deleteResearcherTraining/', function(request, response) {
     let methodCode = "83";
 
     let requiredData = [];
@@ -294,28 +282,26 @@ router.post('/deleteResearcherTraining/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 ResearcherTraining_Control.checkResearcherTrainingByID(new ObjectId(request.body.researcherTrainingId), this);
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (code != "862") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     ResearcherTraining_Control.deleteResearcherTrainingByID(new ObjectId(request.body.researcherTrainingId), this);
                 }
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCode(ReturnCode.success, "researcherTraining with _id: " + request.body.researcherTrainingId + " has deleted successfully.", response);
                 }
             }
@@ -323,21 +309,28 @@ router.post('/deleteResearcherTraining/', function (request, response) {
     }
 });
 
-router.get('/wipeResearcherTraining/', function (request, response) {
+router.get('/wipeResearcherTraining/', function(request, response) {
     let methodCode = "84";
 
     flow.exec(
-        function () {
+        function() {
             ResearcherTraining_Control.wipeResearcherTraining(this);
-        }, function (code, err, result) {
+        },
+        function(code, err, result) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCode(ReturnCode.success, "All ResearcherTraining has been deleted successfully.", response);
             }
         }
     );
+});
+
+var schedule = require('node-schedule');
+schedule.scheduleJob('0 3 * * *', function(date_called) {
+    ResearcherTraining_Control.wipeResearcherTraining(function(code, err, result) {
+        console.log("TRAINING WIPED")
+    });
 });
 
 module.exports = router;

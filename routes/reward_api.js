@@ -25,7 +25,7 @@ let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDe
 let Publication_Control = require("../controller/publication_control.js");
 let Reward_Control = require("../controller/reward_control.js");
 
-router.post('/newReward_EachScrap', function (request, response) {
+router.post('/newReward_EachScrap', function(request, response) {
     let methodCode = "57";
 
     let requiredData = [];
@@ -36,12 +36,11 @@ router.post('/newReward_EachScrap', function (request, response) {
 
     if (!requiredReady) {
         let alert = "Input Not Valid, check if some data is required."
-        //console.log(alert);
+            //console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 let reward = new Reward();
                 reward.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
                 reward.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
@@ -53,11 +52,11 @@ router.post('/newReward_EachScrap', function (request, response) {
 
                 Reward_Control.newReward_fromScrap(reward, this);
 
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "New Reward was saved successfully as _id defined", functionCallback._id, response);
                 }
             }
@@ -65,27 +64,26 @@ router.post('/newReward_EachScrap', function (request, response) {
     }
 });
 
-router.post('/getAllRewardPreview/', function (request, response) {
+router.post('/getAllRewardPreview/', function(request, response) {
     let methodCode = "58";
 
     flow.exec(
-        function () {
+        function() {
             Reward_Control.getAllRewardPreview(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "691") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "692") {
+            } else if (code === "692") {
                 Reward_Control.getAllFullRewardDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No Reward Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Reward Completed", functionCallback, response)
             }
         }
@@ -93,34 +91,33 @@ router.post('/getAllRewardPreview/', function (request, response) {
 });
 
 
-router.post('/getAllReward/', function (request, response) {
+router.post('/getAllReward/', function(request, response) {
     let methodCode = "58";
 
     flow.exec(
-        function () {
+        function() {
             Reward_Control.getAllReward(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "691") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "692") {
+            } else if (code === "692") {
                 Reward_Control.getAllFullRewardDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No Reward Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Reward Completed", functionCallback, response)
             }
         }
     );
 });
 
-router.post('/getAllRewardPreviewByResearcherId/', function (request, response) {
+router.post('/getAllRewardPreviewByResearcherId/', function(request, response) {
     let methodCode = "59";
 
     let requiredData = [];
@@ -140,36 +137,32 @@ router.post('/getAllRewardPreviewByResearcherId/', function (request, response) 
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else if (!objectReady) {
+    } else if (!objectReady) {
         let alert = "Input Not Valid, check if some data have to be MongoDB ObjectId.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Reward_Control.getAllRewardPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (code === "701") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else if (code === "702") {
+                } else if (code === "702") {
                     Reward_Control.getAllFullRewardDataPreview(functionCallback, this);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "No Reward Founded", [], response)
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Reward Completed", functionCallback, response)
                 }
             }
@@ -177,7 +170,7 @@ router.post('/getAllRewardPreviewByResearcherId/', function (request, response) 
     }
 });
 
-router.post('/getAllRewardByResearcherId/', function (request, response) {
+router.post('/getAllRewardByResearcherId/', function(request, response) {
     let methodCode = "59";
 
     let requiredData = [];
@@ -197,36 +190,32 @@ router.post('/getAllRewardByResearcherId/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else if (!objectReady) {
+    } else if (!objectReady) {
         let alert = "Input Not Valid, check if some data have to be MongoDB ObjectId.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Reward_Control.getAllRewardByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (code === "701") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else if (code === "702") {
+                } else if (code === "702") {
                     Reward_Control.getAllFullRewardDataPreview(functionCallback, this);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "No Reward Founded", [], response)
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "get All Reward Completed", functionCallback, response)
                 }
             }
@@ -234,7 +223,7 @@ router.post('/getAllRewardByResearcherId/', function (request, response) {
     }
 });
 
-router.post('/getRewardfromID/', function (request, response) {
+router.post('/getRewardfromID/', function(request, response) {
     let methodCode = "60";
 
     let requiredData = [];
@@ -249,24 +238,23 @@ router.post('/getRewardfromID/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Reward_Control.checkRewardByID(new ObjectId(request.body.rewardId), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Reward_Control.getFullRewardData(functionCallback, this);
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 //console.log("functionCallback: "+ JSON.stringify(functionCallback))
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get Reward with _id " + request.body.rewardId + " Completed", functionCallback, response)
             }
@@ -274,7 +262,7 @@ router.post('/getRewardfromID/', function (request, response) {
     }
 });
 
-router.post('/deleteReward/', function (request, response) {
+router.post('/deleteReward/', function(request, response) {
     let methodCode = "61";
 
     let requiredData = [];
@@ -289,28 +277,26 @@ router.post('/deleteReward/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 Reward_Control.checkRewardByID(new ObjectId(request.body.rewardId), this);
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (code != "712") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Reward_Control.deleteRewardByID(new ObjectId(request.body.rewardId), this);
                 }
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCode(ReturnCode.success, "reward with _id: " + request.body.rewardId + " has deleted successfully.", response);
                 }
             }
@@ -318,22 +304,29 @@ router.post('/deleteReward/', function (request, response) {
     }
 });
 
-router.get('/wipeReward/', function (request, response) {
+router.get('/wipeReward/', function(request, response) {
     let methodCode = "62";
 
     flow.exec(
-        function () {
+        function() {
             Reward_Control.wipeReward(this);
 
-        }, function (code, err, result) {
+        },
+        function(code, err, result) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCode(ReturnCode.success, "All Reward has been deleted successfully.", response);
             }
         }
     );
+});
+
+var schedule = require('node-schedule');
+schedule.scheduleJob('0 3 * * *', function(date_called) {
+    Reward_Control.wipeReward(function(code, err, result) {
+        console.log("REWARD FUND WIPED")
+    });
 });
 
 module.exports = router;

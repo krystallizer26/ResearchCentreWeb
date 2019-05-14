@@ -25,7 +25,7 @@ let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDe
 let Publication_Control = require("../controller/publication_control.js");
 let IntellectualProperty_Control = require("../controller/intellectualProperty_control.js");
 
-router.post('/newIntellectualProperty_EachScrap', function (request, response) {
+router.post('/newIntellectualProperty_EachScrap', function(request, response) {
     let methodCode = "...";
 
     let requiredData = [];
@@ -36,12 +36,11 @@ router.post('/newIntellectualProperty_EachScrap', function (request, response) {
 
     if (!requiredReady) {
         let alert = "Input Not Valid, check if some data is required."
-        //console.log(alert);
+            //console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 let intellectualProperty = new IntellectualProperty();
                 intellectualProperty.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
                 intellectualProperty.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
@@ -56,11 +55,11 @@ router.post('/newIntellectualProperty_EachScrap', function (request, response) {
 
                 IntellectualProperty_Control.newIntellectualProperty_fromScrap(intellectualProperty, this);
 
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "New IntellectualProperty was saved successfully as _id defined", functionCallback._id, response);
                 }
             }
@@ -68,61 +67,59 @@ router.post('/newIntellectualProperty_EachScrap', function (request, response) {
     }
 });
 
-router.post('/getAllIntellectualPropertyPreview/', function (request, response) {
+router.post('/getAllIntellectualPropertyPreview/', function(request, response) {
     let methodCode = "68";
 
     flow.exec(
-        function () {
+        function() {
             IntellectualProperty_Control.getAllIntellectualPropertyPreview(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "691") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "692") {
+            } else if (code === "692") {
                 IntellectualProperty_Control.getAllFullIntellectualPropertyDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No IntellectualProperty Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All IntellectualProperty Completed", functionCallback, response)
             }
         }
     );
 });
 
-router.post('/getAllIntellectualProperty/', function (request, response) {
+router.post('/getAllIntellectualProperty/', function(request, response) {
     let methodCode = "68";
 
     flow.exec(
-        function () {
+        function() {
             IntellectualProperty_Control.getAllIntellectualProperty(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "691") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "692") {
+            } else if (code === "692") {
                 IntellectualProperty_Control.getAllFullIntellectualPropertyDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No IntellectualProperty Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All IntellectualProperty Completed", functionCallback, response)
             }
         }
     );
 });
 
-router.post('/getAllIntellectualPropertyPreviewByResearcherId/', function (request, response) {
+router.post('/getAllIntellectualPropertyPreviewByResearcherId/', function(request, response) {
     let methodCode = "69";
 
     let requiredData = [];
@@ -142,36 +139,32 @@ router.post('/getAllIntellectualPropertyPreviewByResearcherId/', function (reque
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else if (!objectReady) {
+    } else if (!objectReady) {
         let alert = "Input Not Valid, check if some data have to be MongoDB ObjectId.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 IntellectualProperty_Control.getAllIntellectualPropertyPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (code === "701") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else if (code === "702") {
+                } else if (code === "702") {
                     IntellectualProperty_Control.getAllFullIntellectualPropertyDataPreview(functionCallback, this);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "No IntellectualProperty Founded", [], response)
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "get All IntellectualProperty Completed", functionCallback, response)
                 }
             }
@@ -179,7 +172,7 @@ router.post('/getAllIntellectualPropertyPreviewByResearcherId/', function (reque
     }
 });
 
-router.post('/getAllIntellectualPropertyByResearcherId/', function (request, response) {
+router.post('/getAllIntellectualPropertyByResearcherId/', function(request, response) {
     let methodCode = "69";
 
     let requiredData = [];
@@ -199,36 +192,32 @@ router.post('/getAllIntellectualPropertyByResearcherId/', function (request, res
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else if (!objectReady) {
+    } else if (!objectReady) {
         let alert = "Input Not Valid, check if some data have to be MongoDB ObjectId.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 IntellectualProperty_Control.getAllIntellectualPropertyByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (code === "701") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else if (code === "702") {
+                } else if (code === "702") {
                     IntellectualProperty_Control.getAllFullIntellectualPropertyDataPreview(functionCallback, this);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "No IntellectualProperty Founded", [], response)
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "get All IntellectualProperty Completed", functionCallback, response)
                 }
             }
@@ -236,7 +225,7 @@ router.post('/getAllIntellectualPropertyByResearcherId/', function (request, res
     }
 });
 
-router.post('/getIntellectualPropertyfromID/', function (request, response) {
+router.post('/getIntellectualPropertyfromID/', function(request, response) {
     let methodCode = "70";
 
     let requiredData = [];
@@ -251,24 +240,23 @@ router.post('/getIntellectualPropertyfromID/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 IntellectualProperty_Control.checkIntellectualPropertyByID(new ObjectId(request.body.intellectualPropertyId), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     IntellectualProperty_Control.getFullIntellectualPropertyData(functionCallback, this);
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 //console.log("functionCallback: "+ JSON.stringify(functionCallback))
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get IntellectualProperty with _id " + request.body.intellectualPropertyId + " Completed", functionCallback, response)
             }
@@ -276,7 +264,7 @@ router.post('/getIntellectualPropertyfromID/', function (request, response) {
     }
 });
 
-router.post('/deleteIntellectualProperty/', function (request, response) {
+router.post('/deleteIntellectualProperty/', function(request, response) {
     let methodCode = "71";
 
     let requiredData = [];
@@ -291,28 +279,26 @@ router.post('/deleteIntellectualProperty/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 IntellectualProperty_Control.checkIntellectualPropertyByID(new ObjectId(request.body.intellectualPropertyId), this);
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (code != "712") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     IntellectualProperty_Control.deleteIntellectualPropertyByID(new ObjectId(request.body.intellectualPropertyId), this);
                 }
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCode(ReturnCode.success, "intellectualProperty with _id: " + request.body.intellectualPropertyId + " has deleted successfully.", response);
                 }
             }
@@ -320,22 +306,29 @@ router.post('/deleteIntellectualProperty/', function (request, response) {
     }
 });
 
-router.get('/wipeIntellectualProperty/', function (request, response) {
+router.get('/wipeIntellectualProperty/', function(request, response) {
     let methodCode = "72";
 
     flow.exec(
-        function () {
+        function() {
             IntellectualProperty_Control.wipeIntellectualProperty(this);
 
-        }, function (code, err, result) {
+        },
+        function(code, err, result) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCode(ReturnCode.success, "All IntellectualProperty has been deleted successfully.", response);
             }
         }
     );
+});
+
+var schedule = require('node-schedule');
+schedule.scheduleJob('0 3 * * *', function(date_called) {
+    IntellectualProperty_Control.wipeIntellectualProperty(function(code, err, result) {
+        console.log("INTPROPERTY FUND WIPED")
+    });
 });
 
 module.exports = router;

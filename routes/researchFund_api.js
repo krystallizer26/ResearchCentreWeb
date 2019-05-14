@@ -25,7 +25,7 @@ let DoctoryTeachingDepartment_Control = require("../controller/doctoryTeachingDe
 let Publication_Control = require("../controller/publication_control.js");
 let ResearchFund_Control = require("../controller/researchFund_control.js");
 
-router.post('/newResearchFund_EachScrap', function (request, response) {
+router.post('/newResearchFund_EachScrap', function(request, response) {
     let methodCode = "52";
 
     let requiredData = [];
@@ -38,10 +38,9 @@ router.post('/newResearchFund_EachScrap', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 let researchFund = new ResearchFund();
                 researchFund.researcherName = Validate.scrappingCleanUp(request.body.researcherName)
                 researchFund.researcherPersonalID = Validate.scrappingCleanUp(request.body.researcherPersonalID)
@@ -73,11 +72,11 @@ router.post('/newResearchFund_EachScrap', function (request, response) {
 
                 ResearchFund_Control.newResearchFund_fromScrap(researchFund, this);
 
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "New Publication was saved successfully as _id defined", functionCallback._id, response);
                 }
             }
@@ -85,60 +84,58 @@ router.post('/newResearchFund_EachScrap', function (request, response) {
     }
 });
 
-router.post('/getAllResearchFundPreview/', function (request, response) {
+router.post('/getAllResearchFundPreview/', function(request, response) {
     let methodCode = "53";
 
     flow.exec(
-        function () {
+        function() {
             ResearchFund_Control.getAllResearchFundPreview(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "631") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "632") {
+            } else if (code === "632") {
                 ResearchFund_Control.getAllFullResearchFundDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearchFund Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearchFund Completed", functionCallback, response)
             }
         }
     );
 });
 
-router.post('/getAllResearchFund/', function (request, response) {
+router.post('/getAllResearchFund/', function(request, response) {
     let methodCode = "53";
 
     flow.exec(
-        function () {
+        function() {
             ResearchFund_Control.getAllResearchFund(this);
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (code === "631") {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else if (code === "632") {
+            } else if (code === "632") {
                 ResearchFund_Control.getAllFullResearchFundDataPreview(functionCallback, this);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearchFund Founded", [], response)
             }
-        }, function (code, err, functionCallback) {
+        },
+        function(code, err, functionCallback) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearchFund Completed", functionCallback, response)
             }
         }
     );
 });
-router.post('/getAllResearchFundPreviewByResearcherId/', function (request, response) {
+router.post('/getAllResearchFundPreviewByResearcherId/', function(request, response) {
     let methodCode = "54";
 
     let requiredData = [];
@@ -158,36 +155,32 @@ router.post('/getAllResearchFundPreviewByResearcherId/', function (request, resp
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else if (!objectReady) {
+    } else if (!objectReady) {
         let alert = "Input Not Valid, check if some data have to be MongoDB ObjectId.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 ResearchFund_Control.getAllResearchFundPreviewByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (code === "641") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else if (code === "642") {
+                } else if (code === "642") {
                     ResearchFund_Control.getAllFullResearchFundDataPreview(functionCallback, this);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearchFund Founded", [], response)
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearchFund Completed", functionCallback, response)
                 }
             }
@@ -195,7 +188,7 @@ router.post('/getAllResearchFundPreviewByResearcherId/', function (request, resp
     }
 });
 
-router.post('/getAllResearchFundByResearcherId/', function (request, response) {
+router.post('/getAllResearchFundByResearcherId/', function(request, response) {
     let methodCode = "54";
 
     let requiredData = [];
@@ -215,43 +208,39 @@ router.post('/getAllResearchFundByResearcherId/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!numberReady) {
+    } else if (!numberReady) {
         let alert = "Input Not Valid, check if some data have to be number.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "002", alert, response)
-    }
-    else if (!objectReady) {
+    } else if (!objectReady) {
         let alert = "Input Not Valid, check if some data have to be MongoDB ObjectId.";
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 ResearchFund_Control.getAllResearchFundByResearcherId(request.body.researcherId, parseInt(request.body.limit), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (code === "641") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else if (code === "642") {
+                } else if (code === "642") {
                     ResearchFund_Control.getAllFullResearchFundDataPreview(functionCallback, this);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "No ResearchFund Founded", [], response)
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCodeAndData(ReturnCode.success, "get All ResearchFund Completed", functionCallback, response)
                 }
             }
         );
     }
 });
-router.post('/getResearchFundfromID/', function (request, response) {
+router.post('/getResearchFundfromID/', function(request, response) {
     let methodCode = "55";
 
     let requiredData = [];
@@ -266,24 +255,23 @@ router.post('/getResearchFundfromID/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 ResearchFund_Control.checkResearchFundByID(new ObjectId(request.body.researchFundId), this);
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     ResearchFund_Control.getFullResearchFundData(functionCallback, this);
                 }
-            }, function (code, err, functionCallback) {
+            },
+            function(code, err, functionCallback) {
                 //console.log("functionCallback: "+ JSON.stringify(functionCallback))
                 Return_Control.responseWithCodeAndData(ReturnCode.success, "get ResearchFund with _id " + request.body.researchFundId + " Completed", functionCallback, response)
             }
@@ -291,7 +279,7 @@ router.post('/getResearchFundfromID/', function (request, response) {
     }
 });
 
-router.post('/deleteResearchFund/', function (request, response) {
+router.post('/deleteResearchFund/', function(request, response) {
     let methodCode = "56";
 
     let requiredData = [];
@@ -306,28 +294,26 @@ router.post('/deleteResearchFund/', function (request, response) {
         let alert = "Input Not Valid, check if some data is required."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "001", alert, response)
-    }
-    else if (!objectIdReady) {
+    } else if (!objectIdReady) {
         let alert = "Input Not Valid, check if some data is not ObjectID for MongoDB."
         console.log(alert);
         Return_Control.responseWithCode(ReturnCode.clientError + methodCode + "003", alert, response)
-    }
-    else {
+    } else {
         flow.exec(
-            function () {
+            function() {
                 ResearchFund_Control.checkResearchFundByID(new ObjectId(request.body.researchFundId), this);
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (code != "672") {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     ResearchFund_Control.deleteResearchFundByID(new ObjectId(request.body.researchFundId), this);
                 }
-            }, function (code, err, result) {
+            },
+            function(code, err, result) {
                 if (err) {
                     Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-                }
-                else {
+                } else {
                     Return_Control.responseWithCode(ReturnCode.success, "researchFund with _id: " + request.body.researchFundId + " has deleted successfully.", response);
                 }
             }
@@ -335,22 +321,29 @@ router.post('/deleteResearchFund/', function (request, response) {
     }
 });
 
-router.get('/wipeResearchFund/', function (request, response) {
+router.get('/wipeResearchFund/', function(request, response) {
     let methodCode = "63";
 
     flow.exec(
-        function () {
+        function() {
             ResearchFund_Control.wipeResearchFund(this);
 
-        }, function (code, err, result) {
+        },
+        function(code, err, result) {
             if (err) {
                 Return_Control.responseWithCode(ReturnCode.serviceError + methodCode + code, err, response);
-            }
-            else {
+            } else {
                 Return_Control.responseWithCode(ReturnCode.success, "All ResearchFund has been deleted successfully.", response);
             }
         }
     );
+});
+
+var schedule = require('node-schedule');
+schedule.scheduleJob('0 3 * * *', function(date_called) {
+    ResearchFund_Control.wipeResearchFund(function(code, err, result) {
+        console.log("RESEARCHER FUND WIPED")
+    });
 });
 
 module.exports = router;
