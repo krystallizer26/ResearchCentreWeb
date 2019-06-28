@@ -322,12 +322,12 @@ router.get('/wipeReward/', function(request, response) {
     );
 });
 
-var schedule = require('node-schedule');
-schedule.scheduleJob('0 3 * * *', function(date_called) {
-    Reward_Control.wipeReward(function(code, err, result) {
-        console.log("REWARD FUND WIPED")
-    });
-});
+// var schedule = require('node-schedule');
+// schedule.scheduleJob('0 3 * * *', function(date_called) {
+//     Reward_Control.wipeReward(function(code, err, result) {
+//         console.log("REWARD FUND WIPED")
+//     });
+// });
 
 module.exports = router;
 

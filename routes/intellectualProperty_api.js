@@ -324,12 +324,12 @@ router.get('/wipeIntellectualProperty/', function(request, response) {
     );
 });
 
-var schedule = require('node-schedule');
-schedule.scheduleJob('0 3 * * *', function(date_called) {
-    IntellectualProperty_Control.wipeIntellectualProperty(function(code, err, result) {
-        console.log("INTPROPERTY FUND WIPED")
-    });
-});
+// var schedule = require('node-schedule');
+// schedule.scheduleJob('0 3 * * *', function(date_called) {
+//     IntellectualProperty_Control.wipeIntellectualProperty(function(code, err, result) {
+//         console.log("INTPROPERTY FUND WIPED")
+//     });
+// });
 
 module.exports = router;
 

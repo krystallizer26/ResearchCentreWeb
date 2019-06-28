@@ -460,12 +460,12 @@ router.get('/wipeResearcher/', function(request, response) {
     );
 });
 
-var schedule = require('node-schedule');
-schedule.scheduleJob('0 3 * * *', function(date_called) {
-    Researcher_Control.wipeResearcher(function(code, err, result) {
-        console.log("RESEARCHER WIPED")
-    });
-});
+// var schedule = require('node-schedule');
+// schedule.scheduleJob('0 3 * * *', function(date_called) {
+//     Researcher_Control.wipeResearcher(function(code, err, result) {
+//         console.log("RESEARCHER WIPED")
+//     });
+// });
 
 module.exports = router;
 

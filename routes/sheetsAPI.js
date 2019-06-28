@@ -97,35 +97,35 @@ fs.readFile(CLIENT_SECRET_PATH, (err, content) => {
 
 // automate scrap =================================================
 
-var schedule = require('node-schedule');
-schedule.scheduleJob('0 3 5 0 *', function(date_called) {
-    scrapResearcher(function(message) {
-        console.log("RESEARCHER SCRAPED")
-    })
-});
+// var schedule = require('node-schedule');
+// schedule.scheduleJob('0 3 5 0 *', function(date_called) {
+//     scrapResearcher(function(message) {
+//         console.log("RESEARCHER SCRAPED")
+//     })
+// });
 
 
-var schedule = require('node-schedule');
-schedule.scheduleJob('0 3 10 0 *', function(date_called) {
-    scrapPublication(function(message) {
-        console.log("PUBLICATION SCRAPED")
-    })
-    scrapResearchFundSheet(function(message) {
-        console.log("RESEARCH FUND SCRAPED")
-    })
-    scrapReward(function(message) {
-        console.log("REWARD SCRAPED")
-    })
-    scrapIntellectualProperty(function(message) {
-        console.log("INTPROPERTY SCRAPED")
-    })
-    scrapThesis(function(message) {
-        console.log("THESIS SCRAPED")
-    })
-    scrapTeacherTraining(function(message) {
-        console.log("RESEARCHER TRAINING SCRAPED")
-    })
-});
+// var schedule = require('node-schedule');
+// schedule.scheduleJob('0 3 10 0 *', function(date_called) {
+//     scrapPublication(function(message) {
+//         console.log("PUBLICATION SCRAPED")
+//     })
+//     scrapResearchFundSheet(function(message) {
+//         console.log("RESEARCH FUND SCRAPED")
+//     })
+//     scrapReward(function(message) {
+//         console.log("REWARD SCRAPED")
+//     })
+//     scrapIntellectualProperty(function(message) {
+//         console.log("INTPROPERTY SCRAPED")
+//     })
+//     scrapThesis(function(message) {
+//         console.log("THESIS SCRAPED")
+//     })
+//     scrapTeacherTraining(function(message) {
+//         console.log("RESEARCHER TRAINING SCRAPED")
+//     })
+// });
 
 // route definitions ==============================================
 router.get('/insertResearcherSheet', function(req, res) {

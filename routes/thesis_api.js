@@ -415,12 +415,12 @@ router.get('/wipeThesis/', function(request, response) {
     );
 });
 
-var schedule = require('node-schedule');
-schedule.scheduleJob('0 3 * * *', function(date_called) {
-    Thesis_Control.wipeThesis(function(code, err, result) {
-        console.log("THESIS WIPED")
-    });
-});
+// var schedule = require('node-schedule');
+// schedule.scheduleJob('0 3 * * *', function(date_called) {
+//     Thesis_Control.wipeThesis(function(code, err, result) {
+//         console.log("THESIS WIPED")
+//     });
+// });
 
 module.exports = router;
 
