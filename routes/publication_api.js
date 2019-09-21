@@ -429,12 +429,12 @@ router.get('/wipePublication/', function(request, response) {
 });
 
 
-var schedule = require('node-schedule');
-schedule.scheduleJob('0 3 * * *', function(date_called) {
-    Publication_Control.wipePublication(function(code, err, result) {
-        console.log("PUBLICATION WIPED")
-    });
-});
+// var schedule = require('node-schedule');
+// schedule.scheduleJob('0 3 * * *', function(date_called) {
+//     Publication_Control.wipePublication(function(code, err, result) {
+//         console.log("PUBLICATION WIPED")
+//     });
+// });
 
 
 module.exports = router;
