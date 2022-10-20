@@ -27,7 +27,7 @@
     "express-session": "^1.15.6",
     "googleapis": "^27.0.0",
     "mongodb": "^3.0.1",
-    "mongoose": "^4.13.12",
+    "mongoose": "^4.13.21",
     "morgan": "~1.9.0",
     "nightmare": "^3.0.1",
     "nightmare-window-manager": "^0.2.2",
